@@ -9,27 +9,13 @@
 #include <cmath>   
 #include <unordered_map>
 #include <numeric>
-#include "Exce_8_25.h"
 #include <stack> 
 #include <iomanip>
 #include <bitset>
-#include "Matrix.h"
-#include "myDSA_II.h"
+#include "LeetCode.h"
+using namespace std;
 int main() {
-	stringstream ss;
-	ss << "E 6 8 " << "1 2 a 3 " << "1 3 b 8 ";
-	ss << "2 4 c 9 " << "3 2 d 4 " << "2 5 e 6 ";
-	ss << "3 5 f 10 " << "4 6 g 6 " << "5 6 h 9 ";
-	MyGraphy myG(ss);
-
-	vector<int> topoSorted;
-	myG.topoSort(topoSorted);
-	std::vector<std::vector<int>> paths;
-	myG.CriticalPath(paths);
-	for (auto& p : paths) {
-		for (int i : p)
-			cout << i << " ";
-		cout << endl;
-	}
+	string a = "abc";
+	auto t = letterCombinations("23");
 	return 0;
 }
