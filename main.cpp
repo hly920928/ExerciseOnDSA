@@ -15,7 +15,9 @@
 #include "LeetCode.h"
 using namespace std;
 int main() {
-	string a = "abc";
-	auto t = letterCombinations("23");
+	int a[] = { 1, 0, -1, 0, -2, 2 };
+	vector<int> v;
+	for (int t : a)v.push_back(t);
+	auto vv = fourSum(v, 0);
 	return 0;
 }
