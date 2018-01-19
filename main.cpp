@@ -15,9 +15,16 @@
 #include "LeetCode.h"
 using namespace std;
 int main() {
-	int a[] = { 1, 0, -1, 0, -2, 2 };
-	vector<int> v;
-	for (int t : a)v.push_back(t);
-	auto vv = fourSum(v, 0);
+	ListNode n1(1), n2(2), n3(3), n4(4), n5(5);
+	n1.next = &n2;
+	n2.next = &n3;
+	n3.next = &n4;
+	n4.next = &n5;
+	auto ptr = &n1;
+	removeNthFromEnd(&n1,2);
+	while (ptr != nullptr) {
+			cout << ptr->val << endl;
+			ptr = ptr->next;
+		}
 	return 0;
 }

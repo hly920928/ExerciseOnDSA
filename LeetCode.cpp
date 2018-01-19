@@ -50,6 +50,22 @@ vector<vector<int>> fourSum(vector<int>& nums, int target)
 	}
 	return ans;
 }
+ListNode * removeNthFromEnd(ListNode * head, int n)
+{
+	ListNode* end= head; ListNode* nth=head; int cnt = 0;
+	ListNode* pre = head;
+	while (end != nullptr) {
+		end = end->next;
+		if (cnt <n)cnt++;
+		else{pre = nth;
+			nth = nth->next;}
+	}
+	if (nth == head) 
+		head = head->next;
+	else pre->next = nth->next;
+	//delete nth;
+	return head;
+}
 void reCursive(vector<string>& ans, const string& digits, const string* map, string& t) {
 	int n = t.size(); int ds = digits.size();
 	if (n == ds)return;
