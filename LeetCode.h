@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 #include <vector>
+#include <stack>
 //17. Letter Combinations of a Phone Numberclass Solution {
 std::vector<std::string> letterCombinations(std::string digits);
 //18. 4Sum
@@ -12,3 +13,5 @@ struct ListNode {
 	ListNode(int x) : val(x), next(NULL) {}
 };
 ListNode* removeNthFromEnd(ListNode* head, int n);
+//20. Valid Parentheses
+bool isValid(std::string s);

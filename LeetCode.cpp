@@ -66,6 +66,36 @@ ListNode * removeNthFromEnd(ListNode * head, int n)
 	//delete nth;
 	return head;
 }
+bool isValid(string s)
+{
+	stack<char> stk;
+	char isPop='/';
+	for (char c : s){ {
+		isPop = '/';
+		switch (c) {
+		case '(': {
+			isPop = 'u'; break; }
+		case '[': {
+			isPop = 'u'; break; }
+		case '{': {
+			isPop = 'u'; break; }
+		case ')': {
+			if (stk.empty() || stk.top() != '(') return false;
+			isPop = 'o'; break; }
+		case ']': {
+			if (stk.empty() || stk.top() != '[') return false;
+			isPop = 'o'; break; }
+		case '}': {
+			if (stk.empty() || stk.top() != '{') return false;
+			isPop = 'o'; break; }
+		}
+				  if (isPop == 'o') stk.pop();
+				  if (isPop == 'u') stk.push(c);
+		}
+	}
+	return stk.empty();
+}
+
 void reCursive(vector<string>& ans, const string& digits, const string* map, string& t) {
 	int n = t.size(); int ds = digits.size();
 	if (n == ds)return;
