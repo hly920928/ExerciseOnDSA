@@ -15,7 +15,15 @@
 #include "LeetCode.h"
 using namespace std;
 int main() {
-	string s = "(]";
-	cout << isValid(s) << endl;
+	ListNode n1(1);
+	ListNode n2(0);
+	vector<ListNode*> v;
+	//v.push_back(&n1);
+	//v.push_back(&n2);
+	ListNode* head = mergeKLists(v);
+	while (head != nullptr) {
+		printf_s("%d\n", head->val);
+		head = head->next;
+	}
 	return 0;
 }

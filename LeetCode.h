@@ -2,6 +2,7 @@
 #include <string>
 #include <vector>
 #include <stack>
+#include <queue>
 //17. Letter Combinations of a Phone Numberclass Solution {
 std::vector<std::string> letterCombinations(std::string digits);
 //18. 4Sum
@@ -15,3 +16,5 @@ struct ListNode {
 ListNode* removeNthFromEnd(ListNode* head, int n);
 //20. Valid Parentheses
 bool isValid(std::string s);
+//23. Merge k Sorted Lists
+ListNode* mergeKLists(std::vector<ListNode*>& lists);

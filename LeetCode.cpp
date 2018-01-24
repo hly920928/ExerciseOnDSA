@@ -95,6 +95,44 @@ bool isValid(string s)
 	}
 	return stk.empty();
 }
+struct heapIndex {
+	int index;
+	int val;
+	ListNode* ptr;
+	heapIndex(int i, ListNode* v) :index(i), ptr(v) , val(v->val){};
+	bool  operator <(const heapIndex &b)const {
+		return val > b.val;
+	}
+};
+ListNode * mergeKLists(vector<ListNode*>& lists)
+{
+	ListNode *header = nullptr; int n = lists.size();
+	ListNode *cur = nullptr;
+	priority_queue<heapIndex> pq;
+	for (int i = 0; i < n; i++) {
+		if (lists[i] != nullptr) {
+			pq.push(heapIndex(i, lists[i]));
+			lists[i] = lists[i]->next;
+		}
+	}
+	if (pq.size() != 0) {
+		header = pq.top().ptr;
+		cur= pq.top().ptr;
+	}
+	if (pq.empty())return header;
+	while (true) {
+		heapIndex top = pq.top(); pq.pop();
+		if (pq.empty())break;
+		if (lists[top.index] != nullptr)
+		{
+			pq.push(heapIndex(top.index, lists[top.index]));
+			lists[top.index] = lists[top.index]->next;
+		}
+		cur->next = pq.top().ptr;
+		cur = cur->next;
+	}
+	return header;
+}
 
 void reCursive(vector<string>& ans, const string& digits, const string* map, string& t) {
 	int n = t.size(); int ds = digits.size();
@@ -107,6 +145,7 @@ void reCursive(vector<string>& ans, const string& digits, const string* map, str
 		t.pop_back();
 	}
 }
+
 vector<string> letterCombinations(string digits)
 {
 	vector<string> ans;
