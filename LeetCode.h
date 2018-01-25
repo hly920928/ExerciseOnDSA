@@ -20,3 +20,5 @@ bool isValid(std::string s);
 ListNode* mergeKLists(std::vector<ListNode*>& lists);
 //21. Merge Two Sorted Lists
 ListNode* mergeTwoLists(ListNode* l1, ListNode* l2);
+//22. Generate Parentheses
+std::vector<std::string> generateParenthesis(int n);

@@ -130,7 +130,6 @@ ListNode * mergeKLists(vector<ListNode*>& lists)
 	}
 	return header;
 }
-
 ListNode * mergeTwoLists(ListNode * l1, ListNode * l2)
 {
 	if (l1 == nullptr&&l2== nullptr)return nullptr;
@@ -162,7 +161,6 @@ ListNode * mergeTwoLists(ListNode * l1, ListNode * l2)
 	if (curl2 != nullptr)cur->next = curl2;
 	return header;
 }
-
 void reCursive(vector<string>& ans, const string& digits, const string* map, string& t) {
 	int n = t.size(); int ds = digits.size();
 	if (n == ds)return;
@@ -174,7 +172,6 @@ void reCursive(vector<string>& ans, const string& digits, const string* map, str
 		t.pop_back();
 	}
 }
-
 vector<string> letterCombinations(string digits)
 {
 	vector<string> ans;
@@ -191,5 +188,30 @@ vector<string> letterCombinations(string digits)
 	reCursive(ans, digits, map, t);
 	return ans;
 }
-
+vector<string> ans;
+string s;
+int _n;
+void gP_reCur(int nL,int nR,int p) {
+	if (s.size() == _n * 2) {
+		ans.push_back(s);
+		return;
+	}
+	if (nL > 0) {
+		s.push_back('(');
+		gP_reCur(nL - 1, nR, p + 1);
+		s.pop_back();
+	}
+	if (nR > 0 && p > 0) {
+		s.push_back(')');
+		gP_reCur(nL, nR-1, p - 1);
+		s.pop_back();
+	}
+}
+vector<string> generateParenthesis(int n) {
+	_n = n;
+	s.clear();
+	ans.clear();
+	gP_reCur(_n, _n, 0);
+	return ans;
+ }
 
