@@ -20,7 +20,7 @@ int main() {
 	vector<ListNode*> v;
 	//v.push_back(&n1);
 	//v.push_back(&n2);
-	ListNode* head = mergeKLists(v);
+	ListNode* head = mergeTwoLists(nullptr, nullptr);
 	while (head != nullptr) {
 		printf_s("%d\n", head->val);
 		head = head->next;

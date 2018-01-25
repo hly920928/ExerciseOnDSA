@@ -112,13 +112,11 @@ ListNode * mergeKLists(vector<ListNode*>& lists)
 	for (int i = 0; i < n; i++) {
 		if (lists[i] != nullptr) {
 			pq.push(heapIndex(i, lists[i]));
-			lists[i] = lists[i]->next;
-		}
+			lists[i] = lists[i]->next;}
 	}
 	if (pq.size() != 0) {
 		header = pq.top().ptr;
-		cur= pq.top().ptr;
-	}
+		cur= pq.top().ptr;}
 	if (pq.empty())return header;
 	while (true) {
 		heapIndex top = pq.top(); pq.pop();
@@ -126,11 +124,42 @@ ListNode * mergeKLists(vector<ListNode*>& lists)
 		if (lists[top.index] != nullptr)
 		{
 			pq.push(heapIndex(top.index, lists[top.index]));
-			lists[top.index] = lists[top.index]->next;
-		}
+			lists[top.index] = lists[top.index]->next;}
 		cur->next = pq.top().ptr;
 		cur = cur->next;
 	}
+	return header;
+}
+
+ListNode * mergeTwoLists(ListNode * l1, ListNode * l2)
+{
+	if (l1 == nullptr&&l2== nullptr)return nullptr;
+	ListNode* curl1 = l1; ListNode* curl2 = l2;
+	int vL1 = 0; int vL2 = 0;
+	if (curl1 != nullptr)vL1 = curl1->val;
+	else vL1 = INT_MAX;
+	if (curl2 != nullptr)vL2 = curl2->val;
+	else vL2 = INT_MAX;
+	ListNode* header = nullptr;
+	if (vL1 < vL2) {
+		header = curl1;
+		curl1 = curl1->next;
+	}else {
+		header = curl2;
+		curl2 = curl2->next;
+	}
+	ListNode* cur = header;
+	while (curl1 != nullptr&&curl2 != nullptr) {
+		if (curl1->val < curl2->val) {
+			cur->next = curl1;
+			curl1 = curl1->next;}
+		else {
+			cur->next = curl2;
+			curl2 = curl2->next;}
+		cur = cur->next;
+	}
+	if(curl1 != nullptr)cur->next = curl1;
+	if (curl2 != nullptr)cur->next = curl2;
 	return header;
 }
 
