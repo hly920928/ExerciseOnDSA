@@ -22,3 +22,7 @@ ListNode* mergeKLists(std::vector<ListNode*>& lists);
 ListNode* mergeTwoLists(ListNode* l1, ListNode* l2);
 //22. Generate Parentheses
 std::vector<std::string> generateParenthesis(int n);
+//24. Swap Nodes in Pairs
+ListNode* swapPairs(ListNode* head);
+//25. Reverse Nodes in k - Group
+ListNode* reverseKGroup(ListNode* head, int k);

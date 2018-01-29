@@ -215,3 +215,43 @@ vector<string> generateParenthesis(int n) {
 	return ans;
  }
 
+ListNode * swapPairs(ListNode * head)
+{
+	auto ans = head;
+	auto cur = head;
+	if (cur == nullptr)return ans;
+	while (true) {
+		if (cur == nullptr|| cur->next == nullptr)break;
+		swap(cur->val, cur->next->val);
+		cur = cur->next;
+		if (cur == nullptr)break;
+		cur = cur->next;
+		if (cur == nullptr)break;
+	}
+	return ans;
+}
+
+ListNode * reverseKGroup(ListNode * head, int k)
+{
+	auto ans = head;
+	auto ptr1 = head;
+	auto ptr2 = head;
+	stack<int>stk;
+	if (head == nullptr)return head;
+	while (true) {
+		for (int i = 0; i < k; i++) {
+			stk.push(ptr2->val);
+			ptr2 = ptr2->next;
+			if (ptr2 == nullptr)goto End;
+		}
+		ptr2 = ptr1;
+		for (int i = 0; i < k; i++) {
+			ptr2->val = stk.top(); stk.pop();
+			ptr2 = ptr2->next;
+		}
+		ptr1 = ptr2;
+	}
+	End:
+	return ans;
+}
+
