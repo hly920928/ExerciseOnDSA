@@ -240,9 +240,9 @@ ListNode * reverseKGroup(ListNode * head, int k)
 	if (head == nullptr)return head;
 	while (true) {
 		for (int i = 0; i < k; i++) {
+			if (ptr2 == nullptr)goto End;
 			stk.push(ptr2->val);
 			ptr2 = ptr2->next;
-			if (ptr2 == nullptr)goto End;
 		}
 		ptr2 = ptr1;
 		for (int i = 0; i < k; i++) {
