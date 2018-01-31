@@ -255,3 +255,16 @@ ListNode * reverseKGroup(ListNode * head, int k)
 	return ans;
 }
 
+int removeDuplicates(vector<int>& nums)
+{ 
+	int n = 0;
+	for (int cur = 0; cur < nums.size(); cur++) {
+		if (nums[cur] != nums[n]) {
+			nums[n + 1] = nums[cur];
+			n++;
+		}
+	}
+	nums.resize(n+1);
+	return n+1;
+}
+

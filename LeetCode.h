@@ -26,3 +26,5 @@ std::vector<std::string> generateParenthesis(int n);
 ListNode* swapPairs(ListNode* head);
 //25. Reverse Nodes in k - Group
 ListNode* reverseKGroup(ListNode* head, int k);
+//26. Remove Duplicates from Sorted Array
+int removeDuplicates(std::vector<int>& nums);
