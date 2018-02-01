@@ -283,7 +283,7 @@ int removeElement(vector<int>& nums, int val)
 	nums.resize(id1);
 	return id1;
 }
-void buildNext(vector<int>& next, const string& p, int j) {
+void buildNext_v2(vector<int>& next, const string& p, int j) {
 	if (j == 0) { next[j] = -1; return; }
 	int tryPos = next[j - 1];
 	while (true) {
@@ -299,14 +299,14 @@ void buildNext(vector<int>& next, const string& p, int j) {
 int strStr(string m, const string p) {
 	vector<int>next; next.resize(p.size());
 	int size_n = p.size(); int size_m = m.size();
-	for (int i = 0; i < size_n; i++)buildNext(next, p, i);
+	for (int i = 0; i < size_n; i++)buildNext_v2(next, p, i);
 	int i = 0; int j = 0;
 	while (true) {
 		if (i == size_n) {
 			if (j <= size_m)return j - i;
 			else return j;
 		}
-		if (j == size_m)return j;
+		if (j == size_m)return -1;
 		if (m[j] == p[i]) { i++; j++; }
 		else {
 			i = next[i];

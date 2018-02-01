@@ -28,5 +28,7 @@ ListNode* swapPairs(ListNode* head);
 ListNode* reverseKGroup(ListNode* head, int k);
 //26. Remove Duplicates from Sorted Array
 int removeDuplicates(std::vector<int>& nums);
-//26. Remove Duplicates from Sorted Array
+//27. Remove Element
 int removeElement(std::vector<int>& nums, int val);
+//28. Implement strStr()
+int strStr(std::string haystack, std::string needle);
