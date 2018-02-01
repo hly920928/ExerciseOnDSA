@@ -257,6 +257,7 @@ ListNode * reverseKGroup(ListNode * head, int k)
 
 int removeDuplicates(vector<int>& nums)
 { 
+	if (nums.size() == 0)return 0;
 	int n = 0;
 	for (int cur = 0; cur < nums.size(); cur++) {
 		if (nums[cur] != nums[n]) {
@@ -268,3 +269,48 @@ int removeDuplicates(vector<int>& nums)
 	return n+1;
 }
 
+int removeElement(vector<int>& nums, int val)
+{
+	if (nums.size() == 0)return 0;
+	int id1 = 0; 
+	int n = nums.size();
+	for (int i = 0; i < n; i++) {
+		if (nums[i] != val) {
+			nums[id1] = nums[i];
+			id1++;
+		}
+	}
+	nums.resize(id1);
+	return id1;
+}
+void buildNext(vector<int>& next, const string& p, int j) {
+	if (j == 0) { next[j] = -1; return; }
+	int tryPos = next[j - 1];
+	while (true) {
+		if (tryPos == -1) {
+			next[j] = 0; break;
+		}
+		if (p[tryPos] == p[j - 1]) {
+			next[j] = tryPos + 1; break;
+		}
+		tryPos = next[tryPos];
+	}
+}
+int strStr(string m, const string p) {
+	vector<int>next; next.resize(p.size());
+	int size_n = p.size(); int size_m = m.size();
+	for (int i = 0; i < size_n; i++)buildNext(next, p, i);
+	int i = 0; int j = 0;
+	while (true) {
+		if (i == size_n) {
+			if (j <= size_m)return j - i;
+			else return j;
+		}
+		if (j == size_m)return j;
+		if (m[j] == p[i]) { i++; j++; }
+		else {
+			i = next[i];
+			if (i == -1) { i++; j++; };
+		}
+	};
+}

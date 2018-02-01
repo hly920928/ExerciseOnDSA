@@ -16,7 +16,8 @@
 using namespace std;
 int main() {
 	vector<int>v;
-	v.push_back(1); v.push_back(1); v.push_back(2);
-	int n = removeDuplicates(v);
+	v.push_back(3); v.push_back(2);
+	v.push_back(2); v.push_back(3);
+	int n = removeElement(v,3);
 	return 0;
 }
