@@ -16,7 +16,8 @@
 using namespace std;
 int main() {
 	vector<string>words;
-	words.push_back("foo");	words.push_back("bar");
-	auto ans = findSubstring("barfoothefoobarman",words);
+	words.push_back("word");	words.push_back("good");
+	words.push_back("best");	words.push_back("good");
+	auto ans = findSubstring("wordgoodgoodgoodbestword",words);
 	return 0;
 }

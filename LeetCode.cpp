@@ -336,39 +336,54 @@ int divide(int dividend, int divisor)
 vector<int> findSubstring(string s, vector<string>& words)
 {
 	vector<int> ans;
-	unordered_map<string, vector<int>>hashmap;
-	int word_n = words.size();
+	sort(words.begin(), words.end());
+	unordered_map<string,int>hashmap;
+	
+	int word_n = words.size(); int o_word_n = word_n;
 	for (int i = 0; i < word_n; i++)
-		hashmap[words[i]].push_back(i);
+		hashmap[words[i]]++;
+	auto itr = unique(words.begin(), words.end());
+	words.erase(itr, words.end());
+	 word_n = words.size();
+	vector<int>fre; fre.resize(word_n);
+	for (int i = 0; i < word_n; i++) {
+		fre[i] = hashmap[words[i]];
+		hashmap[words[i]] = i;
+	}
+
 	int word_size = words[0].size();
 	string t; t.resize(word_size);
 	int s_n = s.size();
-	vector<vector<int>*> table; table.resize(s_n);
+	vector<int> table; table.resize(s_n);
 	for (int i = 0; i < s_n; i++) {
 		if (i + word_size >s_n) {
-			table[i] =nullptr; continue;
+			table[i] =-1; continue;
 		}
 		copy(s.begin()+i,s.begin()+i + word_size, t.begin());
 		auto itr = hashmap.find(t);
 		if (itr != hashmap.end()) {
-			table[i] = &(itr->second);
+			table[i] = (itr->second);
 		}
-		else table[i] = nullptr;
+		else table[i] = -1;
 	}
+
+
 	int hasFound = 0;
-	vector<bool>Found; Found.resize(word_n);
+   vector<int>Found;
 	for (int i = 0; i < s_n; i++) {
 		hasFound = 0; Found.clear(); Found.resize(word_n);
-		if (table[i] == nullptr)continue;
-		int cur = i;
-		while (true) {
-			if (Found[table[cur]] == true)break;
-			Found[table[cur]] = true;
-			cur = cur + word_size;
-			hasFound++;
-			if (hasFound == word_n)ans.push_back(i);
-			if (cur >= s_n || table[cur] == nullptr)break;
-		}
+		copy(fre.begin(), fre.end(), Found.begin());
+	if (table[i] == -1)continue;
+	int cur = i;
+	while (true) {
+		int id_cur = table[cur];
+	if (Found[id_cur] == 0)break;
+	Found[id_cur]--;
+	cur = cur + word_size;
+	hasFound++;
+	if (hasFound == o_word_n)ans.push_back(i);
+	if (cur >= s_n || table[cur] == -1)break;
+	}
 	}
 	return ans;
 }
