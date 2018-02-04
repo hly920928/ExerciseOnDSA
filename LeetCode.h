@@ -3,6 +3,7 @@
 #include <vector>
 #include <stack>
 #include <queue>
+#include <unordered_map>
 //17. Letter Combinations of a Phone Numberclass Solution {
 std::vector<std::string> letterCombinations(std::string digits);
 //18. 4Sum
@@ -32,3 +33,6 @@ int removeDuplicates(std::vector<int>& nums);
 int removeElement(std::vector<int>& nums, int val);
 //28. Implement strStr()
 int strStr(std::string haystack, std::string needle);
+//29. Divide Two Integers
+int divide(int dividend, int divisor);
+std::vector<int> findSubstring(std::string s, std::vector<std::string>& words);
