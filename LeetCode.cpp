@@ -387,3 +387,24 @@ vector<int> findSubstring(string s, vector<string>& words)
 	}
 	return ans;
 }
+
+void nextPermutation(vector<int>& nums)
+{
+	int n = nums.size();
+	if (n < 2)return;
+	n--; int id = -1;
+	for (int i = n; i > 0; i--) {
+		if (nums[i - 1] < nums[i]) {
+			id = i - 1; break;
+		}
+	}
+	if (id == -1) {
+		reverse(nums.begin(), nums.end());
+		return;
+	}
+	sort(nums.begin() + id + 1, nums.end());
+	auto itr = lower_bound(nums.begin() + id + 1, nums.end(),nums[id]);
+	int t = nums[id];
+	while (*itr == t)itr++;
+	swap(nums[id], *itr);
+}

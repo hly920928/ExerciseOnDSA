@@ -35,4 +35,7 @@ int removeElement(std::vector<int>& nums, int val);
 int strStr(std::string haystack, std::string needle);
 //29. Divide Two Integers
 int divide(int dividend, int divisor);
+//30.Substring with Concatenation of All Words
 std::vector<int> findSubstring(std::string s, std::vector<std::string>& words);
+//31.Next Permutation
+void nextPermutation(std::vector<int>& nums);

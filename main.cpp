@@ -15,9 +15,8 @@
 #include "LeetCode.h"
 using namespace std;
 int main() {
-	vector<string>words;
-	words.push_back("word");	words.push_back("good");
-	words.push_back("best");	words.push_back("good");
-	auto ans = findSubstring("wordgoodgoodgoodbestword",words);
+	vector<int>nums;
+	nums.push_back(1); nums.push_back(5); nums.push_back(1);
+	nextPermutation(nums);
 	return 0;
 }
