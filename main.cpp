@@ -15,8 +15,7 @@
 #include "LeetCode.h"
 using namespace std;
 int main() {
-	vector<int>nums;
-	nums.push_back(1); nums.push_back(5); nums.push_back(1);
-	nextPermutation(nums);
+	string s = "()(())";
+	int n=longestValidParentheses(s);
 	return 0;
 }

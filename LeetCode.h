@@ -39,3 +39,5 @@ int divide(int dividend, int divisor);
 std::vector<int> findSubstring(std::string s, std::vector<std::string>& words);
 //31.Next Permutation
 void nextPermutation(std::vector<int>& nums);
+//32.Longest Valid Parentheses
+int longestValidParentheses(std::string s);

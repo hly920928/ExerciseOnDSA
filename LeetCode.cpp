@@ -408,3 +408,47 @@ void nextPermutation(vector<int>& nums)
 	while (*itr == t)itr++;
 	swap(nums[id], *itr);
 }
+void inline expand(vector<int>& table,string& s, int& lo, int& hi) {
+	int n = s.size() - 1; bool isExpand = false;
+	while (true) {
+		isExpand = false;
+		if (lo >= 0 && hi <= n&&s[lo] == '('&&s[hi] == ')') {
+			s[lo] = '.'; s[hi] = '.';
+			lo--; hi++; isExpand = true;
+		}
+		if (lo>0&&s[lo]==')'&&s[lo-1] == '(') {
+			s[lo] = '.'; s[lo-1] = '.';
+			lo=lo-2; isExpand = true;
+		}
+		if (hi<n&& s[hi] == '('&&s[hi+1] == ')') {
+			s[hi] = '.'; s[hi + 1] = '.';
+			hi=hi+2; isExpand = true;
+		}
+		if (!isExpand) {
+			if (lo >= 0 && lo <= n&&table[lo] != -2) {
+				lo = table[lo];
+			}else break;
+		}
+	}
+}
+int longestValidParentheses(string s)
+{
+	int n = s.size()-1; int lo = 0; int hi = 0;
+	int i = 0; int max_l = 0;
+	vector<int> table; table.resize(n + 1);
+	while (true) {
+		if (i >=n)break;
+		if (s[i] == '('&&s[i + 1] == ')') {
+			lo = i; hi = i + 1;
+			expand(table,s, lo, hi);
+			table[hi - 1] = lo;
+			int len = hi - lo - 1;
+			max_l = (max_l > len) ? max_l : len;
+			i = hi;
+		}
+		else {
+			table[i] = -2; i++;
+		}
+	}
+	return max_l;
+}
