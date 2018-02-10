@@ -15,7 +15,14 @@
 #include "LeetCode.h"
 using namespace std;
 int main() {
-	string s = "()(())";
-	int n=longestValidParentheses(s);
+	vector<int>nums;
+	nums.push_back(1); 
+	nums.push_back(3);
+	/*nums.push_back(6);
+	nums.push_back(7);
+	nums.push_back(0);
+	nums.push_back(1);
+	nums.push_back(2);*/
+	int i = search(nums,3);
 	return 0;
 }

@@ -41,3 +41,5 @@ std::vector<int> findSubstring(std::string s, std::vector<std::string>& words);
 void nextPermutation(std::vector<int>& nums);
 //32.Longest Valid Parentheses
 int longestValidParentheses(std::string s);
+//33.Search in Rotated Sorted Array
+int search(std::vector<int>& nums, int target);

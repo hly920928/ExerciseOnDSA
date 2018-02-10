@@ -452,3 +452,31 @@ int longestValidParentheses(string s)
 	}
 	return max_l;
 }
+
+int search(vector<int>& nums, int target)
+{
+
+	 int n = nums.size()-1;
+	 int p =-1;
+	if (n == -1)return -1;
+	for (int i = 0; i < n; i++) {
+		if (nums[i] > nums[i + 1]) {
+			p = i + 1; break;
+		}
+	}
+	if (p == -1) {
+		auto itr = lower_bound(nums.begin(), nums.end(), target);
+		if (itr == nums.end() || *itr != target)return -1;
+		return itr - nums.begin();
+	}
+	if (target < nums[0]) {
+		auto itr = lower_bound(nums.begin() + p, nums.end(), target);
+		if (itr==nums.end()||*itr != target)return -1;
+		return itr - nums.begin();
+	}
+	else {
+		auto itr = lower_bound(nums.begin(), nums.begin() + p, target);
+		if (itr == nums.begin() + p||*itr != target)return -1;
+		return itr - nums.begin();
+	}
+}
