@@ -43,3 +43,5 @@ void nextPermutation(std::vector<int>& nums);
 int longestValidParentheses(std::string s);
 //33.Search in Rotated Sorted Array
 int search(std::vector<int>& nums, int target);
+//34. Search for a Range
+std::vector<int> searchRange(std::vector<int>& nums, int target);

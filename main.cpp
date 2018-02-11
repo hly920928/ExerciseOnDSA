@@ -16,13 +16,12 @@
 using namespace std;
 int main() {
 	vector<int>nums;
-	nums.push_back(1); 
-	nums.push_back(3);
-	/*nums.push_back(6);
+	nums.push_back(5); 
 	nums.push_back(7);
-	nums.push_back(0);
-	nums.push_back(1);
-	nums.push_back(2);*/
-	int i = search(nums,3);
+	nums.push_back(7);
+	nums.push_back(8);
+	nums.push_back(8);
+	nums.push_back(10);
+	auto i = searchRange(nums, 8);
 	return 0;
 }

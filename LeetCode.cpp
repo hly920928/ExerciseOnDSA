@@ -480,3 +480,51 @@ int search(vector<int>& nums, int target)
 		return itr - nums.begin();
 	}
 }
+vector<int> searchRange(vector<int>& nums, int target)
+{
+	vector<int> ans;
+	int lo = 0; int hi = nums.size() - 1;
+
+	int lb = -1; int hb = -1;
+	if (hi == -1)goto End;
+	while (true) {
+		if (hi - lo <= 1) {
+			if (nums[lo] == target) {
+				lb = lo; break;
+			}
+			if (nums[hi] == target) {
+				lb = hi; break;
+			}
+			break;
+		  }
+		int min = (hi + lo) / 2;
+		if (nums[min] >= target) {
+			hi = min;
+		}
+		else if (nums[min] < target) {
+			lo = min;
+		}
+	}
+	lo = 0; hi = nums.size() - 1;
+	while (true) {
+		if (hi - lo <= 1) {
+			if (nums[hi] == target) {
+				hb = hi; break;
+			}
+			if (nums[lo] == target) {
+				hb = lo; break;
+			}
+			break;
+		}
+		int min = (hi + lo) / 2;
+		if (nums[min] >target) {
+			hi = min;
+		}
+		else if (nums[min] <= target) {
+			lo = min;
+		}
+	}
+	End:
+	ans.push_back(lb); ans.push_back(hb);
+	return ans;
+}
