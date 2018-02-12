@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "LeetCode.h"
 #include <algorithm>
+#include <bitset>
 using namespace std;
 void twoSum(int twoSum,const vector<int>& nums, vector<int>&cur, int other_id, vector<vector<int>>& ans) {
 	if (nums.size() - other_id<2)return;
@@ -527,4 +528,68 @@ vector<int> searchRange(vector<int>& nums, int target)
 	End:
 	ans.push_back(lb); ans.push_back(hb);
 	return ans;
+}
+
+int searchInsert(vector<int>& nums, int target)
+{
+	int lo = 0; int hi = nums.size() - 1;
+	if (hi == -1)return 0;
+	while (true) {
+		if (hi - lo <= 1) {
+			if (nums[lo] >= target) {
+				return lo;
+			}
+			if (nums[hi] >= target) {
+				return hi;
+			}
+			return hi+1;
+		}
+		int min = (hi + lo) / 2;
+		if (nums[min] >= target) {
+			hi = min;
+		}
+		else if (nums[min] < target) {
+			lo = min;
+		}
+	}
+
+	//return  	lower_bound(nums.begin(), nums.end(), target)-nums.begin();
+}
+
+bool isValidSudoku(vector<vector<char>>& board)
+{
+	bitset<10>table; table.reset();
+	for (int i = 0; i < 9; i++) {
+		table.reset();
+		for (int j= 0; j < 9;j++) {
+			char t = board[i][j];
+			if (t== '.')continue;
+			if (table[t - '0'])return false;
+			table[t - '0'] = true;
+		}
+	}
+	for (int i = 0; i < 9; i++) {
+		table.reset();
+		for (int j = 0; j < 9; j++) {
+			char t = board[j][i];
+			if (t == '.')continue;
+			if (table[t - '0'])return false;
+			table[t - '0'] = true;
+		}
+	}
+	char x[] = { 0,0,0,3,3,3,6,6,6 };
+	char y[] = { 0,3,6,0,3,6,0,3,6 };
+	for (int i = 0; i < 9; i++) {
+		table.reset();
+		int bx = x[i]; int by = y[i];
+		for (int ox= 0; ox < 3; ox++) {
+			for (int oy = 0; oy < 3; oy++) {
+				char t = board[bx+ox][by+oy];
+				if (t == '.')continue;
+				if (table[t - '0'])return false;
+				table[t - '0'] = true;
+			}
+		}
+	}
+	return true;
 }

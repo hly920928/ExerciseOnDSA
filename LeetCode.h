@@ -45,3 +45,5 @@ int longestValidParentheses(std::string s);
 int search(std::vector<int>& nums, int target);
 //34. Search for a Range
 std::vector<int> searchRange(std::vector<int>& nums, int target);
+//35. Search Insert Position
+int searchInsert(std::vector<int>& nums, int target);

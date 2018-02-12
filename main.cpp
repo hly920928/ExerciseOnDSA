@@ -15,13 +15,9 @@
 #include "LeetCode.h"
 using namespace std;
 int main() {
-	vector<int>nums;
-	nums.push_back(5); 
-	nums.push_back(7);
-	nums.push_back(7);
-	nums.push_back(8);
-	nums.push_back(8);
-	nums.push_back(10);
-	auto i = searchRange(nums, 8);
+	
+	int l[] = { 1,3,5,6 };
+	vector<int>nums(l, l + 4);
+	auto i = searchInsert(nums,5);
 	return 0;
 }
