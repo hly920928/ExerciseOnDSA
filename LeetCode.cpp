@@ -316,23 +316,30 @@ int strStr(string m, const string p) {
 	};
 }
 
-int divide(int dividend, int divisor)
+int divide(long long dividend, int divisor)
 {
-	int n = 0;
+	 int n = 0;
 	bool isNeg = true;
 	if ((dividend > 0 && divisor > 0) ||
 		(dividend < 0 && divisor < 0))
 		isNeg = false;
-	dividend = abs(dividend);
-	divisor = abs(divisor);
-	while (dividend > 0) {
-		dividend -= divisor;
-		n++;
+	unsigned int dd = abs(dividend);
+	unsigned int dr = abs(divisor);
+	if (dd == 0 || dr > dd)return 0;
+	unsigned int one = 1;
+	while (dr << 1> dr) {
+		dr = dr<< 1;
+		one=one<<1;
 	}
-	if (n < 0)return 2147483647;
-	n = (dividend == 0) ? n : n - 1;
-	n = (isNeg) ? n*-1 : n;
-	return n;
+	while(one>0){
+		if (dd >=dr) {
+			n += one;
+			dd -= dr;
+		}
+		dr = dr >>1;
+		one = one>>1;
+	}
+	return isNeg?n*-1:n;
 }
 vector<int> findSubstring(string s, vector<string>& words)
 {

@@ -16,8 +16,6 @@
 using namespace std;
 int main() {
 	
-	int l[] = { 1,3,5,6 };
-	vector<int>nums(l, l + 4);
-	auto i = searchInsert(nums,5);
+	int t = divide(2147483648,2);
 	return 0;
 }

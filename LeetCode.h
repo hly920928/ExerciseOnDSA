@@ -34,7 +34,7 @@ int removeElement(std::vector<int>& nums, int val);
 //28. Implement strStr()
 int strStr(std::string haystack, std::string needle);
 //29. Divide Two Integers
-int divide(int dividend, int divisor);
+int divide(long long dividend, int divisor);
 //30.Substring with Concatenation of All Words
 std::vector<int> findSubstring(std::string s, std::vector<std::string>& words);
 //31.Next Permutation
@@ -43,7 +43,10 @@ void nextPermutation(std::vector<int>& nums);
 int longestValidParentheses(std::string s);
 //33.Search in Rotated Sorted Array
 int search(std::vector<int>& nums, int target);
-//34. Search for a Range
+//34.Search for a Range
 std::vector<int> searchRange(std::vector<int>& nums, int target);
-//35. Search Insert Position
+//35.Search Insert Position
 int searchInsert(std::vector<int>& nums, int target);
+//36.Valid Sudoku
+bool isValidSudoku(std::vector<std::vector<char>>& board);
+//
