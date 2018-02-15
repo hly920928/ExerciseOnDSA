@@ -2,6 +2,10 @@
 #include "LeetCode.h"
 #include <algorithm>
 #include <bitset>
+#include <queue>
+#include <stack>
+#include <string>
+#include <unordered_map>
 using namespace std;
 void twoSum(int twoSum,const vector<int>& nums, vector<int>&cur, int other_id, vector<vector<int>>& ans) {
 	if (nums.size() - other_id<2)return;
@@ -208,6 +212,7 @@ void gP_reCur(int nL,int nR,int p) {
 		s.pop_back();
 	}
 }
+
 vector<string> generateParenthesis(int n) {
 	_n = n;
 	s.clear();
@@ -284,6 +289,7 @@ int removeElement(vector<int>& nums, int val)
 	nums.resize(id1);
 	return id1;
 }
+
 void buildNext_v2(vector<int>& next, const string& p, int j) {
 	if (j == 0) { next[j] = -1; return; }
 	int tryPos = next[j - 1];
@@ -297,6 +303,7 @@ void buildNext_v2(vector<int>& next, const string& p, int j) {
 		tryPos = next[tryPos];
 	}
 }
+
 int strStr(string m, const string p) {
 	vector<int>next; next.resize(p.size());
 	int size_n = p.size(); int size_m = m.size();
@@ -341,6 +348,7 @@ int divide(long long dividend, int divisor)
 	}
 	return isNeg?n*-1:n;
 }
+
 vector<int> findSubstring(string s, vector<string>& words)
 {
 	vector<int> ans;
@@ -416,6 +424,7 @@ void nextPermutation(vector<int>& nums)
 	while (*itr == t)itr++;
 	swap(nums[id], *itr);
 }
+
 void inline expand(vector<int>& table,string& s, int& lo, int& hi) {
 	int n = s.size() - 1; bool isExpand = false;
 	while (true) {
@@ -439,6 +448,7 @@ void inline expand(vector<int>& table,string& s, int& lo, int& hi) {
 		}
 	}
 }
+
 int longestValidParentheses(string s)
 {
 	int n = s.size()-1; int lo = 0; int hi = 0;
@@ -488,6 +498,7 @@ int search(vector<int>& nums, int target)
 		return itr - nums.begin();
 	}
 }
+
 vector<int> searchRange(vector<int>& nums, int target)
 {
 	vector<int> ans;
@@ -562,7 +573,8 @@ int searchInsert(vector<int>& nums, int target)
 
 	//return  	lower_bound(nums.begin(), nums.end(), target)-nums.begin();
 }
-
+const static char x_b[9] = { 0,0,0,3,3,3,6,6,6 };
+const static char y_b[9] = { 0,3,6,0,3,6,0,3,6 };
 bool isValidSudoku(vector<vector<char>>& board)
 {
 	bitset<10>table; table.reset();
@@ -584,11 +596,10 @@ bool isValidSudoku(vector<vector<char>>& board)
 			table[t - '0'] = true;
 		}
 	}
-	char x[] = { 0,0,0,3,3,3,6,6,6 };
-	char y[] = { 0,3,6,0,3,6,0,3,6 };
+
 	for (int i = 0; i < 9; i++) {
 		table.reset();
-		int bx = x[i]; int by = y[i];
+		int bx = x_b[i]; int by = y_b[i];
 		for (int ox= 0; ox < 3; ox++) {
 			for (int oy = 0; oy < 3; oy++) {
 				char t = board[bx+ox][by+oy];
@@ -599,4 +610,136 @@ bool isValidSudoku(vector<vector<char>>& board)
 		}
 	}
 	return true;
+}
+const static char g_table[9][9] = { {1,1,1,2,2,2,3,3,3}
+                                                ,{1,1,1,2,2,2,3,3,3},
+							                     {1,1,1,2,2,2,3,3,3},
+												 {4,4,4,5,5,5,6,6,6},
+												 {4,4,4,5,5,5,6,6,6},
+												 {4,4,4,5,5,5,6,6,6},
+												 {7,7,7,8,8,8,9,9,9},
+												 {7,7,7,8,8,8,9,9,9},
+												 {7,7,7,8,8,8,9,9,9}};
+
+struct pos {
+	unsigned char possible;
+	bitset<10>candidate;
+	pos( int _p = 10):possible(_p) {
+		candidate.set();
+	}
+	bool operator<(const pos& b){
+		return possible < b.possible;
+	}
+};
+class SudokuSolver {
+private:
+	vector<vector<char>>* board;
+	pos table[81];
+	int numsOfblank;
+public:
+	SudokuSolver(vector<vector<char>>* _b) :board(_b) {
+		auto& b = *board;
+		numsOfblank = 0;
+		for (int i = 0; i < 9; i++) {
+			for (int j= 0; j< 9;j++) {
+				if (b[i][j] == '.') {
+					generateAllcandidate(i, j);
+					numsOfblank++;
+				}
+				else table[i * 9 + j].possible = 99;
+				}
+			}
+	};
+	bool solve() {
+		auto& b = *board;
+		int m = findMin();
+		if (m == -1)return false;
+		if(numsOfblank==0)return true;
+		int x = m / 9; int y = m % 9;
+		for (int i = 1; i < 10; i++) {
+			if (table[m].candidate[i]) {
+				b[x][y] = i + '0';
+				//printf("push %d %d %d\n", x, y, i);
+				printOutBoard();
+				update_full();
+				numsOfblank--;
+				if (solve())return true;
+				b[x][y] ='.';
+				//printf("pop %d %d\n", x, y);
+				printOutBoard();
+				numsOfblank++;
+				update_full();
+			}
+		}
+		return false;
+	};
+private:
+	void inline generateAllcandidate(int x,int y){
+		auto& b = *board;
+		auto& p = table[x * 9 + y];
+		p.candidate.set();
+		for (int j =0;j < 9; j++) {
+			char t = b[x][j];
+			if (t == '.')continue;
+			p.candidate[t - '0'] = false;
+		}
+		for (int j = 0;j < 9; j++) {
+			char t = b[j][y];
+			if (t == '.')continue;
+			p.candidate[t - '0'] = false;
+		}
+		int i = g_table[x][y];
+		int bx = x_b[i-1]; int by = y_b[i-1];
+		for (int ox = 0; ox < 3; ox++) {
+			for (int oy = 0; oy < 3; oy++) {
+				char t = b[bx + ox][by + oy];
+				if (t == '.')continue;
+				if (p.candidate[t - '0']) {
+					p.candidate[t - '0'] = false;
+				}
+			}
+		}
+		p.possible =0;
+		for (int i = 1; i < 10; i++) {
+			if (p.candidate[i])p.possible++;
+		}
+	};
+	void inline update_full() {
+		auto& b = *board;
+		for (int i = 0; i < 9; i++) {
+			for (int j = 0; j < 9; j++) {
+				if (b[i][j] == '.') {
+					generateAllcandidate(i, j);
+				}
+				else table[i * 9 + j].possible = 99;
+			}
+		}
+	}
+   
+	int inline findMin() {
+		int i = 0;
+		int min_p=table[i].possible;
+		for (int id = 0; id < 81; id++) {
+			bool flag = min_p < table[id].possible;
+			i = (flag)? i : id;
+			min_p = (flag) ? min_p : table[id].possible;
+			if (min_p == 0)return -1;
+		}
+		return i;
+	}
+public:
+	void printOutBoard() {
+		for (auto& v : *board) {
+			for (auto& i : v) {
+				printf("%c ", i);
+			}
+			printf("\n");
+		}
+		printf("\n");
+	}
+};
+void solveSudoku(vector<vector<char>>& board)
+{
+	SudokuSolver sds(&board);
+	sds.solve();
 }

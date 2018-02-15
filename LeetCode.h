@@ -1,9 +1,6 @@
 #pragma once
 #include <string>
 #include <vector>
-#include <stack>
-#include <queue>
-#include <unordered_map>
 //17. Letter Combinations of a Phone Numberclass Solution {
 std::vector<std::string> letterCombinations(std::string digits);
 //18. 4Sum
@@ -49,4 +46,5 @@ std::vector<int> searchRange(std::vector<int>& nums, int target);
 int searchInsert(std::vector<int>& nums, int target);
 //36.Valid Sudoku
 bool isValidSudoku(std::vector<std::vector<char>>& board);
-//
+//37. Sudoku Solver
+void solveSudoku(std::vector<std::vector<char>>& board);
