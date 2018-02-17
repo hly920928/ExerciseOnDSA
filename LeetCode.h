@@ -50,3 +50,5 @@ bool isValidSudoku(std::vector<std::vector<char>>& board);
 void solveSudoku(std::vector<std::vector<char>>& board);
 //38.Count and Say
 std::string countAndSay(int n);
+//39.Combination Sum
+std::vector<std::vector<int>> combinationSum(std::vector<int>& candidates, int target);

@@ -760,3 +760,64 @@ string countAndSay(int n)
 	}
 	return ans;
 }
+void combinationSum_part(const vector<int>& candidates,int head, int target, vector<vector<int>>& ans) {
+	int first = candidates[head];
+	if (target <= 0)return;
+	if (head == candidates.size() - 1) {
+		if (target>=first&&(target%first)==0) {
+			ans.push_back(vector<int>());
+			int n = target / first;
+			auto& last = ans.back();
+			for (int i = 0; i < n; i++) {
+				last.push_back(first);
+			}
+			return ;
+		}
+		return ;
+	}
+	if (first >=target) {
+		if (target == first) {
+			ans.push_back(vector<int>());
+			auto& last = ans.back();
+			last.push_back(target);
+			return ;
+		}
+		return ;
+	}
+	vector<vector<int>> vtail;
+	vector<int> vhead; int remain_target = target;
+	while (true) {
+		vhead.push_back(first);
+		remain_target -= first;
+		vtail.clear();
+		if (remain_target < 0)break;
+		if (remain_target == 0) {
+			ans.push_back(vector<int>());
+			auto& last = ans.back();
+			last.insert(last.end(), vhead.begin(), vhead.end());
+			break;
+		}
+	    combinationSum_part(candidates, head + 1, remain_target, vtail);
+		for (auto& tail : vtail) {
+			ans.push_back(vector<int>());
+			auto& last = ans.back();
+			last.insert(last.end(), vhead.begin(), vhead.end());
+			last.insert(last.end(), tail.begin(), tail.end());
+		}
+	}
+	vtail.clear();
+    combinationSum_part(candidates, head + 1, target, vtail);
+	for (auto& tail : vtail) {
+		ans.push_back(vector<int>());
+		auto& last = ans.back();
+		last.insert(last.end(), tail.begin(), tail.end());
+	}
+	return;
+}
+vector<vector<int>> combinationSum(vector<int>& candidates, int target)
+{
+	vector<vector<int>> ans;
+	sort(candidates.begin(), candidates.end());
+	combinationSum_part(candidates, 0, target, ans);
+	return ans;
+}
