@@ -48,3 +48,5 @@ int searchInsert(std::vector<int>& nums, int target);
 bool isValidSudoku(std::vector<std::vector<char>>& board);
 //37. Sudoku Solver
 void solveSudoku(std::vector<std::vector<char>>& board);
+//38.Count and Say
+std::string countAndSay(int n);

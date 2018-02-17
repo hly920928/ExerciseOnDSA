@@ -660,13 +660,13 @@ public:
 			if (table[m].candidate[i]) {
 				b[x][y] = i + '0';
 				//printf("push %d %d %d\n", x, y, i);
-				printOutBoard();
+				//printOutBoard();
 				update_full();
 				numsOfblank--;
 				if (solve())return true;
 				b[x][y] ='.';
 				//printf("pop %d %d\n", x, y);
-				printOutBoard();
+				//printOutBoard();
 				numsOfblank++;
 				update_full();
 			}
@@ -742,4 +742,21 @@ void solveSudoku(vector<vector<char>>& board)
 {
 	SudokuSolver sds(&board);
 	sds.solve();
+}
+
+string countAndSay(int n)
+{
+	string ans = "1"; string t;
+	for (int i = 1; i < n; i++) {
+		t = ans; ans.clear();
+		int _n = t.size(); int cum = 0;
+		for (int k= 0; k<=_n;k++) {
+			if ((k== 0 && (k != _n)) ||t[k- 1] == t[k])cum++;
+			else {
+				ans = ans + to_string(cum)+t[k-1];
+				cum = 1;
+			}
+		}
+	}
+	return ans;
 }
