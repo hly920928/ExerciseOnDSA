@@ -25,6 +25,7 @@ void twoSum(int twoSum,const vector<int>& nums, vector<int>&cur, int other_id, v
 		head++; tail--;
 	}
 }
+
 void threeSum(int threeSum,const vector<int>& nums, vector<int>&cur, int head, vector<vector<int>>& ans) {
 	for (int i = head +1; i < nums.size(); i++) {
 		if (nums.size() - i<3)break;
@@ -37,6 +38,7 @@ void threeSum(int threeSum,const vector<int>& nums, vector<int>&cur, int head, v
 		cur.pop_back();
 	}
 };
+
 vector<vector<int>> fourSum(vector<int>& nums, int target)
 {
 	vector<vector<int>> ans;
@@ -55,6 +57,7 @@ vector<vector<int>> fourSum(vector<int>& nums, int target)
 	}
 	return ans;
 }
+
 ListNode * removeNthFromEnd(ListNode * head, int n)
 {
 	ListNode* end= head; ListNode* nth=head; int cnt = 0;
@@ -71,6 +74,7 @@ ListNode * removeNthFromEnd(ListNode * head, int n)
 	//delete nth;
 	return head;
 }
+
 bool isValid(string s)
 {
 	stack<char> stk;
@@ -100,6 +104,7 @@ bool isValid(string s)
 	}
 	return stk.empty();
 }
+
 struct heapIndex {
 	int index;
 	int val;
@@ -109,6 +114,7 @@ struct heapIndex {
 		return val > b.val;
 	}
 };
+
 ListNode * mergeKLists(vector<ListNode*>& lists)
 {
 	ListNode *header = nullptr; int n = lists.size();
@@ -135,6 +141,7 @@ ListNode * mergeKLists(vector<ListNode*>& lists)
 	}
 	return header;
 }
+
 ListNode * mergeTwoLists(ListNode * l1, ListNode * l2)
 {
 	if (l1 == nullptr&&l2== nullptr)return nullptr;
@@ -166,6 +173,7 @@ ListNode * mergeTwoLists(ListNode * l1, ListNode * l2)
 	if (curl2 != nullptr)cur->next = curl2;
 	return header;
 }
+
 void reCursive(vector<string>& ans, const string& digits, const string* map, string& t) {
 	int n = t.size(); int ds = digits.size();
 	if (n == ds)return;
@@ -177,6 +185,7 @@ void reCursive(vector<string>& ans, const string& digits, const string* map, str
 		t.pop_back();
 	}
 }
+
 vector<string> letterCombinations(string digits)
 {
 	vector<string> ans;
@@ -573,6 +582,7 @@ int searchInsert(vector<int>& nums, int target)
 
 	//return  	lower_bound(nums.begin(), nums.end(), target)-nums.begin();
 }
+
 const static char x_b[9] = { 0,0,0,3,3,3,6,6,6 };
 const static char y_b[9] = { 0,3,6,0,3,6,0,3,6 };
 bool isValidSudoku(vector<vector<char>>& board)
@@ -611,6 +621,7 @@ bool isValidSudoku(vector<vector<char>>& board)
 	}
 	return true;
 }
+
 const static char g_table[9][9] = { {1,1,1,2,2,2,3,3,3}
                                                 ,{1,1,1,2,2,2,3,3,3},
 							                     {1,1,1,2,2,2,3,3,3},
@@ -620,7 +631,6 @@ const static char g_table[9][9] = { {1,1,1,2,2,2,3,3,3}
 												 {7,7,7,8,8,8,9,9,9},
 												 {7,7,7,8,8,8,9,9,9},
 												 {7,7,7,8,8,8,9,9,9}};
-
 struct pos {
 	unsigned char possible;
 	bitset<10>candidate;
@@ -760,6 +770,7 @@ string countAndSay(int n)
 	}
 	return ans;
 }
+
 void combinationSum_part(const vector<int>& candidates,int head, int target, vector<vector<int>>& ans) {
 	int first = candidates[head];
 	if (target <= 0)return;
@@ -814,10 +825,113 @@ void combinationSum_part(const vector<int>& candidates,int head, int target, vec
 	}
 	return;
 }
+
 vector<vector<int>> combinationSum(vector<int>& candidates, int target)
 {
 	vector<vector<int>> ans;
 	sort(candidates.begin(), candidates.end());
 	combinationSum_part(candidates, 0, target, ans);
+	return ans;
+}
+
+const vector<int>* c;
+void  combinationSum2_part(int head, int target, vector<vector<int>>& ans) {
+	const auto &candidates = *c;
+	int first = candidates[head];
+	if (target <= 0)return;
+	if (head == candidates.size() - 1|| first >= target) {
+		int id = head;
+		while (candidates[id] == target) {
+			ans.push_back(vector<int>());
+			auto& last = ans.back();
+			last.push_back(first);
+			id++;
+		}
+			return;
+		}
+	//no first
+	combinationSum2_part(head + 1, target, ans);
+	//have first
+	vector<vector<int>> vtail;
+	combinationSum2_part(head + 1, target-first, vtail);
+	for (auto& tail : vtail) {
+		ans.push_back(vector<int>());
+		auto& last = ans.back();
+		last.push_back(first);
+		last.insert(last.end(), tail.begin(), tail.end());
+	}
+
+	
+	
+	return;
+}
+const vector<int>* fre;
+void combinationSum2_partV2(int head, int target, vector<vector<int>>& ans) {
+	const auto &candidates = *c;
+	int first = candidates[head];
+	int fre_n = (*fre)[first];
+	if (target <= 0)return;
+	if (head == candidates.size() - 1) {
+		if (target >= first && (target%first) == 0) {
+			int n = target / first;
+			if (n <= fre_n) {
+				ans.push_back(vector<int>());
+				auto& last = ans.back();
+				for (int i = 0; i < n; i++) {
+					last.push_back(first);
+				}
+			}
+		}
+		return;
+	}
+	if (first >= target) {
+		if (target == first) {
+			ans.push_back(vector<int>());
+			auto& last = ans.back();
+			last.push_back(target);
+			return;
+		}
+		return;
+	}
+	vector<vector<int>> vtail;
+	vector<int> vhead; int remain_target = target;
+	while (fre_n>0) {
+		vhead.push_back(first);
+		remain_target -= first;
+		vtail.clear();
+		if (remain_target < 0)break;
+		if (remain_target == 0) {
+			ans.push_back(vector<int>());
+			auto& last = ans.back();
+			last.insert(last.end(), vhead.begin(), vhead.end());
+			break;
+		}
+		combinationSum2_partV2(head + 1, remain_target, vtail);
+		for (auto& tail : vtail) {
+			ans.push_back(vector<int>());
+			auto& last = ans.back();
+			last.insert(last.end(), vhead.begin(), vhead.end());
+			last.insert(last.end(), tail.begin(), tail.end());
+		}
+		fre_n--;
+	}
+	vtail.clear();
+	combinationSum2_partV2(head + 1, target, vtail);
+	for (auto& tail : vtail) 
+		ans.push_back(tail);
+	return;
+}
+vector<vector<int>> combinationSum2(vector<int>& candidates, int target)
+{
+	vector<vector<int>> ans;
+	c = &candidates;
+	sort(candidates.begin(), candidates.end());
+	vector<int>_fre; _fre.resize(candidates.back()+1);
+	for (int& i : _fre) i = 0;
+	for (int i : candidates) _fre[i]++;
+	fre = &_fre;
+	auto itr = unique(candidates.begin(), candidates.end());
+	candidates.erase(itr, candidates.end());
+	combinationSum2_partV2(0, target,ans);
 	return ans;
 }

@@ -17,11 +17,8 @@
 using namespace std;
 int main() {
 	string n = countAndSay(5);
-	vector<int> v; 
-	v.push_back(2);
-	v.push_back(3);
-	v.push_back(6);
-	v.push_back(7);
-	auto& ans = combinationSum(v, 7);
+	int a[] = {10, 1, 2, 7, 6, 1, 5};
+	vector<int> v(a,a+7); 
+	auto& ans = combinationSum2(v,8);
 	return 0;
 }
