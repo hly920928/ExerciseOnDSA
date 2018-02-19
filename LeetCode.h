@@ -56,3 +56,5 @@ std::vector<std::vector<int>> combinationSum(std::vector<int>& candidates, int t
 std::vector<std::vector<int>> combinationSum2(std::vector<int>& candidates, int target);
 //41. First Missing Positive
 int firstMissingPositive(std::vector<int>& nums);
+//42. Trapping Rain Water
+int trap(std::vector<int>& height);

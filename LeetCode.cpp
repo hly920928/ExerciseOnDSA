@@ -920,3 +920,35 @@ int firstMissingPositive(vector<int>& nums)
 	}
 	return n+1;
 }
+int trap(vector<int>& height)
+{
+	int n = height.size();
+	if (n == 0)return 0;
+	stack<int>stk; int num = 0;
+	for (int i = 0; i < n; i++) {
+		//if (i > 0 && height[i] == height[i - 1]) continue;
+		while (!stk.empty() && height[i] >= height[stk.top()]) {
+			int lo = stk.top(); stk.pop();
+			while (!stk.empty() && height[lo] >= height[stk.top()]) {
+				lo = stk.top(); stk.pop();
+				if (stk.empty()) {
+					stk.push(i); goto Out1;
+				}
+			}
+			if(!stk.empty())lo = stk.top();
+			int top = (height[lo] < height[i]) ? height[lo] : height[i];
+			for (lo = lo + 1; height[lo] < top; lo++) {
+				num += top - height[lo];
+				height[lo] = top;
+			}
+		}
+		if (stk.empty() && height[i] > 0) {
+			stk.push(i); continue;
+		}
+	Out1:
+		if (!stk.empty()) {
+			stk.push(i);
+		}
+	};
+	return num;
+}

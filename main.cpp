@@ -16,7 +16,8 @@
 #include "RouterNode.h"
 using namespace std;
 int main() {
-	vector<int >n; n.push_back(1);
-	int f = firstMissingPositive(n);
+	int n[] = { 5,5,1,7,1,1,5,2,7,6 };
+	vector<int >v(n, n + 10);
+	int f = trap(v);
 	return 0;
 }
