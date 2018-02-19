@@ -54,3 +54,5 @@ std::string countAndSay(int n);
 std::vector<std::vector<int>> combinationSum(std::vector<int>& candidates, int target);
 //40. Combination Sum II
 std::vector<std::vector<int>> combinationSum2(std::vector<int>& candidates, int target);
+//41. First Missing Positive
+int firstMissingPositive(std::vector<int>& nums);

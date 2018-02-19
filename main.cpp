@@ -16,9 +16,7 @@
 #include "RouterNode.h"
 using namespace std;
 int main() {
-	string n = countAndSay(5);
-	int a[] = {10, 1, 2, 7, 6, 1, 5};
-	vector<int> v(a,a+7); 
-	auto& ans = combinationSum2(v,8);
+	vector<int >n; n.push_back(1);
+	int f = firstMissingPositive(n);
 	return 0;
 }

@@ -835,36 +835,6 @@ vector<vector<int>> combinationSum(vector<int>& candidates, int target)
 }
 
 const vector<int>* c;
-void  combinationSum2_part(int head, int target, vector<vector<int>>& ans) {
-	const auto &candidates = *c;
-	int first = candidates[head];
-	if (target <= 0)return;
-	if (head == candidates.size() - 1|| first >= target) {
-		int id = head;
-		while (candidates[id] == target) {
-			ans.push_back(vector<int>());
-			auto& last = ans.back();
-			last.push_back(first);
-			id++;
-		}
-			return;
-		}
-	//no first
-	combinationSum2_part(head + 1, target, ans);
-	//have first
-	vector<vector<int>> vtail;
-	combinationSum2_part(head + 1, target-first, vtail);
-	for (auto& tail : vtail) {
-		ans.push_back(vector<int>());
-		auto& last = ans.back();
-		last.push_back(first);
-		last.insert(last.end(), tail.begin(), tail.end());
-	}
-
-	
-	
-	return;
-}
 const vector<int>* fre;
 void combinationSum2_partV2(int head, int target, vector<vector<int>>& ans) {
 	const auto &candidates = *c;
@@ -934,4 +904,19 @@ vector<vector<int>> combinationSum2(vector<int>& candidates, int target)
 	candidates.erase(itr, candidates.end());
 	combinationSum2_partV2(0, target,ans);
 	return ans;
+}
+
+int firstMissingPositive(vector<int>& nums)
+{
+	int n = nums.size();
+	vector<bool>table; table.resize(n + 1);
+	for (int i : nums) {
+		if (i > 0&&i<=n) {
+			table[i] = true;
+		}
+	}
+	for (int i = 1; i < n + 1; i++) {
+		if (!table[i])return i;
+	}
+	return n+1;
 }
