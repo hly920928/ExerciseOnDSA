@@ -18,6 +18,6 @@ using namespace std;
 int main() {
 	int n[] = { 5,5,1,7,1,1,5,2,7,6 };
 	vector<int >v(n, n + 10);
-	int f = trap(v);
+	string s = multiply("123456","667");
 	return 0;
 }

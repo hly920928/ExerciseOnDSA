@@ -6,6 +6,7 @@
 #include <stack>
 #include <string>
 #include <unordered_map>
+#include <sstream>
 using namespace std;
 void twoSum(int twoSum,const vector<int>& nums, vector<int>&cur, int other_id, vector<vector<int>>& ans) {
 	if (nums.size() - other_id<2)return;
@@ -951,4 +952,82 @@ int trap(vector<int>& height)
 		}
 	};
 	return num;
+}
+class BigInteger_non_neg {
+public:
+    string s;
+public:
+	BigInteger_non_neg(const string& _s) :s(_s) {
+		reverse(s.begin(), s.end());
+	};
+	BigInteger_non_neg() :s("0") {};
+	void operator+=(const BigInteger_non_neg& b) {
+		int b_n = b.s.size();		int s_n = s.size();
+		int now_n = (b_n > s_n) ? b_n : s_n;
+		s.resize(now_n + 1); 
+		s.back()='0';
+		int up = 0;
+		for (int i = 0; i < now_n+1; i++) {
+			char s_v = (i < s_n) ? s[i] - '0' : 0;
+			char b_v = (i <b_n) ? b.s[i] - '0' : 0;
+			int sum = s_v + b_v + up;
+			s[i] = sum % 10+'0';
+			up = sum / 10;
+		}
+		if (s.back() == '0')s.pop_back();
+	};
+	void shiftLeft() {
+		int  s_n = s.size();
+		s.push_back('0'); 
+		char pre = s[0];char t= s[1];
+		for (int i = 0; i < s_n; i++) {
+			t = s[i + 1];
+			s[i + 1] = pre;
+			pre = t;
+		}
+		s[0] = '0';
+	};
+	BigInteger_non_neg operator*(char i) {
+		BigInteger_non_neg ans;
+		ans.s = s;
+		int n = i - '0';
+		if (n == 0) {
+			ans.s = "0"; return ans;
+		}
+		if (n == 1)return ans;
+		int s_n = ans.s.size();
+		ans.s.resize(s_n + 1);
+		ans.s.back() = '0'; int up = 0;
+		for (int i = 0; i < s_n + 1; i++) {
+			char s_v = (i < s_n) ? ans.s[i] - '0' : 0;
+			int sum = s_v*n + up;
+			ans.s[i]  = sum % 10 + '0';
+			up = sum / 10;
+		}
+		if (ans.s.back() == '0')ans.s.pop_back();
+		return ans;
+	};
+	string to_string()const {
+		string ans = s;
+		reverse(ans.begin(), ans.end());
+		return ans;
+	};
+	bool isZero()const {
+		if (s == "0")return true;
+		return false;
+	}
+};
+string multiply(string num1, string num2)
+{
+	BigInteger_non_neg bi1(num1);
+	BigInteger_non_neg bi2(num2);
+	BigInteger_non_neg part_product("0");
+	auto& Itg_s = num1.size() < num2.size() ? bi1 : bi2;
+	auto& Itg_l= num1.size() < num2.size() ? bi2 : bi1;
+	int n = Itg_s.s.size();
+	for (int i = 0; i < n; i++) {
+		part_product += (Itg_l* Itg_s.s[i]);
+		Itg_l.shiftLeft();
+	}
+	return part_product.to_string();
 }
