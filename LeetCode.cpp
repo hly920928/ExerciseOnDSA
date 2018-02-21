@@ -1032,23 +1032,37 @@ string multiply(string num1, string num2)
 	return part_product.to_string();
 }
 int n_s; int n_p;
-string* ptr_s;  string* ptr_p;
-bool isMatch(int id_s, int id_p) {
+bool isMatch(const string& ptr_s, const string& ptr_p,int id_s, int id_p) {
+	if (id_p == n_p - 1 && ptr_p.at(id_p) == '*')return true;
 	if (id_s == n_s) {
 		if (id_p == n_p)return true;
-		if (id_p == n_p - 1 && ptr_p->at(id_p) == '*')return true;
+		while (id_p<n_p - 1 && ptr_p.at(id_p) == '*') id_p++;
+		if(id_p==n_p - 1 && ptr_p.at(id_p) == '*')return true;
 		return false;
 	}
-	char now_p = ptr_p->at(id_p);
-	char now_s = ptr_s->at(id_s);
-	if (now_p == '?') return isMatch(id_s + 1, id_p + 1);
-	if (now_p == '*') return true;//TODO
+	if (id_p == n_p)return false;
+	char now_p = ptr_p.at(id_p);
+	char now_s = ptr_s.at(id_s);
+	if (now_p == '?') return isMatch(ptr_s, ptr_p,id_s + 1, id_p + 1);
+	if (now_p == '*') {
+		char next_p = ptr_p.at(id_p + 1);
+		while (next_p == '*') {
+			id_p++; 
+			if (id_p == n_p - 1)break;
+			next_p = ptr_p.at(id_p + 1);
+		}
+		if (next_p == '?' || next_p == now_s)
+			if (isMatch(ptr_s, ptr_p,id_s + 1, id_p + 2))return true;
+		return isMatch(ptr_s, ptr_p,id_s + 1, id_p);
+	}
     if (now_p != now_s)return false;
-	return isMatch(id_s + 1, id_p + 1);
+	return isMatch(ptr_s, ptr_p,id_s + 1, id_p + 1);
 }
 bool isMatch(string s, string p)
 {
+	if (p.front() == '*'&&p.back() != '*') {
+		reverse(s.begin(), s.end());
+	}
 	 n_s = s.size(); n_p = p.size();
-	 ptr_s=&s;  ptr_p=&p;
-	 return isMatch(0, 0);
+	 return isMatch(s,p,0, 0);
 }
