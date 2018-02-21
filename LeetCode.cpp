@@ -1132,22 +1132,32 @@ void inline wildCard_num(string& p, vector<partString>&v) {
 }
 bool isMatch(string s, string p) {
 	n_s = s.size(); n_p = p.size();
-	vector<partString>v;
-	wildCard_num(p, v);
-	vector<string>v_s;
-	//
-	const char* p_head = p.c_str();
-	for (auto& _p : v) {
-		if (_p.tail != -1) {
-			string n(p_head + _p.head, p_head + _p.tail);
-			v_s.push_back(n);
-		}else v_s.push_back(to_string(_p.head));
-	}
-
-	if (v.size() < 6||n_s<50) {
-		return isMatch_V1(s, p, 0, 0);
-	}
-	else {
-		return isMatch_V2(s, p,v,v_s);
+	int id_s = 0; int id_p = 0; int pre_s = -1; int pre_p = -1;
+	auto& ptr_p = p; auto& ptr_s = s;
+	while (true) {
+		if (id_p == n_p - 1 && ptr_p.at(id_p) == '*')return true;
+		if (id_s == n_s) {
+			if (id_p == n_p)return true;
+			while (id_p<n_p - 1 && ptr_p.at(id_p) == '*') id_p++;
+			if (id_p == n_p - 1 && ptr_p.at(id_p) == '*')return true;
+			return false;
+		}
+		if (id_p<n_p&&ptr_p.at(id_p) == '*') {
+			pre_p = id_p + 1; id_p++;
+			while (pre_p < n_p&&ptr_p.at(pre_p) == '*') {
+				pre_p++; id_p++;
+			}
+			pre_s = id_s; 
+			continue;
+		}
+		if (id_p==n_p||(ptr_p.at(id_p) != ptr_s.at(id_s) && ptr_p.at(id_p) != '?')) {
+			if (pre_p == -1)return false;
+			id_p = pre_p;
+			id_s = pre_s + 1;
+			pre_s++;
+		}
+		else {
+			id_p++; id_s++;
+		}
 	}
 }
