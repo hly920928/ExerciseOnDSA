@@ -60,3 +60,5 @@ int firstMissingPositive(std::vector<int>& nums);
 int trap(std::vector<int>& height);
 //43. Multiply Strings
 std::string multiply(std::string num1, std::string num2);
+//44. Wildcard Matching
+bool isMatch(std::string s, std::string p);

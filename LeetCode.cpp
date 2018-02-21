@@ -1031,3 +1031,47 @@ string multiply(string num1, string num2)
 	}
 	return part_product.to_string();
 }
+
+bool isMatch(string s, string p)
+{
+	int id_s = 0; int id_p=0;
+	int n_s = s.size(); int n_p = p.size();
+	while(true){
+	OUT1:
+		if (id_s == n_s) {
+			if(id_p == n_p)return true;
+			if (id_p == n_p-1&&p[id_p]=='*')return true;
+			return false;
+		}
+		if (id_p == n_p)return false;
+		char now_p = p[id_p];
+		char now_s = s[id_s];
+		if (now_p == '?') {
+			id_s++; id_p++; continue;
+		}
+		if (now_p == '*') {
+			while (id_p < n_p-1&&p[id_p + 1] == '*') {
+				id_p++; goto OUT1;
+			}
+			if (id_p < n_p - 1&&p[id_p+1]== now_s) {
+				int t_id_s = id_s;
+				int t_id_p = id_p+1;
+				while (true) {
+					if (t_id_s == n_s&&t_id_p == n_p)return true;
+					char now_s = s[t_id_s];
+					char now_p = p[t_id_p];
+					if (now_p == '*' || now_p == '?') {
+						id_p = t_id_p;
+						id_s = t_id_s; goto OUT1;
+					}
+					if (now_s != now_p)break;
+					t_id_s++; t_id_p++;
+				}
+			}
+			id_s++; continue;
+		}
+		if (now_p != now_s)return false;
+		id_s++; id_p++;
+		
+	}
+}
