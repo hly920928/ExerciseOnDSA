@@ -18,6 +18,7 @@ using namespace std;
 int main() {
 	int n[] = { 5,5,1,7,1,1,5,2,7,6 };
 	vector<int >v(n, n + 10);
-	bool b = isMatch("ho","ho**");
+	bool b = isMatch("abaabaaaabbabbaaabaabababbaabaabbabaaaaabababbababaabbabaabbbbaabbbbbbbabaaabbaaaaabbaabbbaaaaabbbabb",
+		"ab*aaba**abbaaaa**b*b****aa***a*b**ba*a**ba*baaa*b*ab*");
 	return 0;
 }

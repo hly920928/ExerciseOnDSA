@@ -1032,7 +1032,7 @@ string multiply(string num1, string num2)
 	return part_product.to_string();
 }
 int n_s; int n_p;
-bool isMatch(const string& ptr_s, const string& ptr_p,int id_s, int id_p) {
+bool isMatch_V1(const string& ptr_s, const string& ptr_p,int id_s, int id_p) {
 	if (id_p == n_p - 1 && ptr_p.at(id_p) == '*')return true;
 	if (id_s == n_s) {
 		if (id_p == n_p)return true;
@@ -1043,7 +1043,7 @@ bool isMatch(const string& ptr_s, const string& ptr_p,int id_s, int id_p) {
 	if (id_p == n_p)return false;
 	char now_p = ptr_p.at(id_p);
 	char now_s = ptr_s.at(id_s);
-	if (now_p == '?') return isMatch(ptr_s, ptr_p,id_s + 1, id_p + 1);
+	if (now_p == '?') return isMatch_V1(ptr_s, ptr_p,id_s + 1, id_p + 1);
 	if (now_p == '*') {
 		char next_p = ptr_p.at(id_p + 1);
 		while (next_p == '*') {
@@ -1052,17 +1052,102 @@ bool isMatch(const string& ptr_s, const string& ptr_p,int id_s, int id_p) {
 			next_p = ptr_p.at(id_p + 1);
 		}
 		if (next_p == '?' || next_p == now_s)
-			if (isMatch(ptr_s, ptr_p,id_s + 1, id_p + 2))return true;
-		return isMatch(ptr_s, ptr_p,id_s + 1, id_p);
+			if (isMatch_V1(ptr_s, ptr_p,id_s + 1, id_p + 2))return true;
+		return isMatch_V1(ptr_s, ptr_p,id_s + 1, id_p);
 	}
     if (now_p != now_s)return false;
-	return isMatch(ptr_s, ptr_p,id_s + 1, id_p + 1);
+	return isMatch_V1(ptr_s, ptr_p,id_s + 1, id_p + 1);
 }
-bool isMatch(string s, string p)
+struct partString {
+    int head;
+	int tail;
+	partString(int h = -1, int t = -1) :head(h), tail(t) {};
+};
+bool isMatch_V2(string& s, string& p, const vector<partString>&v, const vector<string>&v_s)
 {
-	if (p.front() == '*'&&p.back() != '*') {
-		reverse(s.begin(), s.end());
+	 
+	 const char* s_head = s.c_str();
+	 const char* p_head = p.c_str();
+	 const char* s_tail = s.c_str() + n_s - 1;
+	 const char* p_tail = p.c_str() + n_p - 1;
+	 const char* p_ = p_head;
+	 const char* s_ = s_head;
+	 //head_part
+	 while (true) {
+		 if (*p_== '*'||*p_ == '\0'||*s_=='\0')break;
+		 if (*p_ != *s_&&*p_ != '?')return false;
+		 p_++; s_++;
+	 }
+	 if ( *p_ == '\0'&&*s_ == '\0')return true;
+	 //tail_part
+	 while (true) {
+		 if (*p_tail == '*' || p_tail == p_head || s_tail == s_head)break;
+		 if (*p_tail != *s_tail&&*p_tail != '?')return false;
+		 p_tail--; s_tail--;
+	 }
+	 string s_new(s_, s_tail+1);
+	 //
+	 int subs_n = v.size(); int pos = 0;
+	 for (int i = 0; i < subs_n; i++) {
+		 if (v[i].tail == -1) {
+			 pos += v[i].head; continue;
+		 }
+		 else {
+			 pos = s_new.find(v_s[i], pos);
+			 if (pos == -1)return false;
+			 pos+= v_s[i].size();
+		 }
+	 }
+	 return true;
+}
+void inline wildCard_num(string& p, vector<partString>&v) {
+	int ans=0;
+	int head = 0; int tail = 0; int blank = 0;
+	while (true) {
+		OUT1:
+		if (head == n_p)break;
+		if (p[head] == '?') {
+			blank ++; head++; continue;
+		}else {
+			if (blank != 0)v.push_back(partString(blank, -1));
+			blank = 0;
+		}
+		if (p[head] != '*') {
+			tail = head + 1;
+			while (true) {
+				if (tail == n_p) {
+					v.push_back(partString(head, tail));
+					return;
+				}
+				if (p[tail] != '*'&&p[tail] != '?') {
+					tail++;}
+				else {
+					v.push_back(partString(head, tail));
+					 head=tail;
+					goto OUT1;}
+			}
+		}
+		if (p[head] == '*') head++;
 	}
-	 n_s = s.size(); n_p = p.size();
-	 return isMatch(s,p,0, 0);
+}
+bool isMatch(string s, string p) {
+	n_s = s.size(); n_p = p.size();
+	vector<partString>v;
+	wildCard_num(p, v);
+	vector<string>v_s;
+	//
+	const char* p_head = p.c_str();
+	for (auto& _p : v) {
+		if (_p.tail != -1) {
+			string n(p_head + _p.head, p_head + _p.tail);
+			v_s.push_back(n);
+		}else v_s.push_back(to_string(_p.head));
+	}
+
+	if (v.size() < 6||n_s<50) {
+		return isMatch_V1(s, p, 0, 0);
+	}
+	else {
+		return isMatch_V2(s, p,v,v_s);
+	}
 }
