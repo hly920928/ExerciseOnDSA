@@ -62,3 +62,5 @@ int trap(std::vector<int>& height);
 std::string multiply(std::string num1, std::string num2);
 //44. Wildcard Matching
 bool isMatch(std::string s, std::string p);
+//45. Jump Game II
+int jump(std::vector<int>& nums);

@@ -1161,3 +1161,28 @@ bool isMatch(string s, string p) {
 		}
 	}
 }
+int inline min_e(vector<int>&jump_n, int i, int l,int n) {
+	if (i + l >= n)return 0;
+	if (l == 0)return INT_MAX - 1;
+	int min = INT_MAX-1;
+
+	for (int k = i + l; k > i; k--) {
+		int now = jump_n[k];
+		if (now == 1)return 1;
+		min = (min < now) ? min : now;
+	}
+	return min;
+}
+int jump(vector<int>& nums)
+{
+	int n = nums.size();
+	if (n == 0)return 0;
+	vector<int>jump_n;
+	jump_n.resize(n);
+	for (int& i : jump_n)i = INT_MAX;
+	jump_n.back() = 0;
+	for (int i = n - 2; i >= 0; i--) {
+		jump_n[i] = min_e(jump_n,i,nums[i],n-1)+1;
+	}
+	return jump_n[0];
+}

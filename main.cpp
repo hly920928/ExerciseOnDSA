@@ -16,9 +16,8 @@
 #include "RouterNode.h"
 using namespace std;
 int main() {
-	int n[] = { 5,5,1,7,1,1,5,2,7,6 };
-	vector<int >v(n, n + 10);
-	bool b = isMatch("aaaa",
-		"***a");
+	int n[] = { 5,9,3,2,1,0,2,3,3,1,0,0 };
+	vector<int >v(n, n + 12);
+	int i = jump(v);
 	return 0;
 }
