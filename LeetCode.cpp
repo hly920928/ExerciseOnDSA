@@ -6,6 +6,7 @@
 #include <stack>
 #include <string>
 #include <unordered_map>
+#include <map>
 #include <sstream>
 using namespace std;
 void twoSum(int twoSum,const vector<int>& nums, vector<int>&cur, int other_id, vector<vector<int>>& ans) {
@@ -1185,4 +1186,45 @@ int jump(vector<int>& nums)
 		jump_n[i] = min_e(jump_n,i,nums[i],n-1)+1;
 	}
 	return jump_n[0];
+}
+map<int, int>* ptr_m;
+vector<vector<int>>* ans_t;
+int max_n;
+void permute_Recur(vector<int>& stk) {
+	auto& map = *ptr_m;
+	if (stk.size()== max_n) {
+		ans_t->push_back(stk); return;
+	}
+	for (auto& itr : *ptr_m) {
+		if (itr.second!=0)
+		{
+			int id_next = itr.first;
+			itr.second--;
+			stk.push_back(id_next);
+			permute_Recur(stk);
+			stk.pop_back();
+			itr.second++;
+		}
+	}
+};
+vector<vector<int>> permute(vector<int>& nums)
+{
+	return vector<vector<int>>();
+}
+
+vector<vector<int>> permuteUnique(vector<int>& nums)
+{
+	map<int,int> table;
+	max_n = nums.size();
+	vector<vector<int>> ans;
+	ptr_m = &table;
+	ans_t = &ans;
+	vector<int> stk;
+	for (int i : nums) {
+		if (table.find(i) == table.end())
+			table[i] =1;
+		else table[i]++;
+	}
+	permute_Recur(stk);
+	return ans;
 }

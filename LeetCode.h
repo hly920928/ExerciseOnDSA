@@ -64,3 +64,7 @@ std::string multiply(std::string num1, std::string num2);
 bool isMatch(std::string s, std::string p);
 //45. Jump Game II
 int jump(std::vector<int>& nums);
+//46. Permutations
+std::vector<std::vector<int>> permute(std::vector<int>& nums);
+//47. Permutations II
+std::vector<std::vector<int>> permuteUnique(std::vector<int>& nums);

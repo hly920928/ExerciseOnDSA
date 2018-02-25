@@ -16,8 +16,9 @@
 #include "RouterNode.h"
 using namespace std;
 int main() {
-	int n[] = { 5,9,3,2,1,0,2,3,3,1,0,0 };
-	vector<int >v(n, n + 12);
-	int i = jump(v);
+	////
+	int n[] = { 1,1,2 };
+	vector<int >v(n, n + 3);
+	auto v_v = permuteUnique(v);
 	return 0;
 }
