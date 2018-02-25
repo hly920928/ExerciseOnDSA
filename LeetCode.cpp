@@ -1209,7 +1209,20 @@ void permute_Recur(vector<int>& stk) {
 };
 vector<vector<int>> permute(vector<int>& nums)
 {
-	return vector<vector<int>>();
+	map<int, int> table;
+	max_n = nums.size();
+	vector<vector<int>> ans;
+	if (max_n == 0)return ans;
+	ptr_m = &table;
+	ans_t = &ans;
+	vector<int> stk;
+	for (int i : nums) {
+		if (table.find(i) == table.end())
+			table[i] = 1;
+		else table[i]++;
+	}
+	permute_Recur(stk);
+	return ans;
 }
 
 vector<vector<int>> permuteUnique(vector<int>& nums)
@@ -1217,6 +1230,7 @@ vector<vector<int>> permuteUnique(vector<int>& nums)
 	map<int,int> table;
 	max_n = nums.size();
 	vector<vector<int>> ans;
+	if (max_n == 0)return ans;
 	ptr_m = &table;
 	ans_t = &ans;
 	vector<int> stk;
