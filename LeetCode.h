@@ -68,3 +68,5 @@ int jump(std::vector<int>& nums);
 std::vector<std::vector<int>> permute(std::vector<int>& nums);
 //47. Permutations II
 std::vector<std::vector<int>> permuteUnique(std::vector<int>& nums);
+//48. Rotate Image
+void rotate(std::vector<std::vector<int>>& matrix);

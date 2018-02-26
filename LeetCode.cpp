@@ -1242,3 +1242,36 @@ vector<vector<int>> permuteUnique(vector<int>& nums)
 	permute_Recur(stk);
 	return ans;
 }
+vector<vector<int>>*ptr_matrix;
+void inline rotate_part(int bx, int by, int n) {
+	auto&matrix = *ptr_matrix;
+	queue<int>q;
+	for (int i = 0; i < n - 1; i++) q.push(matrix[bx][by+i]);
+	for (int i = 0; i < n - 1; i++) {
+		q.push(matrix[bx + i][by + n - 1]);
+		matrix[bx + i][by + n - 1] = q.front(); q.pop();
+	}
+	for (int i = 0; i < n - 1; i++) {
+		q.push(matrix[bx +n-1][by + n - 1-i]);
+		matrix[bx + n - 1][by + n - 1 - i] = q.front(); q.pop();
+	}
+	for (int i = 0; i < n - 1; i++) {
+		q.push(matrix[bx + n - 1-i][by]);
+		matrix[bx + n - 1 - i][by] = q.front(); q.pop();
+	}
+	for (int i = 0; i < n - 1; i++) {
+		matrix[bx][by+i]= q.front(); q.pop();
+	}
+}
+void rotate(vector<vector<int>>& matrix)
+{
+	ptr_matrix = &matrix;
+	int bx = 0; int by = 0; int n = matrix.size();
+	if (n <= 1)return;
+	while (true) {
+		rotate_part(bx, by, n);
+		n -= 2;
+		if (n <=1)return;
+		bx += 1; by+= 1;
+	}
+}

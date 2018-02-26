@@ -17,8 +17,16 @@
 using namespace std;
 int main() {
 	////
-	int n[] = { 1,1,2 };
-	vector<int >v(n, n + 3);
-	auto v_v = permuteUnique(v);
+	vector<vector<int>> matrix;
+	matrix.resize(4);
+	int r0[] = { 5, 1, 9, 11 };
+	int r1[] = { 2, 4, 8, 10 };
+	int r2[] = { 13, 3, 6, 7 };
+	int r3[] = { 15, 14, 12, 16 };
+	for (int i : r0)matrix[0].push_back(i);
+	for (int i : r1)matrix[1].push_back(i);
+	for (int i : r2)matrix[2].push_back(i);
+	for (int i : r3)matrix[3].push_back(i);
+	rotate(matrix);
 	return 0;
 }
