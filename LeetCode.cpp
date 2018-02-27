@@ -1275,3 +1275,53 @@ void rotate(vector<vector<int>>& matrix)
 		bx += 1; by+= 1;
 	}
 }
+struct frec {
+	unsigned char f[26];
+	frec(const string& s) {
+		for (auto& i : f)i =0;
+		for (char c : s) {
+			f[c - 'a']++;
+		}
+	}
+	bool operator<(const frec& b)const {
+		for (int i = 0; i < 26; i++) {
+			if (f[i]<b.f[i])return true;
+			if (f[i]>b.f[i])return false;
+		}
+		return false;
+	}
+	bool operator==(const frec& b)const {
+		for (int i = 0; i < 26; i++) {
+			if (b.f[i] != f[i])return false;
+		}
+		return true;
+	}
+};
+struct ptr_frec {
+	const frec* ptr;
+	ptr_frec(const frec& f) :ptr(&f){}
+	bool operator<(const ptr_frec& b)const {
+        return *ptr<*(b.ptr);
+	}
+};
+vector<vector<string>> groupAnagrams(vector<string>& strs)
+{
+	vector<vector<string>> ans;
+	vector<frec>_frec; 
+	map<ptr_frec, int> map;
+	int n = strs.size();
+	for (auto& s : strs)_frec.push_back(frec(s));
+	for (int i = 0; i < n;i++) {
+		ptr_frec pf(_frec[i]);
+		auto ptr = map.find(pf);
+		if (map.find(pf) == map.end()) {
+			map[pf] = ans.size();
+			ans.push_back(vector<string>());
+			ans.back().push_back(strs[i]);
+		}
+		else {
+			ans[ptr->second].push_back(strs[i]);
+		}
+	}
+	return ans;
+}

@@ -70,3 +70,5 @@ std::vector<std::vector<int>> permute(std::vector<int>& nums);
 std::vector<std::vector<int>> permuteUnique(std::vector<int>& nums);
 //48. Rotate Image
 void rotate(std::vector<std::vector<int>>& matrix);
+//49. Group Anagrams
+std::vector<std::vector<std::string>> groupAnagrams(std::vector<std::string>& strs);
