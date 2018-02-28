@@ -1325,3 +1325,23 @@ vector<vector<string>> groupAnagrams(vector<string>& strs)
 	}
 	return ans;
 }
+
+double myPow(double x, long long n)
+{
+	if (x == 1)return 1;
+	if (x == 0)return 0;
+	if (n < 0)return myPow(1 / x, -n);
+	if (n == 0)return 1;
+	if (n == 1)return x;
+	double t = 0;
+	if (n % 2 == 1) {
+		 t = myPow(x, n / 2);
+		 if (t == 0)return 0;
+		return x*t*t;
+	}
+	else {
+		 t = myPow(x, n / 2);
+		 if (t == 0)return 0;
+		return t*t;
+	}
+}

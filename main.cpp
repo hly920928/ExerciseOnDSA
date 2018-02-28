@@ -17,9 +17,7 @@
 using namespace std;
 int main() {
 	////
-	string strs[] = { "eat", "tea", "tan", "ate", "nat", "bat" };
-	vector<string>vstrs;
-	for (string& s : strs)vstrs.push_back(s);
-	auto ans = groupAnagrams(vstrs);
+
+	double t = myPow(2.00000, -2147483647);
 	return 0;
 }

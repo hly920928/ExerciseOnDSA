@@ -72,3 +72,5 @@ std::vector<std::vector<int>> permuteUnique(std::vector<int>& nums);
 void rotate(std::vector<std::vector<int>>& matrix);
 //49. Group Anagrams
 std::vector<std::vector<std::string>> groupAnagrams(std::vector<std::string>& strs);
+//50. Pow(x, n)
+double myPow(double x, long long n);
