@@ -1356,11 +1356,20 @@ public:
 		board.resize(size);
 		for (auto& s : board) {
 			s.resize(size);
-			for (auto& c : s)c = '#';
+			for (auto& c : s)c = '.';
 		}
 	};
 	void Solver(int n) {
-
+		if (n == size) {
+			ans->push_back(board);
+		}
+		for (int i = 0; i < size; i++) {
+			if (isValid(n, i)) {
+				board[n][i] = 'Q';
+				Solver(n + 1);
+				board[n][i] = '.';
+			}
+		}
 	}
 private:
 	bool inline isValid(int x, int y) {
@@ -1372,7 +1381,7 @@ private:
 			if (board[dx][dy] == 'Q')return false;
 			dx--; dy++;
 		}
-		int dx = x -1; int dy = y -1;
+		dx = x -1; dy = y -1;
 		while (inBoard(dx, dy)) {
 			if (board[dx][dy] == 'Q')return false;
 			dx--; dy--;
@@ -1389,5 +1398,6 @@ vector<vector<string>> solveNQueens(int n)
 {
 	vector<vector<string>>ans;
 	nQueenSolver nqs(ans, 4);
+	nqs.Solver(0);
 	return ans;
 }
