@@ -74,3 +74,5 @@ void rotate(std::vector<std::vector<int>>& matrix);
 std::vector<std::vector<std::string>> groupAnagrams(std::vector<std::string>& strs);
 //50. Pow(x, n)
 double myPow(double x, long long n);
+//51. N-Queens
+std::vector<std::vector<std::string>> solveNQueens(int n);

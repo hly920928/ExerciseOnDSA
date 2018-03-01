@@ -1330,6 +1330,7 @@ double myPow(double x, long long n)
 {
 	if (x == 1)return 1;
 	if (x == 0)return 0;
+	//if (n == -2147483648)return 1/x*myPow(1 / x, -(n+1));
 	if (n < 0)return myPow(1 / x, -n);
 	if (n == 0)return 1;
 	if (n == 1)return x;
@@ -1344,4 +1345,49 @@ double myPow(double x, long long n)
 		 if (t == 0)return 0;
 		return t*t;
 	}
+}
+class nQueenSolver {
+private:
+	vector<vector<string>>*ans;
+	vector<string> board;
+	int size;
+public:
+	nQueenSolver(vector<vector<string>>& a,int n) :ans(&a) ,size(n){
+		board.resize(size);
+		for (auto& s : board) {
+			s.resize(size);
+			for (auto& c : s)c = '#';
+		}
+	};
+	void Solver(int n) {
+
+	}
+private:
+	bool inline isValid(int x, int y) {
+		for (int i = 0; i < x; i++) {
+			if (board[i][y] == 'Q')return false;
+		}
+		int dx = x-1; int dy = y+1;
+		while (inBoard( dx, dy)) {
+			if (board[dx][dy] == 'Q')return false;
+			dx--; dy++;
+		}
+		int dx = x -1; int dy = y -1;
+		while (inBoard(dx, dy)) {
+			if (board[dx][dy] == 'Q')return false;
+			dx--; dy--;
+		}
+		return true;
+	};
+	bool inline inBoard(int x, int y) {
+		if (x < 0 || x >= size)return false;
+		if (y < 0 || y >= size)return false;
+		return true;
+	}
+};
+vector<vector<string>> solveNQueens(int n)
+{
+	vector<vector<string>>ans;
+	nQueenSolver nqs(ans, 4);
+	return ans;
 }

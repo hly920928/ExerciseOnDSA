@@ -18,6 +18,6 @@ using namespace std;
 int main() {
 	////
 
-	double t = myPow(2.00000, -2147483647);
+	auto ans = solveNQueens(4);
 	return 0;
 }
