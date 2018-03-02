@@ -18,6 +18,6 @@ using namespace std;
 int main() {
 	////
 
-	auto ans = solveNQueens(4);
+	auto ans = totalNQueens(4);
 	return 0;
 }

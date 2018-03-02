@@ -1352,7 +1352,8 @@ private:
 	vector<string> board;
 	int size;
 public:
-	nQueenSolver(vector<vector<string>>& a,int n) :ans(&a) ,size(n){
+	int nums;
+	nQueenSolver(vector<vector<string>>& a,int n) :ans(&a) ,size(n), nums(0){
 		board.resize(size);
 		for (auto& s : board) {
 			s.resize(size);
@@ -1361,7 +1362,8 @@ public:
 	};
 	void Solver(int n) {
 		if (n == size) {
-			ans->push_back(board);
+			//ans->push_back(board);
+			nums++;
 		}
 		for (int i = 0; i < size; i++) {
 			if (isValid(n, i)) {
@@ -1396,8 +1398,19 @@ private:
 };
 vector<vector<string>> solveNQueens(int n)
 {
+
 	vector<vector<string>>ans;
-	nQueenSolver nqs(ans, 4);
+	if (n == 0)return ans;
+	nQueenSolver nqs(ans, n);
 	nqs.Solver(0);
 	return ans;
+}
+
+int totalNQueens(int n)
+{
+	vector<vector<string>>ans;
+	if (n == 0)return 0;
+	nQueenSolver nqs(ans, n);
+	nqs.Solver(0);
+	return nqs.nums;
 }

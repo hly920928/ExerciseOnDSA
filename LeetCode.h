@@ -76,3 +76,5 @@ std::vector<std::vector<std::string>> groupAnagrams(std::vector<std::string>& st
 double myPow(double x, long long n);
 //51. N-Queens
 std::vector<std::vector<std::string>> solveNQueens(int n);
+//52. N-Queens II
+int totalNQueens(int n);
