@@ -1414,3 +1414,21 @@ int totalNQueens(int n)
 	nqs.Solver(0);
 	return nqs.nums;
 }
+
+int maxSubArray(vector<int>& nums)
+{
+	int n = nums.size();
+	if (n == 0)return 0;
+	int max= nums[0]; int tail_sum= 0; int tail_max= nums[0];
+	for (int i = 1; i < n; i++) {
+		int now = nums[i];
+		tail_max = (tail_max < 0) ? now : tail_max + now;
+		tail_sum += now;
+		int sum_link = max + tail_sum;
+		if (sum_link > max || tail_max > max) {
+			max = (sum_link > tail_max) ? sum_link : tail_max;
+			tail_sum = 0;
+		}
+	}
+	return max;
+}

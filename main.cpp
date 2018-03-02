@@ -17,7 +17,9 @@
 using namespace std;
 int main() {
 	////
-
-	auto ans = totalNQueens(4);
+	int n[] = { 1,2 };
+	vector<int> nums;
+	for (int i : n)nums.push_back(i);
+	auto ans = maxSubArray(nums);
 	return 0;
 }
