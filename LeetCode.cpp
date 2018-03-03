@@ -1432,3 +1432,32 @@ int maxSubArray(vector<int>& nums)
 	}
 	return max;
 }
+
+class myMatrix {
+private:
+	vector<vector<int>>*ptr_matrix;
+	int m;
+	int n;
+public:
+	myMatrix(vector<vector<int>>& matrix) :ptr_matrix(&matrix),
+		m(matrix.size()), n(matrix[0].size()) {};
+	void spiral(vector<int>& ans) {
+
+	}
+private:
+
+	int inline get(int x, int y) {
+
+	}
+	int inline set(int x, int y) {
+
+	}
+	void inline next(int& x, int& y, int d) {
+
+	}
+};
+vector<int> spiralOrder(vector<vector<int>>& matrix)
+{
+	vector<int> ans;
+	return ans;
+}

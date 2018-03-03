@@ -80,3 +80,5 @@ std::vector<std::vector<std::string>> solveNQueens(int n);
 int totalNQueens(int n);
 //53. Maximum Subarray
 int maxSubArray(std::vector<int>& nums);
+//54. Spiral Matrix
+std::vector<int> spiralOrder(std::vector<std::vector<int>>& matrix);
