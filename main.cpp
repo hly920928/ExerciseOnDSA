@@ -17,9 +17,9 @@
 using namespace std;
 int main() {
 	////
-	int n[] = { 1,2 };
-	vector<int> nums;
-	for (int i : n)nums.push_back(i);
-	auto ans = maxSubArray(nums);
+	int n[] = {1, 2, 3,4, 5, 6,7, 8, 9};
+	vector<vector<int>>m;
+	
+	auto ans = spiralOrder(m);
 	return 0;
 }

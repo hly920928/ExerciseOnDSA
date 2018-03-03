@@ -1440,24 +1440,73 @@ private:
 	int n;
 public:
 	myMatrix(vector<vector<int>>& matrix) :ptr_matrix(&matrix),
-		m(matrix.size()), n(matrix[0].size()) {};
+		m(matrix.size()){
+		if (matrix.size() == 0) 
+			n = 0;
+		else n = matrix[0].size();
+	};
 	void spiral(vector<int>& ans) {
-
+		if (m == 0 || n == 0)return;
+		int now_x = 0; int now_y = 0;
+		ans.push_back(ptr_matrix->at(0)[0]);
+		ptr_matrix->at(0)[0] = INT_MIN;
+		int next_x = 0; int next_y = 0;
+		int d = 0;
+		while (true) {
+			if (get(now_x + 1, now_y) == INT_MIN&&
+				get(now_x - 1, now_y) == INT_MIN&&
+				get(now_x , now_y+1) == INT_MIN&&
+				get(now_x , now_y-1) == INT_MIN)break;
+			next(next_x, next_y,d);
+			int next_v = get(next_x, next_y);
+			if (next_v == INT_MIN) {
+				setBack(next_x, next_y, d);
+				d = (d + 1) % 4;
+				continue;
+			}
+			else {
+				ans.push_back(next_v);
+				now_x = next_x;
+				now_y = next_y;
+				set(now_x, now_y, INT_MIN);
+			}
+		}
 	}
 private:
 
 	int inline get(int x, int y) {
-
+		if (x < 0 || x >= m)return INT_MIN;
+		if (y < 0 || y >= n)return INT_MIN;
+		return ptr_matrix->at(x)[y];
 	}
-	int inline set(int x, int y) {
-
+	void inline set(int x, int y,int v) {
+		if (x < 0 || x >= m)return;
+		if (y < 0 || y >= n)return;
+		 ptr_matrix->at(x)[y]= v;
 	}
 	void inline next(int& x, int& y, int d) {
-
+		switch (d)
+		{
+		case 0: {y++; return; }
+		case 1: {x++; return; }
+		case 2: {y--; return; }
+		case 3: {x--; return; }
+		}
+	}
+	void inline setBack(int& x, int& y, int d) {
+		switch (d)
+		{
+		case 0: {y--; return; }
+		case 1: {x--; return; }
+		case 2: {y++; return; }
+		case 3: {x++; return; }
+		}
 	}
 };
 vector<int> spiralOrder(vector<vector<int>>& matrix)
 {
 	vector<int> ans;
+	myMatrix mm(matrix);
+	mm.spiral(ans);
 	return ans;
 }
