@@ -17,9 +17,11 @@
 using namespace std;
 int main() {
 	////
-	int n[] = {1, 2, 3,4, 5, 6,7, 8, 9};
-	vector<vector<int>>m;
-	
-	auto ans = spiralOrder(m);
+	int n[] = {1,2,3};
+	vector<int>m;
+	for (int i : n) {
+		m.push_back(i);
+	}
+	auto ans = canJump(m);
 	return 0;
 }

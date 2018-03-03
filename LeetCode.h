@@ -82,3 +82,5 @@ int totalNQueens(int n);
 int maxSubArray(std::vector<int>& nums);
 //54. Spiral Matrix
 std::vector<int> spiralOrder(std::vector<std::vector<int>>& matrix);
+//55. Jump Game
+bool canJump(std::vector<int>& nums);

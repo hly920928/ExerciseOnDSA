@@ -1,3 +1,4 @@
+#include "stdafx.h"
 //至少有多少只恼人的大青蛙?
 //http://bailian.openjudge.cn/oitraining2016d/B/
 #include <cstdio>
@@ -134,9 +135,12 @@ void Solve() {
 	m.DFS(0, 0);
 	printf("%d\n", m.lit);
 }
+/*
 int main() {
-	int cas;
-	scanf("%d", &cas);
-	while (cas--)Solve();
-	return 0;
+int cas;
+scanf("%d", &cas);
+while (cas--)Solve();
+return 0;
 }
+
+*/

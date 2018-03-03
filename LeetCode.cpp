@@ -1398,7 +1398,6 @@ private:
 };
 vector<vector<string>> solveNQueens(int n)
 {
-
 	vector<vector<string>>ans;
 	if (n == 0)return ans;
 	nQueenSolver nqs(ans, n);
@@ -1509,4 +1508,16 @@ vector<int> spiralOrder(vector<vector<int>>& matrix)
 	myMatrix mm(matrix);
 	mm.spiral(ans);
 	return ans;
+}
+
+bool canJump(vector<int>& nums)
+{
+	int max_end = nums[0];
+	int n = nums.size();
+	for (int i = 0; i <= max_end;i++) {
+		int now_end = i + nums[i];
+		max_end = (max_end > now_end) ? max_end : now_end;
+		if (max_end >= n - 1)return true;
+	}
+	return false;
 }
