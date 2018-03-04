@@ -16,12 +16,11 @@
 #include "RouterNode.h"
 using namespace std;
 int main() {
-	////
-	int n[] = {1,2,3};
-	vector<int>m;
-	for (int i : n) {
-		m.push_back(i);
-	}
-	auto ans = canJump(m);
+	vector<Interval>v;
+	v.push_back(Interval(1, 4));
+	v.push_back(Interval(1, 4));
+	//v.push_back(Interval(8, 10));
+	//v.push_back(Interval(15, 18));
+	auto ans = merge(v);
 	return 0;
 }

@@ -1521,3 +1521,34 @@ bool canJump(vector<int>& nums)
 	}
 	return false;
 }
+
+bool IntervalLess(const Interval& a, const Interval& b) {
+	return a.start < b.start;
+}
+vector<Interval> merge(vector<Interval>& intervals)
+{
+	vector<Interval> ans; int n = intervals.size();
+	if (n == 0)return ans;
+	sort(intervals.begin(), intervals.end(), IntervalLess);
+	int begin_id = 0; int end_id = 0; int end_v=intervals[begin_id].end;
+	while (true) {
+		if (begin_id == n-1) {
+			ans.push_back(intervals[begin_id]);
+			break;
+		}
+		if (end_id == n - 1) {
+				ans.push_back(Interval(intervals[begin_id].start, end_v));
+				break;
+		}
+		auto& inv_now = intervals[end_id + 1];
+		if (inv_now.start < end_v) {
+			end_v = (inv_now.end > end_v) ? inv_now.end : end_v;
+			end_id++;
+		}
+		else {
+			ans.push_back(Interval(intervals[begin_id].start, end_v));
+			begin_id = end_id+1; end_id = end_id+1; end_v = intervals[begin_id].end;
+		}
+	}
+	return ans;
+}
