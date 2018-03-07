@@ -1560,6 +1560,7 @@ bool less_End(const Interval& a, const Interval& b) {
 }
 vector<Interval> insert(vector<Interval>& intervals, Interval newInterval)
 {
+	intervals.push_back(newInterval);
 	sort(intervals.begin(), intervals.end(), less_Start);
-	return intervals;
+	return merge(intervals);
 }

@@ -17,10 +17,13 @@
 using namespace std;
 int main() {
 	vector<Interval>v;
-	v.push_back(Interval(1, 4));
-	v.push_back(Interval(1, 4));
+	v.push_back(Interval(1,2));
+	v.push_back(Interval(3,5));
+	v.push_back(Interval(6, 7));
+	v.push_back(Interval(8, 10));
+	v.push_back(Interval(12, 16));
 	//v.push_back(Interval(8, 10));
 	//v.push_back(Interval(15, 18));
-	auto ans = merge(v);
+	auto ans = insert(v,Interval(4,9));
 	return 0;
 }
