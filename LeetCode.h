@@ -92,3 +92,5 @@ struct Interval {
 	Interval(int s, int e) : start(s), end(e) {}
 };
 std::vector<Interval> merge(std::vector<Interval>& intervals);
+//
+std::vector<Interval> insert(std::vector<Interval>& intervals, Interval newInterval);

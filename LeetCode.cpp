@@ -1541,7 +1541,7 @@ vector<Interval> merge(vector<Interval>& intervals)
 				break;
 		}
 		auto& inv_now = intervals[end_id + 1];
-		if (inv_now.start < end_v) {
+		if (inv_now.start <= end_v) {
 			end_v = (inv_now.end > end_v) ? inv_now.end : end_v;
 			end_id++;
 		}
@@ -1551,4 +1551,15 @@ vector<Interval> merge(vector<Interval>& intervals)
 		}
 	}
 	return ans;
+}
+bool less_Start(const Interval& a, const Interval& b) {
+	return a.start < b.start;
+}
+bool less_End(const Interval& a, const Interval& b) {
+	return a.start < b.start;
+}
+vector<Interval> insert(vector<Interval>& intervals, Interval newInterval)
+{
+	sort(intervals.begin(), intervals.end(), less_Start);
+	return intervals;
 }
