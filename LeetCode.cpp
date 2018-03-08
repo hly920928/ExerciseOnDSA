@@ -1561,6 +1561,26 @@ bool less_End(const Interval& a, const Interval& b) {
 vector<Interval> insert(vector<Interval>& intervals, Interval newInterval)
 {
 	intervals.push_back(newInterval);
-	sort(intervals.begin(), intervals.end(), less_Start);
+	//sort(intervals.begin(), intervals.end(), less_Start);
 	return merge(intervals);
+}
+
+int lengthOfLastWord(std::string s)
+{
+	int n = s.size();
+	if (n == 0)return 0;
+	int length = 0; bool flag = false;
+	for (int i = n - 1; i >= 0; i--) {
+		if (s[i] != ' ' && !flag) {
+			flag = true; 
+			length = 1;
+			continue;
+		}
+		if (s[i] != ' ' && flag) {
+			length++;
+			continue;
+		}
+		if (s[i] == ' '&& flag)break;
+	}
+	return length;
 }

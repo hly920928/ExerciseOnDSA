@@ -94,3 +94,5 @@ struct Interval {
 std::vector<Interval> merge(std::vector<Interval>& intervals);
 //57. Insert Interval
 std::vector<Interval> insert(std::vector<Interval>& intervals, Interval newInterval);
+//58. Length of Last Word
+int lengthOfLastWord(std::string s);

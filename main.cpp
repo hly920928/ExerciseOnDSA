@@ -24,6 +24,6 @@ int main() {
 	v.push_back(Interval(12, 16));
 	//v.push_back(Interval(8, 10));
 	//v.push_back(Interval(15, 18));
-	auto ans = insert(v,Interval(4,9));
+	auto ans =lengthOfLastWord("Hello World");
 	return 0;
 }
