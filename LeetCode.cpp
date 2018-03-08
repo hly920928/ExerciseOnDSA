@@ -1584,3 +1584,55 @@ int lengthOfLastWord(std::string s)
 	}
 	return length;
 }
+
+vector<vector<int>>*ptr_matrix_2;
+int nb;
+void inline generateMatrix_part(int bx, int by, int n) {
+	auto&matrix = *ptr_matrix_2;
+	queue<int>q;
+	for (int i = 0; i < n - 1; i++) {
+		matrix[bx][by + i] = nb;
+		nb++;
+	}
+	for (int i = 0; i < n - 1; i++) {
+		matrix[bx + i][by + n - 1] =nb;
+		nb++;
+	}
+	for (int i = 0; i < n - 1; i++) {
+		matrix[bx + n - 1][by + n - 1 - i] = nb;
+		nb++;
+	}
+	for (int i = 0; i < n - 1; i++) {
+		matrix[bx + n - 1 - i][by] = nb;
+		nb++;
+	}
+}
+vector<vector<int>> generateMatrix(int n)
+{
+	nb = 1;
+	vector<vector<int>> matrix;
+	int bx = 0; int by = 0;
+	if (n <= 0)return matrix;
+	ptr_matrix_2 = &matrix;
+	ptr_matrix_2->resize(n);
+	for (auto& v : matrix)v.resize(n);
+	if (n == 1) {
+		matrix[0][0] = 1;
+		return matrix;
+	}
+	int _n = n;
+	while (true) {
+		generateMatrix_part(bx, by, _n);
+		_n -= 2;
+		if (_n == 1) {
+			int c = (n / 2);
+			matrix[c][c] = nb;
+			return matrix;
+		}
+		else if (_n == 0) {
+			return matrix;
+		}
+		bx += 1; by += 1;
+	}
+	return matrix;
+}

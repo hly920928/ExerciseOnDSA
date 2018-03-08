@@ -96,3 +96,5 @@ std::vector<Interval> merge(std::vector<Interval>& intervals);
 std::vector<Interval> insert(std::vector<Interval>& intervals, Interval newInterval);
 //58. Length of Last Word
 int lengthOfLastWord(std::string s);
+//59. Spiral Matrix II
+std::vector<std::vector<int>> generateMatrix(int n);
