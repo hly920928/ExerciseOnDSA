@@ -1636,3 +1636,31 @@ vector<vector<int>> generateMatrix(int n)
 	}
 	return matrix;
 }
+int accumFactri[] = { 1, 3, 9, 33, 153, 873, 5913, 46233, 409113 };
+int Factri[] = { 1, 2, 6, 24, 120, 720, 5040, 40320, 362880 };
+string getPermutation(int n, int k)
+{
+	string ans; int remainPlace = n-1;
+	bool table[10];
+	for (bool& b : table)b = true;
+	while (remainPlace>0) {
+		for (int i =1; i <=n; i++) {
+			if (!table[i])continue;
+			int id = 1;
+			for (int j= i - 1; j> 0;j--) {
+				if (table[j])id++;
+			}
+			if (Factri[remainPlace-1] * id >= k) {
+				ans.push_back(i + '0');
+				k -= Factri[remainPlace - 1] * (id - 1);
+				table[i] = false;
+				break;
+			}
+		}
+		remainPlace--;
+	}
+	for (int i = 1; i <= n; i++) {
+		if (table[i])ans.push_back(i + '0');
+	}
+	return ans;
+}

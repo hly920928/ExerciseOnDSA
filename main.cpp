@@ -24,6 +24,8 @@ int main() {
 	v.push_back(Interval(12, 16));
 	//v.push_back(Interval(8, 10));
 	//v.push_back(Interval(15, 18));
-	auto ans =generateMatrix(1);
+	for (int i = 1; i <= 6; i++) {
+		cout << getPermutation(3, i) << endl;
+	}
 	return 0;
 }

@@ -98,3 +98,5 @@ std::vector<Interval> insert(std::vector<Interval>& intervals, Interval newInter
 int lengthOfLastWord(std::string s);
 //59. Spiral Matrix II
 std::vector<std::vector<int>> generateMatrix(int n);
+//60. Permutation Sequence
+std::string getPermutation(int n, int k);
