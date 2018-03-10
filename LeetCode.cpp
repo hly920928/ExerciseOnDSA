@@ -1664,3 +1664,26 @@ string getPermutation(int n, int k)
 	}
 	return ans;
 }
+
+ListNode * rotateRight(ListNode * head, int k)
+{ 
+	auto _h = head;
+
+	if (head == nullptr)return head;
+	if (head->next == nullptr)return head;
+	if(k==0)return head;
+	ListNode* ans = nullptr;
+	vector<ListNode*> v;
+	while (head != nullptr) {
+		v.push_back(head);
+		head = head->next;
+	}
+	if (v.size() <=k) {
+		k = k%v.size();
+		if (k == 0)return _h;
+	}
+	ans = v[v.size() - k];
+	v[v.size() - 1]->next = v[0];
+    v[v.size() - k - 1]->next = nullptr;
+	return ans;
+}

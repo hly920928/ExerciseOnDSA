@@ -100,3 +100,5 @@ int lengthOfLastWord(std::string s);
 std::vector<std::vector<int>> generateMatrix(int n);
 //60. Permutation Sequence
 std::string getPermutation(int n, int k);
+//61. Rotate List
+ListNode* rotateRight(ListNode* head, int k);
