@@ -26,11 +26,6 @@ int main() {
 	l2.next = &l3;
 	l3.next = &l4;
 	l4.next = &l5;
-	auto ans = rotateRight(&l1,5);
-	//v.push_back(Interval(8, 10));
-	//v.push_back(Interval(15, 18));
-	for (int i = 1; i <= 6; i++) {
-		cout << getPermutation(3, i) << endl;
-	}
+	int t = uniquePaths(10,10);
 	return 0;
 }

@@ -102,3 +102,5 @@ std::vector<std::vector<int>> generateMatrix(int n);
 std::string getPermutation(int n, int k);
 //61. Rotate List
 ListNode* rotateRight(ListNode* head, int k);
+//62. Unique Paths
+int uniquePaths(int m, int n);

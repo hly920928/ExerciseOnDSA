@@ -1687,3 +1687,17 @@ ListNode * rotateRight(ListNode * head, int k)
     v[v.size() - k - 1]->next = nullptr;
 	return ans;
 }
+
+int uniquePaths(int m, int n)
+{
+	int _n = m+n;
+	int k = (m < n) ? m : n;
+	_n -= 2;	k -= 1;
+	if (k == 0)return 1;
+	long long ki = 1;
+	for (int i = 2; i <= k; i++)ki *= i;
+	long long  n_n_k = _n - k + 1;
+	for (int i = n_n_k + 1; i <= _n; i++)n_n_k *= i;
+
+	return n_n_k/ ki;
+}
