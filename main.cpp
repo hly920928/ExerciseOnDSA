@@ -16,16 +16,9 @@
 #include "RouterNode.h"
 using namespace std;
 int main() {
-	vector<Interval>v;
-	ListNode l1(1);
-	ListNode l2(2);
-	ListNode l3(3);
-	ListNode l4(4);
-	ListNode l5(5);
-	l1.next = &l2;
-	l2.next = &l3;
-	l3.next = &l4;
-	l4.next = &l5;
-	int t = uniquePaths(10,10);
+	vector<vector<int>>v;
+	v.resize(1);
+	v[0].push_back(0);
+	int t = uniquePathsWithObstacles(v);
 	return 0;
 }

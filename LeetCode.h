@@ -104,3 +104,5 @@ std::string getPermutation(int n, int k);
 ListNode* rotateRight(ListNode* head, int k);
 //62. Unique Paths
 int uniquePaths(int m, int n);
+//63. Unique Paths II
+int uniquePathsWithObstacles(std::vector<std::vector<int>>& obstacleGrid);
