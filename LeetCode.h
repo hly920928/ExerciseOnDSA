@@ -106,3 +106,5 @@ ListNode* rotateRight(ListNode* head, int k);
 int uniquePaths(int m, int n);
 //63. Unique Paths II
 int uniquePathsWithObstacles(std::vector<std::vector<int>>& obstacleGrid);
+//64. Minimum Path Sum
+int minPathSum(std::vector<std::vector<int>>& grid);

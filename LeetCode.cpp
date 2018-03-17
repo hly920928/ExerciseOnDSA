@@ -1728,3 +1728,27 @@ int uniquePathsWithObstacles(vector<vector<int>>& obstacleGrid)
 	}
 	return table[m-1][n-1];
 }
+
+int minPathSum(vector<vector<int>>& grid)
+{
+	vector<vector<int>>table;
+	int m = grid.size();
+	int n = grid[0].size();
+	table.resize(m);
+	for (auto& v : table) {
+		v.resize(n);
+		for (auto& c : v) {
+			c = INT_MAX;
+		}
+	}
+	table[0][0] = grid[0][0];
+	for (int i = 0; i < m; i++) {
+		for (int j = 0; j< n; j++) {
+			int t1 = (i - 1 >= 0) ? table[i - 1][j] + grid[i][j] : INT_MAX;
+			int t2 = (j - 1 >= 0) ? table[i][j - 1] + grid[i][j] : INT_MAX;
+			table[i][j] = (t1 < t2) ? t1 : t2;
+			if(i==0&&j==0)table[0][0] = grid[0][0];
+		}
+	}
+	return table[m - 1][n - 1];
+}
