@@ -108,3 +108,5 @@ int uniquePaths(int m, int n);
 int uniquePathsWithObstacles(std::vector<std::vector<int>>& obstacleGrid);
 //64. Minimum Path Sum
 int minPathSum(std::vector<std::vector<int>>& grid);
+//65. Valid Number
+bool isNumber(std::string s);

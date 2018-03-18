@@ -1752,3 +1752,70 @@ int minPathSum(vector<vector<int>>& grid)
 	}
 	return table[m - 1][n - 1];
 }
+bool inline isNum(char c) {
+	return (c >= '0'&&c <= '9');
+}
+bool inline isInteger_positive(string& s,int head,int n) {
+	if (head >= n)return false;
+	for (int i = head; i < n; i++) {
+		if (!isNum(s[i]))return false;
+	}
+	return true;
+}
+void inline popBlank(string& s, int n) {
+	for (int i = n-1; i >=0; i--) {
+		if (s[i] == ' ')s.pop_back();
+		else break;
+	}
+	n = s.size();
+	int end = 0;
+	for (end=0; end< n; end++) {
+		if (s[end] == ' ')continue;
+		else break;
+	}
+	if(end!=0)s.erase(0, end);
+}
+bool isNumber(string s)
+{
+	bool fInt = false;
+	bool fNeg = false;
+	bool fExp = false;
+	bool fFra = false;
+	int n = s.size();
+	popBlank(s, n);
+	n = s.size();
+	if (n == 0)return false;
+	for (int i = 0; i < n; i++) {
+		char now = s[i];
+		if (now == '+') {
+			if (n == 1)return false;
+			if (i!= 0)return false;
+			continue;
+		}
+		if (!fNeg&&now == '-') {
+			if (i != 0)return false;
+			fNeg = true;
+			continue;
+		}
+		if (!fFra&&now == '.') {
+			if (n == 1)return false;
+			if (i == n-1&&( s[i -1] == '-' || s[i -1] == '+'))return false;
+			fFra = true;
+			continue;
+		}
+		if (!fExp&&now == 'e') {
+			if (i == 0)return false;
+			if (i ==1&&(s[0] == '-'|| s[0] =='.' || s[0] == '+'))return false;
+			if (i == n - 1)return false;
+			if ((s[i + 1] == '-'|| s[i + 1] == '+')&&i + 1 < n - 1) {
+				i++;
+			}
+			i++;
+			return isInteger_positive(s, i, n);
+		}
+		if (!isNum(now)) {
+			return false;
+		}
+	}
+	return true;
+}
