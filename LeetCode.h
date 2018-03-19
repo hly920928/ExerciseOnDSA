@@ -112,3 +112,5 @@ int minPathSum(std::vector<std::vector<int>>& grid);
 bool isNumber(std::string s);
 //66. Plus One
 std::vector<int> plusOne(std::vector<int>& digits);
+//67. Add Binary
+std::string addBinary(std::string a, std::string b);

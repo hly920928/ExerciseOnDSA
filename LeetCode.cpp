@@ -1834,3 +1834,28 @@ std::vector<int> plusOne(std::vector<int>& digits)
 	reverse(ans.begin(), ans.end());
 	return ans;
 }
+
+string addBinary(string a, string b)
+{
+	if (a == "0")return b;
+	if (b == "0")return a;
+	if (a == "0"&&b == "0")return "0";
+	string ans;
+	reverse(a.begin(), a.end());
+	reverse(b.begin(), b.end());
+	int upFlag =0; 
+	int a_n = a.size();
+	int b_n = b.size();
+	int n = (a_n>b_n)? a_n:b_n;
+	for (int i = 0; i < n; i++) {
+		int now_a=(i>a_n-1)?0:a[i]-'0';
+		int now_b=(i>b_n - 1)?0:b[i] - '0';
+		int now = now_a + now_b+ upFlag;
+		if (now % 2)ans.push_back('1');
+		else ans.push_back('0');
+		upFlag = now / 2;
+	}
+	if (upFlag)ans.push_back('1');
+	reverse(ans.begin(), ans.end());
+	return ans;
+}

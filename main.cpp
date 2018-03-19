@@ -17,6 +17,6 @@
 using namespace std;
 int main() {
 	vector<int>ans; ans.push_back(0);
-	plusOne(ans);
+	auto s = addBinary("100", "110010");
 	return 0;
 }
