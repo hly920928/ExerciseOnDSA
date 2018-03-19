@@ -1819,3 +1819,18 @@ bool isNumber(string s)
 	}
 	return true;
 }
+
+std::vector<int> plusOne(std::vector<int>& digits)
+{
+	vector<int> ans;
+	reverse(digits.begin(), digits.end());
+	int upFlag =1; int n = digits.size();
+	for (int i = 0; i < n; i++) {
+		int now = digits[i] + upFlag;
+		upFlag = now / 10;
+		ans.push_back(now % 10);
+	}
+	if (upFlag)ans.push_back(upFlag);
+	reverse(ans.begin(), ans.end());
+	return ans;
+}

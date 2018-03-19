@@ -16,7 +16,7 @@
 #include "RouterNode.h"
 using namespace std;
 int main() {
-	int a =+-5;
-	cout << isNumber("  2.8")<< endl;
+	vector<int>ans; ans.push_back(0);
+	plusOne(ans);
 	return 0;
 }
