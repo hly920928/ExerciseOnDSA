@@ -1859,3 +1859,62 @@ string addBinary(string a, string b)
 	reverse(ans.begin(), ans.end());
 	return ans;
 }
+string strBlank(int n) {
+	string ans; ans.resize(n);
+	for (char& c : ans)c = ' ';
+	return ans;
+}
+void inline pack(vector<string>& words,int head_id, int end_id, vector<string>& ans,int diff,bool isEnd) {
+	int n = end_id - head_id;
+	diff += n;
+	ans.push_back("");
+	string& temp= ans.back();
+	temp = words[head_id];
+	if (isEnd) {
+		for (int i = head_id + 1; i <= end_id; i++) {
+			temp.push_back(' ');
+			temp.insert(temp.end(), words[i].begin(), words[i].end());
+		}
+		string b = strBlank(diff-n);
+		temp.insert(temp.end(), b.begin(), b.end());
+		return;
+	}
+	if (n == 0) {
+		string b = strBlank(diff);
+		temp.insert(temp.end(), b.begin(), b.end());
+		return;
+	}
+	int blankLen = (diff%n) ? diff / n + 1 : diff / n;
+	for (int i = head_id + 1; i <=end_id; i++) {
+		string b = strBlank(blankLen);
+		temp.insert(temp.end(), b.begin(), b.end());
+		temp.insert(temp.end(), words[i].begin(), words[i].end());
+		diff -= blankLen; n--;
+		if (n == 0) {
+			blankLen = 0;
+		}else {
+			blankLen = (diff%n) ? diff / n + 1 : diff / n;
+		}
+	}
+}
+vector<string> fullJustify(vector<string>& words, int maxWidth)
+{
+	vector<string> ans; int head_id = 0; int end_id = 0;
+	int total = words[head_id].size(); int len = words.size();
+	while (true) {
+		if (end_id == len-1) {
+			pack(words, head_id, end_id,ans, maxWidth - total,true);
+			break;
+		}
+		if (total +1+ words[end_id + 1].size() > maxWidth) {
+			pack(words, head_id, end_id, ans, maxWidth - total,false);
+			head_id = end_id + 1; end_id = end_id + 1;
+			total = words[head_id].size();
+		}
+		else {
+			end_id++;
+			total += 1+words[end_id].size();
+		}
+	}
+	return ans;
+}

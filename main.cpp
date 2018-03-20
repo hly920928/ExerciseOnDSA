@@ -16,7 +16,10 @@
 #include "RouterNode.h"
 using namespace std;
 int main() {
-	vector<int>ans; ans.push_back(0);
-	auto s = addBinary("100", "110010");
+	string vs[] ={"My", "momma", "always", "said,", "\"Life", "was", "like", "a", "box", "of", "chocolates.", "You", "never", "know", "what", "you're", "gonna", "get."};
+	vector<string> words;
+	for (string s : vs)words.push_back(s);
+
+	auto v_s = fullJustify(words, 20);
 	return 0;
 }
