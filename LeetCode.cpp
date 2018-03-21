@@ -1918,3 +1918,25 @@ vector<string> fullJustify(vector<string>& words, int maxWidth)
 	}
 	return ans;
 }
+
+int mySqrt(int x)
+{
+	if (x > 2147395600)return 46341;
+	int lo = 0; int hi = 46340;
+	int mi = (lo + hi) / 2;
+	while (true) {
+		int ms = mi*mi;
+		int mps = (mi + 1)*(mi + 1);
+		if (ms<=x&&mps>=x) {
+			if (ms == x)return mi;
+			if (mps == x)return mi + 1;
+			return mi;
+		}
+		if (ms > x) {
+			hi = mi;
+		}else if (mps < x) {
+			lo = (mi + 1);
+		}
+		mi = (lo + hi) / 2;
+	}
+}

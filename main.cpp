@@ -16,10 +16,7 @@
 #include "RouterNode.h"
 using namespace std;
 int main() {
-	string vs[] ={"My", "momma", "always", "said,", "\"Life", "was", "like", "a", "box", "of", "chocolates.", "You", "never", "know", "what", "you're", "gonna", "get."};
-	vector<string> words;
-	for (string s : vs)words.push_back(s);
 
-	auto v_s = fullJustify(words, 20);
+	auto v_s = mySqrt(2147483647);
 	return 0;
 }

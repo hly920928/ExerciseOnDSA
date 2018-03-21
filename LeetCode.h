@@ -116,3 +116,5 @@ std::vector<int> plusOne(std::vector<int>& digits);
 std::string addBinary(std::string a, std::string b);
 //68. Text Justification
 std::vector<std::string> fullJustify(std::vector<std::string>& words, int maxWidth);
+//68. Text Justification
+int mySqrt(int x);
