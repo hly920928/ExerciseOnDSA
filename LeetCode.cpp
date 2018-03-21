@@ -1921,7 +1921,7 @@ vector<string> fullJustify(vector<string>& words, int maxWidth)
 
 int mySqrt(int x)
 {
-	if (x > 2147395600)return 46341;
+	if (x > 2147395600)return 46340;
 	int lo = 0; int hi = 46340;
 	int mi = (lo + hi) / 2;
 	while (true) {
@@ -1939,4 +1939,16 @@ int mySqrt(int x)
 		}
 		mi = (lo + hi) / 2;
 	}
+}
+
+int climbStairs(int n)
+{
+	vector<int>table;
+	table.resize(n+1);
+	table[0] = 0;
+	table[1] = 1;
+	table[2] = 2;
+	for (int i = 3; i <= n; i++)
+		table[i] = table[i - 1] + table[i - 2];
+	return table[n];
 }
