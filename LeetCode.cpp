@@ -1952,3 +1952,56 @@ int climbStairs(int n)
 		table[i] = table[i - 1] + table[i - 2];
 	return table[n];
 }
+
+string simplifyPath(string path)
+{
+	
+	string ans;
+	vector<string> v;
+	int n = path.size();
+	string str;
+	for (int i = 0; i < n; i++) {
+		if (path[i] == '/') {
+		/*
+		if (str.size() != 0) {
+		if (str == "." || str == "..")
+		{
+		if (!v.empty())v.pop_back();
+		str.clear();
+		}else {
+		v.push_back(str);
+		str.clear();}}
+		*/
+			if (str== ".") {
+				str.clear();
+				continue;
+			}
+			if (str == "..") {
+				if (!v.empty())v.pop_back();
+				str.clear();
+				continue;
+			}
+			if (!str.empty()) {
+				v.push_back(str); str.clear();
+			}
+		}
+		else {
+			str.push_back(path[i]);
+		}
+	}
+	if (str == ".") {
+		str.clear();
+	}
+	else if (str == "..") {
+		if (!v.empty())v.pop_back();
+		str.clear();
+	}else if (!str.empty()) {
+		v.push_back(str); str.clear();
+	}
+	if (v.empty())return "/";
+	for (string &s : v) {
+		ans.push_back('/');
+		ans.insert(ans.end(), s.begin(), s.end());
+	}
+	return ans;
+}

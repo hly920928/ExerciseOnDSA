@@ -17,6 +17,6 @@
 using namespace std;
 int main() {
 
-	auto v_s = mySqrt(2147483647);
+	auto v_s = simplifyPath("///eHx/..");
 	return 0;
 }

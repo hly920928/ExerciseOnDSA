@@ -118,3 +118,7 @@ std::string addBinary(std::string a, std::string b);
 std::vector<std::string> fullJustify(std::vector<std::string>& words, int maxWidth);
 //68. Text Justification
 int mySqrt(int x);
+//70. Climbing Stairs
+int climbStairs(int n);
+//71. Simplify Path
+std::string simplifyPath(std::string path);
