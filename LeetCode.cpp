@@ -2005,3 +2005,34 @@ string simplifyPath(string path)
 	}
 	return ans;
 }
+
+int minDistance(string word1, string word2)
+{
+	vector<vector<int>>dp;
+	int m = word1.size(); int n = word2.size();
+	dp.resize(m+1);
+	for (auto& v : dp)v.resize(n+1);
+	dp[0][0] = 0;
+	for (int i = 0; i <=m; i++) {
+		for (int j = 0; j <= n;j++) {
+			if (i == 0) {
+				dp[i][j] = j;
+				continue;}
+			if (j== 0) {
+				dp[i][j] =i;
+				continue;}
+			dp[i][j]= dp[i - 1][j] + 1;//Delete
+			int t = dp[i][j-1] + 1;//Insert
+			dp[i][j] = (dp[i][j] < t) ? dp[i][j] : t;
+			if (word1[i - 1] == word2[j - 1]) {
+				 t = dp[i - 1][j - 1];//Do nothing
+				dp[i][j] = (dp[i][j] < t) ? dp[i][j] : t;
+			}
+			else {
+				t = dp[i - 1][j - 1]+1;//Replace
+				dp[i][j] = (dp[i][j] < t) ? dp[i][j] : t;
+			}
+		}
+	}
+	return dp[m][n];
+}

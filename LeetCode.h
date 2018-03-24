@@ -122,3 +122,5 @@ int mySqrt(int x);
 int climbStairs(int n);
 //71. Simplify Path
 std::string simplifyPath(std::string path);
+//72. Edit Distance
+int minDistance(std::string word1, std::string word2);

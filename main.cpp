@@ -17,6 +17,6 @@
 using namespace std;
 int main() {
 
-	auto v_s = simplifyPath("///eHx/..");
+	auto v_s = minDistance("a","a");
 	return 0;
 }
