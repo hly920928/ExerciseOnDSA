@@ -124,3 +124,5 @@ int climbStairs(int n);
 std::string simplifyPath(std::string path);
 //72. Edit Distance
 int minDistance(std::string word1, std::string word2);
+//73. Set Matrix Zeroes
+void setZeroes(std::vector<std::vector<int>>& matrix);

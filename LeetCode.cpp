@@ -1728,7 +1728,6 @@ int uniquePathsWithObstacles(vector<vector<int>>& obstacleGrid)
 	}
 	return table[m-1][n-1];
 }
-
 int minPathSum(vector<vector<int>>& grid)
 {
 	vector<vector<int>>table;
@@ -2035,4 +2034,31 @@ int minDistance(string word1, string word2)
 		}
 	}
 	return dp[m][n];
+}
+void inline SetZero(int i, int j, vector<vector<int>>& matrix,int m,int n) {
+	for (int k = 0; k < m; k++) {
+		if(matrix[k][j]!= INT_MAX - 1) matrix[k][j] = 0;
+	}
+	for (int k= 0;k < n; k++)
+	{
+		if (matrix[i][k] != INT_MAX - 1)matrix[i][k] = 0;
+	} 
+}
+void setZeroes(vector<vector<int>>& matrix)
+{
+	int m = matrix.size();
+	int n = matrix[0].size();
+	for (int i = 0; i < m; i++) {
+		for (int j = 0;j < n;j++) {
+			if (matrix[i][j] == 0)matrix[i][j] = INT_MAX-1;
+		}
+	}
+	for (int i = 0; i < m; i++) {
+		for (int j = 0; j < n; j++) {
+			if (matrix[i][j] == INT_MAX - 1) {
+				matrix[i][j] = 0;
+				SetZero(i, j, matrix, m, n);
+			}
+		}
+	}
 }

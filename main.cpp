@@ -16,7 +16,15 @@
 #include "RouterNode.h"
 using namespace std;
 int main() {
-
-	auto v_s = minDistance("a","a");
+	int t1[] = { 0,0, 0, 5,4, 3, 1, 4,0, 1, 1, 4,1, 2, 1, 3,0, 0, 1, 1 };
+	vector<vector<int>> matrix;
+	matrix.resize(5);
+	for (int i = 0; i < 5; i++) {
+		matrix[i].resize(4);
+		for (int j= 0;j < 4; j++) {
+			matrix[i][j] = t1[i * 4 + j];
+		}
+	}
+	 setZeroes(matrix);
 	return 0;
 }
