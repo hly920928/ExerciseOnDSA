@@ -2062,3 +2062,32 @@ void setZeroes(vector<vector<int>>& matrix)
 		}
 	}
 }
+int inline getMatrix(vector<vector<int>>& matrix, int id,int m) {
+	int x = id / m;
+	int y = id%m;
+	return matrix[x][y];
+}
+bool searchMatrix(vector<vector<int>>& matrix, int target)
+{
+	int m = matrix.size();
+	if (m == 0)return false;
+	int n = matrix[0].size();
+	if (n == 0)return false;
+	int lo = 0; int hi = m*n - 1;
+	while (true) {
+		if (hi - lo<=1) {
+			if (getMatrix(matrix, hi, n) == target)return true;
+			if (getMatrix(matrix, lo, n) == target)return true;
+			return false;
+		}
+		int mid = (lo + hi) / 2;
+		int now = getMatrix(matrix, mid, n);
+		if (now == target)return true;
+		if (now < target) {
+			lo = mid;
+		}
+		else {
+			hi = mid;
+		}
+	}
+}

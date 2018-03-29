@@ -126,3 +126,5 @@ std::string simplifyPath(std::string path);
 int minDistance(std::string word1, std::string word2);
 //73. Set Matrix Zeroes
 void setZeroes(std::vector<std::vector<int>>& matrix);
+//74. Search a 2D Matrix
+bool searchMatrix(std::vector<std::vector<int>>& matrix, int target);
