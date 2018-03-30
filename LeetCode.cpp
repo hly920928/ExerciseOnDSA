@@ -2091,3 +2091,24 @@ bool searchMatrix(vector<vector<int>>& matrix, int target)
 		}
 	}
 }
+
+void sortColors(std::vector<int>& nums)
+{
+	int n_red = 0;
+	int n_white = 0;
+	int n_blue = 0;
+	for (int i : nums) {
+		switch (i)
+		{
+		case 0: {n_red++; break; }
+		case 1: {n_white++; break; }
+		case 2: {n_blue++; break; }
+		}
+	}
+	int p1 = n_red;
+	int p2 = n_red + n_white;
+	int p3 = n_red + n_white+ n_blue;
+	for (int i = 0; i < p1; i++)nums[i] = 0;
+	for (int i = p1; i <p2; i++)nums[i] = 1;
+	for (int i = p2; i < p3; i++)nums[i] = 2;
+}
