@@ -2112,52 +2112,43 @@ void sortColors(std::vector<int>& nums)
 	for (int i = p1; i <p2; i++)nums[i] = 1;
 	for (int i = p2; i < p3; i++)nums[i] = 2;
 }
-bool inline isAll(queue<int>* table, string& s) {
-	for (char c : s) {
-		if (table[c].front() < 0)return false;
+bool inline isOK(int* table_remain) {
+	for (int i = 'A'; i < 'z' + 1;i++) {
+		if (table_remain[i] > 0)return false;
 	}
 	return true;
-}
-void inline lowest(queue<int>* table , string& s,int& lo, char& c_lowest) {
-	 lo = INT_MAX;
-	for (char c : s) {
-		if (table[c].front() < lo) {
-			lo = table[c].front();
-			c_lowest = c;
-		}
-	}
 }
 string minWindow(string s, string t)
 {
 	int s_n = s.size();
-	if (t.size() > s_n)return "";
-	queue<int> table[256];
-	for (char& i : t)table[i].push(-1);
-	int lo = -1; int hi = -1; int len = INT_MAX; bool all_flag=false; 
-	int id_lowest = -1;
-	char c_lowest=' ';
-	
-	for (int i = 0; i < s_n;i++) {
-		if (table[s[i]].size()!=0) {
-			table[s[i]].pop();
-			table[s[i]].push(i);
-			if (!all_flag) {
-				if (isAll(table, t)) {
-					all_flag = true;
-					lowest(table, t, id_lowest, c_lowest);
-					lo = id_lowest; hi = i;
-				}
-			}
-			else {
-				if (s[i] == c_lowest) {
-					lowest(table, t, id_lowest, c_lowest);
-					if (i - id_lowest < hi - lo) {
-						hi = i; lo = id_lowest;
-					}
-				}
-			}
-		}
+	int num_needed = t.size();
+	if (num_needed> s_n)return "";
+	int table_remain[256];
+	for (int& i : table_remain)i = 0;
+	for (char c : t) {
+		table_remain[c]++;
 	}
-	if (!all_flag)return "";
-	return s.substr(lo, hi - lo+1);
+	for (int& i : table_remain) {
+		if (i == 0)i = INT_MIN;
+	}
+	int lo = -1; int hi = s_n;
+	int left = 0;	int right = 0;
+	while (true) {
+		if (table_remain[s[right]] != INT_MIN&&right < s_n) {
+			table_remain[s[right]]--;
+		}
+		if (right != s_n)right++;
+		while (isOK(table_remain)) {
+			if (right - left-1  < hi - lo) {
+				hi = right - 1;
+				lo = left;
+			}
+			table_remain[s[left]]++;
+			left++;
+		}
+
+		if (right == s_n)break;
+	}
+	if (lo == -1)return "";
+	return s.substr(lo, hi - lo + 1);
 }
