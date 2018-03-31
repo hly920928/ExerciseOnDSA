@@ -128,3 +128,7 @@ int minDistance(std::string word1, std::string word2);
 void setZeroes(std::vector<std::vector<int>>& matrix);
 //74. Search a 2D Matrix
 bool searchMatrix(std::vector<std::vector<int>>& matrix, int target);
+//75. Sort Colors
+void sortColors(std::vector<int>& nums);
+//76. Minimum Window Substring
+std::string minWindow(std::string s, std::string t);

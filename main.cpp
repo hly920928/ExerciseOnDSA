@@ -22,6 +22,6 @@ int main() {
 	matrix[0].push_back(1);
 	matrix[0].push_back(3);
 	matrix[0].push_back(5);
-	bool b = searchMatrix(matrix, 0);
+	auto s = minWindow("ADOBECODEBANC", "ABC");
 	return 0;
 }

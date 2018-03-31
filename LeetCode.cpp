@@ -2112,3 +2112,52 @@ void sortColors(std::vector<int>& nums)
 	for (int i = p1; i <p2; i++)nums[i] = 1;
 	for (int i = p2; i < p3; i++)nums[i] = 2;
 }
+bool inline isAll(queue<int>* table, string& s) {
+	for (char c : s) {
+		if (table[c].front() < 0)return false;
+	}
+	return true;
+}
+void inline lowest(queue<int>* table , string& s,int& lo, char& c_lowest) {
+	 lo = INT_MAX;
+	for (char c : s) {
+		if (table[c].front() < lo) {
+			lo = table[c].front();
+			c_lowest = c;
+		}
+	}
+}
+string minWindow(string s, string t)
+{
+	int s_n = s.size();
+	if (t.size() > s_n)return "";
+	queue<int> table[256];
+	for (char& i : t)table[i].push(-1);
+	int lo = -1; int hi = -1; int len = INT_MAX; bool all_flag=false; 
+	int id_lowest = -1;
+	char c_lowest=' ';
+	
+	for (int i = 0; i < s_n;i++) {
+		if (table[s[i]].size()!=0) {
+			table[s[i]].pop();
+			table[s[i]].push(i);
+			if (!all_flag) {
+				if (isAll(table, t)) {
+					all_flag = true;
+					lowest(table, t, id_lowest, c_lowest);
+					lo = id_lowest; hi = i;
+				}
+			}
+			else {
+				if (s[i] == c_lowest) {
+					lowest(table, t, id_lowest, c_lowest);
+					if (i - id_lowest < hi - lo) {
+						hi = i; lo = id_lowest;
+					}
+				}
+			}
+		}
+	}
+	if (!all_flag)return "";
+	return s.substr(lo, hi - lo+1);
+}
