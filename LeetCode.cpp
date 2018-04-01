@@ -2152,3 +2152,40 @@ string minWindow(string s, string t)
 	if (lo == -1)return "";
 	return s.substr(lo, hi - lo + 1);
 }
+void combine(vector<vector<int>>&ans, int n, int k) {
+	if (k == 1) {
+		for (int i = 1; i <= n; i++) {
+			vector<int>v; v.push_back(i);
+			ans.push_back(v);
+		}
+		return;
+	}
+	vector<vector<int>>less;
+	combine(less, n, k - 1);
+	for (vector<int>& v : less) {
+		if (v.back() == n)continue;
+		int back = v.back();
+		for (int i = back + 1; i <= n; i++) {
+			v.push_back(i);
+			ans.push_back(v);
+			v.pop_back();
+		}
+	}
+}
+vector<vector<int>> combine(int n, int k)
+{
+	vector<vector<int>> ans;
+	int i = 0;
+	vector<int> now(k, 0);
+	while (true) {
+		now[i]++;
+		if (now[0] + k - i > n+1)break;
+		if (now[i] + k - i > n+1)i--;
+		else if (i ==k - 1)ans.push_back(now);
+		else {
+			i++;
+			now[i] = now[i-1];
+		}
+	}
+	return ans;
+}

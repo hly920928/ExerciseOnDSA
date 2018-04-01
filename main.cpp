@@ -16,12 +16,6 @@
 #include "RouterNode.h"
 using namespace std;
 int main() {
-	int t1[] = { 0,0, 0, 5,4, 3, 1, 4,0, 1, 1, 4,1, 2, 1, 3,0, 0, 1, 1 };
-	vector<vector<int>> matrix;
-	matrix.resize(1);
-	matrix[0].push_back(1);
-	matrix[0].push_back(3);
-	matrix[0].push_back(5);
-	auto s = minWindow("ADOBECODEBANC", "ABC");
+	auto vv = combine(4, 2);
 	return 0;
 }

@@ -132,3 +132,5 @@ bool searchMatrix(std::vector<std::vector<int>>& matrix, int target);
 void sortColors(std::vector<int>& nums);
 //76. Minimum Window Substring
 std::string minWindow(std::string s, std::string t);
+//77. Combinations
+std::vector<std::vector<int>> combine(int n, int k);
