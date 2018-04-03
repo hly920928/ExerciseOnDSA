@@ -2189,3 +2189,32 @@ vector<vector<int>> combine(int n, int k)
 	}
 	return ans;
 }
+
+vector<vector<int>> subsets(std::vector<int>& nums)
+{
+	vector<vector<int>>ans;
+	int i = 0;
+	int n = nums.size();
+	vector<int> cur; 
+	ans.push_back(cur);
+	cur.push_back(nums[0]);
+
+	vector<int> now(n, 0);
+	while (true) {
+		now[i]++;
+	    cur[i] = nums[now[i] - 1];
+		ans.push_back(cur);
+		if (now[i] >=n) {
+			i--;
+			if (i == -1)break;
+			cur.pop_back();
+		}
+		else {
+			i++;
+			now[i] = now[i - 1];
+			cur.push_back(nums[now[i]-1]);
+		}
+		
+	}
+	return ans;
+}

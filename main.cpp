@@ -16,6 +16,10 @@
 #include "RouterNode.h"
 using namespace std;
 int main() {
-	auto vv = combine(4, 2);
+	vector<int>nums;
+	nums.push_back(1);
+	nums.push_back(2);
+	nums.push_back(3);
+	auto subs = subsets(nums);
 	return 0;
 }

@@ -134,3 +134,5 @@ void sortColors(std::vector<int>& nums);
 std::string minWindow(std::string s, std::string t);
 //77. Combinations
 std::vector<std::vector<int>> combine(int n, int k);
+//78. Subsets
+std::vector<std::vector<int>>subsets(std::vector<int>& nums);
