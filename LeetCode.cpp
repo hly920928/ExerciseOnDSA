@@ -2204,7 +2204,7 @@ vector<vector<int>> subsets(std::vector<int>& nums)
 		now[i]++;
 	    cur[i] = nums[now[i] - 1];
 		ans.push_back(cur);
-		if (now[i] >=n) {
+		if (now[i] ==n) {
 			i--;
 			if (i == -1)break;
 			cur.pop_back();
@@ -2217,4 +2217,39 @@ vector<vector<int>> subsets(std::vector<int>& nums)
 		
 	}
 	return ans;
+}
+vector<vector<char>>* exboard;
+int exm = 0;
+int exn = 0;
+string* ex_s;
+int ex_s_len=0;
+char inline ex_get(int x, int y) {
+	if (x<0 || x>=exm)return ' ';
+	if (y<0 || y>=exn)return ' ';
+	return exboard->at(x)[y];
+}
+bool existAt(int x, int y, int id) {
+    if (id == ex_s_len)return true;
+	if (ex_get(x, y) != ex_s->at(id))return false;
+	exboard->at(x)[y] = ' ';
+	if (existAt(x + 1, y, id + 1))return true;
+	if (existAt(x - 1, y, id + 1))return true;
+	if (existAt(x , y+1, id + 1))return true;
+	if (existAt(x, y-1, id + 1))return true;
+	exboard->at(x)[y] = ex_s->at(id);
+	return false;
+}
+bool exist(vector<vector<char>>& board, string word)
+{
+	exboard = &board;
+	exm = board.size();
+	exn = board[0].size();
+	ex_s = &word;
+	ex_s_len = word.size();
+	for (int i = 0; i < exm; i++) {
+		for (int j = 0; j < exn;j++) {
+			if (existAt(i, j, 0))return true;
+		}
+	}
+	return false;
 }

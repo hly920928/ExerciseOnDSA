@@ -136,3 +136,5 @@ std::string minWindow(std::string s, std::string t);
 std::vector<std::vector<int>> combine(int n, int k);
 //78. Subsets
 std::vector<std::vector<int>>subsets(std::vector<int>& nums);
+//79. Word Search
+bool exist(std::vector<std::vector<char>>& board, std::string word);
