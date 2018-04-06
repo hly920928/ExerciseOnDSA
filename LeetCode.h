@@ -138,3 +138,5 @@ std::vector<std::vector<int>> combine(int n, int k);
 std::vector<std::vector<int>>subsets(std::vector<int>& nums);
 //79. Word Search
 bool exist(std::vector<std::vector<char>>& board, std::string word);
+//Remove Duplicates from Sorted Array II
+int removeDuplicates_V2(std::vector<int>& nums);

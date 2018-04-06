@@ -17,19 +17,11 @@
 using namespace std;
 int main() {
 	int m[] = {
-		'A','B','C','E',
-			'S','F','C','S',
-			'A','D','E','E'
+		1,1,1,1
 	};
-	vector<vector<char>>mat;
-	mat.resize(3);
-	for (int i = 0; i < 3; i++) {
-		mat[i].resize(4);
-		for (int j = 0;j <4; j++) {
-			mat[i][j] = m[i * 4 + j];
-		}
-	}
+	vector<int>mat;
+	for (int i : m)mat.push_back(i);
 	string str = "ABCB";
-	bool ans = exist(mat, str);
+	int ans = removeDuplicates_V2(mat);
 	return 0;
 }

@@ -2253,3 +2253,31 @@ bool exist(vector<vector<char>>& board, string word)
 	}
 	return false;
 }
+
+int removeDuplicates_V2(std::vector<int>& nums)
+{
+	int n = nums.size();
+	if (n <3)return  n;
+	vector < bool>Dup; Dup.resize(n);
+	bool isDup = false;
+	for (int i = 0; i < n; i++) {
+		int now = nums[i];
+		if (i > 1 && now == nums[i - 1] && now == nums[i - 2]) {
+			Dup[i] = true;
+			isDup = true;
+		}
+	}
+	if(!isDup)return  n;
+	int id_ex = -1;
+	for (int i = 0; i < n; i++) {
+		int now = nums[i];
+		if (Dup[i] &&id_ex == -1)id_ex = i;
+		if (!Dup[i] &&id_ex != -1) {
+			nums[id_ex] = now;
+			Dup[i] = true;
+			id_ex++;
+		}
+	}
+		nums.resize(id_ex);
+		return id_ex;
+	}
