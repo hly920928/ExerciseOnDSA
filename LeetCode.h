@@ -140,3 +140,5 @@ std::vector<std::vector<int>>subsets(std::vector<int>& nums);
 bool exist(std::vector<std::vector<char>>& board, std::string word);
 //Remove Duplicates from Sorted Array II
 int removeDuplicates_V2(std::vector<int>& nums);
+//81. Search in Rotated Sorted Array II
+bool searchRotated_Sorted_Array(std::vector<int>& nums, int target);

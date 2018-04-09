@@ -2281,3 +2281,30 @@ int removeDuplicates_V2(std::vector<int>& nums)
 		nums.resize(id_ex);
 		return id_ex;
 	}
+
+bool searchRotated_Sorted_Array(std::vector<int>& nums, int target)
+{
+	int n = nums.size() - 1;
+	int p = -1;
+	if (n == -1)return -1;
+	for (int i = 0; i < n; i++) {
+		if (nums[i] > nums[i + 1]) {
+			p = i + 1; break;
+		}
+	}
+	if (p == -1) {
+		auto itr = lower_bound(nums.begin(), nums.end(), target);
+		if (itr == nums.end() || *itr != target)return false;
+		return true;
+	}
+	if (target < nums[0]) {
+		auto itr = lower_bound(nums.begin() + p, nums.end(), target);
+		if (itr == nums.end() || *itr != target)return false;
+		return true;
+	}
+	else {
+		auto itr = lower_bound(nums.begin(), nums.begin() + p, target);
+		if (itr == nums.begin() + p || *itr != target)return false;
+		return true;
+	}
+}
