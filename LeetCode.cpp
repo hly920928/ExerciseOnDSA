@@ -2286,7 +2286,7 @@ bool searchRotated_Sorted_Array(std::vector<int>& nums, int target)
 {
 	int n = nums.size() - 1;
 	int p = -1;
-	if (n == -1)return -1;
+	if (n == -1)return false;
 	for (int i = 0; i < n; i++) {
 		if (nums[i] > nums[i + 1]) {
 			p = i + 1; break;
@@ -2307,4 +2307,29 @@ bool searchRotated_Sorted_Array(std::vector<int>& nums, int target)
 		if (itr == nums.begin() + p || *itr != target)return false;
 		return true;
 	}
+}
+
+ListNode * deleteDuplicates(ListNode * head)
+{
+	if(head == nullptr)return head;
+	auto now = head;
+	while (true) {
+		if (now== nullptr||now->next == nullptr || now->next->val != now->val)break;
+		while (now->next != nullptr&&now->next->val == now->val)now = now->next;
+		now = now->next;
+	}
+	head = now;
+	if (head == nullptr)return head;
+	int target = -1; ListNode * ptr2 = nullptr;
+	while (now->next != nullptr) {
+		if (now->next->next != nullptr&&now->next->val == now->next->next->val) {
+			ptr2 = now->next->next; target = ptr2->val;
+			while (ptr2->next != nullptr&&ptr2->next->val == target)ptr2 = ptr2->next;
+			now->next = ptr2->next; target = -1; ptr2 = nullptr;
+		}
+		else {
+			now = now->next;
+		}
+	}
+	return head;
 }

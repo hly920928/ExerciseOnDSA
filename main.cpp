@@ -16,12 +16,23 @@
 #include "RouterNode.h"
 using namespace std;
 int main() {
-	int m[] = {
-		1,1,1,1
-	};
-	vector<int>mat;
-	for (int i : m)mat.push_back(i);
-	string str = "ABCB";
-	int ans = removeDuplicates_V2(mat);
+	int t[] = { 1,1,1,1,1,1,1 };
+	ListNode head(t[0]);
+	ListNode* cur = &head;
+	for (int i = 1; i < sizeof(t)/sizeof(int); i++) {
+		cur->next = new ListNode(t[i]);
+		cur = cur->next;
+	}
+	cur = &head;
+	while (cur != nullptr) {
+		cout << cur->val << endl;
+		cur = cur->next;
+	}
+	auto ans = deleteDuplicates(&head);
+	cur = &head;
+	while (cur != nullptr) {
+		cout << cur->val << endl;
+		cur = cur->next;
+	}
 	return 0;
 }

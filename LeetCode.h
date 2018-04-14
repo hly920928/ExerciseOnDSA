@@ -142,3 +142,5 @@ bool exist(std::vector<std::vector<char>>& board, std::string word);
 int removeDuplicates_V2(std::vector<int>& nums);
 //81. Search in Rotated Sorted Array II
 bool searchRotated_Sorted_Array(std::vector<int>& nums, int target);
+//82. Remove Duplicates from Sorted List II
+ListNode* deleteDuplicates(ListNode* head);
