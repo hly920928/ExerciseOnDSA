@@ -29,7 +29,7 @@ int main() {
 		cur = cur->next;
 	}
 	auto ans = deleteDuplicates(&head);
-	cur = &head;
+	cur = ans;
 	while (cur != nullptr) {
 		cout << cur->val << endl;
 		cur = cur->next;

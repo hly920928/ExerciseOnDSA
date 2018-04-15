@@ -2333,3 +2333,23 @@ ListNode * deleteDuplicates(ListNode * head)
 	}
 	return head;
 }
+void inline deleteAfter(ListNode * ln) {
+	if (ln->next->next == nullptr) {
+		ln->next = nullptr;
+	}
+	ln->next = ln->next->next;
+}
+ListNode * deleteDuplicates_v0(ListNode * head)
+{
+	if(head== nullptr)return head;
+	ListNode * cur= head;
+	while (cur->next != nullptr) {
+		if (cur->val == cur->next->val) {
+			deleteAfter(cur);
+		}
+		else {
+			cur = cur->next;
+		}
+	}
+	return head;
+}
