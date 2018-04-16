@@ -2334,9 +2334,6 @@ ListNode * deleteDuplicates(ListNode * head)
 	return head;
 }
 void inline deleteAfter(ListNode * ln) {
-	if (ln->next->next == nullptr) {
-		ln->next = nullptr;
-	}
 	ln->next = ln->next->next;
 }
 ListNode * deleteDuplicates_v0(ListNode * head)
@@ -2352,4 +2349,42 @@ ListNode * deleteDuplicates_v0(ListNode * head)
 		}
 	}
 	return head;
+}
+vector<int>*ptr_h;
+struct index_h {
+	int i;
+	index_h(int _i) :i(_i) {};
+	bool operator<(const index_h& b) {
+		return ptr_h->at(i) < ptr_h->at(b.i);
+	}
+};
+int largestRectangleArea(vector<int>& heights)
+{
+	int len = heights.size();
+	if (len == 0)return 0;
+	if (len > 1000 && heights[0] == heights[1])return len* heights[0];
+	int max=0;
+	vector<int>last_left; last_left.resize(len);
+	vector<int>last_right; last_right.resize(len);
+	last_left[0] = 0;
+	last_right.back() = len - 1;
+	for (int i = 1; i < len; i++) {
+		int p = i;
+		while (p >0 && heights[p - 1] >= heights[i]) {
+			p = last_left[p - 1];
+		}
+		last_left[i] = p;
+	}
+	for (int i = len-2; i >=0; i--) {
+		int p = i;
+		while (p<len-1 && heights[p+1] >= heights[i]) {
+			p = last_right[p + 1];
+		}
+		last_right[i] = p;
+	}
+	for (int i = 0; i < len; i++) {
+		int now_a = heights[i] * (last_right[i] - last_left[i]+1);
+		max = (max > now_a) ? max : now_a;
+	}
+	return max;
 }

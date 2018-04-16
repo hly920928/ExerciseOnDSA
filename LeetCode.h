@@ -144,5 +144,7 @@ int removeDuplicates_V2(std::vector<int>& nums);
 bool searchRotated_Sorted_Array(std::vector<int>& nums, int target);
 //82. Remove Duplicates from Sorted List II
 ListNode* deleteDuplicates(ListNode* head);
-//
-ListNode* deleteDuplicates(ListNode* head);
+//83. Remove Duplicates from Sorted List
+ListNode* deleteDuplicates_v0(ListNode* head);
+//84. Largest Rectangle in Histogram
+int largestRectangleArea(std::vector<int>& heights);

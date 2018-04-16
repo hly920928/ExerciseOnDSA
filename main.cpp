@@ -16,23 +16,11 @@
 #include "RouterNode.h"
 using namespace std;
 int main() {
-	int t[] = { 1,1,1,1,1,1,1 };
-	ListNode head(t[0]);
-	ListNode* cur = &head;
-	for (int i = 1; i < sizeof(t)/sizeof(int); i++) {
-		cur->next = new ListNode(t[i]);
-		cur = cur->next;
+	int t[] = { 2,1,5,6,2,3 };
+	vector<int >v;
+	for (int i : t) {
+		v.push_back(i);
 	}
-	cur = &head;
-	while (cur != nullptr) {
-		cout << cur->val << endl;
-		cur = cur->next;
-	}
-	auto ans = deleteDuplicates(&head);
-	cur = ans;
-	while (cur != nullptr) {
-		cout << cur->val << endl;
-		cur = cur->next;
-	}
+	int sum = largestRectangleArea(v);
 	return 0;
 }
