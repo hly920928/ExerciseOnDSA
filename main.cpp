@@ -16,11 +16,14 @@
 #include "RouterNode.h"
 using namespace std;
 int main() {
-	int t[] = { 2,1,5,6,2,3 };
-	vector<int >v;
-	for (int i : t) {
-		v.push_back(i);
+	char t1[] = { 1,0,1,0,0,1,0,1,1,1 ,1,1,1,1,1,1,0,0,1,0};
+	vector<vector<char>>m; m.resize(4);
+	for (int i = 0; i < 4; i++) {
+		m[i].resize(5);
+		for (int j= 0;j< 5; j++) {
+			m[i][j] = t1[i * 5 + j]+'0';
+		}
 	}
-	int sum = largestRectangleArea(v);
+	int sum = maximalRectangle(m);
 	return 0;
 }

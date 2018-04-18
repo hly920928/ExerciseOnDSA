@@ -148,3 +148,5 @@ ListNode* deleteDuplicates(ListNode* head);
 ListNode* deleteDuplicates_v0(ListNode* head);
 //84. Largest Rectangle in Histogram
 int largestRectangleArea(std::vector<int>& heights);
+//85. Maximal Rectangle
+int maximalRectangle(std::vector<std::vector<char>>& matrix);

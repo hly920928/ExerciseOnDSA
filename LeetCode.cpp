@@ -2350,24 +2350,17 @@ ListNode * deleteDuplicates_v0(ListNode * head)
 	}
 	return head;
 }
-vector<int>*ptr_h;
-struct index_h {
-	int i;
-	index_h(int _i) :i(_i) {};
-	bool operator<(const index_h& b) {
-		return ptr_h->at(i) < ptr_h->at(b.i);
-	}
-};
+vector<int>*p_last_left = nullptr;
+vector<int>*p_last_right = nullptr;
 int largestRectangleArea(vector<int>& heights)
 {
 	int len = heights.size();
 	if (len == 0)return 0;
-	if (len > 1000 && heights[0] == heights[1])return len* heights[0];
 	int max=0;
-	vector<int>last_left; last_left.resize(len);
-	vector<int>last_right; last_right.resize(len);
+	auto& last_left = *p_last_left;
+	auto& last_right = *p_last_right;
 	last_left[0] = 0;
-	last_right.back() = len - 1;
+	last_right[len - 1] = len - 1;
 	for (int i = 1; i < len; i++) {
 		int p = i;
 		while (p >0 && heights[p - 1] >= heights[i]) {
@@ -2387,4 +2380,30 @@ int largestRectangleArea(vector<int>& heights)
 		max = (max > now_a) ? max : now_a;
 	}
 	return max;
+}
+
+int maximalRectangle(vector<vector<char>>& matrix) {
+	int m = matrix.size();
+	if (m == 0)return 0;
+	int n = matrix[0].size();
+	int max = 0;
+		p_last_left = &vector<int>();
+		p_last_left->resize(n);
+		p_last_right = &vector<int>();
+		p_last_right->resize(n);
+	vector<int>height; height.resize(n);
+	for (auto& i : height)i=0;
+	for (int i = 0; i < m; i++) {
+		for (int j = 0;j < n; j++) {
+			if (matrix[i][j] == '0') {
+				height[j] = 0;
+			}
+			else {
+				height[j]++;
+			}
+		}
+		int m = largestRectangleArea(height);
+		max = (max > m) ? max : m;
+	}
+		return max;
 }
