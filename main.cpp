@@ -16,14 +16,24 @@
 #include "RouterNode.h"
 using namespace std;
 int main() {
-	char t1[] = { 1,0,1,0,0,1,0,1,1,1 ,1,1,1,1,1,1,0,0,1,0};
-	vector<vector<char>>m; m.resize(4);
-	for (int i = 0; i < 4; i++) {
-		m[i].resize(5);
-		for (int j= 0;j< 5; j++) {
-			m[i][j] = t1[i * 5 + j]+'0';
-		}
+	ListNode ln1(1);
+	ListNode ln2(1);
+	ListNode ln3(3);
+	ListNode ln4(2);
+	ListNode ln5(5);
+	ListNode ln6(2);
+	ln1.next = &ln2;
+	auto cur = &ln1;
+	while (cur != nullptr) {
+		cout << cur->val << endl;
+		cur = cur->next;
 	}
-	int sum = maximalRectangle(m);
+	cur = &ln1;
+	cur = partition(cur,3);
+	cout<<"Second" << endl;
+	while (cur != nullptr) {
+		cout << cur->val << endl;
+		cur = cur->next;
+	}
 	return 0;
 }

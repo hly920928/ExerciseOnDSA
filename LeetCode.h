@@ -150,3 +150,5 @@ ListNode* deleteDuplicates_v0(ListNode* head);
 int largestRectangleArea(std::vector<int>& heights);
 //85. Maximal Rectangle
 int maximalRectangle(std::vector<std::vector<char>>& matrix);
+//86. Partition List
+ListNode* partition(ListNode* head, int x);

@@ -2407,3 +2407,37 @@ int maximalRectangle(vector<vector<char>>& matrix) {
 	}
 		return max;
 }
+struct List {
+	ListNode * head;
+	ListNode * tail;
+	List(ListNode * _h = nullptr) :head(_h), tail(_h) {};
+	void add(ListNode * ln) {
+		if (head == nullptr) {
+			head = ln;
+			tail = ln;
+			return;
+		}
+		tail->next = ln;
+		tail = tail->next;
+		return;
+	}
+};
+ListNode * partition(ListNode * head, int x)
+{
+	if (head == nullptr|| head->next == nullptr)return head;
+	List smaller;
+	List bigger;
+	auto cur = head;
+	while (cur != nullptr) {
+		if (cur->val < x) {
+			smaller.add(cur);
+		}
+		else {
+			bigger.add(cur);
+		}
+		cur = cur->next;
+	}
+	if(bigger.head!=nullptr)smaller.add(bigger.head);
+	bigger.tail->next = nullptr;
+	return smaller.head;
+}
