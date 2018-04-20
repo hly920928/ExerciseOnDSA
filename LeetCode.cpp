@@ -2438,6 +2438,110 @@ ListNode * partition(ListNode * head, int x)
 		cur = cur->next;
 	}
 	if(bigger.head!=nullptr)smaller.add(bigger.head);
-	bigger.tail->next = nullptr;
+	if (bigger.tail != nullptr)bigger.tail->next = nullptr;
 	return smaller.head;
+}
+//87. Scramble String
+bool inline equal(int* a, int* b, int len) {
+	for (int i = 0; i < len; i++) {
+		if (a[i] != b[i])return false;
+	}
+	return true;
+}
+bool isScramble_recur(string& s1, string& s2) {
+	int len = s1.size();
+	if (len == 0)return true;
+	if (len == 1) {
+		if (s1[0] == s2[0])return true;
+		return false;
+	}
+	if (len == 2) {
+		if (s1[0] == s2[0] && s1[1] == s2[1])return true;
+		if (s1[0] == s2[1] && s1[1] == s2[0])return true;
+		return false;
+	}
+	int t_s1[26];
+	int t_s2_h[26];
+	int t_s2_e[26];
+	for (int i = 0; i < 26; i++) {
+		t_s1[i] = 0; t_s2_h[i] = 0; t_s2_e[i] = 0;
+	}
+	int id_s1 = 0; int id_s2_h = 0; int id_s2_e =len-1;
+	bool isSame = true;
+	while (true) {
+		if (id_s1 == len - 1) {
+			if (isSame)return true;
+			return false;
+		}
+		if (s1[id_s1] != s2[id_s2_h])isSame = false;
+		t_s1[s1[id_s1] - 'a']++;
+		t_s2_h[s2[id_s2_h] - 'a']++;
+		t_s2_e[s2[id_s2_e] - 'a']++;
+	   // check first part
+		if (equal(t_s1, t_s2_h, 26)) {
+			string s1_h = s1.substr(0, id_s1 + 1);
+			string s1_e = s1.substr(id_s1 + 1, len - id_s1 - 1);
+			string s2_h = s2.substr(0, id_s1 + 1);
+			string s2_e = s2.substr(id_s1 + 1, len - id_s1 - 1);
+			if (s1_h.size() < s1_e.size()) {
+				if (isScramble_recur(s1_h, s2_h)) {
+					if (isScramble_recur(s1_e, s2_e))
+						return true;
+				}
+			}else {
+				if (isScramble_recur(s1_e, s2_e)) {
+					if (isScramble_recur(s1_h, s2_h))
+						return true;
+					}
+				}
+			}
+		if (equal(t_s1, t_s2_e, 26)) {
+			string s1_h = s1.substr(0, id_s1 + 1);
+			string s1_e = s1.substr(id_s1 + 1, len - id_s1 - 1);
+			string s2_h = s2.substr(id_s2_e,len- id_s2_e);
+			string s2_e = s2.substr(0, id_s2_e);
+			if (s1_h.size() < s1_e.size()) {
+				if (isScramble_recur(s1_h, s2_h)) {
+					if (isScramble_recur(s1_e, s2_e))
+						return true;
+				}
+			}
+			else {
+				if (isScramble_recur(s1_e, s2_e)) {
+					if (isScramble_recur(s1_h, s2_h))
+						return true;
+				}
+			}
+		}
+		id_s1++;
+		id_s2_h++;
+		id_s2_e--;
+	}
+}
+bool isScramble(string s1, string s2) {
+	int len = s1.size();
+	if (len == 0)return true;
+	if (len == 1) {
+		if (s1[0] ==s2[0])return true;
+		return false;
+	}
+	if (len == 2) {
+		if (s1[0] == s2[0]&& s1[1] == s2[1])return true;
+		if (s1[0] == s2[1] && s1[1] == s2[0])return true;
+		return false;
+	}
+	int t_s1[26];
+	int t_s2[26];
+	for (int i = 0; i < 26; i++) {
+		t_s1[i] = 0; t_s2[i] = 0;
+	}
+	bool isSame = true;
+	for (int i = 0; i < len; i++) {
+		if (s1[i] != s2[i])isSame = false;
+		t_s1[s1[i]-'a'] ++;
+		t_s2[s2[i]-'a'] ++;
+	}
+	if (isSame)return true;
+	if (!equal(t_s1, t_s2, 26))return false;
+	return isScramble_recur(s1, s2);
 }

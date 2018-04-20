@@ -152,3 +152,5 @@ int largestRectangleArea(std::vector<int>& heights);
 int maximalRectangle(std::vector<std::vector<char>>& matrix);
 //86. Partition List
 ListNode* partition(ListNode* head, int x);
+////87. Scramble String
+bool isScramble(std::string s1, std::string s2);
