@@ -2545,3 +2545,21 @@ bool isScramble(string s1, string s2) {
 	if (!equal(t_s1, t_s2, 26))return false;
 	return isScramble_recur(s1, s2);
 }
+
+void merge(std::vector<int>& nums1, int m, std::vector<int>& nums2, int n)
+{
+	vector<int> n1; n1.resize(m);
+	copy(nums1.begin(), nums1.begin() + m, n1.begin());
+	n1.push_back(INT_MAX);
+	nums2.push_back(INT_MAX);
+	int id = 0; int id_1 = 0; int id_2 = 0;
+	while (true) {
+		int t1 = n1[id_1];
+		int t2 = nums2[id_2];
+		nums1[id] = (t1 < t2) ? t1 : t2;
+		if (t1 == INT_MAX&&t2 == INT_MAX)break;
+		if (t1 != INT_MAX&&t1 < t2)id_1++;
+        if (t2 != INT_MAX&&t1>= t2)id_2++;
+		id++;
+	}
+}
