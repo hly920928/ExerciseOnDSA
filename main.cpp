@@ -60,7 +60,7 @@ int main() {
 	int n2[] = { 2,5,6 };
 	vector<int> nums1(n1, n1 + 6);
 	vector<int> nums2(n2, n2 + 3);
-	merge(nums1, 3, nums2, 3);
+	auto gc = grayCode(2);
 	return 0;
 }
 

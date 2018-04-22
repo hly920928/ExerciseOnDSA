@@ -2556,10 +2556,25 @@ void merge(std::vector<int>& nums1, int m, std::vector<int>& nums2, int n)
 	while (true) {
 		int t1 = n1[id_1];
 		int t2 = nums2[id_2];
-		nums1[id] = (t1 < t2) ? t1 : t2;
 		if (t1 == INT_MAX&&t2 == INT_MAX)break;
+		nums1[id] = (t1 < t2) ? t1 : t2;
 		if (t1 != INT_MAX&&t1 < t2)id_1++;
         if (t2 != INT_MAX&&t1>= t2)id_2++;
 		id++;
 	}
+}
+
+vector<int> grayCode(int n)
+{
+	vector<int>ans; ans.push_back(0);
+	int limit =(1 << n)-1;
+	int bit = 1; int now = 0;
+	for (int i = 0; i < n; i++) {
+		int len = ans.size() - 1;
+		for (int j = len; j >= 0; j--) {
+			ans.push_back(ans[j] + bit);
+		}
+		bit *= 2;
+	}
+	return ans;
 }

@@ -156,3 +156,5 @@ ListNode* partition(ListNode* head, int x);
 bool isScramble(std::string s1, std::string s2);
 //88. Merge Sorted Array
 void merge(std::vector<int>& nums1, int m, std::vector<int>& nums2, int n);
+//89. Gray Code
+std::vector<int> grayCode(int n);
