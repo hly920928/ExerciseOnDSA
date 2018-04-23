@@ -158,3 +158,5 @@ bool isScramble(std::string s1, std::string s2);
 void merge(std::vector<int>& nums1, int m, std::vector<int>& nums2, int n);
 //89. Gray Code
 std::vector<int> grayCode(int n);
+//90. Subsets II
+std::vector<std::vector<int>> subsetsWithDup(std::vector<int>& nums);

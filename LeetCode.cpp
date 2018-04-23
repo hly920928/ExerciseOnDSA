@@ -2578,3 +2578,32 @@ vector<int> grayCode(int n)
 	}
 	return ans;
 }
+
+std::vector<std::vector<int>> subsetsWithDup(std::vector<int>& nums)
+{
+	std::vector<std::vector<int>>ans;
+	int len = nums.size();
+	if (len == 0)return ans;
+	sort(nums.begin(), nums.end());
+	vector<int> now;
+	int pl = 0; int l = 0;
+	ans.push_back(now);
+	for (int i = 0; i < len; i++) {
+		l = ans.size();
+		if (i == 0 ||nums[i - 1] != nums[i]) {
+			
+			for (int j = 0; j < l;j++) {
+				ans.push_back(ans[j]);
+				ans.back().push_back(nums[i]);
+			}
+		}
+		else {
+			for (int j = pl; j < l; j++) {
+				ans.push_back(ans[j]);
+				ans.back().push_back(nums[i]);
+			}
+		}
+		pl = l;
+	}
+	return ans;
+}
