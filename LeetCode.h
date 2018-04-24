@@ -160,3 +160,5 @@ void merge(std::vector<int>& nums1, int m, std::vector<int>& nums2, int n);
 std::vector<int> grayCode(int n);
 //90. Subsets II
 std::vector<std::vector<int>> subsetsWithDup(std::vector<int>& nums);
+//91. Decode Ways
+int numDecodings(std::string s);

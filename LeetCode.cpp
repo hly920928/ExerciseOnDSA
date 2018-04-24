@@ -2607,3 +2607,47 @@ std::vector<std::vector<int>> subsetsWithDup(std::vector<int>& nums)
 	}
 	return ans;
 }
+vector<int>* Code_table;
+int num_Decode(string& s,int i) {
+	int ans = -1;
+	auto& t = *Code_table;
+	if (s[i] == '0') {
+		ans = 0; goto END;
+	}
+	if (i == s.size()) {
+		ans = 1;	return ans;
+	}
+	if (i == s.size() - 1) {
+		ans = 1; goto END;
+	}
+	if (i == s.size() - 2) {
+		if (s[i + 1] == '0') {
+			if (s[i] =='1' || s[i] == '2')return 1;
+			return 0;
+		}
+	}
+	if (t[i] != -1) {
+		ans = t[i];
+		goto END;
+	}
+
+	if ((s[i] == '1' || s[i] == '2') && s[i + 1] == '0')ans = num_Decode(s, i + 2);
+	else if (s[i] > '2' || s[i] =='2' && s[i + 1] > '6') {
+		ans = num_Decode(s, i +1);
+	}
+	else {
+		ans = num_Decode(s, i + 1) + num_Decode(s, i + 2);
+	}
+	END:
+	t[i] = ans;
+	return ans;
+}
+int numDecodings(std::string s)
+{
+	vector<int> cb; Code_table = &cb;
+	if (s.size() == 0 || s[0] == '0')return 0;
+	Code_table->resize(s.size());
+	for (int& i : *Code_table)i = -1;
+	int ans =num_Decode(s, 0);
+	return ans;
+}

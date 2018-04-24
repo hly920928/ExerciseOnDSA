@@ -56,11 +56,7 @@ int ClockSimu(vector<table_item>& init_table, vector<char>& sequ, int limit) {
 	return n_page_fail;
 }
 int main() {
-	int n1[] = {1,2,2};
-	int n2[] = { 2,5,6 };
-	vector<int> nums1(n1, n1 + 3);
-	vector<int> nums2(n2, n2 + 3);
-	auto gc = subsetsWithDup(nums1);
+	int num = numDecodings("301");
 	return 0;
 }
 
