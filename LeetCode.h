@@ -162,3 +162,5 @@ std::vector<int> grayCode(int n);
 std::vector<std::vector<int>> subsetsWithDup(std::vector<int>& nums);
 //91. Decode Ways
 int numDecodings(std::string s);
+//92. Reverse Linked List II
+ListNode* reverseBetween(ListNode* head, int m, int n);

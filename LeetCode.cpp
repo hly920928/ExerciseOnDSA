@@ -2651,3 +2651,41 @@ int numDecodings(std::string s)
 	int ans =num_Decode(s, 0);
 	return ans;
 }
+
+ListNode * reverseBetween(ListNode * head, int m, int n)
+{
+	ListNode preHead(-1);
+	preHead.next = head; m++; n++;
+	ListNode* mid_tail = nullptr;
+	ListNode* mid_head = nullptr;
+	ListNode* pre_tail = nullptr;
+	ListNode* now = &preHead;
+	int id = 1;
+	while (true) {
+		if (id < m - 1) {
+			now = now->next;
+		}
+		if (id == m - 1) {
+			pre_tail = now;
+			now = now->next;
+		}
+		if (id == n + 1) {
+			pre_tail->next = mid_head;
+			mid_tail->next = now;
+			break;
+		}
+		if (id ==m) {
+			mid_tail = now;
+			mid_head = now;
+			now = now->next;
+		}
+		if (id > m) {
+			auto t = now;
+			now = now->next;
+			t->next=mid_head;
+			mid_head = t;
+		}
+		id++;
+	}
+	return preHead.next;
+}
