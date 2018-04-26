@@ -164,3 +164,5 @@ std::vector<std::vector<int>> subsetsWithDup(std::vector<int>& nums);
 int numDecodings(std::string s);
 //92. Reverse Linked List II
 ListNode* reverseBetween(ListNode* head, int m, int n);
+//93. Restore IP Addresses
+std::vector<std::string> restoreIpAddresses(std::string s);

@@ -56,21 +56,9 @@ int ClockSimu(vector<table_item>& init_table, vector<char>& sequ, int limit) {
 	return n_page_fail;
 }
 int main() { 
-	ListNode l1(1);
-	ListNode l2(2);
-	ListNode l3(3);
-	ListNode l4(4);
-	ListNode l5(5);
-	l1.next = &l2;
-	l2.next = &l3;
-	l3.next = &l4;
-	l4.next = &l5;
-	auto ans = reverseBetween(&l1, 2, 4);
-	auto p = ans;
-	while (p != nullptr) {
-		cout << p->val << endl;
-		p = p->next;
-	}
+
+	auto ans = restoreIpAddresses("010010");
+
 	return 0;
 }
 

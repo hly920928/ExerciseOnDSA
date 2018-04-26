@@ -2664,22 +2664,21 @@ ListNode * reverseBetween(ListNode * head, int m, int n)
 	while (true) {
 		if (id < m - 1) {
 			now = now->next;
-		}
-		if (id == m - 1) {
+		} else if (id == m - 1) {
 			pre_tail = now;
 			now = now->next;
 		}
-		if (id == n + 1) {
+		else if (id == n + 1) {
 			pre_tail->next = mid_head;
 			mid_tail->next = now;
 			break;
 		}
-		if (id ==m) {
+		else if (id ==m) {
 			mid_tail = now;
 			mid_head = now;
 			now = now->next;
 		}
-		if (id > m) {
+		else if (id > m) {
 			auto t = now;
 			now = now->next;
 			t->next=mid_head;
@@ -2688,4 +2687,83 @@ ListNode * reverseBetween(ListNode * head, int m, int n)
 		id++;
 	}
 	return preHead.next;
+}
+vector<string>*ip_ans;
+string* ip_s;
+vector<int>*ip_now;
+int s_len;
+void  restoreIp_re(int i) {
+	if (i >= s_len)return;
+	int t = -1;
+	vector<int>*_ip_now= ip_now;
+
+	if (_ip_now->size() == 3) {
+		if (s_len - i > 3)return;
+		string str;
+		if (s_len - i == 3) {
+			if (ip_s->at(i) - '0' == 0)return;
+			 t = (ip_s->at(i) - '0') * 100
+				+ (ip_s->at(i + 1) - '0') * 10
+				+(ip_s->at(i + 2) - '0');
+			if (t > 255)return;
+		}
+		if (s_len - i == 2) {
+		if (ip_s->at(i) - '0' == 0)return;
+			 t = (ip_s->at(i) - '0') * 10
+				+ (ip_s->at(i + 1) - '0');
+		}
+		if (s_len - i == 1) {
+			 t = (ip_s->at(i) - '0');
+		}
+		_ip_now->push_back(t);
+		str = to_string(_ip_now->at(0)) + "." +
+			to_string(_ip_now->at(1)) + "." +
+			to_string(_ip_now->at(2)) + "." +
+			to_string(_ip_now->at(3));
+		ip_ans->push_back(str);
+		_ip_now->pop_back();
+		return;
+	}
+	if (ip_s->at(i) == '0') {
+		_ip_now->push_back(0);
+		restoreIp_re(i + 1);
+		_ip_now->pop_back();
+		return;
+	}
+	//length=3
+	if (i+2<s_len) {
+		t = (ip_s->at(i) - '0') * 100
+			+ (ip_s->at(i + 1) - '0') * 10
+			+ (ip_s->at(i + 2) - '0');
+		if (t < 256) {
+			_ip_now->push_back(t);
+			restoreIp_re(i + 3);
+			_ip_now->pop_back();
+		}
+	}	
+	//length=2
+
+	if (i + 1< s_len) {
+		t = (ip_s->at(i) - '0') * 10
+			+ (ip_s->at(i + 1) - '0');
+		_ip_now->push_back(t);
+		restoreIp_re(i + 2);
+		_ip_now->pop_back();
+	}
+	
+	
+	//length=1
+	t = (ip_s->at(i) - '0');
+	_ip_now->push_back(t);
+	restoreIp_re(i + 1);
+	_ip_now->pop_back();
+}
+vector<string> restoreIpAddresses(string s)
+{
+	vector<string>ans; vector<int> now;
+	s_len = s.size();
+	ip_ans = &ans; ip_now = &now;
+	ip_s = &s;
+	restoreIp_re(0);
+	return ans;
 }
