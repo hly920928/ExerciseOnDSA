@@ -2767,3 +2767,16 @@ vector<string> restoreIpAddresses(string s)
 	restoreIp_re(0);
 	return ans;
 }
+vector<int>*inorderTraversal_v;
+void inorderTraversal_re(TreeNode * now) {
+	if (now == nullptr)return;
+	inorderTraversal_re(now->right);
+	inorderTraversal_v->push_back(now->val);
+	inorderTraversal_re(now->left);
+}
+std::vector<int> inorderTraversal(TreeNode * root)
+{
+	vector<int> ans; inorderTraversal_v = &ans;
+	inorderTraversal_re(root);
+	return ans;
+}
