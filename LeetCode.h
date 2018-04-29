@@ -166,3 +166,18 @@ int numDecodings(std::string s);
 ListNode* reverseBetween(ListNode* head, int m, int n);
 //93. Restore IP Addresses
 std::vector<std::string> restoreIpAddresses(std::string s);
+struct TreeNode {
+	int val;
+	TreeNode *left;
+	TreeNode *right;
+	TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+};
+
+//94. Binary Tree Inorder Traversal
+std::vector<int> inorderTraversal(TreeNode* root);
+
+//95. Unique Binary Search Trees II
+vector<TreeNode*> generateTrees_re(int lo, int hi) {
+
+}
+std::vector<TreeNode*> generateTrees(int n);

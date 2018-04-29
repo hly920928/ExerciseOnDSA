@@ -2770,13 +2770,48 @@ vector<string> restoreIpAddresses(string s)
 vector<int>*inorderTraversal_v;
 void inorderTraversal_re(TreeNode * now) {
 	if (now == nullptr)return;
-	inorderTraversal_re(now->right);
 	inorderTraversal_v->push_back(now->val);
+	inorderTraversal_re(now->right);
 	inorderTraversal_re(now->left);
 }
 std::vector<int> inorderTraversal(TreeNode * root)
 {
 	vector<int> ans; inorderTraversal_v = &ans;
 	inorderTraversal_re(root);
+	return ans;
+}
+void generateTrees_re(int lo, int hi, vector<TreeNode*>& v) {
+	if (lo > hi) {
+		v.push_back(nullptr);
+		return;
+	}
+	if (lo == hi) {
+		v.push_back(new TreeNode(lo));
+		return;
+	}
+	vector<TreeNode*> temp_l;
+	vector<TreeNode*> temp_r;
+	for (int i = lo; i <= hi; i++) {
+
+		generateTrees_re(lo, i - 1, temp_l);
+		generateTrees_re(i+1, hi, temp_r);
+		for (auto& l : temp_l) {
+			for (auto& r : temp_r) {
+				auto now = new TreeNode(i);
+				now->left = l;
+				now->right = r;
+				v.push_back(now);
+			}
+		}
+		temp_l.clear();
+		temp_r.clear();
+	}
+}
+vector<TreeNode*> generateTrees(int n)
+{
+
+	vector<TreeNode*> ans;
+	if (n == 0)return ans;
+	generateTrees_re(1, n, ans);
 	return ans;
 }
