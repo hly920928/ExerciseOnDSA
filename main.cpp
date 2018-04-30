@@ -57,7 +57,7 @@ int ClockSimu(vector<table_item>& init_table, vector<char>& sequ, int limit) {
 }
 int main() { 
 
-	auto ans = restoreIpAddresses("010010");
+	auto ans = numTrees(9);
 
 	return 0;
 }

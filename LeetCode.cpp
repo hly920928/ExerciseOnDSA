@@ -2807,6 +2807,7 @@ void generateTrees_re(int lo, int hi, vector<TreeNode*>& v) {
 		temp_r.clear();
 	}
 }
+
 vector<TreeNode*> generateTrees(int n)
 {
 
@@ -2814,4 +2815,21 @@ vector<TreeNode*> generateTrees(int n)
 	if (n == 0)return ans;
 	generateTrees_re(1, n, ans);
 	return ans;
+}
+long long inline product(int lo, int hi) {
+	int ans= 1;
+	for (int i = lo; i <= hi; i++) {
+		ans *= i;
+	}
+	return ans;
+}
+int numTrees(int n)
+{
+	int a[] = {
+		1, 1, 2, 5, 14, 42, 132, 429, 1430,
+		4862, 16796, 58786, 208012, 742900,
+		2674440, 9694845, 35357670,
+		129644790, 477638700, 1767263190
+	};
+	return a[n];
 }
