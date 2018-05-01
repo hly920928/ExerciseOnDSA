@@ -2852,7 +2852,28 @@ bool isInterleave_re(int id1, int id2, int id3) {
 }
 bool isInterleave(string s1, string s2, string s3)
 {
-	pS1=&s1; pS2 = &s2; pS3 = &s3;
 	if (s3.size() != (s1.size() + s2.size()))return false;
-	return isInterleave_re(0,0,0);
+	int m = s1.size()+1;
+	int n = s2.size()+1;
+	vector<vector<bool>>table; table.resize(m);
+	for (auto& v: table) {
+		 v.resize(n);
+		 for (auto& b : v)b = false;
+	}
+	table[0][0] = true; bool b1 = false; bool b2 = false;
+	for (int i = 1; i < m; i++) {
+		if (s3[i-1] == s1[i-1]&& table[i-1][0])table[i][0] = true;
+	}
+	for (int j = 1; j < n; j++) {
+		if (s3[j-1] == s2[j-1]&& table[0][j-1])table[0][j] = true;
+	}
+	for (int i = 1; i < m;i++) {
+		for (int j =1;j <n;j++) {
+			b1 = table[i - 1][j];
+			b2 = table[i][j-1];
+			if(s3[i+j-1]==s1[i-1]&& b1)table[i][j] = true;
+			if (s3[i+j-1]==s2[j-1]&& b2)table[i][j] = true;
+		}
+	}
+	return table[m-1][n-1];
 }
