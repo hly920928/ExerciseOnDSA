@@ -2833,3 +2833,26 @@ int numTrees(int n)
 	};
 	return a[n];
 }
+string* pS1;
+string* pS2;
+string* pS3;
+bool isInterleave_re(int id1, int id2, int id3) {
+	if (id1 == pS1->size() && id2 == pS2->size())return true;
+	char c1 = ' '; char c2 =' ';
+	if (id1 != pS1->size())c1 = pS1->at(id1);
+	if (id2 != pS2->size())c2 = pS2->at(id2);
+	char c3 = pS3 -> at(id3);
+	if (c1 == c3) {
+		if (isInterleave_re(id1 + 1, id2, id3 + 1))return true;
+	}
+	if (c2 == c3) {
+		if (isInterleave_re(id1, id2+1, id3 + 1))return true;
+	}
+	return false;
+}
+bool isInterleave(string s1, string s2, string s3)
+{
+	pS1=&s1; pS2 = &s2; pS3 = &s3;
+	if (s3.size() != (s1.size() + s2.size()))return false;
+	return isInterleave_re(0,0,0);
+}

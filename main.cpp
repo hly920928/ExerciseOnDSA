@@ -57,7 +57,7 @@ int ClockSimu(vector<table_item>& init_table, vector<char>& sequ, int limit) {
 }
 int main() { 
 
-	auto ans = numTrees(9);
+	auto ans = isInterleave("aabcc", "dbbca", "aadbbbaccc");
 
 	return 0;
 }
