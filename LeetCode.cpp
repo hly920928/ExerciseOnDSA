@@ -2856,9 +2856,11 @@ bool isInterleave(string s1, string s2, string s3)
 	int m = s1.size()+1;
 	int n = s2.size()+1;
 	vector<vector<bool>>table; table.resize(m);
-	for (auto& v: table) {
-		 v.resize(n);
-		 for (auto& b : v)b = false;
+	for (int i = 0; i < m; i++) {
+		table[i].resize(n);
+		for (int j = 0; j < n; j++) {
+			table[i][j] = false;
+		}
 	}
 	table[0][0] = true; bool b1 = false; bool b2 = false;
 	for (int i = 1; i < m; i++) {
@@ -2876,4 +2878,15 @@ bool isInterleave(string s1, string s2, string s3)
 		}
 	}
 	return table[m-1][n-1];
+}
+bool isValidBST_re(TreeNode * r, long long lo, long long hi) {
+	if (r == nullptr)return true;
+	if (r->left== nullptr&&r->right==nullptr)return true;
+	if (r->val >= hi || r->val <= lo)return false;
+	if (isValidBST_re(r->left, lo, r->val) && isValidBST_re(r->right, r->val, hi))return true;
+	return false;
+}
+bool isValidBST(TreeNode * root)
+{
+	return isValidBST_re(root,LONG_MIN, LONG_MAX);
 }

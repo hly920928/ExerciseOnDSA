@@ -183,3 +183,5 @@ std::vector<TreeNode*> generateTrees(int n);
 int numTrees(int n);
 //97. Interleaving String
 bool isInterleave(std::string s1, std::string s2, std::string s3);
+//98. Validate Binary Search Tree
+bool isValidBST(TreeNode* root);
