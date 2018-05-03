@@ -57,8 +57,13 @@ int ClockSimu(vector<table_item>& init_table, vector<char>& sequ, int limit) {
 }
 int main() { 
 
-	auto ans = isInterleave("aabcc", "dbbca", "aadbbbaccc");
-
+	TreeNode tn1(1);
+	TreeNode tn2(2);
+	TreeNode tn3(3);
+	TreeNode tn4(4);
+	tn1.left = &tn3;
+	tn3.right = &tn2;
+	recoverTree(&tn3);
 	return 0;
 }
 

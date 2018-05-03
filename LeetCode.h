@@ -185,3 +185,5 @@ int numTrees(int n);
 bool isInterleave(std::string s1, std::string s2, std::string s3);
 //98. Validate Binary Search Tree
 bool isValidBST(TreeNode* root);
+//99. Recover Binary Search Tree
+void recoverTree(TreeNode* root);

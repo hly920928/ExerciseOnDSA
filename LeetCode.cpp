@@ -2881,12 +2881,53 @@ bool isInterleave(string s1, string s2, string s3)
 }
 bool isValidBST_re(TreeNode * r, long long lo, long long hi) {
 	if (r == nullptr)return true;
-	if (r->left== nullptr&&r->right==nullptr)return true;
-	if (r->val >= hi || r->val <= lo)return false;
+	if ((long long)r->val >= hi || (long long)r->val <= lo)return false;
 	if (isValidBST_re(r->left, lo, r->val) && isValidBST_re(r->right, r->val, hi))return true;
 	return false;
 }
 bool isValidBST(TreeNode * root)
 {
+	if (root == nullptr)return true;
+	if (root->left == nullptr&&root->right == nullptr)return true;
 	return isValidBST_re(root,LONG_MIN, LONG_MAX);
+}
+TreeNode * recoverTree_re(TreeNode * root, TreeNode * lo, TreeNode * hi) {
+	if (root==nullptr)return nullptr;
+	char error = ' ';
+	if (root->val > hi->val) {
+		error = 'b';
+	}
+	if (root->val < lo->val) {
+		error = 's';
+	}
+	auto _b=recoverTree_re(root->left, lo, root);
+	auto _s=recoverTree_re(root->right, root, hi);
+	if (_b != nullptr&&_s != nullptr) {
+		swap(_b->val, _s->val); return nullptr;
+	}
+	if (_b == nullptr&&_s == nullptr) {
+		if(error!= ' ')return root;
+		return nullptr;
+	}
+
+	if (_b != nullptr) {
+		if (error = 's')return root;
+		return _b;
+	}
+	if (_s != nullptr) {
+		if (error = 'b')return root;
+		return _s;
+	}
+	if (error) return _b;
+	if (_b->val<hi->val&&_b->val>lo->val) {
+		swap(_b->val, root->val); return nullptr;
+	}
+	return _b;
+}
+void recoverTree(TreeNode * root)
+{
+	if (root == nullptr)return;
+	TreeNode max(INT_MAX);
+	TreeNode min(INT_MIN);
+	recoverTree_re(root, &min, &max);
 }
