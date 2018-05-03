@@ -63,7 +63,7 @@ int main() {
 	TreeNode tn4(4);
 	tn1.left = &tn3;
 	tn3.right = &tn2;
-	recoverTree(&tn3);
+	recoverTree(&tn1);
 	return 0;
 }
 

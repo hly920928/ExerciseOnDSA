@@ -2891,43 +2891,25 @@ bool isValidBST(TreeNode * root)
 	if (root->left == nullptr&&root->right == nullptr)return true;
 	return isValidBST_re(root,LONG_MIN, LONG_MAX);
 }
-TreeNode * recoverTree_re(TreeNode * root, TreeNode * lo, TreeNode * hi) {
-	if (root==nullptr)return nullptr;
-	char error = ' ';
-	if (root->val > hi->val) {
-		error = 'b';
-	}
-	if (root->val < lo->val) {
-		error = 's';
-	}
-	auto _b=recoverTree_re(root->left, lo, root);
-	auto _s=recoverTree_re(root->right, root, hi);
-	if (_b != nullptr&&_s != nullptr) {
-		swap(_b->val, _s->val); return nullptr;
-	}
-	if (_b == nullptr&&_s == nullptr) {
-		if(error!= ' ')return root;
-		return nullptr;
-	}
-
-	if (_b != nullptr) {
-		if (error = 's')return root;
-		return _b;
-	}
-	if (_s != nullptr) {
-		if (error = 'b')return root;
-		return _s;
-	}
-	if (error) return _b;
-	if (_b->val<hi->val&&_b->val>lo->val) {
-		swap(_b->val, root->val); return nullptr;
-	}
-	return _b;
+vector<int>*_q;
+void mid_tra(TreeNode * root) {
+	if (root == nullptr)return;
+	mid_tra(root->left);
+	_q->push_back(root->val);
+	mid_tra(root->right);
+}
+void mid_tra_push(TreeNode * root,int& i) {
+	if (root == nullptr)return;
+	mid_tra_push(root->left,i);
+	root->val = _q->at(i); i++;
+	mid_tra_push(root->right,i);
 }
 void recoverTree(TreeNode * root)
 {
+	vector<int> q; _q = &q;
 	if (root == nullptr)return;
-	TreeNode max(INT_MAX);
-	TreeNode min(INT_MIN);
-	recoverTree_re(root, &min, &max);
+	mid_tra(root);
+	sort(q.begin(), q.end());
+	int id=0;
+	mid_tra_push(root, id);
 }
