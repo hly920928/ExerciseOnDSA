@@ -2913,3 +2913,12 @@ void recoverTree(TreeNode * root)
 	int id=0;
 	mid_tra_push(root, id);
 }
+
+bool isSameTree(TreeNode * p, TreeNode * q)
+{
+	if (p == nullptr&&q == nullptr)return true;
+	if (p != nullptr&&q == nullptr)return false;
+	if (p == nullptr&&q!= nullptr)return false;
+	if (p->val != q->val)return false;
+	if(isSameTree(p->left,q->left)&& isSameTree(p->right, q->right))return true;
+}
