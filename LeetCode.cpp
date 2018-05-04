@@ -2921,4 +2921,17 @@ bool isSameTree(TreeNode * p, TreeNode * q)
 	if (p == nullptr&&q!= nullptr)return false;
 	if (p->val != q->val)return false;
 	if(isSameTree(p->left,q->left)&& isSameTree(p->right, q->right))return true;
+	return false;
+}
+bool isSymmetric_re(TreeNode * l, TreeNode * r) {
+	if (l == nullptr&&r == nullptr)return true;
+	if(l != nullptr&&r == nullptr)return false;
+	if (l == nullptr&&r != nullptr)return false;
+	if (l->val != r->val)return false;
+	return isSymmetric_re(l->right, r->left) && isSymmetric_re(l->left, r->right);
+}
+bool isSymmetric(TreeNode * root)
+{
+	if (root == nullptr)return true;
+	return isSymmetric_re(root->left, root->right);
 }

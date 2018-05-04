@@ -187,3 +187,7 @@ bool isInterleave(std::string s1, std::string s2, std::string s3);
 bool isValidBST(TreeNode* root);
 //99. Recover Binary Search Tree
 void recoverTree(TreeNode* root);
+//100. Same Tree
+bool isSameTree(TreeNode* p, TreeNode* q);
+//101. Symmetric Tree
+bool isSymmetric(TreeNode* root);
