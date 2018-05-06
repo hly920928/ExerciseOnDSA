@@ -2935,3 +2935,20 @@ bool isSymmetric(TreeNode * root)
 	if (root == nullptr)return true;
 	return isSymmetric_re(root->left, root->right);
 }
+
+vector<vector<int>> levelOrder(TreeNode * root)
+{
+	vector<vector<int>> ans;
+	queue<TreeNode*>q;
+	q.push(root);	q.push(nullptr);
+	while (!q.empty) {
+		ans.push_back(vector<int>());
+		while (q.front() != nullptr) {
+			ans.back().push_back(q.front()->val);
+			q.push(q.front()->left);
+			q.push(q.front()->right);
+			q.pop();
+		}
+		q.pop();
+	}
+}
