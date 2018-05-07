@@ -2971,9 +2971,15 @@ vector<vector<int>> zigzagLevelOrder(TreeNode * root)
 		for (auto& ptr : v) {
 			ans.back().push_back(ptr->val);
 			if (fromLeft) {
-
+				if (ptr->left != nullptr)stk.push(ptr->left);
+				if (ptr->right != nullptr)stk.push(ptr->right);
+			}
+			else {
+				if (ptr->right != nullptr)stk.push(ptr->right);
+				if (ptr->left != nullptr)stk.push(ptr->left);
 			}
 		}
+		fromLeft = !fromLeft;
 	}
 	return ans;
 }
