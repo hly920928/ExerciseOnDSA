@@ -2941,14 +2941,39 @@ vector<vector<int>> levelOrder(TreeNode * root)
 	vector<vector<int>> ans;
 	queue<TreeNode*>q;
 	q.push(root);	q.push(nullptr);
-	while (!q.empty) {
+	while (q.front()!= nullptr) {
 		ans.push_back(vector<int>());
 		while (q.front() != nullptr) {
 			ans.back().push_back(q.front()->val);
-			q.push(q.front()->left);
-			q.push(q.front()->right);
+			if(q.front()->left!=nullptr)q.push(q.front()->left);
+			if(q.front()->right!=nullptr)q.push(q.front()->right);
 			q.pop();
 		}
+		q.push(nullptr);
 		q.pop();
 	}
+	return ans;
+}
+
+vector<vector<int>> zigzagLevelOrder(TreeNode * root)
+{
+	vector<vector<int>> ans;
+	if (root == nullptr)return ans;
+	bool fromLeft = true;
+	stack<TreeNode*>stk;
+	stk.push(root);
+	while (!stk.empty()) {
+		vector<TreeNode*>v;
+		while (!stk.empty()) {
+			v.push_back(stk.top()); stk.pop();
+		}
+		ans.push_back(vector<int>());
+		for (auto& ptr : v) {
+			ans.back().push_back(ptr->val);
+			if (fromLeft) {
+
+			}
+		}
+	}
+	return ans;
 }
