@@ -56,14 +56,8 @@ int ClockSimu(vector<table_item>& init_table, vector<char>& sequ, int limit) {
 	return n_page_fail;
 }
 int main() { 
-
-	TreeNode tn1(1);
-	TreeNode tn2(2);
-	TreeNode tn3(3);
-	TreeNode tn4(4);
-	tn1.left = &tn3;
-	tn3.right = &tn2;
-	recoverTree(&tn1);
+	int p[] = { 3, 9, 20, 15, 7 };
+	int in[] = { 9, 3, 15, 20, 7 };
 	return 0;
 }
 

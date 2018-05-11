@@ -2991,3 +2991,33 @@ int maxDepth(TreeNode * root)
 	int r= maxDepth(root->right);
 	return (l > r) ? l + 1 : r + 1;
 }
+unordered_map<int, int>*buildTree_t;
+int pre_idx;
+vector<int>*pre;
+vector<int>*in;
+TreeNode * buildTree(int lo, int hi) {
+	if (hi < lo)return nullptr;
+	int now = pre->at(pre_idx);
+	if (hi == lo) {
+		auto ptr = new TreeNode(now);
+		pre_idx++;
+		return ptr;
+	}
+	auto ptr = new TreeNode(now);
+	int mid = buildTree_t->at(now);
+	pre_idx++;
+	ptr->left = buildTree(lo, mid - 1);
+	ptr->right = buildTree(mid-1,hi);
+	return ptr;
+}
+TreeNode * buildTree(vector<int>& preorder, vector<int>& inorder)
+{
+	unordered_map<int, int>table; int n = preorder.size();
+	buildTree_t = &table;
+	pre = &preorder;
+	in = &inorder;
+	pre_idx = 0;
+	for (int i = 0; i < n; i++)table[preorder[i]] = i;
+
+	return buildTree(0,n-1);
+}

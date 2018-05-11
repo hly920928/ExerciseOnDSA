@@ -195,3 +195,5 @@ bool isSymmetric(TreeNode* root);
 std::vector<std::vector<int>> levelOrder(TreeNode* root);
 //103. Binary Tree Zigzag Level Order Traversal
 vector<vector<int>> zigzagLevelOrder(TreeNode* root);
+//104. Maximum Depth of Binary Tree
+int maxDepth(TreeNode* root);
