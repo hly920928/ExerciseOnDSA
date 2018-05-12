@@ -3031,8 +3031,8 @@ TreeNode * buildTree_inAndpost_re(int lo, int hi) {
 	auto ptr = new TreeNode(now);
 	int mid = buildTree_t->at(now);
 	pre_idx--;
-	ptr->left = buildTree_inAndpost_re(lo, mid - 1);
 	ptr->right = buildTree_inAndpost_re(mid + 1, hi);
+	ptr->left = buildTree_inAndpost_re(lo, mid - 1);
 	return ptr;
 }
 TreeNode * buildTree_inAndpost(vector<int>& inorder, vector<int>& postorder)
@@ -3044,4 +3044,24 @@ TreeNode * buildTree_inAndpost(vector<int>& inorder, vector<int>& postorder)
 	pre_idx = n-1;
 	for (int i = 0; i < n; i++)table[inorder[i]] = i;
 	return buildTree_inAndpost_re(0, n - 1);
+}
+
+vector<vector<int>> levelOrderBottom(TreeNode * root)
+{
+	vector<vector<int>> ans;
+	queue<TreeNode*>q;
+	q.push(root);	q.push(nullptr);
+	while (q.front() != nullptr) {
+		ans.push_back(vector<int>());
+		while (q.front() != nullptr) {
+			ans.back().push_back(q.front()->val);
+			if (q.front()->left != nullptr)q.push(q.front()->left);
+			if (q.front()->right != nullptr)q.push(q.front()->right);
+			q.pop();
+		}
+		q.push(nullptr);
+		q.pop();
+	}
+	reverse(ans.begin(), ans.end());
+	return ans;
 }

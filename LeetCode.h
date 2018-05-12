@@ -198,4 +198,8 @@ vector<vector<int>> zigzagLevelOrder(TreeNode* root);
 //104. Maximum Depth of Binary Tree
 int maxDepth(TreeNode* root);
 //105. Construct Binary Tree from Preorder and Inorder Traversal
-TreeNode* buildTree(std::vector<int>& preorder, std::vector<int>& inorder);
+TreeNode* buildTree_inAndpre(std::vector<int>& preorder, std::vector<int>& inorder);
+//106. Construct Binary Tree from Inorder and Postorder Traversal
+TreeNode* buildTree_inAndpost(std::vector<int>& inorder, std::vector<int>& postorder);
+//107. Binary Tree Level Order Traversal II
+std::vector<std::vector<int>> levelOrderBottom(TreeNode* root);
