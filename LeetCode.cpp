@@ -3085,3 +3085,14 @@ TreeNode * sortedArrayToBST(std::vector<int>& nums)
 	return sortedArrayToBST_re(0,nums.size()-1);
 }
 
+TreeNode * sortedListToBST(ListNode * head)
+{
+	vector<int> nums;
+	auto now = head;
+	while (now != nullptr) {
+		nums.push_back(now->val);
+		now = now->next;
+	}
+	return sortedArrayToBST(nums);
+}
+
