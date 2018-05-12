@@ -3065,3 +3065,23 @@ vector<vector<int>> levelOrderBottom(TreeNode * root)
 	reverse(ans.begin(), ans.end());
 	return ans;
 }
+vector<int>* _nums;
+TreeNode * sortedArrayToBST_re(int lo,int hi)
+{
+	if (lo > hi)return nullptr;
+	if (lo == hi) {
+		return new TreeNode(_nums->at(lo));
+	}
+	int mid = (lo + hi) / 2;
+	auto ptr= new TreeNode(_nums->at(mid));
+	ptr->left = sortedArrayToBST_re(lo, mid - 1);
+	ptr->right = sortedArrayToBST_re(mid +1, hi);
+	return ptr;
+}
+
+TreeNode * sortedArrayToBST(std::vector<int>& nums)
+{
+	_nums = &nums;
+	return sortedArrayToBST_re(0,nums.size()-1);
+}
+
