@@ -203,3 +203,7 @@ TreeNode* buildTree_inAndpre(std::vector<int>& preorder, std::vector<int>& inord
 TreeNode* buildTree_inAndpost(std::vector<int>& inorder, std::vector<int>& postorder);
 //107. Binary Tree Level Order Traversal II
 std::vector<std::vector<int>> levelOrderBottom(TreeNode* root);
+//108. Convert Sorted Array to Binary Search Tree
+TreeNode* sortedArrayToBST(std::vector<int>& nums);
+//109. Convert Sorted List to Binary Search Tree
+TreeNode* sortedListToBST(ListNode* head);

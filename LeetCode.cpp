@@ -3095,4 +3095,19 @@ TreeNode * sortedListToBST(ListNode * head)
 	}
 	return sortedArrayToBST(nums);
 }
+bool isBalanced_re(TreeNode * r, int& d) {
+	if (r == nullptr) {
+		d = 0; return true;
+	}
+	int ld = -1; int rd = -1;
+	if (isBalanced_re(r->left, ld) == false || isBalanced_re(r->right, rd) == false)return false;
+	if (ld - rd > 1 || ld - rd < -1)return false;
+	d = (ld > rd) ? ld + 1 : rd + 1;
+	return true;
+}
+bool isBalanced(TreeNode * root)
+{
+	int d = 0;
+	return isBalanced_re(root,d);
+}
 
