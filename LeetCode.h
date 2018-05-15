@@ -209,3 +209,5 @@ TreeNode* sortedArrayToBST(std::vector<int>& nums);
 TreeNode* sortedListToBST(ListNode* head);
 //110. Balanced Binary Tree
 bool isBalanced(TreeNode* root);
+//111. Minimum Depth of Binary Tree
+int minDepth(TreeNode* root);

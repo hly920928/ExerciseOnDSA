@@ -3120,3 +3120,19 @@ int minDepth(TreeNode * root)
 	return (ld < rd) ? ld + 1 : rd + 1;
 }
 
+bool hasPathSum_r(TreeNode * root, int sum)
+{
+	if (root->left == nullptr&&root->right == nullptr) {
+		if (sum == root->val)return true;
+		return false;
+	}
+	if (root->val > sum)return false;
+	return hasPathSum_r(root->left, sum - root->val) || hasPathSum_r(root->right, sum - root->val);
+}
+
+
+bool hasPathSum(TreeNode * root, int sum)
+{
+	if (root == nullptr)	return false;
+	return hasPathSum_r(root, sum);
+}
