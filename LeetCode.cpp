@@ -3136,3 +3136,28 @@ bool hasPathSum(TreeNode * root, int sum)
 	if (root == nullptr)	return false;
 	return hasPathSum_r(root, sum);
 }
+std::vector<std::vector<int>>* sps;
+vector<int>* p_pst;
+void pathSum_re(TreeNode * root, int sum) {
+
+	if (root == nullptr)	return;
+	if (root->left == nullptr&&root->right == nullptr) {
+		if (sum == root->val) {
+			sps->push_back(*p_pst);
+			sps->back().push_back(root->val);
+		}
+		return;
+	}
+	p_pst->push_back(root->val);
+	hasPathSum_r(root->left, sum - root->val);		
+	hasPathSum_r(root->right, sum - root->val);
+	p_pst->pop_back();
+}
+std::vector<std::vector<int>> pathSum(TreeNode * root, int sum)
+{
+	vector<vector<int >> sumPath; sps = &sumPath;
+	vector<int>pathSumStk; p_pst = &pathSumStk;
+	if (root == nullptr)	return sumPath;
+	pathSum_re(root, sum);
+	return sumPath;
+}
