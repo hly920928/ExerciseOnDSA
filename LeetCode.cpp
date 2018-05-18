@@ -8,6 +8,7 @@
 #include <unordered_map>
 #include <map>
 #include <sstream>
+#include <vector>
 using namespace std;
 void twoSum(int twoSum,const vector<int>& nums, vector<int>&cur, int other_id, vector<vector<int>>& ans) {
 	if (nums.size() - other_id<2)return;
@@ -3160,4 +3161,26 @@ std::vector<std::vector<int>> pathSum(TreeNode * root, int sum)
 	if (root == nullptr)	return sumPath;
 	pathSum_re(root, sum);
 	return sumPath;
+}
+
+void flatten(TreeNode * root)
+{
+	if (root == nullptr)return;
+	if (root->left == nullptr&&root->right == nullptr)return;
+	flatten(root->left);
+	flatten(root->right);
+	auto ptr_L_begin = root->left;
+	auto ptr_L_end = root->left;
+	auto ptr_R_Begin = root->right;
+	if (ptr_L_end != nullptr) {
+		while (ptr_L_end->right != nullptr)ptr_L_end = ptr_L_end->right;
+
+		root->right = ptr_L_begin;
+		ptr_L_end->right = ptr_R_Begin;
+		root->left =nullptr;
+	}
+	else {
+		root->right = ptr_R_Begin;
+		root->left = nullptr;
+	}
 }

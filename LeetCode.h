@@ -194,7 +194,7 @@ bool isSymmetric(TreeNode* root);
 //102. Binary Tree Level Order Traversal
 std::vector<std::vector<int>> levelOrder(TreeNode* root);
 //103. Binary Tree Zigzag Level Order Traversal
-vector<vector<int>> zigzagLevelOrder(TreeNode* root);
+std::vector<std::vector<int>> zigzagLevelOrder(TreeNode* root);
 //104. Maximum Depth of Binary Tree
 int maxDepth(TreeNode* root);
 //105. Construct Binary Tree from Preorder and Inorder Traversal
@@ -213,3 +213,7 @@ bool isBalanced(TreeNode* root);
 int minDepth(TreeNode* root);
 //112. Path Sum
 bool hasPathSum(TreeNode* root, int sum);
+//113. Path Sum II
+std::vector<std::vector<int>> pathSum(TreeNode* root, int sum);
+//114. Flatten Binary Tree to Linked List
+void flatten(TreeNode* root);

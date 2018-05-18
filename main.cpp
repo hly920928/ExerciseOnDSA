@@ -15,49 +15,20 @@
 #include "LeetCode.h"
 #include "RouterNode.h"
 using namespace std;
-struct table_item {
-	int n;
-	char id;
-	table_item(int _n = 0, char _id = 0) : n(_n), id(_id) {};
-	void set(int _n, char _id) {
-		n = _n;
-		id = _id;
-	}
-};
-int ClockSimu(vector<table_item>& init_table, vector<char>& sequ, int limit) {
-	int table_len = init_table.size(); int n_page_fail = 0;
-	int ptr = 0;
-	for (char c : sequ) {
-		//search all
-		bool found = false;
-		for (auto& it : init_table) {
-			if (it.id == c) {
-				found = true;
-				it.n =1;
-			}
-			else {
-				if (it.n != 0)it.n = (it.n + 1) % limit;
-			}
-			
-		}
-		// no found,page_fail
-		if (!found) {
-			n_page_fail++;
-			while (init_table[ptr].n != 0) {
-				init_table[ptr].n = (init_table[ptr].n + 1) % limit;
-				ptr = (ptr + 1) % table_len;
-			}
-			init_table[ptr].n = 1;
-			init_table[ptr].id = c;
-			ptr = (ptr + 1) % table_len;
-		}
-	    found:;
-	}
-	return n_page_fail;
-}
+
 int main() { 
-	int p[] = { 3, 9, 20, 15, 7 };
-	int in[] = { 9, 3, 15, 20, 7 };
+	TreeNode tn1(1);
+	TreeNode tn2(2);
+	TreeNode tn3(3);
+	TreeNode tn4(4);
+	TreeNode tn5(5);
+	TreeNode tn6(6);
+	tn1.left = &tn2;
+	tn1.right = &tn5;
+	tn2.left = &tn3;
+	tn2.right = &tn4;
+	tn5.right = &tn6;
+	flatten(&tn1);
 	return 0;
 }
 
