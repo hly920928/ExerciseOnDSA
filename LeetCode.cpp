@@ -3184,3 +3184,45 @@ void flatten(TreeNode * root)
 		root->left = nullptr;
 	}
 }
+
+int numDistinct(string s, string t)
+{
+	
+	int m = s.size(); int n = t.size();
+	if (m == 0)return 0;
+	vector<vector<int>>table;
+	table.resize(m);
+	for (auto&v : table) {
+		v.resize(n);
+		for (auto& i : v)i = 0;
+	}
+	for (int i = 0; i < m; i++) {
+		for (int j= 0;j < n; j++) {
+			if (j > i) {
+				table[i][j] = 0;
+				continue;
+			}
+			if (j == 0) {
+				if (s[i] ==t[j]) {
+					if (i == 0)table[i][j] = 1;
+					else {
+						table[i][j] = 1 + table[i - 1][j];
+					}
+				}
+				else {
+					if (i != 0)table[i][j] =  table[i - 1][j];
+				}
+			}
+			else {
+				if (s[i] == t[j]) {
+					table[i][j] =  table[i - 1][j-1]+ table[i - 1][j];
+				}
+				else {
+					table[i][j] = table[i - 1][j];
+				}
+
+			}
+		}
+	}
+	return table[m - 1][n - 1];
+}

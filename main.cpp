@@ -17,18 +17,7 @@
 using namespace std;
 
 int main() { 
-	TreeNode tn1(1);
-	TreeNode tn2(2);
-	TreeNode tn3(3);
-	TreeNode tn4(4);
-	TreeNode tn5(5);
-	TreeNode tn6(6);
-	tn1.left = &tn2;
-	tn1.right = &tn5;
-	tn2.left = &tn3;
-	tn2.right = &tn4;
-	tn5.right = &tn6;
-	flatten(&tn1);
+	int n = numDistinct("b", "a");
 	return 0;
 }
 

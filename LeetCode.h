@@ -217,3 +217,5 @@ bool hasPathSum(TreeNode* root, int sum);
 std::vector<std::vector<int>> pathSum(TreeNode* root, int sum);
 //114. Flatten Binary Tree to Linked List
 void flatten(TreeNode* root);
+//115. Distinct Subsequences
+int numDistinct(std::string s, std::string t);
