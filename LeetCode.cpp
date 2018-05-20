@@ -3226,3 +3226,23 @@ int numDistinct(string s, string t)
 	}
 	return table[m - 1][n - 1];
 }
+
+void connect(TreeLinkNode * root)
+{
+	queue<TreeLinkNode*>q;
+	if (root == nullptr)return;
+	q.push(root); q.push(nullptr);
+	while (true) {
+		if (q.front() == nullptr&&q.size() == 1)break;
+		auto now = q.front(); q.pop();
+		if (now != nullptr) {
+			now->next = q.front();
+			if(now->left!=nullptr)q.push(now->left);
+			q.push(now->right);
+		}
+		else {
+			q.push(nullptr);
+		}
+	}
+
+}

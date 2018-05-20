@@ -17,7 +17,12 @@
 using namespace std;
 
 int main() { 
-	int n = numDistinct("b", "a");
+	TreeLinkNode tn1(1);
+	TreeLinkNode tn2(2);
+	TreeLinkNode tn3(3);
+	tn1.left = &tn2;
+	tn1.right = &tn3;
+	connect(&tn1);
 	return 0;
 }
 

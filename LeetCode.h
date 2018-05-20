@@ -219,3 +219,12 @@ std::vector<std::vector<int>> pathSum(TreeNode* root, int sum);
 void flatten(TreeNode* root);
 //115. Distinct Subsequences
 int numDistinct(std::string s, std::string t);
+//116. Populating Next Right Pointers in Each Node
+struct TreeLinkNode {
+	int val;
+	TreeLinkNode *left;
+	TreeLinkNode *right;
+	TreeLinkNode *next;
+	TreeLinkNode(int v) :val(v) {};
+};
+void connect(TreeLinkNode *root);
