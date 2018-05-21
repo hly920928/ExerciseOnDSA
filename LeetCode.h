@@ -228,3 +228,4 @@ struct TreeLinkNode {
 	TreeLinkNode(int v) :val(v) {};
 };
 void connect(TreeLinkNode *root);
+std::vector<std::vector<int>> generate(int numRows);

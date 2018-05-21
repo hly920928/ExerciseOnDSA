@@ -22,7 +22,7 @@ int main() {
 	TreeLinkNode tn3(3);
 	tn1.left = &tn2;
 	//tn1.right = &tn3;
-	connect(&tn1);
+	auto 	vv = generate(5);
 	return 0;
 }
 

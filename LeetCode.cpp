@@ -3238,11 +3238,30 @@ void connect(TreeLinkNode * root)
 		if (now != nullptr) {
 			now->next = q.front();
 			if (now->left != nullptr)q.push(now->left);
-			if (now->left != nullptr)q.push(now->right);
+			if (now->right != nullptr)q.push(now->right);
 		}
 		else {
 			q.push(nullptr);
 		}
 	}
 
+}
+
+vector<vector<int>> generate(int numRows)
+{
+	vector<vector<int>> ans;
+	ans.push_back(vector<int>());
+	ans.back().push_back(1);
+	for (int i = 2; i <= numRows; i++) {
+		ans.push_back(vector<int>());
+		auto& pre = ans[i-2];
+		
+		ans.back().resize(i);
+		ans.back().front() = 1;
+		ans.back().back() = 1;
+		for (int j = 1; j < i-1; j++) {
+			ans.back()[j] = pre[j - 1] + pre[j];
+		}
+	}
+	return ans;
 }
