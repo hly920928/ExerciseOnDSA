@@ -21,7 +21,7 @@ int main() {
 	TreeLinkNode tn2(2);
 	TreeLinkNode tn3(3);
 	tn1.left = &tn2;
-	tn1.right = &tn3;
+	//tn1.right = &tn3;
 	connect(&tn1);
 	return 0;
 }

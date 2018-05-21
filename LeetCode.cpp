@@ -3237,8 +3237,8 @@ void connect(TreeLinkNode * root)
 		auto now = q.front(); q.pop();
 		if (now != nullptr) {
 			now->next = q.front();
-			if(now->left!=nullptr)q.push(now->left);
-			q.push(now->right);
+			if (now->left != nullptr)q.push(now->left);
+			if (now->left != nullptr)q.push(now->right);
 		}
 		else {
 			q.push(nullptr);
