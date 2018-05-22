@@ -3250,6 +3250,7 @@ void connect(TreeLinkNode * root)
 vector<vector<int>> generate(int numRows)
 {
 	vector<vector<int>> ans;
+	if(numRows==0)return ans;
 	ans.push_back(vector<int>());
 	ans.back().push_back(1);
 	for (int i = 2; i <= numRows; i++) {
@@ -3264,4 +3265,9 @@ vector<vector<int>> generate(int numRows)
 		}
 	}
 	return ans;
+}
+
+vector<int> getRow(int rowIndex)
+{
+	return generate(rowIndex)[rowIndex];
 }
