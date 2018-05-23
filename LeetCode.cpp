@@ -3269,5 +3269,39 @@ vector<vector<int>> generate(int numRows)
 
 vector<int> getRow(int rowIndex)
 {
-	return generate(rowIndex)[rowIndex];
+	vector<vector<int>> ans;
+	int numRows = rowIndex+1;
+	ans.push_back(vector<int>());
+	ans.back().push_back(1);
+	for (int i = 2; i <= numRows; i++) {
+		ans.push_back(vector<int>());
+		auto& pre = ans[i - 2];
+
+		ans.back().resize(i);
+		ans.back().front() = 1;
+		ans.back().back() = 1;
+		for (int j = 1; j < i - 1; j++) {
+			ans.back()[j] = pre[j - 1] + pre[j];
+		}
+	}
+	return ans.back();
+}
+
+int minimumTotal(vector<vector<int>>& triangle)
+{
+	if (triangle.size() == 0)return 0;
+	vector<vector<int>>table;
+	table.resize(triangle.size());
+	int m = triangle.size();
+	table[0].push_back(triangle[0][0]);
+	for (int i = 1; i < m; i++) {
+		int n = triangle[m].size();
+		table.resize(n);
+		table[i][0] = table[i - 1][0] + triangle[i][0];
+		table[i][n - 1] = table[i - 1][n - 2] + triangle[i][n - 1];
+		for (int j = 1; j < n - 1; j++) {
+			table[i][j] = min(table[i - 1][j], table[i - 1][j - 1]) + triangle[i][j];
+		}
+	}
+	return *min_element(table.back().begin(),table.back().end());
 }

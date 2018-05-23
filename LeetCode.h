@@ -229,3 +229,6 @@ struct TreeLinkNode {
 };
 void connect(TreeLinkNode *root);
 std::vector<std::vector<int>> generate(int numRows);
+vector<int> getRow(int rowIndex);
+//
+int minimumTotal(vector<vector<int>>& triangle);
