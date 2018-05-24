@@ -3295,8 +3295,8 @@ int minimumTotal(vector<vector<int>>& triangle)
 	int m = triangle.size();
 	table[0].push_back(triangle[0][0]);
 	for (int i = 1; i < m; i++) {
-		int n = triangle[m].size();
-		table.resize(n);
+		int n = triangle[i].size();
+		table[i].resize(n);
 		table[i][0] = table[i - 1][0] + triangle[i][0];
 		table[i][n - 1] = table[i - 1][n - 2] + triangle[i][n - 1];
 		for (int j = 1; j < n - 1; j++) {
@@ -3304,4 +3304,18 @@ int minimumTotal(vector<vector<int>>& triangle)
 		}
 	}
 	return *min_element(table.back().begin(),table.back().end());
+}
+
+int maxProfit(vector<int>& prices)
+{
+
+	int n = prices.size();
+	if (n == 0)return 0;
+	vector<int> maxAfter; maxAfter.resize(n);
+	maxAfter.back() = prices.back();
+	for (int i = n - 2; i >= 0; i--) {
+		maxAfter[i] = (maxAfter[i + 1] > prices[i]) ? maxAfter[i + 1] : prices[i];
+	}
+	for (int i = 0; i < n; i++)maxAfter[i] = maxAfter[i] - prices[i];
+	return *max_element(maxAfter.begin(), maxAfter.end());
 }
