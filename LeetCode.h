@@ -229,6 +229,12 @@ struct TreeLinkNode {
 };
 void connect(TreeLinkNode *root);
 std::vector<std::vector<int>> generate(int numRows);
-vector<int> getRow(int rowIndex);
+std::vector<int> getRow(int rowIndex);
 //120. Triangle
 int minimumTotal(std::vector<std::vector<int>>& triangle);
+//121. Best Time to Buy and Sell Stock
+int maxProfit(std::vector<int>& prices);
+//122. Best Time to Buy and Sell Stock II
+int maxProfit_V2(std::vector<int>& prices);
+//123. Best Time to Buy and Sell Stock III
+int maxProfit_V3(std::vector<int>& prices);

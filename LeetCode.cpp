@@ -3340,3 +3340,34 @@ int maxProfit_V2(std::vector<int>& prices)
 	}
 	return sum;
 }
+
+int maxProfit_V3(vector<int>& prices)
+{
+
+	int b_p = -1; int n = prices.size();
+	if (n == 0)return 0;
+	vector<int>maxBefore; maxBefore.resize(n);
+	vector<int>maxAfter; maxAfter.resize(n);
+	int b_min = prices[0];
+	for (int i = 1; i < n; i++) {
+		int t = prices[i] - b_min;
+		maxBefore[i] = (maxBefore[i-1] > t) ? maxBefore[i-1] : t;
+		b_min = (b_min < prices[i]) ? b_min : prices[i];
+	}
+	int a_max = prices[n-1];
+	for (int i = n-2; i>=0; i--) {
+		int t = a_max-prices[i];
+		maxAfter[i] = (maxAfter[i+1] > t) ? maxAfter[i+1] : t;
+		a_max = (a_max > prices[i]) ? a_max : prices[i];
+	}
+	int max = maxBefore[n-1];
+	for (int i = 1; i < n - 2; i++) {
+		int b = maxBefore[i];
+		if (b < 0)b = 0;
+		int a = maxAfter[i+1];
+		if (a < 0)a = 0;
+		int t = a + b;
+		max = (max > t) ? max : t;
+	}
+	return max;
+}

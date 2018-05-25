@@ -17,12 +17,11 @@
 using namespace std;
 
 int main() { 
-	TreeLinkNode tn1(1);
-	TreeLinkNode tn2(2);
-	TreeLinkNode tn3(3);
-	tn1.left = &tn2;
-	//tn1.right = &tn3;
-	auto 	vv = generate(5);
+	vector<int>vp;
+	vp.push_back(1);
+	vp.push_back(4);
+	vp.push_back(3);
+	int t = maxProfit_V3(vp);
 	return 0;
 }
 
