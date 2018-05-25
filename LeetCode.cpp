@@ -3319,3 +3319,24 @@ int maxProfit(vector<int>& prices)
 	for (int i = 0; i < n; i++)maxAfter[i] = maxAfter[i] - prices[i];
 	return *max_element(maxAfter.begin(), maxAfter.end());
 }
+
+int maxProfit_V2(std::vector<int>& prices)
+{
+	int b_p = -1; int n = prices.size();
+	if (n == 0)return 0;
+	int sum = 0;
+	for (int i = 0; i < n; i++) {
+		if (i == n - 1 && b_p != -1) {
+			sum += prices[i] - b_p;
+			break;
+		}
+		if (prices[i] < prices[i + 1]) {
+			if (b_p == -1)b_p = prices[i];
+		}
+		else {
+			if (b_p != -1)sum += prices[i] - b_p;
+			b_p = -1;
+		}
+	}
+	return sum;
+}
