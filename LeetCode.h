@@ -238,3 +238,5 @@ int maxProfit(std::vector<int>& prices);
 int maxProfit_V2(std::vector<int>& prices);
 //123. Best Time to Buy and Sell Stock III
 int maxProfit_V3(std::vector<int>& prices);
+//124. Binary Tree Maximum Path Sum
+int maxPathSum(TreeNode* root); 

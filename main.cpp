@@ -17,11 +17,16 @@
 using namespace std;
 
 int main() { 
-	vector<int>vp;
-	vp.push_back(1);
-	vp.push_back(4);
-	vp.push_back(3);
-	int t = maxProfit_V3(vp);
+	TreeNode n1(-10);
+	TreeNode n2(9);
+	TreeNode n3(20);
+	TreeNode n4(15);
+	TreeNode n5(7);
+	n1.left = &n2;
+	n1.right = &n3;
+	n3.left = &n4;
+	n3.right = &n5;
+	int t = maxPathSum(&n1);
 	return 0;
 }
 
