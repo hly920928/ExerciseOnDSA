@@ -3371,3 +3371,24 @@ int maxProfit_V3(vector<int>& prices)
 	}
 	return max;
 }
+int maxPS;
+int maxDirectPathSum_re(TreeNode * root) {
+	if (root->left == nullptr&&root->right == nullptr) {
+		maxPS = max(maxPS, root->val);
+		return root->val;
+	}
+	int rm = 0;
+	if (root->right != nullptr)rm = maxDirectPathSum_re(root->right);
+	int lm = 0;
+	if (root->left != nullptr)rm = maxDirectPathSum_re(root->left);
+	if (rm < 0)rm = 0;
+	if (lm < 0)lm = 0;
+	int tm = root->val + rm + lm;
+	maxPS = max(maxPS, tm);
+	return  max(maxPS+ rm, maxPS+ lm);
+}
+int maxPathSum(TreeNode * root)
+{
+	maxPS = INT_MIN;
+	return 0;
+}
