@@ -240,3 +240,5 @@ int maxProfit_V2(std::vector<int>& prices);
 int maxProfit_V3(std::vector<int>& prices);
 //124. Binary Tree Maximum Path Sum
 int maxPathSum(TreeNode* root); 
+//125. Valid Palindrome
+bool isPalindrome(std::string s);

@@ -3373,7 +3373,7 @@ int maxProfit_V3(vector<int>& prices)
 }
 int maxPS;
 int maxDirectPathSum_re(TreeNode * root) {
-	int&mp = maxPS;
+	//int&mp = maxPS;
 	if (root->left == nullptr&&root->right == nullptr) {
 		maxPS = max(maxPS, root->val);
 		return root->val;
@@ -3393,4 +3393,22 @@ int maxPathSum(TreeNode * root)
 	maxPS = INT_MIN;
 	maxDirectPathSum_re(root);
 	return maxPS;
+}
+
+bool isPalindrome(string s)
+{
+	int n = s.size();
+	int lo = 0;
+	int hi = n - 1;
+	for (char& c : s) {
+		if (isalpha(c)&&c >= 'a')c = c+('A' - 'a');
+	}
+	while (true) {
+		while (lo<n&&!isalnum(s[lo]))lo++;
+		while (hi >=0&&!isalnum(s[hi]))hi--;
+		if(lo>=hi)return true;
+		if (s[lo] != s[hi])return false;
+		lo++; hi--;
+	}
+	return true;
 }

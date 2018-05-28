@@ -26,7 +26,7 @@ int main() {
 	n1.right = &n3;
 	n3.left = &n4;
 	n3.right = &n5;
-	int t = maxPathSum(&n1);
+	auto t = isPalindrome("A man, a plan, a canal: Panama");
 	return 0;
 }
 
