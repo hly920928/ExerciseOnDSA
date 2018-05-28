@@ -6,6 +6,7 @@
 #include <stack>
 #include <string>
 #include <unordered_map>
+#include <unordered_set>
 #include <map>
 #include <sstream>
 #include <vector>
@@ -3411,4 +3412,53 @@ bool isPalindrome(string s)
 		lo++; hi--;
 	}
 	return true;
+}
+int CanTran(string& a, string& b) {
+	int t = 0;
+	int n = a.size();
+	for (int i = 0; i < n; i++) {
+		if (a[i] != b[i] ) {
+			if(t==0)t++;
+			else return 'F';
+		}
+	}
+	if (t == 1)return 'Y';
+	return 'D';
+};
+int ladderLength(string beginWord, string endWord, vector<string>& wordList)
+{
+	
+	int n = wordList.size();
+	vector<int>dis; dis.resize(n);
+	for (int& i : dis)i = INT_MIN;
+     int  end = INT_MIN;
+	 queue<int>front_e;
+	 unordered_set<int>set;
+	 for (int i = 0; i < n;i++) {
+		 if (wordList[i] == endWord) {
+			 end = i;
+			 dis[i] =1;
+			 front_e.push(i);
+		}else  set.insert(i);
+		
+	}
+	if (end== INT_MIN)return 0;
+	vector<int>neo;
+	while (true) {
+		if (front_e.empty())return 0;
+		int now = front_e.front(); front_e.pop();
+		if (CanTran(wordList[now], beginWord)=='Y')return dis[now] + 1;
+		
+		for (int i : set) {
+			if (CanTran(wordList[now], wordList[i]) == 'Y') {
+				dis[i] = dis[now] + 1;
+				front_e.push(i);
+				neo.push_back(i);
+			}
+		}
+		for (int i : neo)set.erase(i);
+		neo.clear();
+
+	}
+
 }

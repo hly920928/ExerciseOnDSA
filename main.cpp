@@ -26,7 +26,10 @@ int main() {
 	n1.right = &n3;
 	n3.left = &n4;
 	n3.right = &n5;
-	auto t = isPalindrome("A man, a plan, a canal: Panama");
+	string strs[] = { "hot","dot","dog","lot","log","cog" };
+	vector<string> v(strs, strs + 6);
+
+	auto t = ladderLength("hit", "cog", v);
 	return 0;
 }
 
