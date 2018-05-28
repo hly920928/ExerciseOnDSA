@@ -3417,48 +3417,52 @@ int CanTran(string& a, string& b) {
 	int t = 0;
 	int n = a.size();
 	for (int i = 0; i < n; i++) {
-		if (a[i] != b[i] ) {
-			if(t==0)t++;
-			else return 'F';
-		}
+		if (a[i] != b[i]) t++;
 	}
-	if (t == 1)return 'Y';
-	return 'D';
+	return t;
+};
+struct str_dis {
+	int id; int dis_to_b; int dis_to_e;
+	str_dis(int i, int d,int d_2) :id(i), dis_to_b(d), dis_to_e(d_2){};
+};
+bool operator <(const str_dis& a,const str_dis& b) {
+	if (a.dis_to_e > b.dis_to_e)return true;
+	else return false;
+	if (a.dis_to_b > b.dis_to_b)return true;
+	else return false;
+	return false;
 };
 int ladderLength(string beginWord, string endWord, vector<string>& wordList)
 {
 	
 	int n = wordList.size();
-	vector<int>dis; dis.resize(n);
-	for (int& i : dis)i = INT_MIN;
      int  end = INT_MIN;
-	 queue<int>front_e;
+	 priority_queue<str_dis>front_e;
 	 unordered_set<int>set;
 	 for (int i = 0; i < n;i++) {
 		 if (wordList[i] == endWord) {
 			 end = i;
-			 dis[i] =1;
-			 front_e.push(i);
-		}else  set.insert(i);
+			 front_e.push(str_dis(i, CanTran(wordList[i], beginWord),1));
+		 }
+		 else {
+			 set.insert(i);
+		 }
 		
 	}
 	if (end== INT_MIN)return 0;
 	vector<int>neo;
 	while (true) {
 		if (front_e.empty())return 0;
-		int now = front_e.front(); front_e.pop();
-		if (CanTran(wordList[now], beginWord)=='Y')return dis[now] + 1;
-		
+		str_dis now = front_e.top(); front_e.pop();
+		if (now.dis_to_b==1)return now.dis_to_e + 1;
 		for (int i : set) {
-			if (CanTran(wordList[now], wordList[i]) == 'Y') {
-				dis[i] = dis[now] + 1;
-				front_e.push(i);
+			if (CanTran(wordList[now.id], wordList[i]) ==1) {
+				front_e.push(str_dis(i, CanTran(wordList[i], beginWord), now.dis_to_e + 1));
 				neo.push_back(i);
 			}
 		}
 		for (int i : neo)set.erase(i);
 		neo.clear();
-
 	}
 
 }
