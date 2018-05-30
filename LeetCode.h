@@ -244,3 +244,5 @@ int maxPathSum(TreeNode* root);
 bool isPalindrome(std::string s);
 //127. Word Ladder
 int ladderLength(std::string beginWord, std::string endWord, std::vector<std::string>& wordList);
+//126. Word Ladder II
+std::vector<std::vector<std::string>> findLadders(std::string beginWord, std::string endWord, std::vector<std::string>& wordList);

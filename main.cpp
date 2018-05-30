@@ -26,10 +26,10 @@ int main() {
 	n1.right = &n3;
 	n3.left = &n4;
 	n3.right = &n5;
-	string strs[] = { "hot","dot","dog","lot","log","cog" };
-	vector<string> v(strs, strs + 6);
+	string strs[] = { "hot","cog","dog","tot","hog","hop","pot","dot"};
+	vector<string> v(strs, strs +8);
 
-	auto t = ladderLength("hit", "cog", v);
+	auto t = findLadders("hot", "dog", v);
 	return 0;
 }
 

@@ -3466,3 +3466,92 @@ int ladderLength(string beginWord, string endWord, vector<string>& wordList)
 	}
 
 }
+vector<vector<string>>* fl_ans;
+vector<string>* fl_wordList;
+vector<vector<int>>*fl_parents;
+vector<int>*fl_seq;
+void fL_gP() {
+	if (fl_parents->at(fl_seq->back())[0] == -1) {
+		fl_ans->push_back(vector<string>());
+		auto& now=fl_ans->back();
+		now.push_back(fl_wordList->back());
+		for (int i : *fl_seq) {
+			now.push_back(fl_wordList->at(i));
+		}
+		return;
+	}
+	for (int i : (fl_parents->at(fl_seq->back()))) {
+		fl_seq->push_back(i);
+		fL_gP();
+		fl_seq->pop_back();
+	}
+}
+vector<vector<string>> findLadders(string beginWord, string endWord, vector<string>& wordList)
+{
+	int n = wordList.size();
+	
+	int  end = INT_MIN;
+	vector<vector<string>>ans;
+	vector<vector<int>>parents;
+	vector<int>seq;
+	if (n == 0)return ans;
+	fl_ans=&ans;
+	fl_wordList = &wordList;
+	fl_parents = &parents;
+	fl_seq = &seq;
+	parents.resize(n);
+	vector<int>begin_parents;
+	priority_queue<str_dis>front_e;
+	unordered_set<int>set;
+	for (int i = 0; i < n; i++) {
+		if (wordList[i] == endWord) {
+			end = i;
+			front_e.push(str_dis(i, CanTran(wordList[i], beginWord), 1));
+		}
+		else {
+			set.insert(i);
+		}
+
+	}
+	if (end == INT_MIN)return ans;
+	parents[end].push_back(-1);
+	vector<int>neo; int level = 0;
+	while (true) {
+		//BFS a Level
+		while (true) {
+			if (front_e.empty())break;
+			str_dis now = front_e.top(); front_e.pop();
+			auto& str = wordList[now.id];
+			if (now.dis_to_b == 1) {
+				begin_parents.push_back(now.id);
+				neo.push_back(-1);
+				break;
+			}
+			for (int i : set) {
+				if (CanTran(wordList[now.id], wordList[i]) == 1) {
+					
+					neo.push_back(i);
+					parents[i].push_back(now.id);
+				}
+			}	
+		}
+		if (neo.empty())break;
+		//bool endFlag;
+		for (int& i : neo) {
+			if (i == -1) goto OUTS;
+			front_e.push(str_dis(i, CanTran(wordList[i], beginWord), level + 1));
+			set.erase(i);
+		}
+		neo.clear();
+		level++;
+	}
+	OUTS:
+	//generate all path;
+	wordList.push_back(beginWord);
+	
+	for (int i : begin_parents) {
+		seq.push_back(i);
+		fL_gP();
+	}
+	return ans;
+}
