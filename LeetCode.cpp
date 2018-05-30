@@ -3471,16 +3471,17 @@ vector<string>* fl_wordList;
 vector<vector<int>>*fl_parents;
 vector<int>*fl_seq;
 void fL_gP() {
-	if (fl_parents->at(fl_seq->back())[0] == -1) {
-		fl_ans->push_back(vector<string>());
-		auto& now=fl_ans->back();
-		now.push_back(fl_wordList->back());
-		for (int i : *fl_seq) {
-			now.push_back(fl_wordList->at(i));
-		}
-		return;
-	}
+	vector<int>&seq =*fl_seq;
 	for (int i : (fl_parents->at(fl_seq->back()))) {
+		if (i == -1) {
+			fl_ans->push_back(vector<string>());
+			auto& now = fl_ans->back();
+			now.push_back(fl_wordList->back());
+			for (int i : *fl_seq) {
+				now.push_back(fl_wordList->at(i));
+			}
+			return;
+		}
 		fl_seq->push_back(i);
 		fL_gP();
 		fl_seq->pop_back();
@@ -3500,7 +3501,8 @@ vector<vector<string>> findLadders(string beginWord, string endWord, vector<stri
 	fl_parents = &parents;
 	fl_seq = &seq;
 	parents.resize(n);
-	vector<int>begin_parents;
+	vector<bool>begin_parents;
+	begin_parents.resize(n);
 	priority_queue<str_dis>front_e;
 	unordered_set<int>set;
 	for (int i = 0; i < n; i++) {
@@ -3515,29 +3517,29 @@ vector<vector<string>> findLadders(string beginWord, string endWord, vector<stri
 	}
 	if (end == INT_MIN)return ans;
 	parents[end].push_back(-1);
-	vector<int>neo; int level = 0;
+	unordered_set<int>neo; int level = 0;
 	while (true) {
 		//BFS a Level
 		while (true) {
 			if (front_e.empty())break;
 			str_dis now = front_e.top(); front_e.pop();
 			auto& str = wordList[now.id];
+		
 			if (now.dis_to_b == 1) {
-				begin_parents.push_back(now.id);
-				neo.push_back(-1);
-				break;
+				begin_parents[now.id]=1;
+				neo.insert(-1);
 			}
 			for (int i : set) {
 				if (CanTran(wordList[now.id], wordList[i]) == 1) {
 					
-					neo.push_back(i);
+					neo.insert(i);
 					parents[i].push_back(now.id);
 				}
 			}	
 		}
 		if (neo.empty())break;
 		//bool endFlag;
-		for (int& i : neo) {
+		for (int i : neo) {
 			if (i == -1) goto OUTS;
 			front_e.push(str_dis(i, CanTran(wordList[i], beginWord), level + 1));
 			set.erase(i);
@@ -3549,9 +3551,12 @@ vector<vector<string>> findLadders(string beginWord, string endWord, vector<stri
 	//generate all path;
 	wordList.push_back(beginWord);
 	
-	for (int i : begin_parents) {
-		seq.push_back(i);
-		fL_gP();
+	for (int i = 0; i < n;i++) {
+		if (begin_parents[i]) {
+			seq.push_back(i);
+			fL_gP(); 
+			seq.pop_back();
+		}
 	}
 	return ans;
 }
