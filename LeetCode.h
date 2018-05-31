@@ -246,3 +246,5 @@ bool isPalindrome(std::string s);
 int ladderLength(std::string beginWord, std::string endWord, std::vector<std::string>& wordList);
 //126. Word Ladder II
 std::vector<std::vector<std::string>> findLadders(std::string beginWord, std::string endWord, std::vector<std::string>& wordList);
+//128. Longest Consecutive Sequence
+int longestConsecutive(std::vector<int>& nums);

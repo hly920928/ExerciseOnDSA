@@ -3560,3 +3560,38 @@ vector<vector<string>> findLadders(string beginWord, string endWord, vector<stri
 	}
 	return ans;
 }
+
+int longestConsecutive(vector<int>& nums)
+{
+	unordered_map<int, int> table;
+	int _max = 0;
+	for (int i : nums) {
+		if (table.find(i) != table.end())continue;
+		bool pre = (table.find(i - 1) != table.end());
+		bool succ = (table.find(i +1) != table.end());
+		if (pre&&succ) {
+			int len = table[i - 1] + table[i + 1] + 1;
+			_max = max(_max, len);
+			table[i - 1 - table[i - 1] + 1] = len;
+			table[i +1 +table[i +1] - 1] = len;
+			table[i] = len;
+		}
+		else if(pre) {
+			int len = table[i - 1] + 1;
+			_max = max(_max, len);
+			table[i - 1 - table[i - 1] + 1] = len;
+			table[i] = len;
+		}
+		else if (succ) {
+			int len = table[i + 1] + 1;
+			_max = max(_max, len);
+			table[i + 1 + table[i + 1] - 1] = len;
+			table[i] = len;
+		}
+		else {
+			table[i] = 1;
+			_max = max(_max, 1);
+		}
+	}
+	return _max;
+}
