@@ -3595,3 +3595,21 @@ int longestConsecutive(vector<int>& nums)
 	}
 	return _max;
 }
+int _sumT;
+void sumNumbers_re(TreeNode * root,int sum)
+{
+	if (root->left == nullptr&&root->right == nullptr) {
+		_sumT += sum * 10 + root->val;
+		return;
+	}
+	int sum_now = sum * 10 + root->val;
+	if (root->left != nullptr)sumNumbers_re(root->left, sum_now);
+	if (root->right != nullptr)sumNumbers_re(root->right, sum_now);
+}
+int sumNumbers(TreeNode * root)
+{
+	if (root == nullptr)return 0;
+	_sumT = 0;
+	sumNumbers_re(root, 0);
+	return _sumT;
+}
