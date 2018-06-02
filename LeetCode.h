@@ -250,3 +250,5 @@ std::vector<std::vector<std::string>> findLadders(std::string beginWord, std::st
 int longestConsecutive(std::vector<int>& nums);
 //129. Sum Root to Leaf Numbers
 int sumNumbers(TreeNode* root);
+//130. Surrounded Regions
+void solve_SR(std::vector<std::vector<char>>& board);

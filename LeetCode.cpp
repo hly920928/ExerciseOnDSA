@@ -3613,3 +3613,43 @@ int sumNumbers(TreeNode * root)
 	sumNumbers_re(root, 0);
 	return _sumT;
 }
+vector<char*>* _us;
+int m;
+int n;
+vector<vector<char>>* _board;
+void unsurrounded(int i, int j) {
+	vector<vector<char>>&b = *_board;
+	if (i < 0 || i >= m)return;
+	if (j < 0 ||j >= n)return;
+	if (b[i][j] != 'O')return;
+	_us->push_back(&b[i][j]);
+	b[i][j] = 'X';
+	unsurrounded(i + 1, j);
+	unsurrounded(i -1, j);
+	unsurrounded(i , j-1);
+	unsurrounded(i, j+1);
+};
+void solve_SR(vector<vector<char>>& board)
+{
+	vector<char*> us;
+	m = board.size();
+	if (m == 0)return;
+	n = board[0].size();
+	if (n == 0)return;
+	_us = &us;
+	_board = &board;
+	for (int j = 0; j < n; j++) {
+		unsurrounded(0, j);
+		unsurrounded(m-1, j);
+	}
+	for (int i = 0;i< m;i++) {
+		unsurrounded(i,0);
+		unsurrounded(i,n-1);
+	}
+	for (int i = 0; i< m; i++) {
+		for (int j = 0; j < n; j++) {
+			if (board[i][j] == 'O')board[i][j] = 'X';
+		}
+	}
+	for (char* ptr : us)*ptr = 'O';
+}
