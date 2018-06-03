@@ -3697,6 +3697,7 @@ vector<vector<string>> partition(string s)
 	prouduceAllSub(s, ans);
 	return ans;
 }
+//new!!
 string* str;
 vector<vector<int>>* _table;
 int minCut_re(int a, int b) {
