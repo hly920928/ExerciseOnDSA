@@ -3653,3 +3653,98 @@ void solve_SR(vector<vector<char>>& board)
 	}
 	for (char* ptr : us)*ptr = 'O';
 }
+bool is_Palindrome(string&s) {
+	int end = s.size()-1;
+	int begin = 0;
+	if (end == 0)return true;
+	while (true) {
+		if (end<=begin)return true;
+		if (s[end] == s[begin]) {
+			end--; begin++;
+			continue;
+		};
+		if (s[end] != s[begin])return false;
+	}
+}
+void prouduceAllSub(string& s, vector<vector<string>>&sub) {
+	int n = s.size();
+	if (is_Palindrome(s)) {
+		sub.push_back(vector<string >());
+		sub.back().push_back(s);
+	}
+	string head = ""; string tail = "";
+	for (int i = 0; i < n-1; i++) {
+		head.push_back(s[i]);
+		if (is_Palindrome(head)) {
+			tail = s.substr(i+1, n - i);
+			vector<vector<string>> tail_part;
+			prouduceAllSub(tail, tail_part);
+			if (tail_part.size() != 0) {
+				for (vector<string>& v : tail_part) {
+					sub.push_back(vector<string >());
+					sub.back().push_back(head);
+					for (auto s : v) {
+						sub.back().push_back(s);
+					}
+				}
+			}
+		}
+	}
+}
+vector<vector<string>> partition(string s)
+{
+	vector<vector<string>> ans;
+	prouduceAllSub(s, ans);
+	return ans;
+}
+string* str;
+vector<vector<int>>* _table;
+int minCut_re(int a, int b) {
+	int minC = INT_MAX;
+	string head = ""; string tail = "";
+	auto& t = *_table;
+	if (t[a][b] != INT_MAX) {
+		return t[a][b];
+	}
+	int n = b-a+1;
+	if (n==1) {
+		minC= 0;
+		goto inEND;
+	};
+	if (is_Palindrome(str->substr(a,n))) {
+		minC = 0;
+		goto inEND;
+	}
+
+	for (int i =a; i < b; i++) {
+		head.push_back(str->at(i));
+		if (is_Palindrome(head)) {
+			t[a][i] =0 ;
+			int tailCut = minCut_re(i + 1,b);
+			minC = min(minC, 1 + tailCut);
+			if (minC == 1) {
+				minC = 1;
+				goto inEND;
+			}
+		}
+	}
+    inEND:
+	t[a][b] = minC;
+	return minC;
+}
+int minCut(std::string s)
+{
+	str = &s;
+	vector<vector<int>>table; _table = &table;
+	int n = s.size();
+	if (n <= 1)return 0; table.resize(n);
+	for (int i = 0; i < n; i++) {
+		table[i].resize(n);
+		for (int j= 0; j< n; j++) {
+			table[i][j] = INT_MAX;
+		}
+		
+	}
+	int min = minCut_re(0, n - 1);
+	return min;
+}

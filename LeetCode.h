@@ -252,3 +252,7 @@ int longestConsecutive(std::vector<int>& nums);
 int sumNumbers(TreeNode* root);
 //130. Surrounded Regions
 void solve_SR(std::vector<std::vector<char>>& board);
+//131. Palindrome Partitioning
+std::vector<std::vector<std::string>> partition(std::string s);
+//132. Palindrome Partitioning II
+int minCut(std::string s);
