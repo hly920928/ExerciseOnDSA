@@ -3749,3 +3749,18 @@ int minCut(std::string s)
 	int min = minCut_re(0, n - 1);
 	return min;
 }
+
+UndirectedGraphNode * cloneGraph(UndirectedGraphNode * node)
+{
+	static unordered_map<UndirectedGraphNode *, UndirectedGraphNode *>map;
+	if (map.find(node)!= map.end())return map[node];
+	if (node == nullptr)return nullptr;
+	auto ptr = new UndirectedGraphNode(node->label);
+	for (auto p : node->neighbors) {
+		if (p == node) {
+			ptr->neighbors.push_back(ptr);
+		}else ptr->neighbors.push_back(cloneGraph(p));
+	}
+	map[node] = ptr;
+	return ptr;
+}

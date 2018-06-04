@@ -256,3 +256,9 @@ void solve_SR(std::vector<std::vector<char>>& board);
 std::vector<std::vector<std::string>> partition(std::string s);
 //132. Palindrome Partitioning II new!!
 int minCut(std::string s);
+struct UndirectedGraphNode {
+	int label;
+	vector<UndirectedGraphNode *> neighbors;
+	UndirectedGraphNode(int x) : label(x) {};
+	
+};
