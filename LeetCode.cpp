@@ -3768,15 +3768,15 @@ UndirectedGraphNode * cloneGraph(UndirectedGraphNode * node)
 
 int canCompleteCircuit(vector<int>& gas, vector<int>& cost)
 {
+	int sum = 0; int min_id = -1; int min_sum = INT_MAX;
 	int n = gas.size();
 	for (int i = 0; i < n; i++) {
-		int now = i; int tank = gas[i];
-		while (true) {
-			if (tank < cost[now])break;
-			tank = tank - cost[now] + gas[(now + 1) % n];
-			now = (now + 1) % n;
-			if (now == i)return i;
+		sum += gas[i] - cost[i];
+		if (sum < min_sum) {
+			min_sum = sum;
+			min_id = i;
 		}
 	}
-	return -1;
+	if (sum < 0)return -1;
+		return (min_id + 1) % n;
 }
