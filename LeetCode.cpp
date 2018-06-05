@@ -3756,11 +3756,27 @@ UndirectedGraphNode * cloneGraph(UndirectedGraphNode * node)
 	if (map.find(node)!= map.end())return map[node];
 	if (node == nullptr)return nullptr;
 	auto ptr = new UndirectedGraphNode(node->label);
+	map[node] = ptr;
 	for (auto p : node->neighbors) {
 		if (p == node) {
 			ptr->neighbors.push_back(ptr);
 		}else ptr->neighbors.push_back(cloneGraph(p));
 	}
-	map[node] = ptr;
+	
 	return ptr;
+}
+
+int canCompleteCircuit(vector<int>& gas, vector<int>& cost)
+{
+	int n = gas.size();
+	for (int i = 0; i < n; i++) {
+		int now = i; int tank = gas[i];
+		while (true) {
+			if (tank < cost[now])break;
+			tank = tank - cost[now] + gas[(now + 1) % n];
+			now = (now + 1) % n;
+			if (now == i)return i;
+		}
+	}
+	return -1;
 }

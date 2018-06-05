@@ -258,7 +258,9 @@ std::vector<std::vector<std::string>> partition(std::string s);
 int minCut(std::string s);
 struct UndirectedGraphNode {
 	int label;
-	vector<UndirectedGraphNode *> neighbors;
+	std::vector<UndirectedGraphNode*> neighbors;
 	UndirectedGraphNode(int x) : label(x) {};
 	
 };
+UndirectedGraphNode *cloneGraph(UndirectedGraphNode *node);
+int canCompleteCircuit(std::vector<int>& gas, std::vector<int>& cost);
