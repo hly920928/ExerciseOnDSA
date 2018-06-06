@@ -17,8 +17,9 @@
 using namespace std;
 
 int main() {
-
-	auto t = minCut("aab");
+	int table[] = { 1,0, 2 };
+	vector<int>v(table, table + 3);
+	auto t = candy(v);
 	return 0;
 }
 

@@ -3778,5 +3778,38 @@ int canCompleteCircuit(vector<int>& gas, vector<int>& cost)
 		}
 	}
 	if (sum < 0)return -1;
-		return (min_id + 1) % n;
+	return (min_id + 1) % n;
 }
+vector<int>* candy_r;
+struct candy_id {
+	int id;
+	candy_id(int i) :id(i) {};
+};
+bool operator<(const candy_id& a, const candy_id& b) {
+	return candy_r->at(a.id) < candy_r->at(b.id);
+}
+int candy(std::vector<int>& ratings)
+{
+	candy_r = &ratings; int n = ratings.size();
+	if (n == 0)return 0;
+	vector<candy_id> v_id;
+	for (int i = 0; i < n; i++)v_id.push_back(candy_id(i));
+	sort(v_id.begin(), v_id.end());
+	vector<int> candy_table;
+	for (int i = 0; i < n; i++)candy_table.push_back(1);
+	for (int id = 0; id < n;id++) {
+		int i = v_id[id].id;
+		int rate_left = (i != 0) ? ratings[i-1] : -1;
+		int rate_right= (i !=n-1) ? ratings[i+1] : -1;
+		if (rate_left!=-1&&ratings[i] > rate_left&&candy_table[i] <= candy_table[i - 1]) {
+			candy_table[i] = candy_table[i - 1] + 1;
+		 }
+		if (rate_right!=-1 && ratings[i] > rate_right&&candy_table[i] <= candy_table[i +1]) {
+			candy_table[i] = candy_table[i +1] + 1;
+		}
+	}
+	int sum = 0;
+	for (int i : candy_table)sum += i;
+	return sum;
+}
+

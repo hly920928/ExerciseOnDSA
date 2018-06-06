@@ -262,5 +262,9 @@ struct UndirectedGraphNode {
 	UndirectedGraphNode(int x) : label(x) {};
 	
 };
+//133 Clone Graph
 UndirectedGraphNode *cloneGraph(UndirectedGraphNode *node);
+//134 Gas Station
 int canCompleteCircuit(std::vector<int>& gas, std::vector<int>& cost);
+
+int candy(std::vector<int>& ratings);
