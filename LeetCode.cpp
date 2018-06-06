@@ -3792,22 +3792,56 @@ int candy(std::vector<int>& ratings)
 {
 	candy_r = &ratings; int n = ratings.size();
 	if (n == 0)return 0;
-	vector<candy_id> v_id;
-	for (int i = 0; i < n; i++)v_id.push_back(candy_id(i));
-	sort(v_id.begin(), v_id.end());
-	vector<int> candy_table;
-	for (int i = 0; i < n; i++)candy_table.push_back(1);
-	for (int id = 0; id < n;id++) {
-		int i = v_id[id].id;
-		int rate_left = (i != 0) ? ratings[i-1] : -1;
-		int rate_right= (i !=n-1) ? ratings[i+1] : -1;
-		if (rate_left!=-1&&ratings[i] > rate_left&&candy_table[i] <= candy_table[i - 1]) {
-			candy_table[i] = candy_table[i - 1] + 1;
-		 }
-		if (rate_right!=-1 && ratings[i] > rate_right&&candy_table[i] <= candy_table[i +1]) {
-			candy_table[i] = candy_table[i +1] + 1;
-		}
+	if (n == 1)return 1;
+	vector<int> candy_table; candy_table.resize(n);
+	vector<int> local_min;
+	vector<int> local_max;
+	//head and tail special case
+	if (ratings[0] <= ratings[1]) {
+		candy_table[0] = 1;
+		local_min.push_back(0);
 	}
+	if (ratings[n - 1] <= ratings[n - 2]) {
+		candy_table[n - 1] = 1;
+		local_min.push_back(n - 1);
+	}
+		for (int i = 1; i < n - 1; i++) {
+			if (ratings[i - 1] == ratings[i] && ratings[i] == ratings[i + 1])local_min.push_back(i);
+			else if((ratings[i - 1]>ratings[i] && ratings[i] <= ratings[i + 1])||
+				(ratings[i - 1]>=ratings[i] && ratings[i] <ratings[i + 1]))local_min.push_back(i);
+			else if ((ratings[i - 1]<ratings[i] && ratings[i]>=ratings[i + 1])||
+				(ratings[i - 1]<=ratings[i] && ratings[i]>ratings[i + 1]))local_max.push_back(i);
+	}
+		for (int i : local_min) {
+			candy_table[i] = 1;
+			int now = i - 1;
+			while (now >0) {
+				if (ratings[now - 1] > ratings[now] && ratings[now] > ratings[now + 1]) {
+					candy_table[now] = candy_table[now + 1] + 1;
+				}else break;
+				now--;
+			}
+			now = i +1;
+			while (now<n) {
+				if (ratings[now - 1] < ratings[now] && ratings[now] < ratings[now + 1]) {
+					candy_table[now] = candy_table[now - 1] + 1;
+				}else break;
+				now++;
+			}
+	}
+		for (int i : local_max) {
+			if (ratings[i - 1] != ratings[i] && ratings[i] != ratings[i + 1]) {
+				candy_table[i] = max(candy_table[i - 1], candy_table[i + 1]) + 1;
+			}
+			else if (ratings[i - 1] == ratings[i]) {
+				candy_table[i] =candy_table[i + 1] + 1;
+			}
+			else if (ratings[i +1] == ratings[i]) {
+				candy_table[i] = candy_table[i - 1] + 1;
+			}
+		}
+		if (ratings[0]>ratings[1]) candy_table[0] = candy_table[1]+1;
+		if (ratings[n - 1]> ratings[n - 2])candy_table[n - 1] = candy_table[n-2] + 1;
 	int sum = 0;
 	for (int i : candy_table)sum += i;
 	return sum;

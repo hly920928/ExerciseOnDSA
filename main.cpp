@@ -17,8 +17,8 @@
 using namespace std;
 
 int main() {
-	int table[] = { 1,0, 2 };
-	vector<int>v(table, table + 3);
+	int table[] = { 29,51,87,87,72,12 };
+	vector<int>v(table, table +6);
 	auto t = candy(v);
 	return 0;
 }
