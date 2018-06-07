@@ -3850,8 +3850,16 @@ int candy(std::vector<int>& ratings)
 
 int singleNumber(vector<int>& nums)
 {
-	int ans = 0;
-	for (int& i : nums)ans ^= i;
-	return ans;
+	set<int>yes_set;
+	set<int>no_set;
+	for (int i : nums) {
+		bool inYes = yes_set.find(i) != yes_set.end();
+		bool inNo = no_set.find(i) != no_set.end();
+		if (inNo)continue;
+		if (inYes) {
+			yes_set.erase(i);
+		}
+	}
+	return *set.begin();
 }
 
