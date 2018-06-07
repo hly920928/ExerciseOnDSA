@@ -8,6 +8,7 @@
 #include <unordered_map>
 #include <unordered_set>
 #include <map>
+#include <set>
 #include <sstream>
 #include <vector>
 using namespace std;
@@ -3845,5 +3846,17 @@ int candy(std::vector<int>& ratings)
 	int sum = 0;
 	for (int i : candy_table)sum += i;
 	return sum;
+}
+
+int singleNumber(vector<int>& nums)
+{
+	set<int>set;
+	for (int i : nums) {
+		if (set.find(i) == set.end()) {
+			set.insert(i);
+		}
+		else set.erase(i);
+	}
+	return *set.begin();
 }
 
