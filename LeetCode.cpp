@@ -3848,18 +3848,32 @@ int candy(std::vector<int>& ratings)
 	return sum;
 }
 
+RandomListNode * copyRandomList(RandomListNode * head)
+{
+	if (head == nullptr)return nullptr;
+	static unordered_map<RandomListNode * , RandomListNode * >map;
+	if (map.find(head) != map.end())return map[head];
+	RandomListNode * now = new RandomListNode(head->label);
+	now->next = copyRandomList(head->next);
+	now->random = copyRandomList(head->random);
+	return now;
+}
+
 int singleNumber(vector<int>& nums)
 {
-	set<int>yes_set;
-	set<int>no_set;
+	unordered_set<int>yes_set;
+	unordered_set<int>no_set;
 	for (int i : nums) {
 		bool inYes = yes_set.find(i) != yes_set.end();
 		bool inNo = no_set.find(i) != no_set.end();
 		if (inNo)continue;
 		if (inYes) {
 			yes_set.erase(i);
+			no_set.insert(i);
+			continue;
 		}
+		yes_set.insert(i);
 	}
-	return *set.begin();
+	return *yes_set.begin();
 }
 

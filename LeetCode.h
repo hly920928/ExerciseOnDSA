@@ -266,5 +266,14 @@ struct UndirectedGraphNode {
 UndirectedGraphNode *cloneGraph(UndirectedGraphNode *node);
 //134 Gas Station
 int canCompleteCircuit(std::vector<int>& gas, std::vector<int>& cost);
-
+//135. Candy
 int candy(std::vector<int>& ratings);
+//136-137 singleNumber
+int singleNumber(std::vector<int>& nums);
+//138. Copy List with Random Pointer
+struct RandomListNode {
+	int label;
+	RandomListNode *next, *random;
+	RandomListNode(int x) : label(x), next(NULL), random(NULL) {}
+};
+RandomListNode *copyRandomList(RandomListNode *head);
