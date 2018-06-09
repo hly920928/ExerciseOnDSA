@@ -3847,18 +3847,6 @@ int candy(std::vector<int>& ratings)
 	for (int i : candy_table)sum += i;
 	return sum;
 }
-
-RandomListNode * copyRandomList(RandomListNode * head)
-{
-	if (head == nullptr)return nullptr;
-	static unordered_map<RandomListNode * , RandomListNode * >map;
-	if (map.find(head) != map.end())return map[head];
-	RandomListNode * now = new RandomListNode(head->label);
-	now->next = copyRandomList(head->next);
-	now->random = copyRandomList(head->random);
-	return now;
-}
-
 int singleNumber(vector<int>& nums)
 {
 	unordered_set<int>yes_set;
@@ -3876,4 +3864,36 @@ int singleNumber(vector<int>& nums)
 	}
 	return *yes_set.begin();
 }
+RandomListNode * copyRandomList(RandomListNode * head)
+{
+	if (head == nullptr)return nullptr;
+	static unordered_map<RandomListNode * , RandomListNode * >map;
+	if (map.find(head) != map.end())return map[head];
+	RandomListNode * now = new RandomListNode(head->label);
+	map[head] = now;
+	now->next = copyRandomList(head->next);
+	now->random = copyRandomList(head->random);
+	return now;
+}
+
+bool wordBreak(string s, vector<string>& wordDict)
+{
+	set<string>set;
+	for (string& s : wordDict)set.insert(s);
+	vector<int>pre_pos; pre_pos.push_back(0);
+	int n = s.size();
+	for (int i = 0; i < n; i++) {
+		int pre_n = pre_pos.size();
+		for (int p = pre_n - 1; p >= 0;p--) {
+			string neo = s.substr(pre_pos[p], i - pre_pos[p] + 1);
+			if (set.find(neo)!=set.end()) {
+				pre_pos.push_back(i+1);
+				break;
+			}
+		}
+	}
+	return pre_pos.back() == n;
+}
+
+
 

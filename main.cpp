@@ -18,8 +18,8 @@ using namespace std;
 
 int main() {
 	int table[] = { 29,51,87,87,72,12 };
-	vector<int>v(table, table +6);
-	auto t = candy(v);
+	vector<string>v; v.push_back("leet"); v.push_back("code");
+	auto t = wordBreak("leetcode", v);
 	return 0;
 }
 
