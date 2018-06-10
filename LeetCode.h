@@ -279,3 +279,5 @@ struct RandomListNode {
 RandomListNode *copyRandomList(RandomListNode *head);
 //139. Word Break
 bool wordBreak(std::string s, std::vector<std::string>& wordDict);
+//140. Word Break II
+std::vector<std::string>  wordBreak_II(std::string s, std::vector<std::string>& wordDict);

@@ -17,9 +17,10 @@
 using namespace std;
 
 int main() {
-	int table[] = { 29,51,87,87,72,12 };
-	vector<string>v; v.push_back("leet"); v.push_back("code");
-	auto t = wordBreak("leetcode", v);
+
+	string table[] = { "apple", "pen", "applepen", "pine", "pineapple" };
+	vector<string>v(table, table + 5);
+	auto t = wordBreak_II("pineapplepenapple", v);
 	return 0;
 }
 

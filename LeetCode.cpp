@@ -3894,6 +3894,64 @@ bool wordBreak(string s, vector<string>& wordDict)
 	}
 	return pre_pos.back() == n;
 }
+vector<string>* wB_ans;
+vector<int>* wB_id_stk;
+vector<string>* wB_Dict;
+vector<vector<int>>*wB_nW;
+int wB_sLen;
+void addNext(int head) {
+	
+	if (head == wB_sLen) {
+		wB_ans->push_back("");
+		for (int i : *wB_id_stk) {
+			wB_ans->back() = wB_ans->back() + wB_Dict->at(i);
+			wB_ans->back().push_back(' ');
+		}
+		wB_ans->back().pop_back(); return;
+	}
+	auto& id_stk = *wB_id_stk;
+	auto& nW = wB_nW->at(head);
+	for (int i : nW) {
+		id_stk.push_back(i);
+		addNext(head+ wB_Dict->at(i).size());
+		id_stk.pop_back();
+	}
+}
+std::vector<std::string> wordBreak_II(std::string s, std::vector<std::string>& wordDict)
+{
+	
+	vector<string>ans;
+	int nd = wordDict.size();
+	if(nd==0)return ans;
+	wB_Dict = &wordDict;
+	int n = s.size();
+	if (n == 0)return ans;
+	wB_sLen = n;
+	vector<int>id_stk;
+	wB_ans = &ans;
+	wB_id_stk = &id_stk;
+	unordered_map<string, int>map;
+	for (int i = 0; i < nd; i++) map[wordDict[i]] = i;
+	vector<int>pre_pos; pre_pos.push_back(0);
+	vector<vector<int>>next_word; next_word.resize(n);
+	wB_nW = &next_word;
+	for (int i = 0; i < n; i++) {
+		int pre_n = pre_pos.size();
+		for (int p = pre_n - 1; p >= 0; p--) {
+			string neo = s.substr(pre_pos[p], i - pre_pos[p] + 1);
+			if (map.find(neo) != map.end()) {
+				if (pre_pos.back() != i + 1) {
+					pre_pos.push_back(i + 1);
+				}
+				next_word[pre_pos[p]].push_back(map[neo]);
+			}
+		}
+	}
+  //TODO produce All possible string
+	addNext(0);
+	return ans;
+
+}
 
 
 
