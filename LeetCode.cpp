@@ -3954,14 +3954,6 @@ std::vector<std::string> wordBreak_II(std::string s, std::vector<std::string>& w
 
 }
 
-bool hasCycle_re(ListNode * head)
-{
-	if (head == nullptr)return true;
-	if (head->val == INT_MIN)return false;
-	head->val = INT_MIN;
-	return hasCycle(head->next);
-}
-
 bool hasCycle(ListNode * head)
 {
 	if (head == nullptr)return false;
@@ -3969,6 +3961,30 @@ bool hasCycle(ListNode * head)
 	head->val = INT_MIN;
 	return hasCycle(head->next);
 }
+
+ListNode * detectCycle(ListNode * head)
+{
+	auto slow = head;
+	if (head == nullptr)return nullptr;
+	auto fast = head->next;
+	if (fast == nullptr)return nullptr;
+	if (fast == slow)return slow;
+	while (true) {
+		if (fast == nullptr)return nullptr;
+		if (fast == slow) {
+			slow = slow->next;
+			while (true) {
+				if (head == slow)return head;
+				head = head->next;
+				slow = slow->next;
+			}
+		}
+		else {
+			fast = fast->next->next;
+			slow = slow->next;
+		}
+	}
 }
+
 
 
