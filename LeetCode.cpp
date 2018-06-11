@@ -3926,6 +3926,7 @@ std::vector<std::string> wordBreak_II(std::string s, std::vector<std::string>& w
 	wB_Dict = &wordDict;
 	int n = s.size();
 	if (n == 0)return ans;
+	if(!wordBreak(s, wordDict))return ans;
 	wB_sLen = n;
 	vector<int>id_stk;
 	wB_ans = &ans;
@@ -3953,5 +3954,21 @@ std::vector<std::string> wordBreak_II(std::string s, std::vector<std::string>& w
 
 }
 
+bool hasCycle_re(ListNode * head)
+{
+	if (head == nullptr)return true;
+	if (head->val == INT_MIN)return false;
+	head->val = INT_MIN;
+	return hasCycle(head->next);
+}
+
+bool hasCycle(ListNode * head)
+{
+	if (head == nullptr)return false;
+	if (head->val == INT_MIN)return true;
+	head->val = INT_MIN;
+	return hasCycle(head->next);
+}
+}
 
 
