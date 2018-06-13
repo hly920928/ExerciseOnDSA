@@ -281,3 +281,9 @@ RandomListNode *copyRandomList(RandomListNode *head);
 bool wordBreak(std::string s, std::vector<std::string>& wordDict);
 //140. Word Break II
 std::vector<std::string>  wordBreak_II(std::string s, std::vector<std::string>& wordDict);
+//141. Linked List Cycle
+bool hasCycle(ListNode *head);
+//142. Linked List Cycle II
+ListNode *detectCycle(ListNode *head);
+//143. Reorder List
+void reorderList(ListNode* head);

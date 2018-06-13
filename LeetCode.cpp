@@ -3970,7 +3970,6 @@ ListNode * detectCycle(ListNode * head)
 	if (fast == nullptr)return nullptr;
 	if (fast == slow)return slow;
 	while (true) {
-		if (fast == nullptr)return nullptr;
 		if (fast == slow) {
 			slow = slow->next;
 			while (true) {
@@ -3980,11 +3979,39 @@ ListNode * detectCycle(ListNode * head)
 			}
 		}
 		else {
+			if (fast->next == nullptr)return nullptr;
+			if (fast->next->next == nullptr)return nullptr;
 			fast = fast->next->next;
 			slow = slow->next;
 		}
 	}
 }
 
+void reorderList(ListNode * head)
+{
+	if (head == nullptr)return;
+	if (head->next == nullptr)return;
+	if (head->next ->next == nullptr)return;
+	vector<ListNode*>v;
+	auto t_ptr = head;
+	while (t_ptr != nullptr) {
+		v.push_back(t_ptr);
+		t_ptr = t_ptr->next;
+	}
+	int lo = 0; int hi = v.size() - 1;
+	while (true) {
+		if (hi - lo == 1) {
+			v[lo]->next = v[hi]; v[hi]->next = nullptr; break;
+		}
+		if (hi ==lo) {
+			v[lo]->next = nullptr; break;
+		}
+		v[lo]->next = v[hi];
+	    v[hi]->next = v[lo + 1];
+		lo++; hi--;
+	}
+	if (lo == hi) v[hi]->next = nullptr;
+	v[lo-1]->next->next = nullptr;
+}
 
 
