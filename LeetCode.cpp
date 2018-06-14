@@ -4021,6 +4021,22 @@ void preorderTraversal_re(TreeNode * root) {
 vector<int> preorderTraversal(TreeNode * root)
 {
 	vector<int> ans;
+	pre_Tra_ans = &ans;
+	preorderTraversal_re(root);
+	return ans;
+}
+vector<int>*post_Tra_ans;
+void postorderTraversal_re(TreeNode * root) {
+	if (root == nullptr)return;
+	postorderTraversal_re(root->left);
+	postorderTraversal_re(root->right);
+	post_Tra_ans->push_back(root->val);
+}
+vector<int> postorderTraversal(TreeNode * root)
+{
+	vector<int> ans;
+	post_Tra_ans = &ans;
+	postorderTraversal_re(root);
 	return ans;
 }
 
