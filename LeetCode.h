@@ -287,3 +287,6 @@ bool hasCycle(ListNode *head);
 ListNode *detectCycle(ListNode *head);
 //143. Reorder List
 void reorderList(ListNode* head);
+//144. Binary Tree Preorder Traversal
+std::vector<int> preorderTraversal(TreeNode* root);
+

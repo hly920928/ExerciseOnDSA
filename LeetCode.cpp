@@ -4010,8 +4010,18 @@ void reorderList(ListNode * head)
 	    v[hi]->next = v[lo + 1];
 		lo++; hi--;
 	}
-	if (lo == hi) v[hi]->next = nullptr;
-	v[lo-1]->next->next = nullptr;
+}
+vector<int>*pre_Tra_ans;
+void preorderTraversal_re(TreeNode * root) {
+	if (root == nullptr)return;
+	pre_Tra_ans->push_back(root->val);
+	preorderTraversal_re(root->left);
+	preorderTraversal_re(root->right);
+}
+vector<int> preorderTraversal(TreeNode * root)
+{
+	vector<int> ans;
+	return ans;
 }
 
 
