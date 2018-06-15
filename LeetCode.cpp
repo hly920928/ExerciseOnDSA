@@ -4040,4 +4040,61 @@ vector<int> postorderTraversal(TreeNode * root)
 	return ans;
 }
 
+LRUCache::LRUCache(int capacity)
+{
+	_capacity = capacity;
+	now_size = 0;
+	clock = 0;
+}
 
+int LRUCache::get(int key)
+{
+	auto key1 = key_to_clock.find(key);
+	if (key1 ==key_to_clock.end())return -1;
+	auto ptr = clock_to_keyAndVal.find(key1->second);
+	int val = ptr->second.val;
+	key1->second = clock;
+	clock_to_keyAndVal.erase(ptr);
+	clock_to_keyAndVal[clock] = keyAndVal(key, val);
+	clock++;
+	return val;
+}
+
+void LRUCache::put(int key, int value)
+{
+	if (now_size < _capacity) {
+	
+		auto itr = key_to_clock.find(key);
+		if (itr == key_to_clock.end()) {
+			now_size++;
+			key_to_clock[key] = clock;
+			clock_to_keyAndVal[clock] = keyAndVal(key, value);
+		}
+		else {
+			clock_to_keyAndVal.erase(itr->second);
+			key_to_clock[key] = clock;
+			clock_to_keyAndVal[clock] = keyAndVal(key, value);
+		}
+		
+	}
+	else {
+	 
+		//insert new
+		auto itr = key_to_clock.find(key);
+		if (itr == key_to_clock.end()) {
+			 //key unfound &&full delete LRU
+			auto lru = clock_to_keyAndVal.begin();
+			key_to_clock.erase(key_to_clock.find(lru->second.key));
+			clock_to_keyAndVal.erase(lru);
+			key_to_clock[key] = clock;
+			clock_to_keyAndVal[clock] = keyAndVal(key, value);
+		}
+		else {
+			//key found
+			clock_to_keyAndVal.erase(itr->second);
+			key_to_clock[key] = clock;
+			clock_to_keyAndVal[clock] = keyAndVal(key, value);
+		}
+	}
+	clock++;
+}

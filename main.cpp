@@ -18,19 +18,15 @@ using namespace std;
 
 int main() {
 
-	ListNode ln1(1);
-	ListNode ln2(2);
-	ListNode ln3(3);
-	ListNode ln4(4);
-	ln1.next = &ln2;
-	ln2.next = &ln3;
-	ln3.next = &ln4;
-	reorderList(&ln1);
-	auto t = &ln1;
-	while (t != nullptr) {
-		cout << t->val << endl;
-		t = t->next;
-	}
+	LRUCache cache(2);
+
+	cache.put(2, 1);
+	cache.put(2, 2);
+	int re=cache.get(2);    
+	cache.put(1, 1); 
+	cache.put(4, 1);
+	 re = cache.get(2);
 	return 0;
+
 }
 

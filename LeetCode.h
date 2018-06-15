@@ -1,6 +1,8 @@
 #pragma once
 #include <string>
 #include <vector>
+#include <map>
+#include <unordered_map>
 //17. Letter Combinations of a Phone Numberclass Solution {
 std::vector<std::string> letterCombinations(std::string digits);
 //18. 4Sum
@@ -289,4 +291,23 @@ ListNode *detectCycle(ListNode *head);
 void reorderList(ListNode* head);
 //144. Binary Tree Preorder Traversal
 std::vector<int> preorderTraversal(TreeNode* root);
-
+//145.Binary Tree Postorder Traversal
+std::vector<int> postorderTraversal(TreeNode* root);
+//146. LRU Cache
+struct keyAndVal {
+	int key;
+	int val;
+	keyAndVal(int _k=-1, int _v=-1) :key(_k), val(_v) {};
+};
+class LRUCache {
+private:
+	int clock;
+	int _capacity;
+	int now_size;
+	std::map<int, keyAndVal>clock_to_keyAndVal;
+	std::unordered_map<int, int>key_to_clock;
+public:
+	LRUCache(int capacity);
+	int get(int key);
+	void put(int key, int value);
+};
