@@ -4040,6 +4040,26 @@ vector<int> postorderTraversal(TreeNode * root)
 	return ans;
 }
 
+ListNode * insertionSortList(ListNode * head)
+{
+	if (head == nullptr)return nullptr;
+	ListNode  first(INT_MIN);
+	while (head != nullptr) {
+		auto now_ptr = &first;
+		while (true) {
+			if (now_ptr->val <= head->val && (now_ptr->next == nullptr || now_ptr->next->val > head->val)) {
+				auto next = now_ptr->next;
+				now_ptr->next = head;
+				head = head->next;
+				now_ptr->next->next = next;
+				break;
+			}
+			now_ptr = now_ptr->next;
+		}
+	}
+	return first.next;
+}
+
 LRUCache::LRUCache(int capacity)
 {
 	_capacity = capacity;

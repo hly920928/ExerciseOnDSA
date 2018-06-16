@@ -18,14 +18,10 @@ using namespace std;
 
 int main() {
 
-	LRUCache cache(2);
-
-	cache.put(2, 1);
-	cache.put(2, 2);
-	int re=cache.get(2);    
-	cache.put(1, 1); 
-	cache.put(4, 1);
-	 re = cache.get(2);
+	ListNode ln1(1);
+	ListNode ln2(1);
+	ln1.next = &ln2;
+	auto t = insertionSortList(&ln1);
 	return 0;
 
 }
