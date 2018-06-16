@@ -18,10 +18,14 @@ using namespace std;
 
 int main() {
 
-	ListNode ln1(1);
-	ListNode ln2(1);
+	ListNode ln1(4);
+	ListNode ln2(2);
+	ListNode ln3(1);
+	ListNode ln4(3);
 	ln1.next = &ln2;
-	auto t = insertionSortList(&ln1);
+	ln2.next = &ln3;
+	ln3.next = &ln4;
+	auto t = sortList(&ln1);
 	return 0;
 
 }

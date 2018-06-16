@@ -4060,6 +4060,48 @@ ListNode * insertionSortList(ListNode * head)
 	return first.next;
 }
 
+ListNode * sortList(ListNode * head)
+{
+
+	if (head == nullptr)return nullptr;
+	if (head->next == nullptr)return head;
+	if (head->next->next == nullptr) {
+		if (head->val < head->next->val)return head;
+		else {
+			swap(head->val, head->next->val);
+			return head;
+		}
+	}
+	auto ptr1 = head;
+	auto ptr2 = head;
+	while (ptr2 != nullptr&&ptr2->next != nullptr) {
+		ptr1 = ptr1->next;
+		ptr2 = ptr2->next->next;
+	}
+	auto second_half_head = ptr1->next;
+	ptr1->next = nullptr;
+	ptr1= sortList(head);
+	ptr2= sortList(second_half_head);
+	if (ptr1 == nullptr)return ptr2;
+	if (ptr2 == nullptr)return ptr1;
+	ListNode first(INT_MIN);
+	auto now_ptr = &first;
+	while (ptr1 != nullptr||ptr2 != nullptr) {
+		int v1 = (ptr1 != nullptr) ? ptr1->val : INT_MAX;
+		int v2 = (ptr2 != nullptr) ? ptr2->val : INT_MAX;
+		if (v1 < v2) {
+			now_ptr->next = ptr1;
+			ptr1 = ptr1->next;
+		}
+		else {
+			now_ptr->next = ptr2;
+			ptr2= ptr2->next;
+		}
+		now_ptr = now_ptr->next;
+	}
+	return first.next;
+}
+
 LRUCache::LRUCache(int capacity)
 {
 	_capacity = capacity;

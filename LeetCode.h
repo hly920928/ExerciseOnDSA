@@ -313,3 +313,5 @@ public:
 };
 //147. Insertion Sort List
 ListNode* insertionSortList(ListNode* head);
+//148. Sort List
+ListNode* sortList(ListNode* head);
