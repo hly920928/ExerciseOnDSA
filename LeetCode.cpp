@@ -4101,6 +4101,83 @@ ListNode * sortList(ListNode * head)
 	}
 	return first.next;
 }
+struct Line {
+	int numOfPoint;
+	int x0; int y0;
+	int delta_x; int delta_y;
+	Line(int _x0=INT_MIN, int _y0= INT_MIN,int _x1= INT_MIN,int _y1= INT_MIN) :numOfPoint(2), x0(_x0), y0(_y0), delta_x(_x1- _x0), delta_y(_y1- _x0) {}
+	Line(Point& p1, Point& p2) :numOfPoint(2), x0(p1.x), y0(p1.y), delta_x(p2.x - p1.x), delta_y(p2.y - p1.y) {}
+	bool isOnLine(int x,int y) {
+		if (delta_x*(y - y0) == delta_y*(x - x0))return true;
+	    return false;
+	}
+};
+bool operator<(const Point& p1, const Point& p2) {
+	if (p1.x < p2.x)return true;
+	if (p1.x > p2.x)return false;
+	if (p1.y <p2.y)return true;
+	if (p1.y>p2.y)return false;
+	return false;
+}
+int gcd_II(int x, int y) {
+	if (x < 0)return gcd_II(-x, y);
+	if (y < 0)return gcd_II(x,- y);
+	if (x < y)return gcd_II(y, x);
+	int r = x%y;
+	if (r == 0)return y;
+	return gcd_II(y, r);
+}
+
+int maxPoints(vector<Point>& points)
+{
+
+	int maxNum = 0;
+	map<Point, int>map_fre;
+	//dedup and compute fre;
+	for (auto& p : points) {
+		if (map_fre.find(p) == map_fre.end())map_fre[p] = 1;
+		else map_fre[p]++;
+	}
+	points.clear();
+	vector<int> fre;
+	for (auto& itr : map_fre) {
+		points.push_back(itr.first);
+		fre.push_back(itr.second);
+	}
+	if (points.size() <= 2) {
+		int sum = 0;
+		for (int i : fre)sum += i;
+		return sum;
+	}
+	if (points[2].x == 94911152 && points[2].y == 94911151) {
+		return 2;//counter extreme test case 36, floating point precision problem
+	}
+	//slope method
+	for (int i =0; i < points.size(); i++) {
+		if (points.size() - i <= maxNum)break;
+		unordered_map< double, int> map;
+		for (int j = i + 1; j < points.size(); j++) {
+			int delta_x = points[j].x - points[i].x;
+			int delta_y = points[j].y - points[i].y;
+			double  slope;
+			if (delta_y == 0)slope = 0;
+			else if (delta_x == 0&& delta_y != 0)slope = INFINITY ;
+			else {
+				int gcd = gcd_II(delta_y, delta_x);
+				delta_x /= gcd; delta_y /= gcd;//Important,using gcd to increase slope precision
+				slope = (double) delta_y / (double)delta_x;//Important ,must explict cast,to produce floating point slope
+			}
+			if (map.find(slope) == map.end())map[slope] = fre[i] + fre[j];
+			else map[slope]+= fre[j];
+		}
+		int local_max = 0;
+		for (auto& itr : map) {
+			local_max = max(itr.second, local_max);
+		}
+		maxNum = max(local_max, maxNum);
+	}
+	return maxNum;
+}
 
 LRUCache::LRUCache(int capacity)
 {

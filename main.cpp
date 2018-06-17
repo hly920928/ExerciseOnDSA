@@ -25,6 +25,12 @@ int main() {
 	ln1.next = &ln2;
 	ln2.next = &ln3;
 	ln3.next = &ln4;
+	vector<Point>v_p;
+	v_p.push_back(Point(0, 0));
+	v_p.push_back(Point(0, 0));
+	v_p.push_back(Point(1, 1));
+	double ld = 000;
+	cout << sizeof(ld);
 	auto t = sortList(&ln1);
 	return 0;
 

@@ -315,3 +315,11 @@ public:
 ListNode* insertionSortList(ListNode* head);
 //148. Sort List
 ListNode* sortList(ListNode* head);
+struct Point {
+	int x;
+	int y;
+	Point() : x(0), y(0) {}
+	Point(int a, int b) : x(a), y(b) {}
+};
+//149. Max Points on a Line
+int maxPoints(std::vector<Point>& points);
