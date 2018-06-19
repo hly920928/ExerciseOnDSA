@@ -4179,6 +4179,40 @@ int maxPoints(vector<Point>& points)
 	return maxNum;
 }
 
+int evalRPN(vector<string>& tokens)
+{
+	stack<int>stk;
+	stringstream ss;
+	for (int i = 0; i < tokens.size(); i++) {
+		string now = tokens[i];
+		if (now == "+") {
+			int v1 = stk.top(); stk.pop();
+			int v2 = stk.top(); stk.pop();
+			stk.push(v1 + v2);
+		}
+		else if (now == "-") {
+			int v1 = stk.top(); stk.pop();
+			int v2 = stk.top(); stk.pop();
+			stk.push(v2 - v1);
+		}
+		else if (now == "*") {
+			int v1 = stk.top(); stk.pop();
+			int v2 = stk.top(); stk.pop();
+			stk.push(v1* v2);
+		}
+		else if (now == "/") {
+			int v1 = stk.top(); stk.pop();
+			int v2 = stk.top(); stk.pop();
+			stk.push(v2 / v1);
+		}
+		else {
+			int t = atoi(now.data());
+			stk.push(t);
+		}
+	}
+	return stk.top();
+}
+
 LRUCache::LRUCache(int capacity)
 {
 	_capacity = capacity;
