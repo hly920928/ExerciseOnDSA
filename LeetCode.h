@@ -325,3 +325,5 @@ struct Point {
 int maxPoints(std::vector<Point>& points);
 //150. Evaluate Reverse Polish Notation
 int evalRPN(std::vector<std::string>& tokens);
+//151. Reverse Words in a String
+void reverseWords(std::string &s);

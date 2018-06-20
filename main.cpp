@@ -18,9 +18,8 @@ using namespace std;
 
 int main() {
 
-	string str[] = { "2", "1", "+", "3", "*" };
-	vector<string>v(str, str + 5);
-	auto t = evalRPN(v);
+	string str = " ";
+	reverseWords(str);
 	return 0;
 
 }

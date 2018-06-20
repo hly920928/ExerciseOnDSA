@@ -4213,6 +4213,28 @@ int evalRPN(vector<string>& tokens)
 	return stk.top();
 }
 
+void reverseWords(std::string & s)
+{
+	vector<string>str; str.push_back("");
+	for (int i = 0; i < s.size(); i++) {
+		if (s[i] == ' ') {
+			str.push_back("");
+		}
+		else {
+			str.back().push_back(s[i]);
+		}
+	}
+	s.clear();
+	if (str.size() == 1)return;
+	int last = str.size() - 1;
+	for (int i = last; i >= 0; i--) {
+		if (str[i] != "") {
+			s += str[i];
+			s.push_back(' ');}
+	}
+	s.pop_back();
+}
+
 LRUCache::LRUCache(int capacity)
 {
 	_capacity = capacity;
