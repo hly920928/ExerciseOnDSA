@@ -18,8 +18,9 @@ using namespace std;
 
 int main() {
 
-	string str = " ";
-	reverseWords(str);
+	int nums[] = { 1,0,0,0 };
+	vector<int>v(nums, nums +4);
+	auto ans = maxProduct(v);
 	return 0;
 
 }

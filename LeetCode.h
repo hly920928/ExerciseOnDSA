@@ -327,3 +327,5 @@ int maxPoints(std::vector<Point>& points);
 int evalRPN(std::vector<std::string>& tokens);
 //151. Reverse Words in a String
 void reverseWords(std::string &s);
+//152. Maximum Product Subarray
+int maxProduct(std::vector<int>& nums);

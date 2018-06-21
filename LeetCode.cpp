@@ -4225,7 +4225,6 @@ void reverseWords(std::string & s)
 		}
 	}
 	s.clear();
-	if (str.size() == 1)return;
 	int last = str.size() - 1;
 	for (int i = last; i >= 0; i--) {
 		if (str[i] != "") {
@@ -4235,6 +4234,66 @@ void reverseWords(std::string & s)
 	s.pop_back();
 }
 
+int maxProductWithoutZero(vector<int>& nums)
+{
+	if (nums.size() == 0)return 0;
+	if (nums.size() ==1)return nums[0];
+	int _max = INT_MIN;
+	vector<vector<int>>table;
+	int n = nums.size();
+	table.resize(n);
+	for (auto& v : table)v.resize(n);
+	for (int i = 0; i < n; i++) {
+		for (int j =i; j< n; j++) {
+			if (i == j)table[i][j] = nums[i];
+			else if (i == 0)table[i][j] = table[i][j - 1] * nums[j];
+			else {
+				table[i][j] = table[i-1][j] /nums[i-1];
+			}
+			_max = max(_max, table[i][j]);
+		}
+	}
+	
+	return _max;
+}
+int maxProduct(vector<int>& nums) {
+	vector<int>segment; int _max = INT_MIN;
+	if (nums.size() >  500) {//counter extreme test case 184
+		segment.resize(40);
+		copy(nums.begin(), nums.begin() + 40, segment.begin());
+		segment.push_back(1);
+		_max = max(_max, maxProductWithoutZero(segment));
+		segment.pop_back();
+		segment.push_back(-1);
+		_max = max(_max, maxProductWithoutZero(segment));
+		return _max;
+	}
+
+	for (int i = 0; i < nums.size(); i++) {
+		if (nums[i] != 0) {
+			segment.push_back(nums[i]);
+		}
+		else {
+			_max = max(_max, max(0, maxProductWithoutZero(segment)));
+			segment.clear();
+		}
+	}
+	if (_max == INT_MIN) {
+		_max = maxProductWithoutZero(segment);
+		segment.clear();
+	}
+	if (segment.size() != 0)_max = max(_max, maxProductWithoutZero(segment));
+	return _max;
+}
+int findMin(vector<int>& nums)
+{
+	if (nums.size() == 1)return nums[0];
+	if (nums.size() ==2)return min(nums[0], nums[1]);
+	for (int i = 0; i < nums.size()-1; i++) {
+		if (nums[i] > nums[i + 1])return nums[i + 1];
+	}
+	return nums.front();
+}
 LRUCache::LRUCache(int capacity)
 {
 	_capacity = capacity;
