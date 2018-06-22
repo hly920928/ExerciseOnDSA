@@ -4285,14 +4285,27 @@ int maxProduct(vector<int>& nums) {
 	if (segment.size() != 0)_max = max(_max, maxProductWithoutZero(segment));
 	return _max;
 }
+vector<int>* _nm;
+int findMin_re(int lo,int hi)
+{
+	if (hi-lo<=1&& hi == _nm->size() - 1)return min(_nm->at(0), _nm->at(hi));
+	int mid = (lo + hi) / 2;
+	if (_nm->at(mid - 1) > _nm->at(mid) && _nm->at(mid) < _nm->at(mid+1)) {
+		return  _nm->at(mid);
+	}
+	if (_nm->at(mid) > _nm->at(0))return findMin_re(mid, hi);
+	return findMin_re(lo, mid);
+}
 int findMin(vector<int>& nums)
 {
-	if (nums.size() == 1)return nums[0];
+	if (nums.size() == 1)return nums.back();
 	if (nums.size() ==2)return min(nums[0], nums[1]);
-	for (int i = 0; i < nums.size()-1; i++) {
-		if (nums[i] > nums[i + 1])return nums[i + 1];
-	}
-	return nums.front();
+	_nm = &nums; int lo = 0; int hi = nums.size()-1;
+	return findMin_re(lo, hi);
+}
+int findMin_V2(std::vector<int>& nums)
+{
+	return *min_element(nums.begin(),nums.end());
 }
 LRUCache::LRUCache(int capacity)
 {
@@ -4351,4 +4364,43 @@ void LRUCache::put(int key, int value)
 		}
 	}
 	clock++;
+}
+
+MinStack::MinStack()
+{
+	min = INT_MAX;
+}
+
+void MinStack::push(int x)
+{
+	if (x <= INT_MAX) {
+		stk.push(min);
+		min = x;
+		stk.push(x);
+	}
+	else {
+		stk.push(x);
+	}
+}
+
+void MinStack::pop()
+{
+	if (min == stk.top()) {
+		stk.pop();
+		min = stk.top();
+		stk.pop();
+	}
+	else {
+		stk.pop();
+	}
+}
+
+int MinStack::top()
+{
+	return stk.top();
+}
+
+int MinStack::getMin()
+{
+	return min;
 }

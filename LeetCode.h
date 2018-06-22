@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include <stack>
 #include <vector>
 #include <map>
 #include <unordered_map>
@@ -329,3 +330,18 @@ int evalRPN(std::vector<std::string>& tokens);
 void reverseWords(std::string &s);
 //152. Maximum Product Subarray
 int maxProduct(std::vector<int>& nums);
+//153. Find Minimum in Rotated Sorted Array
+int findMin(std::vector<int>& nums);
+//154. Find Minimum in Rotated Sorted Array II
+int findMin_V2(std::vector<int>& nums);
+class MinStack {
+private:
+	std::stack<int>stk;
+	int min;
+public:
+	MinStack();
+	void push(int x);
+	void pop();
+    int top();
+    int getMin();
+};

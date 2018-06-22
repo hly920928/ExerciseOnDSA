@@ -18,9 +18,14 @@ using namespace std;
 
 int main() {
 
-	int nums[] = { 1,0,0,0 };
-	vector<int>v(nums, nums +4);
-	auto ans = maxProduct(v);
+	MinStack mstk;
+	mstk.push(-2);
+	mstk.push(0);
+	mstk.push(-3);
+	int min = mstk.getMin();
+	mstk.pop();
+	int top= mstk.top();
+	min = mstk.getMin();
 	return 0;
 
 }
