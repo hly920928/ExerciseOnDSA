@@ -4307,6 +4307,32 @@ int findMin_V2(std::vector<int>& nums)
 {
 	return *min_element(nums.begin(),nums.end());
 }
+ListNode * getIntersectionNode(ListNode * headA, ListNode * headB)
+{
+	int l1 = 0; int l2 = 0;
+	auto p1 = headA;
+	while (p1 != nullptr) {
+		p1 = p1->next; l1++;
+	}
+	auto p2 = headB;
+	while (p2 != nullptr) {
+		p2 = p2->next; l2++;
+	}
+	p1 = headA;
+	p2 = headB;
+	if (l1 > l2) {
+		int dff = l1 - l2;
+		for (int i = 0; i < dff; i++) p1 = p1->next;
+	}
+	else {
+		int dff =l2 - l1;
+		for (int i = 0; i < dff; i++) p2 = p2->next;
+	}
+	while (true) {
+		if (p1 == p2)return p1;
+		p1 = p1->next;
+	}
+}
 LRUCache::LRUCache(int capacity)
 {
 	_capacity = capacity;
@@ -4373,7 +4399,7 @@ MinStack::MinStack()
 
 void MinStack::push(int x)
 {
-	if (x <= INT_MAX) {
+	if (x <= min) {
 		stk.push(min);
 		min = x;
 		stk.push(x);
