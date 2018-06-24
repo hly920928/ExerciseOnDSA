@@ -345,3 +345,5 @@ public:
     int top();
     int getMin();
 };
+//160. Intersection of Two Linked Lists
+ListNode *getIntersectionNode(ListNode *headA, ListNode *headB);

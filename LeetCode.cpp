@@ -4331,7 +4331,36 @@ ListNode * getIntersectionNode(ListNode * headA, ListNode * headB)
 	while (true) {
 		if (p1 == p2)return p1;
 		p1 = p1->next;
+		p2 = p2->next;
 	}
+}
+vector<int>* fPE_n;
+char inline isPeak(int i) {
+	int lo = (i == 0) ? INT_MIN : fPE_n->at(i - 1);
+	int hi = (i == fPE_n->size()-1) ? INT_MIN : fPE_n->at(i +1);
+	if (lo<fPE_n->at(i) && fPE_n->at(i)>hi)return 'p';
+	if (lo<fPE_n->at(i) && fPE_n->at(i)<hi)return 'i';
+	if (lo>fPE_n->at(i) && fPE_n->at(i)>hi)return 'd';
+	if (lo>fPE_n->at(i) && fPE_n->at(i)<hi)return 'u';
+}
+int findPeakElement_re(int lo,int hi)
+{
+	if (hi - lo == 1) {
+		if (isPeak(hi)=='p')return hi;
+		if (isPeak(lo)=='p')return lo;
+	}
+	int mid = (lo + hi) / 2;
+	int attr = isPeak(mid);
+	if (attr == 'p')return mid;
+	if (attr == 'i')return findPeakElement_re(mid,hi);
+	if (attr == 'd')return findPeakElement_re(lo, mid);
+	if (attr == 'u')return findPeakElement_re(lo, mid);
+}
+int findPeakElement(vector<int>& nums)
+{
+	if (nums.size() == 1)return 0;
+	fPE_n = &nums;
+	return findPeakElement_re(0, nums.size() - 1);
 }
 LRUCache::LRUCache(int capacity)
 {
