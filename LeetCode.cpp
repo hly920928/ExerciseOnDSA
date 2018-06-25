@@ -4334,6 +4334,38 @@ ListNode * getIntersectionNode(ListNode * headA, ListNode * headB)
 		p2 = p2->next;
 	}
 }
+struct mG_in {
+	int lo; int hi;
+	mG_in(int l = INT_MAX, int h = INT_MIN) :lo(l), hi(h) {};
+};
+int maximumGap(vector<int>& nums)
+{
+	if (nums.size() <2)return 0;
+	if (nums.size() ==2)return abs(nums[0]-nums[1]);
+	int _min = INT_MAX;
+	int _max = INT_MIN;
+	for (int i : nums) {
+		_min = min(_min, i);
+		_max = max(_max, i);
+	}
+	if (_max - _min == 0)return 0;
+	int interval = (_max - _min) / (nums.size() - 1)+1;
+	
+	vector<mG_in>table; table.resize(nums.size() - 1);
+	for (int v : nums) {
+		int id = (v - _min) / interval;
+		table[id].lo = min(table[id].lo, v);
+		table[id].hi = max(table[id].hi, v);
+	}
+	int maxGap = INT_MIN; int lo = table.front().hi;
+	for (int i = 1; i < table.size(); i++) {
+		if (table[i].lo!= INT_MAX) {
+			maxGap = max(maxGap, table[i].lo -lo);
+			lo = table[i].hi;
+		}
+	}
+	return maxGap;
+}
 vector<int>* fPE_n;
 char inline isPeak(int i) {
 	int lo = (i == 0) ? INT_MIN : fPE_n->at(i - 1);

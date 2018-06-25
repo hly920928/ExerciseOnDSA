@@ -347,3 +347,5 @@ public:
 };
 //160. Intersection of Two Linked Lists
 ListNode *getIntersectionNode(ListNode *headA, ListNode *headB);
+//164. Maximum Gap
+int maximumGap(std::vector<int>& nums);

@@ -17,15 +17,9 @@
 using namespace std;
 
 int main() {
-
-	MinStack mstk;
-	mstk.push(-2);
-	mstk.push(0);
-	mstk.push(-3);
-	int min = mstk.getMin();
-	mstk.pop();
-	int top= mstk.top();
-	min = mstk.getMin();
+	int a[] = {1,1,1,1};
+	vector<int>v(a, a + 4);
+	auto ans = maximumGap(v);
 	return 0;
 
 }
