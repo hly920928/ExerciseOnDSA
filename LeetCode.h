@@ -349,3 +349,5 @@ public:
 ListNode *getIntersectionNode(ListNode *headA, ListNode *headB);
 //164. Maximum Gap
 int maximumGap(std::vector<int>& nums);
+//165. Compare Version Numbers
+int compareVersion(std::string version1, std::string version2);

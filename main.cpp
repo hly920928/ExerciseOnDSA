@@ -19,7 +19,7 @@ using namespace std;
 int main() {
 	int a[] = {1,1,1,1};
 	vector<int>v(a, a + 4);
-	auto ans = maximumGap(v);
+	auto ans = compareVersion("7.5.2.4", "7.5.3");
 	return 0;
 
 }

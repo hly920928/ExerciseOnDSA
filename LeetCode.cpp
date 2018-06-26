@@ -4366,6 +4366,36 @@ int maximumGap(vector<int>& nums)
 	}
 	return maxGap;
 }
+int compareVersion(string version1, string version2)
+{
+	string t; vector<int>v1; vector<int>v2;
+	for (char c : version1) {
+		if (c != '.')t.push_back(c);
+		else {
+			v1.push_back(atoi(t.data()));
+			t.clear();
+		}
+	}
+	v1.push_back(atoi(t.data()));
+	t.clear();
+	for (char c : version2) {
+		if (c != '.')t.push_back(c);
+		else {
+			v2.push_back(atoi(t.data()));
+			t.clear();
+		}
+	}
+	v2.push_back(atoi(t.data()));
+	int minlen = min(v1.size(), v2.size());
+	while (v1.back() == 0)v1.pop_back();
+	for (int i = 0; i < minlen; i++) {
+		if (v1[i] < v2[i])return -1;
+		if (v1[i] >v2[i])return 1;
+	}
+	if(v1.size()> v2.size())return 1;
+	if (v1.size()<v2.size())return -1;
+	return 0;
+}
 vector<int>* fPE_n;
 char inline isPeak(int i) {
 	int lo = (i == 0) ? INT_MIN : fPE_n->at(i - 1);
