@@ -351,3 +351,6 @@ ListNode *getIntersectionNode(ListNode *headA, ListNode *headB);
 int maximumGap(std::vector<int>& nums);
 //165. Compare Version Numbers
 int compareVersion(std::string version1, std::string version2);
+//166. Fraction to Recurring Decimal
+std::string fractionToDecimal(int numerator, int denominator);
+std::string fractionToDecimal(long long  numerator, long long denominator);

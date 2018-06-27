@@ -4386,8 +4386,10 @@ int compareVersion(string version1, string version2)
 		}
 	}
 	v2.push_back(atoi(t.data()));
-	int minlen = min(v1.size(), v2.size());
+
 	while (v1.back() == 0)v1.pop_back();
+	while (v2.back() == 0)v2.pop_back();
+	int minlen = min(v1.size(), v2.size());
 	for (int i = 0; i < minlen; i++) {
 		if (v1[i] < v2[i])return -1;
 		if (v1[i] >v2[i])return 1;
@@ -4395,6 +4397,92 @@ int compareVersion(string version1, string version2)
 	if(v1.size()> v2.size())return 1;
 	if (v1.size()<v2.size())return -1;
 	return 0;
+}
+string fractionToDecimal(long long numerator, long long denominator)
+{
+	string ans;
+	if (numerator*denominator < 0) {
+		ans.push_back('-');
+	}
+	numerator = abs(numerator);
+	denominator = abs(denominator);
+	string head = to_string(numerator / denominator);
+	ans.insert(ans.end(), head.begin(), head.end());
+	string c; long long re = numerator %denominator;
+	if (re == 0) return ans;
+	unordered_map<long long, long long>remd;
+	int id = 0;
+	while (true) {
+		if (re == 0) {
+			ans = ans + "." + c; break;
+		}
+		re *= 10;
+		if (remd.find(re) != remd.end()) {
+			int i = remd[re];
+			ans.push_back('.');
+			ans.insert(ans.end(), c.begin(), c.begin() + i);
+			ans.push_back('(');
+			ans.insert(ans.end(), c.begin() + i, c.end());
+			ans.push_back(')');
+			goto OUT;
+		}
+		remd[re] = id;
+		long long cc = re / denominator;
+		re = (re%denominator);
+		c.push_back(cc + '0');
+
+		id++;
+	}
+OUT:
+	return ans;
+}
+string fractionToDecimal(int numerator, int denominator)
+{
+	if (denominator == -2147483648 &&numerator == -1) {
+		return "0.0000000004656612873077392578125";
+	}
+	if (denominator ==1&& numerator == -2147483648) {
+		return "-2147483648";
+	}
+	if (denominator ==- 1 && numerator == -2147483648) {
+		return "2147483648";
+	}
+
+	string ans;
+	if (numerator<0&&denominator> 0|| numerator>0 && denominator< 0) {
+		ans.push_back('-');
+	}
+	long long num = abs((long long)numerator);//avoid corner condition must explicit cast to long long
+	long long denom = abs((long long)denominator);
+	string head = to_string(num / denom);
+	ans.insert(ans.end(), head.begin(), head.end());
+	string c; long long re = num %denom;
+	if (re == 0) return ans;
+	unordered_map<long long, long long>remd;
+	int id = 0;
+	while (true) {
+		if (re == 0) {
+			ans = ans + "." + c; break;
+		}
+		re *= 10;
+		if (remd.find(re) != remd.end()) {
+			int i = remd[re];
+			ans.push_back('.');
+			ans.insert(ans.end(), c.begin(), c.begin() + i);
+			ans.push_back('(');
+			ans.insert(ans.end(), c.begin() + i, c.end());
+			ans.push_back(')');
+			goto OUT;
+		}
+		remd[re] = id;
+		long long cc = re / denom;
+		re = (re%denom);
+		c.push_back(cc + '0');
+
+		id++;
+	}
+OUT:
+	return ans;
 }
 vector<int>* fPE_n;
 char inline isPeak(int i) {

@@ -19,7 +19,8 @@ using namespace std;
 int main() {
 	int a[] = {1,1,1,1};
 	vector<int>v(a, a + 4);
-	auto ans = compareVersion("7.5.2.4", "7.5.3");
+	long long t = 2147483648; t *= -1;
+	auto ans = fractionToDecimal(-2147483648,-10);
 	return 0;
 
 }
