@@ -4440,24 +4440,40 @@ vector<int> twoSum(vector<int>& numbers, int target)
 {
 	vector<int>ans;
 	for (int i = 0; i < numbers.size(); i++) {
-		auto itr = lower_bound(numbers.begin(), numbers.end(), target - numbers[i]);
+		auto itr = lower_bound(numbers.begin()+i+1, numbers.end(), target - numbers[i]);
 		if (*itr == target - numbers[i]) {
-			ans.push_back(i);
+			ans.push_back(i+1);
+			ans.push_back(itr- numbers.begin()+1);
+			return ans;
 		}
 	}
-	return vector<int>();
+	
+}
+std::string convertToTitle(int n)
+{
+	string ans;
+	while (true) {
+		if (n == 0)break;
+		n--;
+		ans.push_back('A' + n % 26);
+		n /= 26;
+	}
+	reverse(ans.begin(), ans.end());
+	return ans;
 }
 string fractionToDecimal(int numerator, int denominator)
 {
-	if (denominator == -2147483648 &&numerator == -1) {
-		return "0.0000000004656612873077392578125";
-	}
-	if (denominator ==1&& numerator == -2147483648) {
-		return "-2147483648";
-	}
-	if (denominator ==- 1 && numerator == -2147483648) {
-		return "2147483648";
-	}
+/*
+if (denominator == -2147483648 &&numerator == -1) {
+return "0.0000000004656612873077392578125";
+}
+if (denominator ==1&& numerator == -2147483648) {
+return "-2147483648";
+}
+if (denominator ==- 1 && numerator == -2147483648) {
+return "2147483648";
+}
+*/
 
 	string ans;
 	if (numerator<0&&denominator> 0|| numerator>0 && denominator< 0) {

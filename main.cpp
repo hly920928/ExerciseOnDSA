@@ -20,7 +20,7 @@ int main() {
 	int a[] = {1,1,1,1};
 	vector<int>v(a, a + 4);
 	long long t = 2147483648; t *= -1;
-	auto ans = fractionToDecimal(-2147483648,-10);
+	auto ans = convertToTitle(28);
 	return 0;
 
 }
