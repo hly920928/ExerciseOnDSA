@@ -4436,6 +4436,17 @@ string fractionToDecimal(long long numerator, long long denominator)
 OUT:
 	return ans;
 }
+vector<int> twoSum(vector<int>& numbers, int target)
+{
+	vector<int>ans;
+	for (int i = 0; i < numbers.size(); i++) {
+		auto itr = lower_bound(numbers.begin(), numbers.end(), target - numbers[i]);
+		if (*itr == target - numbers[i]) {
+			ans.push_back(i);
+		}
+	}
+	return vector<int>();
+}
 string fractionToDecimal(int numerator, int denominator)
 {
 	if (denominator == -2147483648 &&numerator == -1) {
@@ -4452,7 +4463,7 @@ string fractionToDecimal(int numerator, int denominator)
 	if (numerator<0&&denominator> 0|| numerator>0 && denominator< 0) {
 		ans.push_back('-');
 	}
-	long long num = abs((long long)numerator);//avoid corner condition must explicit cast to long long
+	long long num = abs((long long)numerator);//avoid corner condition,must explicitly cast to long long
 	long long denom = abs((long long)denominator);
 	string head = to_string(num / denom);
 	ans.insert(ans.end(), head.begin(), head.end());

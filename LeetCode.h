@@ -354,3 +354,5 @@ int compareVersion(std::string version1, std::string version2);
 //166. Fraction to Recurring Decimal
 std::string fractionToDecimal(int numerator, int denominator);
 std::string fractionToDecimal(long long  numerator, long long denominator);
+//167. Two Sum II - Input array is sorted
+std::vector<int> twoSum(std::vector<int>& numbers, int target);
