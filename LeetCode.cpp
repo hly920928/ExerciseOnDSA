@@ -4461,6 +4461,19 @@ std::string convertToTitle(int n)
 	reverse(ans.begin(), ans.end());
 	return ans;
 }
+int majorityElement(vector<int>& nums)
+{
+	unordered_map<int, int>map;
+	for (int i : nums) {
+		if (map.find(i) == map.end())map[i] = 1;
+		else map[i]++;
+	}
+	int half = nums.size() / 2;
+	for (int i : nums) {
+		if (map[i] >= half)return i;
+	}
+	return 0;
+}
 string fractionToDecimal(int numerator, int denominator)
 {
 /*
