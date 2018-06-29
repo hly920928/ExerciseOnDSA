@@ -358,3 +358,5 @@ std::string fractionToDecimal(long long  numerator, long long denominator);
 std::vector<int> twoSum(std::vector<int>& numbers, int target);
 //168. Excel Sheet Column Title
 std::string convertToTitle(int n);
+//169. Majority Element
+int majorityElement(std::vector<int>& nums);

@@ -4464,15 +4464,25 @@ std::string convertToTitle(int n)
 int majorityElement(vector<int>& nums)
 {
 	unordered_map<int, int>map;
+	vector<int>nums_undp;
 	for (int i : nums) {
-		if (map.find(i) == map.end())map[i] = 1;
+		if (map.find(i) == map.end()) {
+			map[i] = 1; nums_undp.push_back(i);
+		}
 		else map[i]++;
 	}
-	int half = nums.size() / 2;
-	for (int i : nums) {
+	int half =(nums.size()+1) / 2;
+	for (int i : nums_undp) {
 		if (map[i] >= half)return i;
 	}
-	return 0;
+	return -1;
+}
+int titleToNumber(string s)
+{
+	int base = 1; int ans;
+	for (int i = s.size() - 1; i >= 0; i--) {
+		ans = (s[i] - 'A') + 1;
+	}
 }
 string fractionToDecimal(int numerator, int denominator)
 {
