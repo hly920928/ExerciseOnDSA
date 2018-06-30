@@ -17,10 +17,11 @@
 using namespace std;
 
 int main() {
-	int a[] = {1,1,1,1};
-	vector<int>v(a, a + 4);
-	long long t = 2147483648; t *= -1;
-	auto ans = convertToTitle(28);
+	TreeNode tn1(2);
+	TreeNode tn2(1);
+	tn1.left = &tn2;
+	BSTIterator i(&tn1);
+	while (i.hasNext()) cout << i.next()<<endl;
 	return 0;
 
 }

@@ -362,3 +362,13 @@ std::string convertToTitle(int n);
 int majorityElement(std::vector<int>& nums);
 //171. Excel Sheet Column Number
 int titleToNumber(std::string s);
+//172. Factorial Trailing Zeroes
+int trailingZeroes(int n);
+class BSTIterator {
+private:
+	std::stack<TreeNode*>stk;
+public:
+	BSTIterator(TreeNode *root);
+	bool hasNext();
+	int next();
+};

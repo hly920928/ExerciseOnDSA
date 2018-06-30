@@ -4488,14 +4488,9 @@ int titleToNumber(string s)
 }
 int trailingZeroes(int n)
 {
-	long long ln = (long long)n;
 	int ans = 0;
-	long long base =5;
-	while (base <= n) {
-		ans +=(ln / 5);
-		ln/=5
-		base *= 5;
-	}
+	for(int i=0;i<14;i++)
+		ans += (n /= 5);
 	return ans;
 }
 string fractionToDecimal(int numerator, int denominator)
@@ -4672,4 +4667,29 @@ int MinStack::top()
 int MinStack::getMin()
 {
 	return min;
+}
+
+BSTIterator::BSTIterator(TreeNode * root)
+{
+	while (root != nullptr) {
+		stk.push(root);
+		root = root->left;
+	}
+}
+
+bool BSTIterator::hasNext()
+{
+	return !stk.empty();
+}
+
+int BSTIterator::next()
+{
+	auto ptr_t = stk.top(); stk.pop();
+	if (ptr_t->right != nullptr) {
+		stk.push(ptr_t->right);
+		while (hasNext() && stk.top()->left != nullptr) {
+			stk.push(stk.top()->left);
+		}
+	}
+	return ptr_t->val;
 }
