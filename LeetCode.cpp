@@ -4479,10 +4479,24 @@ int majorityElement(vector<int>& nums)
 }
 int titleToNumber(string s)
 {
-	int base = 1; int ans;
+	int base = 1; int ans=0;
 	for (int i = s.size() - 1; i >= 0; i--) {
-		ans = (s[i] - 'A') + 1;
+		ans += ((s[i] - 'A') + 1) * base;
+		base *= 26;
 	}
+	return ans;
+}
+int trailingZeroes(int n)
+{
+	long long ln = (long long)n;
+	int ans = 0;
+	long long base =5;
+	while (base <= n) {
+		ans +=(ln / 5);
+		ln/=5
+		base *= 5;
+	}
+	return ans;
 }
 string fractionToDecimal(int numerator, int denominator)
 {

@@ -360,3 +360,5 @@ std::vector<int> twoSum(std::vector<int>& numbers, int target);
 std::string convertToTitle(int n);
 //169. Majority Element
 int majorityElement(std::vector<int>& nums);
+//171. Excel Sheet Column Number
+int titleToNumber(std::string s);
