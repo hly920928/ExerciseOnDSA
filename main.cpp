@@ -17,11 +17,15 @@
 using namespace std;
 
 int main() {
-	TreeNode tn1(2);
-	TreeNode tn2(1);
-	tn1.left = &tn2;
-	BSTIterator i(&tn1);
-	while (i.hasNext()) cout << i.next()<<endl;
+	vector<vector<int>>m;
+	m.resize(1); 
+/*
+m[0].push_back(1); m[0].push_back(-3); m[0].push_back(3);
+m[1].push_back(0); m[1].push_back(-2); m[1].push_back(0);
+m[2].push_back(-3); m[2].push_back(-3); m[2].push_back(-3);
+*/
+	m[0].push_back(0); m[0].push_back(0);
+	auto ans = calculateMinimumHP(m);
 	return 0;
 
 }

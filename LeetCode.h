@@ -372,3 +372,5 @@ public:
 	bool hasNext();
 	int next();
 };
+//174. Dungeon Game
+int calculateMinimumHP(std::vector<std::vector<int>>& dungeon);
