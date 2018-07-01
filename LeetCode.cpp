@@ -4493,63 +4493,26 @@ int trailingZeroes(int n)
 		ans += (n /= 5);
 	return ans;
 }
-struct dg_statue {
-	int minHp;
-	int curHp;
-	dg_statue(int m=INT_MAX, int c= INT_MIN) :minHp(m), curHp(c) {};
-};
-dg_statue computeTransit(const dg_statue&pre, int val) {
-	if (val <= 0) {
-		int diff = pre.curHp + val;
-		if (diff>0)return  dg_statue(pre.minHp, diff);
-		else return dg_statue(pre.minHp + -1 * diff + 1, 1);
-	}
-	else {
-		return dg_statue(pre.minHp, pre.curHp + val);
-	}
 
-}
-vector<vector<int>>* ptr_dungeon;
-vector<vector<dg_statue>>* ptr_statueTable;
-int minHp;
-void dungeonDFS(int now_x, int now_y, const dg_statue& pre_statue) {
-	if (now_x > ptr_dungeon->size() - 1)return;
-	if (now_y >ptr_dungeon->at(0).size() - 1)return;
-	auto now_statue = computeTransit(pre_statue, ptr_dungeon->at(now_x)[now_y]);
-	if (now_statue.minHp > minHp)return;
-	auto &other_state = ptr_statueTable->at(now_x)[now_y];
-	if (now_statue.curHp<other_state.curHp&&now_statue.minHp>other_state.minHp)return;
-	if (now_statue.curHp>other_state.curHp&&now_statue.minHp<other_state.minHp) {
-		other_state.curHp = now_statue.curHp;
-		other_state.minHp = now_statue.minHp;
-	}
-	if (now_x == ptr_dungeon->size() - 1 && now_y == ptr_dungeon->at(0).size() - 1) {
-		minHp = min(now_statue.minHp, minHp); return;
-	}
-	if (now_x != ptr_dungeon->size() - 1)dungeonDFS(now_x+1, now_y, now_statue);
-	if (now_y != ptr_dungeon->at(0).size() - 1)dungeonDFS(now_x, now_y+1, now_statue);
-}
 int calculateMinimumHP(vector<vector<int>>& dungeon)
 {
 	int m = dungeon.size(); 
 	if (m == 0)return 1;
-	minHp = INT_MAX;
+	
 	int n = dungeon[0].size();
 	if (n == 0)return 1;
-	ptr_dungeon = &dungeon;
-	vector<vector<dg_statue>>table;
-	table.resize(m);
-	for (auto& v : table)v.resize(n);
-	if (dungeon[0][0] <= 0)
-		table[0][0] = dg_statue(dungeon[0][0] * -1 + 1, 1);
-	else table[0][0] = dg_statue(1, 1+dungeon[0][0]);
-	for (int i = 1; i < m; i++) table[i][0]=computeTransit(table[i - 1][0], dungeon[i][0]);
-    if (n == 1)return table[m - 1][n - 1].minHp;
-	for (int j= 1; j< n; j++)table[0][j] = computeTransit(table[0][j - 1], dungeon[0][j]);
-	if (m == 1)return table[m - 1][n - 1].minHp;
-	for (int i = m-1; i >= 0; i--)dungeonDFS(i, 1, table[i][0]);
-	for (int j =n-1; j >=0; j--)dungeonDFS(1, j, table[0][j]);
-	return minHp;
+	int minHP[150][150];//MinimumHP in order to arrive at i,j AND can go to Target
+	minHP[m - 1][n - 1] = max(1, 1 - dungeon[m - 1][n - 1]);
+	for (int i = m - 2; i >= 0; i--)minHP[i][n - 1] = max(1, minHP[i + 1][n - 1] - dungeon[i][n - 1]);
+	for (int j = n - 2; j >= 0;j--)minHP[m-1][j] = max(1, minHP[m - 1][j+1] - dungeon[m-1][j]);
+	for (int i = m - 2; i >= 0; i--) {
+		for (int j = n - 2; j >= 0; j--) {
+			int  t1= max(1, minHP[i + 1][j] - dungeon[i][j]);
+			int  t2 = max(1, minHP[i][j+1] - dungeon[i][j]);
+			minHP[i][j] = min(t1, t2);
+		}
+	}
+	return minHP[0][0];
 }
 string fractionToDecimal(int numerator, int denominator)
 {
