@@ -374,3 +374,5 @@ public:
 };
 //174. Dungeon Game
 int calculateMinimumHP(std::vector<std::vector<int>>& dungeon);
+//179. Largest Number
+std::string largestNumber(std::vector<int>& nums);

@@ -4514,6 +4514,27 @@ int calculateMinimumHP(vector<vector<int>>& dungeon)
 	}
 	return minHP[0][0];
 }
+bool myStrComp(const string&a, const string& b) {
+	int len = min(a.size(),b.size());
+	for (int i = 0; i < len; i++) {
+		if (a[i] > b[i])return true;
+		if (a[i] < b[i])return false;
+	}
+	int t1 = atoi((a + b).data());
+	int t2 = atoi((b +a).data());
+	if (t1 > t2)return true;
+	return false;
+}
+string largestNumber(vector<int>& nums)
+{
+	vector<string>strs;
+	for (int i : nums)strs.push_back(to_string(i));
+	sort(strs.begin(), strs.end(), myStrComp);
+	if (strs.front() == "0")return 0;
+	string ans;
+	for (string& s : strs)ans.insert(ans.end(),s.begin(), s.end());
+	return ans;
+}
 string fractionToDecimal(int numerator, int denominator)
 {
 /*
