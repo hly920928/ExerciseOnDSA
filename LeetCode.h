@@ -376,7 +376,3 @@ public:
 int calculateMinimumHP(std::vector<std::vector<int>>& dungeon);
 //179. Largest Number
 std::string largestNumber(std::vector<int>& nums);
-//187. Repeated DNA Sequences
-std::vector<std::string> findRepeatedDnaSequences(std::string s);
-//188. Best Time to Buy and Sell Stock IV
-int maxProfit_IV(int k, std::vector<int>& prices);
