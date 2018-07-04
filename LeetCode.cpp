@@ -5,12 +5,15 @@
 #include <queue>
 #include <stack>
 #include <string>
+#include <list>
+#include <iterator>
 #include <unordered_map>
 #include <unordered_set>
 #include <map>
 #include <set>
 #include <sstream>
 #include <vector>
+#include <iostream>
 using namespace std;
 void twoSum(int twoSum,const vector<int>& nums, vector<int>&cur, int other_id, vector<vector<int>>& ans) {
 	if (nums.size() - other_id<2)return;
@@ -4534,6 +4537,132 @@ string largestNumber(vector<int>& nums)
 	string ans;
 	for (string& s : strs)ans.insert(ans.end(),s.begin(), s.end());
 	return ans;
+}
+vector<string> findRepeatedDnaSequences(string s)
+{
+	vector<string> ans;
+	unordered_map<string, int>table;
+	for (int i =0; i + 9 < s.size(); i++) {
+		auto str = s.substr(i, 10);
+		auto itr = table.find(str);
+		if (itr != table.end()) {
+			if (itr->second == 1) {
+				ans.push_back(str);
+				table[str]++;
+			}
+		}
+		else {
+			table[str] =1;
+		}
+	}
+	return ans;
+}
+vector<int>* mpPrices;
+
+class interval_profit_node {
+public:
+	int lo; int hi; int profit;
+	interval_profit_node*pred; interval_profit_node*succ;
+	interval_profit_node(int l = -1, int h = -1) :lo(l), hi(h) , pred(nullptr), succ(nullptr) {
+		if (l != -1) {
+			profit = mpPrices->at(hi) - mpPrices->at(lo);
+	  }
+	};
+	void merge(const interval_profit_node& b) {
+		if (b.lo > hi)hi = b.hi;
+		if (b.hi < lo)lo = b.lo;
+		profit = mpPrices->at(hi) - mpPrices->at(lo);
+	}
+	void remove() {
+		if(pred!=nullptr)pred->succ = succ;
+		if (succ!= nullptr)succ->pred = pred;
+		succ = nullptr;
+	}
+	void insertafter(interval_profit_node* s) {
+		succ = s;
+		s->pred = this;
+	}
+	int  tryMerge(const interval_profit_node* bp)const {
+		if (bp == nullptr||bp->hi==-1)return -profit;
+		auto& b = *bp;
+		int t_hi = hi; int t_lo = lo;
+		if (b.lo > hi)t_hi= b.hi;
+		if (b.hi < lo)t_lo = b.lo;
+		int p_now= mpPrices->at(t_hi) - mpPrices->at(t_lo);
+		return (p_now)-(profit + b.profit);
+	}
+};
+struct ptr_profit {
+	interval_profit_node* ptr;
+	ptr_profit(interval_profit_node* p) :ptr(p) {};
+};
+bool operator<(const ptr_profit& a,const  ptr_profit& b) {
+	return a.ptr->profit <b.ptr->profit;
+}
+int maxProfit_IV(int k, vector<int>& prices)
+{
+	mpPrices = &prices;
+	if (prices.size() <= 1)return 0;
+	int lo_id = 0;
+	interval_profit_node head;
+	interval_profit_node* last = &head;
+	vector<ptr_profit>ptr_v;
+	for (int i = 1; i < prices.size(); i++) {
+		if (prices[i - 1] > prices[i]) {
+			auto ptr = new interval_profit_node(lo_id, i - 1);
+			if (ptr->profit != 0) {
+				last->insertafter(ptr);
+				last = last->succ;
+				ptr_v.push_back(ptr_profit(last));
+			}
+			else {
+				delete ptr;
+			}
+			lo_id = i;
+		}
+		if (i == prices.size() - 1) {
+			auto ptr = new interval_profit_node(lo_id, prices.size() - 1);
+			if (ptr->profit != 0) {
+				last->insertafter(ptr);
+				last = last->succ;
+				lo_id = i;
+				ptr_v.push_back(ptr_profit(last));
+			}
+			else {
+				delete ptr;
+			}
+		}
+	}
+	if (ptr_v.size() <= k)goto END;
+	for (int i = 0; i < ptr_v.size() - k; i++) {
+		auto& now = min_element(ptr_v.begin(), ptr_v.end())->ptr;
+		int down_remove = now->profit*-1;
+		int down_mergeBefore = now->tryMerge(now->pred);
+		int down_mergeAfter = now->tryMerge(now->succ);
+		int chosen = max(max(down_remove, down_mergeBefore), down_mergeAfter);
+		if (chosen == down_remove) {
+			now->remove();
+		}
+		else if (chosen == down_mergeAfter) {
+			now->succ->merge(*ptr_v[i].ptr);
+			now->remove();
+		}else {
+			now->merge(*ptr_v[i].ptr);
+			now->remove();
+		}
+		now->profit=INT_MAX;
+	}
+END:
+	int ans = 0;
+		auto nowp = head.succ;
+		while (nowp != nullptr) {
+			ans += nowp->profit;
+			nowp = nowp->succ;
+		}
+		for (auto p : ptr_v) {
+			if (p.ptr != nullptr)delete p.ptr;
+		}
+		return ans;
 }
 string fractionToDecimal(int numerator, int denominator)
 {
