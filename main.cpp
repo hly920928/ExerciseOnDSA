@@ -17,9 +17,9 @@
 using namespace std;
 
 int main() {
-	int a[] = {3,30,34,5,9 };
-	vector<int>v(a, a + 5);
-	auto ans = largestNumber(v);
+	int a[] = { 1,2,4,2,5,7,2,4,9,0 };
+	vector<int>v(a, a +10);
+	auto ans = maxProfit(2,v);
 	return 0;
 
 }

@@ -4554,6 +4554,64 @@ std::vector<std::string> findRepeatedDnaSequences(std::string s)
 		}
 	}return ans;
 }
+struct mp_interVal {
+	int lo; int hi; int profit;
+	mp_interVal(int l=-1, int h=-1) :lo(l), hi(h), profit(hi - lo) {};
+};
+int maxProfit(int k, vector<int>& prices)
+{
+	if (prices.size() <= 1)return 0;
+	//generate all increasing interval
+	int lo_id = 0;
+	vector<mp_interVal>interVal_v;
+	for (int i = 1; i < prices.size(); i++) {
+		if (prices[i - 1] > prices[i]) {
+			auto itv = mp_interVal(prices[lo_id], prices[i - 1]);
+			if (itv.profit != 0) {
+				interVal_v.push_back(itv);
+			}
+			lo_id = i;
+		}
+		if (i == prices.size() - 1) {
+			auto itv = mp_interVal(prices[lo_id], prices.back());
+			if (itv.profit != 0) {
+				interVal_v.push_back(itv);
+			}
+		}
+	}
+	//if number of interVal<=K,just sum up;
+	if (interVal_v.size() <= k) {
+		int ans = 0;
+		for (auto& i : interVal_v) ans += i.profit;
+		return ans;
+	}
+	//otherwise ,DP maxprofit[k][l];
+	vector<vector<int>>profits;
+	profits.resize(k + 1);
+	for (auto&v : profits)v.resize(interVal_v.size()+1);
+	for (int i = 1; i <= k; i++) {
+		profits[i][0] = 0;
+		profits[i][1] = interVal_v[0].profit;
+
+	}
+	for (int j = 0;j <interVal_v.size();j++)profits[0][j] =0;
+	for (int i = 1; i <= k; i++) {
+		for (int j = 2; j <= interVal_v.size(); j++) {
+			if (j>i) {
+				int _max = profits[i][j - 1];
+				for (int m = 0; m < j; m++) {
+					_max = max(_max, profits[i - 1][m] + interVal_v[j-1].hi - interVal_v[m].lo);
+				}
+				profits[i][j] = _max;
+			}
+			else {
+				profits[i][j] = 0;
+				for (int n = 1; n <= j;n++) profits[i][j] += interVal_v[n-1].profit;
+			}
+		}
+	}
+	return profits[k].back();
+}
 string fractionToDecimal(int numerator, int denominator)
 {
 /*
