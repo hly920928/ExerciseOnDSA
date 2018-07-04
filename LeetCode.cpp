@@ -4535,6 +4535,25 @@ string largestNumber(vector<int>& nums)
 	for (string& s : strs)ans.insert(ans.end(),s.begin(), s.end());
 	return ans;
 }
+std::vector<std::string> findRepeatedDnaSequences(std::string s)
+{
+	vector<string> ans;
+	unordered_map<string, int>table;
+	for (int i = 0; i + 9 < s.size(); i++) {
+		auto str = s.substr(i, 10);
+		auto itr = table.find(str);
+		if (itr != table.end()) {
+			if (itr->second == 1) {
+				ans.push_back(str);
+				table[str]++;
+
+			}
+		}
+		else {
+			table[str] = 1;
+		}
+	}return ans;
+}
 string fractionToDecimal(int numerator, int denominator)
 {
 /*
