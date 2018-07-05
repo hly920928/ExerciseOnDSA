@@ -4612,6 +4612,15 @@ int maxProfit(int k, vector<int>& prices)
 	}
 	return profits[k].back();
 }
+void rotate(vector<int>& nums, int k)
+{
+	int n = nums.size();
+	vector<int>t; t.resize(n);
+	for (int i = 0; i < n; i++) {
+		t[(i + k) % n] = nums[i];
+	}
+	copy(t.begin(),t.end(),nums.begin());
+}
 string fractionToDecimal(int numerator, int denominator)
 {
 /*
