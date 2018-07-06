@@ -382,3 +382,5 @@ std::vector<std::string> findRepeatedDnaSequences(std::string s);
 int maxProfit(int k, std::vector<int>& prices);
 //189. Rotate Array
 void rotate(std::vector<int>& nums, int k);
+//190. Reverse Bits
+uint32_t reverseBits(uint32_t n);

@@ -17,9 +17,7 @@
 using namespace std;
 
 int main() {
-	int a[] = { 1,2,4,2,5,7,2,4,9,0 };
-	vector<int>v(a, a +10);
-	auto ans = maxProfit(2,v);
+	uint32_t hi = reverseBits(43261596);
 	return 0;
 
 }
