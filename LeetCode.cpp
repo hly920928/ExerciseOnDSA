@@ -4626,23 +4626,25 @@ uint32_t reverseBits(uint32_t n)
 	uint32_t ans = 0;
 	uint32_t hi = 1 << 31;
 	uint32_t lo = 1;
-	bitset<32> b1 = n;
-	bitset<32> l = lo;
-	bitset<32> h = hi;
-	bitset<32> b2; b2 = ans;
 	for (int i = 0; i < 16; i++) {
-		l = lo;
-		h = hi;
 		ans += ((lo&n) << (31 -2* i))&(hi);
 		lo = lo << 1; hi = hi >> 1;
-		b2 = ans;
 	}
 	for (int i =0; i < 16; i++) {
 		ans += ((lo&n) >> (1+2 * i))&(hi);
 		lo = lo << 1; hi = hi >> 1;
-		b2 = ans;
 	}
 	return ans;
+}
+int hammingWeight(uint32_t n)
+{
+	int ans = 0;
+	uint32_t mask = 1;
+	for (int i = 0; i < 32; i++) {
+		ans += (mask&n) >> i;
+		mask = mask << 1; 
+	}
+	return ans
 }
 string fractionToDecimal(int numerator, int denominator)
 {

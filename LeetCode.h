@@ -384,3 +384,7 @@ int maxProfit(int k, std::vector<int>& prices);
 void rotate(std::vector<int>& nums, int k);
 //190. Reverse Bits
 uint32_t reverseBits(uint32_t n);
+//
+int hammingWeight(uint32_t n) {
+
+};
