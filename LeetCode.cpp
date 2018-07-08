@@ -4644,7 +4644,20 @@ int hammingWeight(uint32_t n)
 		ans += (mask&n) >> i;
 		mask = mask << 1; 
 	}
-	return ans
+	return ans;
+}
+
+int rob(vector<int>& nums)
+{
+	int n = nums.size();
+	if (n == 0)return 0;
+	vector<int>table; table.resize(n);
+	table[n - 1] = nums[n - 1];
+	table[n - 2] = max(nums[n - 1], nums[n - 2]);
+	for (int i = n - 3; i >= 0; i--) {
+		table[i] = max(nums[i]+ table[i+2], table[n - 1]);
+	}
+	return table[0];
 }
 string fractionToDecimal(int numerator, int denominator)
 {
