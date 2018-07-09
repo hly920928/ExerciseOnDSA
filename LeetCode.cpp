@@ -4651,13 +4651,31 @@ int rob(vector<int>& nums)
 {
 	int n = nums.size();
 	if (n == 0)return 0;
+	if (n ==1)return nums[0];
 	vector<int>table; table.resize(n);
 	table[n - 1] = nums[n - 1];
 	table[n - 2] = max(nums[n - 1], nums[n - 2]);
 	for (int i = n - 3; i >= 0; i--) {
-		table[i] = max(nums[i]+ table[i+2], table[n - 1]);
+		table[i] = max(nums[i]+ table[i+2], table[i - 1]);
 	}
 	return table[0];
+}
+vector<int> rightSideView(TreeNode * root)
+{
+	vector<int>ans; queue<TreeNode *>q;
+	if (root == nullptr)return ans;
+	q.push(root); q.push(nullptr); ans.push_back(root->val);
+	while (!q.empty() &&! (q.size() == 1 && q.front() == nullptr)) {
+		while (q.front() != nullptr) {
+			auto now = q.front(); q.pop();
+			if (now->left != nullptr)q.push(now->left);
+			if (now->right != nullptr)q.push(now->right);
+		   }
+		if(q.back()!=nullptr)ans.push_back(q.back()->val);
+		q.pop();
+		q.push(nullptr);
+	}
+	return ans;
 }
 string fractionToDecimal(int numerator, int denominator)
 {

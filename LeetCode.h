@@ -386,3 +386,7 @@ void rotate(std::vector<int>& nums, int k);
 uint32_t reverseBits(uint32_t n);
 //191. Number of 1 Bits
 int hammingWeight(uint32_t n);
+//198. House Robber
+int rob(std::vector<int>& nums);
+//199. Binary Tree Right Side View
+std::vector<int> rightSideView(TreeNode* root);
