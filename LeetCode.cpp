@@ -4677,6 +4677,37 @@ vector<int> rightSideView(TreeNode * root)
 	}
 	return ans;
 }
+vector<vector<char>>* grid_islands;
+int m_islands;
+int n_islands;
+void DFS_islands(int x, int y) {
+	if (x < 0 || x >= m_islands)return;
+	if (y < 0 || y >= n_islands)return;
+	if (grid_islands->at(x)[y]!='1')return;
+	grid_islands->at(x)[y] = '#';
+	DFS_islands(x + 1, y);
+	DFS_islands(x -1, y);
+	DFS_islands(x , y+1);
+	DFS_islands(x, y-1);
+}
+int numIslands(vector<vector<char>>& grid)
+{
+	grid_islands = &grid;
+	m_islands = grid.size();
+	if (m_islands == 0)return 0;
+	n_islands = grid[0].size();
+	if (n_islands == 0)return 0;
+	int ans = 0;
+	for (int i = 0; i < m_islands; i++) {
+		for (int j = 0; j< n_islands; j++) {
+			if (grid[i][j] == '1') {
+				ans++;
+				DFS_islands(i, j);
+			}
+		}
+	}
+	return ans;
+}
 string fractionToDecimal(int numerator, int denominator)
 {
 /*
