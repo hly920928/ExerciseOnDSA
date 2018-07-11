@@ -4727,14 +4727,16 @@ int rangeBitwiseAnd(int m, int n)
 	unsigned int mask = 1 << h;
 	unsigned int allOne = 1;
 	for (int i = 0; i < h; i++) allOne = (allOne << 1) + 1;
-	for (int i = 0; i <= h; i++) {
-		if (tm&mask == 0)continue;
-		if (tn&mask == 0)continue;
-		unsigned int lo = allOne&(~mask);
+	if (tn > allOne)return 0;
+	for (int i = 0; i <= h; i++,mask = mask >> 1, allOne= allOne>>1) {
+		unsigned int t = tm&mask;
+		if (t == 0)continue;
+		t = tn&mask;
+		if (t == 0)continue;
+		unsigned int lo = (allOne|tn)&(~mask);
 		if (lo< tm)ans += mask;
-		mask=mask >> 1;
 	}
-	return 0;
+	return ans;
 }
 string fractionToDecimal(int numerator, int denominator)
 {
