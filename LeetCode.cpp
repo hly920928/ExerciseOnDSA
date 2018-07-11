@@ -4708,6 +4708,34 @@ int numIslands(vector<vector<char>>& grid)
 	}
 	return ans;
 }
+int rangeBitwiseAnd(int m, int n)
+{
+	if (m == 0)return 0;
+	if (m == 1) {
+		if (n == 1)return 1;
+		else return 0;
+	}
+	if (m == n)return m;
+	int h = 0;
+	unsigned int tm = m;
+	unsigned int tn =n;
+	while (tm != 1) {
+		tm = tm >> 1; h++;
+	}
+	tm = m;
+	unsigned int ans = 0;
+	unsigned int mask = 1 << h;
+	unsigned int allOne = 1;
+	for (int i = 0; i < h; i++) allOne = (allOne << 1) + 1;
+	for (int i = 0; i <= h; i++) {
+		if (tm&mask == 0)continue;
+		if (tn&mask == 0)continue;
+		unsigned int lo = allOne&(~mask);
+		if (lo< tm)ans += mask;
+		mask=mask >> 1;
+	}
+	return 0;
+}
 string fractionToDecimal(int numerator, int denominator)
 {
 /*

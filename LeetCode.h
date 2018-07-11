@@ -390,3 +390,7 @@ int hammingWeight(uint32_t n);
 int rob(std::vector<int>& nums);
 //199. Binary Tree Right Side View
 std::vector<int> rightSideView(TreeNode* root);
+//200. Number of Islands
+int numIslands(std::vector<std::vector<char>>& grid);
+//201. Bitwise AND of Numbers Range
+int rangeBitwiseAnd(int m, int n);
