@@ -4738,6 +4738,25 @@ int rangeBitwiseAnd(int m, int n)
 	}
 	return ans;
 }
+int allSqure(int n) {
+	int ans = 0; int now=0;
+	while (n != 0) {
+		now = n % 10; n /= 10;
+		ans += now*now;
+	}
+	return ans;
+}
+bool isHappy(int n)
+{
+	int now = allSqure(n);
+	unordered_set<int>set; set.insert(n);
+	while (true) {
+		if (now == 1)return true;
+		if (set.find(now)!=set.end())return false;
+		set.insert(now);
+		now = allSqure(now);
+	}
+}
 string fractionToDecimal(int numerator, int denominator)
 {
 /*

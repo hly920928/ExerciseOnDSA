@@ -394,3 +394,5 @@ std::vector<int> rightSideView(TreeNode* root);
 int numIslands(std::vector<std::vector<char>>& grid);
 //201. Bitwise AND of Numbers Range
 int rangeBitwiseAnd(int m, int n);
+//202. Happy Number
+bool isHappy(int n);

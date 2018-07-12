@@ -26,7 +26,7 @@ int main() {
 	tn1.right = &tn3;
 	tn2.right = &tn5;
 	tn3.right = &tn4;
-	auto ans = rangeBitwiseAnd(5,7);
+	auto ans = isHappy(18);
 	return 0;
 
 }
