@@ -17,16 +17,8 @@
 using namespace std;
 
 int main() {
-	TreeNode tn1(1);
-	TreeNode tn2(2);
-	TreeNode tn3(3);
-	TreeNode tn4(4);
-	TreeNode tn5(5);
-	tn1.left = &tn2;
-	tn1.right = &tn3;
-	tn2.right = &tn5;
-	tn3.right = &tn4;
-	auto ans = isHappy(18);
+	vector<int>v; v.push_back(1); v.push_back(2);
+	 rotate(v,1);
 	return 0;
 
 }

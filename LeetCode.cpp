@@ -4615,11 +4615,12 @@ int maxProfit(int k, vector<int>& prices)
 void rotate(vector<int>& nums, int k)
 {
 	int n = nums.size();
-	vector<int>t; t.resize(n);
-	for (int i = 0; i < n; i++) {
-		t[(i + k) % n] = nums[i];
-	}
-	copy(t.begin(),t.end(),nums.begin());
+	if (n <= 1)return;
+	k = k%n;
+	if (k == 0)return;
+	reverse(nums.end() -k, nums.end());
+	reverse(nums.begin(), nums.end() - k );
+	reverse(nums.begin(), nums.end());
 }
 uint32_t reverseBits(uint32_t n)
 {
