@@ -4758,6 +4758,22 @@ bool isHappy(int n)
 		now = allSqure(now);
 	}
 }
+ListNode * removeElements(ListNode * head, int val)
+{
+	ListNode pseudo_head(~val); pseudo_head.next = head;
+	ListNode*pre = &pseudo_head; ListNode*now = head;
+	while (now != nullptr) {
+		if (now->val == val) {
+			pre->next = now->next;
+			now= now->next;
+		}
+		else {
+			pre = pre->next;
+			now = now->next;
+		}
+	}
+	return pseudo_head.next;
+}
 string fractionToDecimal(int numerator, int denominator)
 {
 /*
