@@ -396,5 +396,7 @@ int numIslands(std::vector<std::vector<char>>& grid);
 int rangeBitwiseAnd(int m, int n);
 //202. Happy Number
 bool isHappy(int n);
-//203.
+//203. Remove Linked List Elements
 ListNode* removeElements(ListNode* head, int val);
+//204. Count Primes
+int countPrimes(int n);

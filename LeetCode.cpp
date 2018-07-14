@@ -4774,6 +4774,27 @@ ListNode * removeElements(ListNode * head, int val)
 	}
 	return pseudo_head.next;
 }
+int countPrimes(int n)
+{
+	n--;
+	if (n ==-1)return 0;
+	if (n == 0)return 0;
+	if (n == 1)return 0;
+	bool*table = new bool[n + 1];
+	memset(table, true, n + 1);
+	int ans = 1;
+	table[1] = 0; table[2] = 1;
+	for (int i = 3; i <= n; i+=2) {
+		ans += table[i];
+		int t = i * 2;
+		while (t <= n) {
+			table[t] = 0;
+			t += i;
+		}
+	}
+	//delete table;
+	return ans;
+}
 string fractionToDecimal(int numerator, int denominator)
 {
 /*
