@@ -4795,6 +4795,29 @@ int countPrimes(int n)
 	//delete table;
 	return ans;
 }
+bool isIsomorphic(string s, string t)
+{
+	char table1[256];
+	char table2[256];
+	memset(table1,0, 256);
+	memset(table2, 0, 256);
+	int n1 = s.size();
+	if (n1 != t.size())return false;
+	for (int i = 0; i < n1; i++) {
+		if (table1[t[i]] == 0&& table2[s[i]] == 0) {
+				table1[t[i]] = s[i];
+				table2[s[i]] = t[i];
+				continue;
+		}
+		if(table1[t[i]]== s[i]&& table2[s[i]] == t[i])	continue;
+		return false;
+	}
+	for (int i = 0; i < 256;i++) {
+		if (table1[i] == 0)continue;
+		if (table2[table1[i]] != i)return false;
+	}
+	return true;
+}
 string fractionToDecimal(int numerator, int denominator)
 {
 /*

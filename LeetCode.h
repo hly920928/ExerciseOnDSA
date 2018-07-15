@@ -400,3 +400,5 @@ bool isHappy(int n);
 ListNode* removeElements(ListNode* head, int val);
 //204. Count Primes
 int countPrimes(int n);
+//205. Isomorphic Strings
+bool isIsomorphic(std::string s, std::string t);

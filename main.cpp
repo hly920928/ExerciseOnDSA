@@ -18,7 +18,10 @@ using namespace std;
 
 int main() {
 	vector<int>v; v.push_back(1); v.push_back(2);
-	auto ans = countPrimes(10);
+	auto ans1 = isIsomorphic("ab","aa");
+	auto ans2= isIsomorphic("foo", "bar");
+	auto ans3 = isIsomorphic("paper", "title");
+
 	return 0;
 
 }
