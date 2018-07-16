@@ -4818,6 +4818,23 @@ bool isIsomorphic(string s, string t)
 	}
 	return true;
 }
+ListNode * reverseList(ListNode * head)
+{
+	if (head == nullptr)return head;
+	if (head->next == nullptr)return head;
+	ListNode *pre = nullptr;
+	ListNode *now = head; 
+	while (true) {
+		if (now->next == nullptr) {
+			now->next = pre;
+			return now;
+		}
+		auto t = now->next;
+		now->next = pre;
+		pre = now;
+		now = t;
+	} 
+}
 string fractionToDecimal(int numerator, int denominator)
 {
 /*
