@@ -4849,6 +4849,7 @@ struct  CoursesNodes {
 
 vector<CoursesNodes>*ptr_Nodes;
 void DFSCourses(int i) {
+	if (ptr_visited->at(i))return;
 	auto&now = ptr_Nodes->at(i);
 	if (now.isPreReClear()) {
 		ptr_visited->at(i) = true;
@@ -4867,7 +4868,7 @@ bool canFinish(int numCourses, vector<pair<int, int>>& prerequisites)
 	int visted =0;
 	while (true) {
 		for (int i = 0; i < numCourses; i++) {
-			if (Nodes[i].isPreReClear())DFSCourses(i);
+			if (Nodes[i].isPreReClear()&&!visited[i])DFSCourses(i);
 		}
 		int t = 0;
 		for (bool b : visited)if (b)t++;
