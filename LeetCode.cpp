@@ -4835,6 +4835,47 @@ ListNode * reverseList(ListNode * head)
 		now = t;
 	} 
 }
+vector<bool>*ptr_visited;
+struct  CoursesNodes {
+	vector<int>in;
+	vector<int>out;
+	CoursesNodes() {};
+	bool isPreReClear() {
+		auto& v = *ptr_visited;
+		for (int i : in)if (v[i] == false)return false;
+		return true;
+	}
+};
+
+vector<CoursesNodes>*ptr_Nodes;
+void DFSCourses(int i) {
+	auto&now = ptr_Nodes->at(i);
+	if (now.isPreReClear()) {
+		ptr_visited->at(i) = true;
+		for (int j : now.out) DFSCourses(j);
+	}
+}
+bool canFinish(int numCourses, vector<pair<int, int>>& prerequisites)
+{
+	vector<bool>visited; visited.resize(numCourses); ptr_visited = &visited;
+	vector<CoursesNodes>Nodes; Nodes.resize(numCourses); ptr_Nodes = &Nodes;
+	for (int i = 0; i < numCourses; i++)visited[i] = false;
+	for (const auto& p : prerequisites) {
+		Nodes[p.first].in.push_back(p.second);
+		Nodes[p.second].out.push_back(p.first);
+	}
+	int visted =0;
+	while (true) {
+		for (int i = 0; i < numCourses; i++) {
+			if (Nodes[i].isPreReClear())DFSCourses(i);
+		}
+		int t = 0;
+		for (bool b : visited)if (b)t++;
+		if (t == numCourses)return true;
+		if (t == visted)return false;
+		visted = t;
+	}
+}
 string fractionToDecimal(int numerator, int denominator)
 {
 /*

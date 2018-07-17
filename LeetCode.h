@@ -402,3 +402,7 @@ ListNode* removeElements(ListNode* head, int val);
 int countPrimes(int n);
 //205. Isomorphic Strings
 bool isIsomorphic(std::string s, std::string t);
+//206. Reverse Linked List
+ListNode* reverseList(ListNode* head);
+//207. Course Schedule
+bool canFinish(int numCourses, std::vector<std::pair<int, int>>& prerequisites);
