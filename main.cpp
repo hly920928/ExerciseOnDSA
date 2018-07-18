@@ -19,7 +19,13 @@ using namespace std;
 int main() {
 	vector<pair<int, int>>v; v.push_back({ 1,0 }); 
 	//v.push_back({0,1});
-	auto ans1 = canFinish(2, v);
+	Tries trie;
+	trie.insert("apple");
+	trie.search("apple");   // returns true
+	trie.search("app");     // returns false
+	trie.startsWith("app"); // returns true
+	trie.insert("app");
+	trie.search("app");     // returns true
 	return 0;
 
 }

@@ -406,3 +406,33 @@ bool isIsomorphic(std::string s, std::string t);
 ListNode* reverseList(ListNode* head);
 //207. Course Schedule
 bool canFinish(int numCourses, std::vector<std::pair<int, int>>& prerequisites);
+//208. Implement Trie (Prefix Tree)
+struct TriesNode {
+	bool isExist;
+	unsigned int indexNext[26];
+	TriesNode() {
+		isExist = false;
+		for (unsigned int& i : indexNext) i = 0;
+	}
+	bool haveNext() {
+		int t = 0;
+		for (int i : indexNext)t += i;
+		return t!= 0;
+	}
+};
+class Tries {
+private:
+	std::vector<TriesNode>table;
+public:
+	/** Initialize your data structure here. */
+	Tries();
+
+	/** Inserts a word into the trie. */
+	void insert(std::string word);
+
+	/** Returns if the word is in the trie. */
+	bool search(std::string word);
+
+	/** Returns if there is any word in the trie that starts with the given prefix. */
+	bool startsWith(std::string prefix);
+};

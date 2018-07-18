@@ -5077,3 +5077,52 @@ int BSTIterator::next()
 	}
 	return ptr_t->val;
 }
+
+Tries::Tries()
+{
+	table.push_back(TriesNode());
+}
+
+void Tries::insert(std::string word)
+{
+	int nowId = 0;
+	for (char c : word) {
+		if (table[nowId].indexNext[c - 'a'] == 0) {
+			table.push_back(TriesNode());
+			table[nowId].indexNext[c - 'a'] = table.size() - 1;
+			nowId = table[nowId].indexNext[c - 'a'];
+		}
+		else {
+			nowId = table[nowId].indexNext[c - 'a'];
+		}
+	}
+	table[nowId].isExist = true;
+}
+
+bool Tries::search(std::string word)
+{
+	int nowId = 0;
+	for (char c : word) {
+		if (table[nowId].indexNext[c - 'a'] == 0) {
+			return false;
+		}
+		else {
+			nowId = table[nowId].indexNext[c - 'a'];
+		}
+	}
+	return table[nowId].isExist;
+}
+
+bool Tries::startsWith(std::string prefix)
+{
+	int nowId = 0;
+	for (char c : prefix) {
+		if (table[nowId].indexNext[c - 'a'] == 0) {
+			return false;
+		}
+		else {
+			nowId = table[nowId].indexNext[c - 'a'];
+		}
+	}
+	return table[nowId].isExist || table[nowId].haveNext();
+}
