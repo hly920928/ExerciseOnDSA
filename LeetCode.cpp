@@ -4877,6 +4877,29 @@ bool canFinish(int numCourses, vector<pair<int, int>>& prerequisites)
 		visted = t;
 	}
 }
+int minSubArrayLen(int s, std::vector<int>& nums)
+{
+	int n = nums.size(); int minLen = INT_MAX; int startId = 0; int sum = 0;
+	for (int i = 0; i < n; i++) {
+		if (nums[i] >= s)return 1;
+		sum += nums[i];
+		if (sum >= s) {
+			minLen = min(minLen, i - startId + 1);
+			while (true) {
+				
+				sum -= nums[startId];
+				if (sum < s) {
+					sum += nums[startId];
+					break;
+
+				}
+				minLen = min(minLen, i - startId);
+				startId++;
+			}
+		}
+	}
+	return (minLen==INT_MAX)?0: minLen;
+}
 string fractionToDecimal(int numerator, int denominator)
 {
 /*

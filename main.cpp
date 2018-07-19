@@ -17,15 +17,10 @@
 using namespace std;
 
 int main() {
-	vector<pair<int, int>>v; v.push_back({ 1,0 }); 
-	//v.push_back({0,1});
-	Tries trie;
-	trie.insert("apple");
-	trie.search("apple");   // returns true
-	trie.search("app");     // returns false
-	trie.startsWith("app"); // returns true
-	trie.insert("app");
-	trie.search("app");     // returns true
+	int t[] = { 1,2,3,4,5};
+	vector<int>v(t,t+5);
+
+	int ans = minSubArrayLen(15, v);
 	return 0;
 
 }

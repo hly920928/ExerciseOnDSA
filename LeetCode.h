@@ -436,3 +436,5 @@ public:
 	/** Returns if there is any word in the trie that starts with the given prefix. */
 	bool startsWith(std::string prefix);
 };
+//209. Minimum Size Subarray Sum
+int minSubArrayLen(int s, std::vector<int>& nums);
