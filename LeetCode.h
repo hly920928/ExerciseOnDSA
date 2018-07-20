@@ -438,3 +438,5 @@ public:
 };
 //209. Minimum Size Subarray Sum
 int minSubArrayLen(int s, std::vector<int>& nums);
+//210. Course Schedule II
+std::vector<int> findOrder(int numCourses, std::vector< std::pair<int, int>>& prerequisites);

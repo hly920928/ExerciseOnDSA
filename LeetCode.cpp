@@ -4900,6 +4900,42 @@ int minSubArrayLen(int s, std::vector<int>& nums)
 	}
 	return (minLen==INT_MAX)?0: minLen;
 }
+vector<int>*ansFO;
+void DFSfindOrder(int i) {
+	if (ptr_visited->at(i))return;
+	auto&now = ptr_Nodes->at(i);
+	if (now.isPreReClear()) {
+		ansFO->push_back(i);
+		ptr_visited->at(i) = true;
+		for (int j : now.out) DFSCourses(j);
+	}
+}
+std::vector<int> findOrder(int numCourses, std::vector<std::pair<int, int>>& prerequisites)
+{
+	vector<int>ans; ansFO = &ans;
+	vector<bool>visited; visited.resize(numCourses); ptr_visited = &visited;
+	vector<CoursesNodes>Nodes; Nodes.resize(numCourses); ptr_Nodes = &Nodes;
+	for (int i = 0; i < numCourses; i++)visited[i] = false;
+	for (const auto& p : prerequisites) {
+		Nodes[p.first].in.push_back(p.second);
+		Nodes[p.second].out.push_back(p.first);
+	}
+	int visted = 0;
+	while (true) {
+		for (int i = 0; i < numCourses; i++) {
+			if (Nodes[i].isPreReClear() && !visited[i])DFSCourses(i);
+		}
+		int t = 0;
+		for (bool b : visited)if (b)t++;
+		if (t == numCourses)return ans;
+		if (t == visted) {
+			ans.clear();
+			return ans;
+		}
+		visted = t;
+	}
+	return ans;
+}
 string fractionToDecimal(int numerator, int denominator)
 {
 /*
