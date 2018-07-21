@@ -4907,7 +4907,7 @@ void DFSfindOrder(int i) {
 	if (now.isPreReClear()) {
 		ansFO->push_back(i);
 		ptr_visited->at(i) = true;
-		for (int j : now.out) DFSCourses(j);
+		for (int j : now.out) DFSfindOrder(j);
 	}
 }
 std::vector<int> findOrder(int numCourses, std::vector<std::pair<int, int>>& prerequisites)
@@ -4923,7 +4923,7 @@ std::vector<int> findOrder(int numCourses, std::vector<std::pair<int, int>>& pre
 	int visted = 0;
 	while (true) {
 		for (int i = 0; i < numCourses; i++) {
-			if (Nodes[i].isPreReClear() && !visited[i])DFSCourses(i);
+			if (Nodes[i].isPreReClear() && !visited[i])DFSfindOrder(i);
 		}
 		int t = 0;
 		for (bool b : visited)if (b)t++;
@@ -5184,4 +5184,59 @@ bool Tries::startsWith(std::string prefix)
 		}
 	}
 	return table[nowId].isExist || table[nowId].haveNext();
+}
+
+bool Tries::searchWithWildCard(std::string& word,int i,int nodeId)
+{
+	int nextId = table[nodeId].indexNext[word[i] - 'a'];
+	if (i == word.size() - 1) {
+		if (word[i] == '.') {
+			for (int next : table[nodeId].indexNext) {
+				if (table[next].isExist)return true;
+			}
+			return false;
+		}
+		if (nextId == 0)return false;
+		return table[nextId].isExist;
+	  }
+	if (word[i] != '.')return searchWithWildCard(word, i + 1, nextId);
+	for (int next : table[nodeId].indexNext) {
+		if (next != 0) {
+			if (searchWithWildCard(word, i + 1, next))return true;
+		}
+	}
+	return false;
+}
+
+void WordDictionary::addWord(std::string word)
+{
+	auto now = &root;
+	for (char c : word) {
+		if (now->Next[c - 'a'] == nullptr) {
+			now->Next[c - 'a'] = new WDNode;
+		}
+		now = now->Next[c - 'a'];
+	}
+	now->isExist = true;
+}
+bool WordDictionary::searchRe(std::string & word, int i, WDNode * now)
+{
+	if (now == nullptr)return false;
+	if (i == word.size() - 1) {
+		if (word[i] == '.') {
+			for (auto next : now->Next) {
+				if (next!=nullptr&&next->isExist)return true;
+			}
+			return false;
+		}
+		if (now->Next[word[i] - 'a'] ==nullptr)return false;
+		return now->Next[word[i] - 'a']->isExist;
+	}
+	if (word[i] != '.')return searchRe(word, i + 1, now->Next[word[i] - 'a']);
+	for (auto next : now->Next) {
+		if (next != nullptr) {
+			if (searchRe(word, i + 1, next))return true;
+		}
+	}
+	return false;
 }

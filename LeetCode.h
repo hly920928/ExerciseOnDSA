@@ -435,8 +435,31 @@ public:
 
 	/** Returns if there is any word in the trie that starts with the given prefix. */
 	bool startsWith(std::string prefix);
+	bool searchWithWildCard(std::string& word, int id, int nodeId);
 };
 //209. Minimum Size Subarray Sum
 int minSubArrayLen(int s, std::vector<int>& nums);
 //210. Course Schedule II
 std::vector<int> findOrder(int numCourses, std::vector< std::pair<int, int>>& prerequisites);
+//211. Add and Search Word - Data structure design
+class WDNode {
+public:
+	bool isExist;
+	WDNode* Next[26];
+	WDNode():isExist(false) {
+		for (auto& p : Next)p=nullptr;
+	};
+	~WDNode() {
+		for (auto p : Next)delete p;
+	}
+};
+class WordDictionary {
+private:
+	WDNode root;
+public:
+	WordDictionary() {};
+	void addWord(std::string word);;
+	bool search(std::string word) { return searchRe(word, 0, &root); };
+private:
+	bool searchRe(std::string& word, int i, WDNode* now);
+};

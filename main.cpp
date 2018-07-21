@@ -17,10 +17,14 @@
 using namespace std;
 
 int main() {
-	int t[] = { 1,2,3,4,5};
-	vector<int>v(t,t+5);
-
-	int ans = minSubArrayLen(15, v);
+	WordDictionary wd;
+	wd.addWord("bad");
+	wd.addWord("dad");
+	wd.addWord("mad");
+	wd.search("pad");
+	wd.search("bad");
+	wd.search(".ad");
+	wd.search("b..");
 	return 0;
 
 }
