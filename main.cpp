@@ -17,14 +17,20 @@
 using namespace std;
 
 int main() {
-	WordDictionary wd;
-	wd.addWord("bad");
-	wd.addWord("dad");
-	wd.addWord("mad");
-	wd.search("pad");
-	wd.search("bad");
-	wd.search(".ad");
-	wd.search("b..");
+	int t[1][1] = {
+			{'a'}
+	};
+	vector<vector<char>>board; board.resize(1);
+	for (int i = 0; i <1; i++) {
+		board[i].resize(1);
+		for (int j= 0;j< 1;j++) 
+			board[i][j]= t[i][j];
+	}
+	string strs[] = {
+		"a","a" 
+	};
+	vector<string> words(strs, strs + 2);
+	auto ans = findWords(board, words);
 	return 0;
 
 }

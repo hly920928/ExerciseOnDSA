@@ -463,3 +463,5 @@ public:
 private:
 	bool searchRe(std::string& word, int i, WDNode* now);
 };
+//212. Word Search II
+std::vector<std::string> findWords(std::vector<std::vector<char>>& board, std::vector<std::string>& words);

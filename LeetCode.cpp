@@ -4936,6 +4936,54 @@ std::vector<int> findOrder(int numCourses, std::vector<std::pair<int, int>>& pre
 	}
 	return ans;
 }
+vector<vector<char>>* boardFW;
+bool DFSFW(const string & w, int i, int x, int y) {
+	if (x < 0 || x >= boardFW->size())return false;
+	if (y< 0 || y >= boardFW->at(0).size())return false;
+	if (boardFW->at(x)[y] == w[i]) {
+		if (i == w.size() - 1)return true;
+		boardFW->at(x)[y] = '#';
+		if (DFSFW(w, i + 1, x + 1, y))goto TRUE;
+		if (DFSFW(w, i + 1, x - 1, y))goto TRUE;
+		if (DFSFW(w, i + 1, x, y + 1))goto TRUE;
+		if (DFSFW(w, i + 1, x, y - 1))goto TRUE;
+	}else return false;
+	boardFW->at(x)[y] = w[i]; return false;
+TRUE:
+	boardFW->at(x)[y] = w[i]; return true;
+}
+vector<string> findWords(vector<vector<char>>& board, vector<string>& words)
+{
+	vector<string> ans;
+	int m = board.size(); if (m == 0)return ans;
+	int n = board[0].size(); if (n == 0)return ans;
+	vector<pair<int,int>> stat_b[26];
+	boardFW = &board;
+	for (int i = 0; i < m; i++) {
+		for (int j = 0; j < n; j++)
+		{
+			stat_b[board[i][j] - 'a'].push_back({ i,j });
+		}
+	}
+	unordered_set<string>set;
+	for (auto&w : words) set.insert(w);
+	for (auto&w : set) {
+		if (w.size() > m*n)continue;
+		int stat_w[26]; for (auto& i : stat_w)i = 0;
+		for (auto& c : w)stat_w[c - 'a']++;
+		for (int i = 0; i < 26; i++) {
+			if (stat_w[i] > stat_b[i].size())goto OUT;
+		}
+		for (auto&p : stat_b[w[0] - 'a']) {
+			if (DFSFW(w, 0, p.first, p.second)) {
+				ans.push_back(w);
+				goto OUT;
+			}
+		}
+	OUT:;
+	}
+	return ans;
+}
 string fractionToDecimal(int numerator, int denominator)
 {
 /*
