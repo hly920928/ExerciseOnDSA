@@ -4952,7 +4952,7 @@ bool DFSFW(const string & w, int i, int x, int y) {
 TRUE:
 	boardFW->at(x)[y] = w[i]; return true;
 }
-vector<string> findWords(vector<vector<char>>& board, vector<string>& words)
+vector<string> findWords_V1(vector<vector<char>>& board, vector<string>& words)
 {
 	vector<string> ans;
 	int m = board.size(); if (m == 0)return ans;
@@ -4981,6 +4981,57 @@ vector<string> findWords(vector<vector<char>>& board, vector<string>& words)
 			}
 		}
 	OUT:;
+	}
+	return ans;
+}
+vector<string>*ptr_ans;
+string* ptr_now_w;
+bool inline posVaild(int x, int y) {
+	if (x < 0 || x >= boardFW->size())return false;
+	if (y< 0 || y >= boardFW->at(0).size())return false;
+	return true;
+}
+void DFSFW_V2(WDNode & w, int x, int y);
+void inline tryAtFW_V2(WDNode & w,int x, int y) {
+	auto&b = *boardFW;
+	if (posVaild(x, y)&& b[x][y] != '#'&&w.Next[b[x][y] - 'a'] != nullptr) {
+		ptr_now_w->push_back(b[x][y]);
+		b[x][y] = '#';
+		DFSFW_V2(*w.Next[ptr_now_w->back() - 'a'], x, y);
+		b[x][y] = ptr_now_w->back();
+		ptr_now_w->pop_back();
+	
+	}
+}
+void DFSFW_V2(WDNode & w,int x, int y) {
+	
+	if (w.isExist) {
+		ptr_ans->push_back(*ptr_now_w);
+		w.isExist = false;
+	}
+	tryAtFW_V2(w,x + 1, y);
+	tryAtFW_V2(w, x - 1, y);
+	tryAtFW_V2(w, x, y+1);
+	tryAtFW_V2(w, x, y -1);
+}
+vector<string> findWords_V2(vector<vector<char>>& board, vector<string>& words)
+{
+	vector<string>ans; ptr_ans = &ans;
+	int m = board.size(); if (m == 0)return ans;
+	int n = board[0].size(); if (n == 0)return ans;
+	WordDictionary wd;
+	
+	for (auto& w : words)wd.addWord(w);
+	vector<pair<int, int>> stat_b[26];
+	boardFW = &board;
+	for (int i = 0; i < m; i++) 
+		for (int j = 0; j < n; j++)
+			stat_b[board[i][j] - 'a'].push_back({ i,j });
+	string now_w; ptr_now_w = &now_w;
+	auto& root = wd.root;
+	for (int i = 0; i < 26; i++) {
+		if (root.Next[i] == nullptr)continue;
+		for (auto& pos : stat_b[i])tryAtFW_V2(root, pos.first, pos.second);
 	}
 	return ans;
 }

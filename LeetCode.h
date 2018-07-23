@@ -454,9 +454,8 @@ public:
 	}
 };
 class WordDictionary {
-private:
-	WDNode root;
 public:
+	WDNode root;
 	WordDictionary() {};
 	void addWord(std::string word);;
 	bool search(std::string word) { return searchRe(word, 0, &root); };
@@ -464,4 +463,5 @@ private:
 	bool searchRe(std::string& word, int i, WDNode* now);
 };
 //212. Word Search II
-std::vector<std::string> findWords(std::vector<std::vector<char>>& board, std::vector<std::string>& words);
+std::vector<std::string> findWords_V1(std::vector<std::vector<char>>& board, std::vector<std::string>& words);
+std::vector<std::string> findWords_V2(std::vector<std::vector<char>>& board, std::vector<std::string>& words);

@@ -17,20 +17,27 @@
 using namespace std;
 
 int main() {
-	int t[1][1] = {
-			{'a'}
+	const int m = 4; const int n = 4;
+	int t[m][n] =
+	{
+		{'o', 'a', 'a', 'n'},
+		{'e', 't', 'a', 'e'},
+		{'i', 'h', 'k', 'r'},
+		{'i', 'f', 'l', 'v'}
 	};
-	vector<vector<char>>board; board.resize(1);
-	for (int i = 0; i <1; i++) {
-		board[i].resize(1);
-		for (int j= 0;j< 1;j++) 
+
+
+	vector<vector<char>>board; board.resize(m);
+	for (int i = 0; i <m; i++) {
+		board[i].resize(n);
+		for (int j= 0;j< n;j++) 
 			board[i][j]= t[i][j];
 	}
 	string strs[] = {
-		"a","a" 
+		"oath","pea","eat","rain"
 	};
-	vector<string> words(strs, strs + 2);
-	auto ans = findWords(board, words);
+	vector<string> words(strs, strs + 4);
+	auto ans = findWords_V2(board, words);
 	return 0;
 
 }
