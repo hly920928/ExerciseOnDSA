@@ -5035,6 +5035,27 @@ vector<string> findWords_V2(vector<vector<char>>& board, vector<string>& words)
 	}
 	return ans;
 }
+int rob_sub(vector<int>& nums,int h,int t)
+{
+	int n =t-h+1;
+	if (n == 0)return 0;
+	if (n == 1)return nums[h];
+	vector<int>table; table.resize(n);
+	table[n - 1] = nums[h+n - 1];
+	table[n - 2] = max(nums[h+n - 1], nums[h+n - 2]);
+	for (int i = n - 3; i >= 0; i--) {
+		table[i] = max(nums[h+i] + table[i + 2], table[i+1]);
+	}
+	return table[0];
+}
+int rob_II(vector<int>& nums)
+{
+	int n = nums.size();
+	if (n == 0)return 0;
+	int ans = nums[0]+rob_sub(nums,2, n - 2);
+	ans = max(ans, rob_sub(nums,1,n-1));
+	return ans;
+}
 string fractionToDecimal(int numerator, int denominator)
 {
 /*

@@ -465,3 +465,6 @@ private:
 //212. Word Search II
 std::vector<std::string> findWords_V1(std::vector<std::vector<char>>& board, std::vector<std::string>& words);
 std::vector<std::string> findWords_V2(std::vector<std::vector<char>>& board, std::vector<std::string>& words);
+//213. House Robber II
+int rob_sub(std::vector<int>& nums, int h, int t);
+int rob_II(std::vector<int>& nums);

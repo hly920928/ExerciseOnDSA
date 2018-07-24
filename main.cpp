@@ -18,26 +18,14 @@ using namespace std;
 
 int main() {
 	const int m = 4; const int n = 4;
-	int t[m][n] =
+	int t[] =
 	{
-		{'o', 'a', 'a', 'n'},
-		{'e', 't', 'a', 'e'},
-		{'i', 'h', 'k', 'r'},
-		{'i', 'f', 'l', 'v'}
+		1,3,1
 	};
 
 
-	vector<vector<char>>board; board.resize(m);
-	for (int i = 0; i <m; i++) {
-		board[i].resize(n);
-		for (int j= 0;j< n;j++) 
-			board[i][j]= t[i][j];
-	}
-	string strs[] = {
-		"oath","pea","eat","rain"
-	};
-	vector<string> words(strs, strs + 4);
-	auto ans = findWords_V2(board, words);
+	vector<int>v(t,t+3);
+	auto ans = rob_sub(v, 0,2);
 	return 0;
 
 }
