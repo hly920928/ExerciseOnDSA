@@ -5058,33 +5058,7 @@ int rob_II(vector<int>& nums)
 	ans = max(ans, rob_sub(nums,1,n-1));
 	return ans;
 }
-std::string shortestPalindrome(std::string s)
-{
-	int n = s.size();
-	if (n <= 1)return s;
-	bool allA = true;
-	for (char& c : s) {
-		if (c != 'a') {
-			allA = true;
-			break;
-		}
-	}
-	if (allA)return s;
-	int last =0;
-	for (int i = n - 1; i > 0; i--) {
-		int head = 0; int tail = i;
-		while (head < tail) {
-			if (s[head] != s[tail])break;
-			head++; tail--;
-		}
-		if (head >= tail) {
-			last = i; break;
-		}
-	}
-	string p = s.substr( last + 1,n-last);
-	reverse(p.begin(), p.end());
-	return p + s;
-}
+
 string fractionToDecimal(int numerator, int denominator)
 {
 /*
