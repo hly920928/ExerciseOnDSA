@@ -468,3 +468,5 @@ std::vector<std::string> findWords_V2(std::vector<std::vector<char>>& board, std
 //213. House Robber II
 int rob_sub(std::vector<int>& nums, int h, int t);
 int rob_II(std::vector<int>& nums);
+//214. Shortest Palindrome
+std::string shortestPalindrome(std::string s);
