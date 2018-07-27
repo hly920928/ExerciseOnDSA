@@ -5086,7 +5086,7 @@ std::string shortestPalindrome_V1(std::string s)
 }
 std::string shortestPalindrome_V2(std::string s)
 {
-		int n = s.size();
+	int n = s.size();
 	if (n <= 1)return s;
 	//preProcess,simpify problem
 	string aux; aux.push_back('*');
