@@ -25,7 +25,7 @@ int main() {
 
 
 	vector<int>v(t,t+3);
-	auto ans = shortestPalindrome_V2("aacecaaa");
+	auto ans = rob_sub(v, 0,2);
 	return 0;
 
 }
