@@ -5056,7 +5056,7 @@ int rob_II(vector<int>& nums)
 	ans = max(ans, rob_sub(nums,1,n-1));
 	return ans;
 }
-std::string shortestPalindrome(std::string s)
+std::string shortestPalindromeV1(std::string s)
 {
 	int n = s.size();
 	if (n <= 1)return s;
@@ -5083,6 +5083,45 @@ std::string shortestPalindrome(std::string s)
 	string p = s.substr(last + 1, n - last);
 	reverse(p.begin(), p.end());
 	return p + s;
+}
+std::string shortestPalindromeV2(std::string s)
+{
+	int n = s.size();
+	if (n <= 1)return s;
+	//preProcess,simpify problem
+	string aux; aux.push_back('*');
+	for (char c : s) { aux.push_back(c); aux.push_back('*'); }
+	vector<int>radius; radius.resize(aux.size());
+	//produce radius
+	radius[0] = 0; radius[1] = 1; int maxRight = 2; int maxRightCenter = 1;
+	for (int i = 2; i < aux.size(); i++) {
+		bool canExpand = false;
+		if (i >= maxRight) {
+			radius[i] = 0; canExpand = true;
+		}
+		else {
+			int j = 2 * maxRightCenter - i;
+			if (maxRight - i <= radius[j]) {
+				radius[i] = maxRight - i; canExpand = true;
+			}
+			else {
+				radius[i] = radius[j];
+			}
+		}
+		if (canExpand) {
+			while (i + radius[i] + 1<aux.size()&& i - (radius[i] + 1)>=0&&aux[i + radius[i] + 1] == aux[i - (radius[i] + 1)])radius[i]++;
+			if (i + radius[i] > maxRight) {
+				maxRight = i + radius[i];
+				maxRightCenter = i;
+			}
+		}
+	}
+	//find longest sub-Palindrome string including aux[0]
+	int lc = 1;
+	for (int i = 2; i < aux.size(); i++) {if (i == radius[i])lc = i;}
+	string headpart = s.substr(lc, s.size() - lc);
+	reverse(headpart.begin(), headpart.end());
+	return headpart + s;
 }
 string fractionToDecimal(int numerator, int denominator)
 {

@@ -469,4 +469,5 @@ std::vector<std::string> findWords_V2(std::vector<std::vector<char>>& board, std
 int rob_sub(std::vector<int>& nums, int h, int t);
 int rob_II(std::vector<int>& nums);
 //214. Shortest Palindrome
-std::string shortestPalindrome(std::string s);
+std::string shortestPalindromeV1(std::string s);
+std::string shortestPalindromeV2(std::string s);
