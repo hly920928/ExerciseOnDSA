@@ -471,3 +471,6 @@ int rob_II(std::vector<int>& nums);
 //214. Shortest Palindrome
 std::string shortestPalindromeV1(std::string s);
 std::string shortestPalindromeV2(std::string s);
+//215. Kth Largest Element in an Array
+//trivial sort method
+int findKthLargest_V1(std::vector<int>& nums, int k);

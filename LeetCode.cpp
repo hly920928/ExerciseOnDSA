@@ -5094,6 +5094,7 @@ std::string shortestPalindromeV2(std::string s)
 	vector<int>radius; radius.resize(aux.size());
 	//produce radius
 	radius[0] = 0; radius[1] = 1; int maxRight = 2; int maxRightCenter = 1;
+	int lc = 1;
 	for (int i = 2; i < aux.size(); i++) {
 		bool canExpand = false;
 		if (i >= maxRight) {
@@ -5115,13 +5116,17 @@ std::string shortestPalindromeV2(std::string s)
 				maxRightCenter = i;
 			}
 		}
+		if (i == radius[i])lc = i;
 	}
 	//find longest sub-Palindrome string including aux[0]
-	int lc = 1;
-	for (int i = 2; i < aux.size(); i++) {if (i == radius[i])lc = i;}
 	string headpart = s.substr(lc, s.size() - lc);
 	reverse(headpart.begin(), headpart.end());
 	return headpart + s;
+}
+int findKthLargest_V1(vector<int>& nums, int k)
+{
+	sort(nums.begin(), nums.end());
+	return nums[nums.size() - k];
 }
 string fractionToDecimal(int numerator, int denominator)
 {
