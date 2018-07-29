@@ -5128,6 +5128,36 @@ int findKthLargest_V1(vector<int>& nums, int k)
 	sort(nums.begin(), nums.end());
 	return nums[nums.size() - k];
 }
+vector<int>* nums_FKL;
+int findKthLargest_re(int lo, int hi, int k) {
+
+	static auto& nums = *nums_FKL;
+	if (hi - lo + 1 < 100) {
+		sort(nums.begin() + lo, nums.begin() + hi + 1);
+	}
+	if (lo == hi)return nums[lo];
+
+	if (hi - lo == 1) {
+		if (k == 2)return min(nums[lo], nums[hi]);
+		return max(nums[lo], nums[hi]);
+	}
+	int l = lo; int h = hi; int pivot = nums[(lo + hi) / 2];
+	while (true) {
+		while (nums[l] <pivot&&l!=hi)l++;
+		while (nums[h] >pivot&&h!= lo)h--;
+		if (l >= h)break;
+		swap(nums[l], nums[h]); 
+		l++; h--;
+	}
+	OUT:
+	if (hi+1 - k >h)return findKthLargest_re(h+1, hi, k);
+    return findKthLargest_re(lo, h, k-(hi- h));
+}
+int findKthLargest_V2(std::vector<int>& nums, int k)
+{
+	nums_FKL = &nums;
+	return findKthLargest_re(0,nums.size()-1,k);
+}
 string fractionToDecimal(int numerator, int denominator)
 {
 /*

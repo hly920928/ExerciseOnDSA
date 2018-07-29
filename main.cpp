@@ -20,12 +20,12 @@ int main() {
 	const int m = 4; const int n = 4;
 	int t[] =
 	{
-		1,3,1
+		3,2,1,5,6,4
 	};
 
 
-	vector<int>v(t,t+3);
-	auto ans = shortestPalindromeV2("abcd");
+	vector<int>v(t,t+6);
+	auto ans = findKthLargest_V2(v,2);
 	return 0;
 
 }
