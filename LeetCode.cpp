@@ -5134,6 +5134,7 @@ int findKthLargest_re(int lo, int hi, int k) {
 	static auto& nums = *nums_FKL;
 	if (hi - lo + 1 < 100) {
 		sort(nums.begin() + lo, nums.begin() + hi + 1);
+		return nums[hi + 1 - k];
 	}
 	if (lo == hi)return nums[lo];
 
@@ -5157,6 +5158,45 @@ int findKthLargest_V2(std::vector<int>& nums, int k)
 {
 	nums_FKL = &nums;
 	return findKthLargest_re(0,nums.size()-1,k);
+}
+vector<vector<int>>*_ansCS3;
+vector<int>*_curCS3;
+void combinationSum3_re(int i,int k, int n) {
+	if (i > 9)return;
+	if (n <= 0)return;
+	if (i > n)return;
+	int t = 0;
+	for (int j =0;j< k&&(i+j<=9); j++)t +=(i+j);
+	if (n < t)return;
+	t = 0;
+	for (int j = 0;j < k&&(9-j)>=i;j++)t += 9 -j;
+	if (n > t)return;
+	if (k== 1) {
+		if (i <= n) {
+			_curCS3->push_back(n);
+			_ansCS3->push_back(*_curCS3);
+			_curCS3->pop_back();
+		}
+		return;
+	}
+	for (int x = i; x <=9; x++) {
+		_curCS3->push_back(x);
+		combinationSum3_re(x + 1, k - 1, n - x);
+		_curCS3->pop_back();
+	}
+}
+vector<vector<int>> combinationSum3(int k, int n)
+{
+	vector<vector<int>> ans; _ansCS3 = &ans;
+	vector<int> cur; _curCS3 = &cur;
+	int t = 0;
+	for (int i = 1; i <= k; i++)t += i;
+	if (n < t)return ans;
+	t = 0;
+	for (int i = 0; i < k; i++)t +=9- i;
+	if (n > t)return ans;
+	combinationSum3_re(1, k, n);
+	return ans;
 }
 string fractionToDecimal(int numerator, int denominator)
 {

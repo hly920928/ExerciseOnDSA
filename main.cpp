@@ -25,7 +25,7 @@ int main() {
 
 
 	vector<int>v(t,t+6);
-	auto ans = findKthLargest_V2(v,2);
+	auto ans = combinationSum3(3,9);
 	return 0;
 
 }

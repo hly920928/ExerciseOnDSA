@@ -476,3 +476,5 @@ std::string shortestPalindromeV2(std::string s);
 int findKthLargest_V1(std::vector<int>& nums, int k);
 //quickSelect
 int findKthLargest_V2(std::vector<int>& nums, int k);
+//216. Combination Sum III
+std::vector<std::vector<int>> combinationSum3(int k, int n);
