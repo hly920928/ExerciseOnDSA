@@ -478,3 +478,5 @@ int findKthLargest_V1(std::vector<int>& nums, int k);
 int findKthLargest_V2(std::vector<int>& nums, int k);
 //216. Combination Sum III
 std::vector<std::vector<int>> combinationSum3(int k, int n);
+//217. Contains Duplicate
+bool containsDuplicate(std::vector<int>& nums);

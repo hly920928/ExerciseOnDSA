@@ -5198,6 +5198,15 @@ vector<vector<int>> combinationSum3(int k, int n)
 	combinationSum3_re(1, k, n);
 	return ans;
 }
+bool containsDuplicate(vector<int>& nums)
+{
+	unordered_set<int>set;
+	for (int i : nums) {
+		if (set.find(i) != set.end())return true;
+		set.insert(i);
+	}
+	return false;
+}
 string fractionToDecimal(int numerator, int denominator)
 {
 /*
