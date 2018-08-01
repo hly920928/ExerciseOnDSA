@@ -22,10 +22,12 @@ int main() {
 	{
 		3,2,1,5,6,4
 	};
-
-
-	vector<int>v(t,t+6);
-	auto ans = combinationSum3(3,9);
+	TreeNode tn1(1);
+	TreeNode tn2(2);
+	TreeNode tn3(3);
+	tn1.right = &tn2;
+	tn2.left = &tn3;
+	auto ans = inorderTraversal_iterative(&tn1);
 	return 0;
 
 }

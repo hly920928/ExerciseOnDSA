@@ -178,7 +178,7 @@ struct TreeNode {
 
 //94. Binary Tree Inorder Traversal
 std::vector<int> inorderTraversal(TreeNode* root);
-
+std::vector<int> inorderTraversal_iterative(TreeNode* root);
 //95. Unique Binary Search Trees II
 
 std::vector<TreeNode*> generateTrees(int n);

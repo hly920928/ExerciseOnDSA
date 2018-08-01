@@ -2783,6 +2783,39 @@ std::vector<int> inorderTraversal(TreeNode * root)
 	inorderTraversal_re(root);
 	return ans;
 }
+class visitBST {
+public:
+	virtual void operator()(TreeNode *cur) = 0;
+};
+class visited_pushBack:public visitBST {
+private:
+	vector<int>*ans;
+public:
+	visited_pushBack(vector<int>&a) :ans(&a) {};
+	virtual void operator()(TreeNode *cur) {
+		if(cur!= nullptr)ans->push_back(cur->val);
+	}
+};
+void inorderTraversal_iterative(TreeNode * root, visitBST& visit) {
+	TreeNode *  cur = root;
+	stack<TreeNode *>stk; 
+	while (true) {
+		while (cur != nullptr) {
+			stk.push(cur); cur = cur->left;
+		}
+		if (stk.empty())break;
+		visit(stk.top());
+		cur = stk.top()->right;
+		stk.pop();
+		}
+}
+std::vector<int> inorderTraversal_iterative(TreeNode * root)
+{
+	vector<int>ans; visited_pushBack vpb(ans);
+	if(root== nullptr)return ans;
+	inorderTraversal_iterative(root,vpb);
+	return ans;
+}
 void generateTrees_re(int lo, int hi, vector<TreeNode*>& v) {
 	if (lo > hi) {
 		v.push_back(nullptr);
