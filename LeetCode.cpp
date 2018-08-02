@@ -2804,9 +2804,9 @@ void inorderTraversal_iterative(TreeNode * root, visitBST& visit) {
 			stk.push(cur); cur = cur->left;
 		}
 		if (stk.empty())break;
-		visit(stk.top());
-		cur = stk.top()->right;
-		stk.pop();
+		cur = stk.top();stk.pop();
+		visit(cur);
+		cur = cur->right;
 		}
 }
 std::vector<int> inorderTraversal_iterative(TreeNode * root)
@@ -5239,6 +5239,24 @@ bool containsDuplicate(vector<int>& nums)
 		set.insert(i);
 	}
 	return false;
+}
+class SkylineSolver {
+private:
+	map<int, pair<int, int>>table;
+public:
+	SkylineSolver(const vector<vector<int>>& buildings, vector<pair<int, int>>&ans) {
+		for (auto& b : buildings)insertToTable(b);
+		producingAnswer(ans);
+	}
+private:
+	void insertToTable(const vector<int>&b) {};
+	void producingAnswer(const vector<pair<int, int>>&ans) {};
+ };
+vector<pair<int, int>> getSkyline(vector<vector<int>>& buildings)
+{
+	vector<pair<int, int>> ans;
+	SkylineSolver sls(buildings, ans);
+	return ans;
 }
 string fractionToDecimal(int numerator, int denominator)
 {

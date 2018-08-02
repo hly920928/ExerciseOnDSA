@@ -480,3 +480,5 @@ int findKthLargest_V2(std::vector<int>& nums, int k);
 std::vector<std::vector<int>> combinationSum3(int k, int n);
 //217. Contains Duplicate
 bool containsDuplicate(std::vector<int>& nums);
+//218. The Skyline Problem
+vector<pair<int, int>> getSkyline(vector<vector<int>>& buildings);
