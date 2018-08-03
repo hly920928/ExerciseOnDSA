@@ -5369,6 +5369,65 @@ vector<pair<int, int>> getSkyline(vector<vector<int>>& buildings)
 	SkylineSolver sls(buildings, ans);
 	return ans;
 }
+struct pointSKL {
+	int x; int h; char t; int x_r;
+	pointSKL(int _x = -1, int _h = -1, char _t = ' ', char _r = -1) :x(_x), h(_h), t(_t), x_r(_r) {};
+};
+bool operator<(const pointSKL&a, const pointSKL&b) {
+	if (a.x< b.x)return true;
+	if (a.x> b.x)return false;
+	if (a.t<b.t)return true;
+	if (a.t>b.t)return false;
+	if (a.t == 'r')return a.h < b.h;
+	if (a.h> b.h)return true;
+	if (a.h<b.h)return false;
+	if (a.t == 'l') return a.x_r < b.x_r;
+	
+	return false;
+}
+struct LineSKL {
+	int h; int x_r;
+	LineSKL(int _h = -1, char _r = -1) :h(_h), x_r(_r) {};
+};
+bool operator<(const LineSKL&a, const LineSKL&b) {
+	if (a.h>b.h)return true;
+	if (a.h<b.h)return false;
+	if (a.x_r>b.x_r)return true;
+	if (a.x_r<b.x_r)return false;
+	return false;
+}
+std::vector<std::pair<int, int>> getSkyline_V2(std::vector<std::vector<int>>& buildings)
+{
+
+	vector<pair<int, int>>ans;
+	if (buildings.size() == 0)return ans;
+	vector<pointSKL>vp;
+	for (auto& b : buildings) {
+		vp.push_back(pointSKL(b[0], b[2], 'l', b[1]));
+		vp.push_back(pointSKL(b[1], b[2], 'r', b[1]));
+	}
+
+	sort(vp.begin(), vp.end());	set<LineSKL>set; int cur_h = 0;
+	for (auto& p : vp) {
+		if (p.t == 'l') {
+			if (p.h > cur_h) {
+				cur_h = p.h;
+				if(ans.size()==0||p.x!=ans.back().first)ans.push_back({ p.x,  p.h });
+			}
+			set.insert(LineSKL(p.h, p.x_r));
+		}
+		if (p.t == 'r') {
+			set.erase(LineSKL(p.h, p.x));
+			if (p.h == cur_h) {
+				if (set.size() ==0)cur_h = 0;
+				else cur_h = (set.begin())->h;
+				if (cur_h != p.h)	ans.push_back({ p.x, cur_h });
+			}
+		}
+	
+	}
+	return ans;
+}
 string fractionToDecimal(int numerator, int denominator)
 {
 /*

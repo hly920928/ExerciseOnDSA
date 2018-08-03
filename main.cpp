@@ -17,16 +17,16 @@
 using namespace std;
 
 int main() {
-	const int m =9; const int n = 4;
-	int t[9][3] =
-	{ { 2,4,70 },{ 3,8,30 },{ 6,100,41 },{ 7,15,70 },{ 10,30,102 },{ 15,25,76 },{ 60,80,91 },{ 70,90,72 },{ 85,120,59 } };
+	const int m =3; const int n = 4;
+	int t[m][3] =
+	{ { 1,2,1 },{ 1,2,2 },{ 1,2,3 } };
 	vector<vector<int>>buildings; buildings.resize(m);
 	for (int i = 0; i < m; i++) {
 		for (int j:t[i]) {
 			buildings[i].push_back(j);
 		}
 	}
-	auto ans = getSkyline(buildings);
+	auto ans = getSkyline_V2(buildings);
 	return 0;
 
 }
