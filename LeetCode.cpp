@@ -5240,21 +5240,132 @@ bool containsDuplicate(vector<int>& nums)
 	}
 	return false;
 }
+struct RectSKL {
+	int left; int right; int height;
+	RectSKL(int l = -1, int r = -1, int h = -1) : left(l), right(r), height(h) {};
+};
+bool operator<(const RectSKL&a, const RectSKL&b) {
+	if (a.height > b.height)return true;
+	if (a.height< b.height)return false;
+	if (a.left< b.left)return true;
+	if (a.left> b.left)return false;
+	if (a.right>b.right)return true;
+	if (a.right< b.right)return false;
+	return false;
+}
+bool operator==(const RectSKL&a, const RectSKL&b) {
+	if (a.height != b.height)return false;
+	if (a.left != b.left)return false;
+	if (a.right!=b.right)return false;
+	return true;
+}
 class SkylineSolver {
 private:
 	map<int, pair<int, int>>table;
+	vector<RectSKL>myBuildings;
 public:
 	SkylineSolver(const vector<vector<int>>& buildings, vector<pair<int, int>>&ans) {
-		for (auto& b : buildings)insertToTable(b);
+		for (auto& b : buildings)myBuildings.push_back(RectSKL(b[0],b[1],b[2]));
+		sort(myBuildings.begin(), myBuildings.end());
+		merge();
+		for (auto& b : myBuildings)insertToTable(b);
 		producingAnswer(ans);
 	}
 private:
-	void insertToTable(const vector<int>&b) {};
-	void producingAnswer(const vector<pair<int, int>>&ans) {};
+	void insertToTable(const RectSKL&bu) {
+		if (table.size() == 0) {
+			table[bu.left] = { bu.right,bu.height };
+			return;
+		}
+		if (bu == RectSKL(7, 15, 70)) {
+			int k = 1;
+		}
+		auto itr_f = table.lower_bound(bu.left);
+		auto itr_b = itr_f;
+		if (itr_f == table.end()) {
+			itr_f--;
+			if (isDup(itr_f, bu))return;
+		
+			if(itr_f->second.first< bu.right)table[max(itr_f->second.first, bu.left)] = { bu.right,bu.height };
+			return;
+		}
+		if (itr_f == table.begin()) {
+			if (isDup(itr_f, bu))return;
+			if(bu.left<itr_f->first)table[bu.left] = {min(itr_f->first,bu.right),bu.height };
+			itr_b = itr_f; itr_b++;
+		}
+		else {
+			while(itr_f!=table.begin()&&itr_f->first>=bu.left)itr_f--;
+			
+			itr_b = itr_f; itr_b++;
+		}
+		while (true) {
+			if (isDup(itr_f, bu))return;
+			if (itr_b == table.end()) {
+				int f_right = itr_f->second.first;
+				if (f_right >= bu.right)break;
+				table[f_right] = { bu.right,bu.height };
+				break;
+			}
+			int f_right = itr_f->second.first;
+			int b_left = itr_b->first;
+			itr_f++; itr_b++;
+			if (f_right >= bu.right)break;
+			if (b_left > f_right) {
+				if (b_left <= bu.right) { table[max(f_right, bu.left)] = { b_left,bu.height }; }
+				else {
+					table[max(f_right, bu.left)] = { bu.right,bu.height }; break;
+				}
+			}
+		};
+	}
+	void producingAnswer( vector<pair<int, int>>&ans) {
+		auto itr = table.begin();
+		while (true) {
+			int now_left = itr->first;
+			int now_right = itr->second.first;
+			int now_height = itr->second.second;
+			itr++;
+			ans.push_back({ now_left ,now_height });
+			if (itr == table.end() || now_right < itr->first) {
+				ans.push_back({ now_right ,0 });
+				if (itr == table.end())break;
+			}
+		}
+	};
+	void merge() {
+		auto nullR = RectSKL(-1, -1, -1);
+		for (int i = 0; i < myBuildings.size(); i++) {
+			auto& now = myBuildings[i];
+			for (int j=i+1;j < myBuildings.size(); j++) {
+				auto& other = myBuildings[j];
+				if (other.height == -1)continue;
+				if (other.height != now.height)continue;
+				if (other.left > now.right)break;
+				if (other.height ==now.height&&other.left <= now.right) {
+					now.right = max(now.right, other.right);
+					other = nullR;
+				}
+			}
+		}
+		auto itr_last=remove(myBuildings.begin(), myBuildings.end(), nullR);
+		if(myBuildings.begin() <=itr_last&&itr_last< myBuildings.end())myBuildings.erase(itr_last++, myBuildings.end());
+	}
+	bool isDup(map<int, pair<int, int>>::iterator& itr,const RectSKL&b) {
+		int pLeft = itr->first;
+		int pRight = itr->second.first;
+		int pHeight = itr->second.second;
+		if (pLeft == b.left&&pRight == b.right) {
+			itr->second.second = max(pHeight, b.height);
+			return true;
+		}
+		return false;
+	}
  };
 vector<pair<int, int>> getSkyline(vector<vector<int>>& buildings)
 {
 	vector<pair<int, int>> ans;
+	if (buildings.size() == 0)return ans;
 	SkylineSolver sls(buildings, ans);
 	return ans;
 }

@@ -17,17 +17,16 @@
 using namespace std;
 
 int main() {
-	const int m = 4; const int n = 4;
-	int t[] =
-	{
-		3,2,1,5,6,4
-	};
-	TreeNode tn1(1);
-	TreeNode tn2(2);
-	TreeNode tn3(3);
-	tn1.right = &tn2;
-	tn2.left = &tn3;
-	auto ans = inorderTraversal_iterative(&tn1);
+	const int m =9; const int n = 4;
+	int t[9][3] =
+	{ { 2,4,70 },{ 3,8,30 },{ 6,100,41 },{ 7,15,70 },{ 10,30,102 },{ 15,25,76 },{ 60,80,91 },{ 70,90,72 },{ 85,120,59 } };
+	vector<vector<int>>buildings; buildings.resize(m);
+	for (int i = 0; i < m; i++) {
+		for (int j:t[i]) {
+			buildings[i].push_back(j);
+		}
+	}
+	auto ans = getSkyline(buildings);
 	return 0;
 
 }
