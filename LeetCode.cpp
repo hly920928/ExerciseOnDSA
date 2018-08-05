@@ -5428,6 +5428,17 @@ std::vector<std::pair<int, int>> getSkyline_V2(std::vector<std::vector<int>>& bu
 	}
 	return ans;
 }
+bool containsNearbyDuplicate(std::vector<int>& nums, int k)
+{
+	unordered_map<int, int>map;
+	for (int i = 0; i < nums.size(); i++) {
+		if (map[nums[i]] != map.end()) {
+			if (i - map[nums[i]] <= k)return true;
+		}
+		map[nums[i]] = i;
+	}
+	return false;
+}
 string fractionToDecimal(int numerator, int denominator)
 {
 /*
