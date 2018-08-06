@@ -5432,10 +5432,25 @@ bool containsNearbyDuplicate(std::vector<int>& nums, int k)
 {
 	unordered_map<int, int>map;
 	for (int i = 0; i < nums.size(); i++) {
-		if (map[nums[i]] != map.end()) {
+		if (map.find(nums[i]) != map.end()) {
 			if (i - map[nums[i]] <= k)return true;
 		}
 		map[nums[i]] = i;
+	}
+	return false;
+}
+bool containsNearbyAlmostDuplicate(vector<int>& nums, int k, int t)
+{
+	map<int, int>map;
+	for (int i = 0; i < nums.size(); i++) {
+		auto itr = map.find(nums[i] - k);
+		if (itr != map.end()) {
+			while (itr->first <= nums[i] + k) {
+				if (abs(itr->second - i) <= k)return true;
+			}
+		}
+		map[nums[i]] = i;
+		
 	}
 	return false;
 }

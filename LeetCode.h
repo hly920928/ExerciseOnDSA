@@ -483,3 +483,5 @@ bool containsDuplicate(std::vector<int>& nums);
 //218. The Skyline Problem
 std::vector<std::pair<int, int>> getSkyline(std::vector<std::vector<int>>& buildings);
 std::vector<std::pair<int, int>> getSkyline_V2(std::vector<std::vector<int>>& buildings);
+//219. Contains Duplicate II
+bool containsNearbyDuplicate(std::vector<int>& nums, int k);
