@@ -485,3 +485,6 @@ std::vector<std::pair<int, int>> getSkyline(std::vector<std::vector<int>>& build
 std::vector<std::pair<int, int>> getSkyline_V2(std::vector<std::vector<int>>& buildings);
 //219. Contains Duplicate II
 bool containsNearbyDuplicate(std::vector<int>& nums, int k);
+bool containsNearbyAlmostDuplicate(std::vector<int>& nums, int k, int t);
+//221. Maximal Square
+int maximalSquare(std::vector<std::vector<char>>& matrix);

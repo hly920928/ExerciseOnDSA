@@ -5441,18 +5441,52 @@ bool containsNearbyDuplicate(std::vector<int>& nums, int k)
 }
 bool containsNearbyAlmostDuplicate(vector<int>& nums, int k, int t)
 {
-	map<int, int>map;
+	map<long long, int>map;
 	for (int i = 0; i < nums.size(); i++) {
-		auto itr = map.find(nums[i] - k);
+		auto itr = map.lower_bound((long long)nums[i] - (long long)t);
 		if (itr != map.end()) {
-			while (itr->first <= nums[i] + k) {
+			while (itr!=map.end()&&itr->first <= (long long)nums[i] + (long long)t) {
 				if (abs(itr->second - i) <= k)return true;
+				itr++;
 			}
 		}
 		map[nums[i]] = i;
 		
 	}
 	return false;
+}
+vector<vector<char>>*matrixMs;
+bool testSquareN(int x, int y, int N) {
+	 int m = matrixMs->size();int n = matrixMs->at(0).size();
+	int nx = x +N - 1;	if (nx >= m)return false;
+	for (int i = 0; i <N; i++) {
+		if(y + i>=n)return false;
+	    if(matrixMs->at(nx)[y + i]=='0')return false;
+	}
+	int ny =y + N - 1;	if (ny >= n)return false;
+	for (int i = 0; i <N-1; i++) {
+		if (x+ i >= m)return false;
+		if (matrixMs->at(x + i)[ny] == '0')return false;
+	}
+	return true;
+}
+int maximalSquare(vector<vector<char>>& matrix)
+{
+	matrixMs = &matrix;
+	int m = matrix.size();
+	if (m == 0)return 0;
+	int n = matrix[0].size();
+	if (n == 0)return 0;
+	int _max =0;
+	for (int i = 0; i < m; i++) {
+		for (int j= 0; j< n; j++) {
+			if (matrix[i][j]=='1'){
+				int N =1;
+				while (testSquareN(i, j, N)) { _max = max(_max, N); N++; }
+			}
+		}
+	}
+	return _max*_max;
 }
 string fractionToDecimal(int numerator, int denominator)
 {

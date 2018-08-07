@@ -17,16 +17,16 @@
 using namespace std;
 
 int main() {
-	const int m =3; const int n = 4;
-	int t[m][3] =
-	{ { 1,2,1 },{ 1,2,2 },{ 1,2,3 } };
-	vector<vector<int>>buildings; buildings.resize(m);
+	const int m =1; const int n =2;
+	char t[m][n] =
+	{ {'0','1'} };
+	vector<vector<char>>buildings; buildings.resize(m);
 	for (int i = 0; i < m; i++) {
 		for (int j:t[i]) {
 			buildings[i].push_back(j);
 		}
 	}
-	auto ans = getSkyline_V2(buildings);
+	auto ans = maximalSquare(buildings);
 	return 0;
 
 }
