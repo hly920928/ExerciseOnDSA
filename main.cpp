@@ -17,16 +17,9 @@
 using namespace std;
 
 int main() {
-	const int m =1; const int n =2;
-	char t[m][n] =
-	{ {'0','1'} };
-	vector<vector<char>>buildings; buildings.resize(m);
-	for (int i = 0; i < m; i++) {
-		for (int j:t[i]) {
-			buildings[i].push_back(j);
-		}
-	}
-	auto ans = maximalSquare(buildings);
+	TreeNode tn1(1);	TreeNode tn2(2); TreeNode tn3(3); TreeNode tn4(4);
+	tn1.left = &tn2; tn1.right = &tn3; tn2.left = &tn4;
+	auto ans = countNodes(&tn1);
 	return 0;
 
 }

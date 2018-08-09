@@ -5488,6 +5488,26 @@ int maximalSquare(vector<vector<char>>& matrix)
 	}
 	return _max*_max;
 }
+int inline depthLCN(TreeNode * root) {
+	auto now = root; int d = 0;
+	while (now != nullptr) {
+		d++; now = now->left;
+	}
+	return d;
+}
+
+int countNodes(TreeNode * root)
+{
+	if (root == nullptr)return 0;
+	int dL = depthLCN(root->left);int dR = depthLCN(root->right);
+	if (dL == 0 && dR == 0)return 1;
+	if (dL == 1 && dR == 1)return 3;
+	if (dL == 1&&dR == 0)return 2;
+	if (dL > dR) {
+		return 1 + countNodes(root->left) +(1<<dR)-1;
+	}
+	return 1+countNodes(root->right) + (1 << dL) - 1;
+}
 string fractionToDecimal(int numerator, int denominator)
 {
 /*
