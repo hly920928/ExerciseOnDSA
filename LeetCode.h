@@ -490,3 +490,5 @@ bool containsNearbyAlmostDuplicate(std::vector<int>& nums, int k, int t);
 int maximalSquare(std::vector<std::vector<char>>& matrix);
 //222. Count Complete Tree Nodes
 int countNodes(TreeNode* root);
+//223. Rectangle Area
+int computeArea(int A, int B, int C, int D, int E, int F, int G, int H);
