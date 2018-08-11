@@ -492,5 +492,3 @@ int maximalSquare(std::vector<std::vector<char>>& matrix);
 int countNodes(TreeNode* root);
 //223. Rectangle Area
 int computeArea(int A, int B, int C, int D, int E, int F, int G, int H);
-//224. Basic Calculator
-int mycalculate(std::string s);
