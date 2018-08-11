@@ -18,8 +18,7 @@ using namespace std;
 
 int main() {
 	TreeNode tn1(1);	TreeNode tn2(2); TreeNode tn3(3); TreeNode tn4(4);
-	tn1.left = &tn2; tn1.right = &tn3; tn2.left = &tn4;
-	auto ans = countNodes(&tn1);
+	auto ans = calculate_my("(1)");
 	return 0;
 
 }
