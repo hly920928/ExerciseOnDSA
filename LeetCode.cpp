@@ -5555,6 +5555,14 @@ int calculate_my(string s)
 	}
 	return nums.top();
 }
+TreeNode * invertTree(TreeNode * root)
+{
+	if (root == nullptr)return nullptr;
+	auto lt = root->left; auto rt = root->right;
+	root->left = invertTree(rt);
+	root->right = invertTree(lt);
+	return root;
+}
 string fractionToDecimal(int numerator, int denominator)
 {
 /*

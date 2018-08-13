@@ -561,3 +561,5 @@ public:
 		return q.empty();
 	}
 };
+//226. Invert Binary Tree
+TreeNode* invertTree(TreeNode* root);
