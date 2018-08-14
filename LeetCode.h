@@ -563,3 +563,5 @@ public:
 };
 //226. Invert Binary Tree
 TreeNode* invertTree(TreeNode* root);
+//227. Basic Calculator II
+int calculate_II(std::string s);

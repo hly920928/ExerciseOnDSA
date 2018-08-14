@@ -5519,13 +5519,45 @@ bool compCal(char now, char top) {
 	if (top == '#')return false;
 	if (now == ')')return true;
 	if (now == '(')return false;
-
 	if (top == '(')return false;
+	if (top == '*' || top == '/')return true;
+	if (now == '*'|| now == '/')return false;
+
 	return true;
 }
 int calCal(int a, int b, char c) {
 	if (c == '+')return a + b;
 	if (c == '-')return a - b;
+	if (c == '*')return a*b;
+	if (c == '/')return a/b;
+}
+int calculate_basic(string& s)
+{
+	stack<int>nums; stack<char>opr;
+	string str;
+	opr.push('#'); s.push_back('&');
+	for (char& c : s) {
+		if (c == ' ')continue;
+		if (c >= '0'&&c <= '9') {
+			str.push_back(c);
+			continue;
+		}
+		if (str.size() != 0) { nums.push(atoi(str.data())); str.clear(); }
+		if (opr.top() == '('&&c == ')') {
+			opr.pop(); continue;
+		}
+		while((compCal(c, opr.top()) || c == '&') && opr.size() != 1) {
+			int b = nums.top(); nums.pop();
+			int a = nums.top(); nums.pop();
+			nums.push(calCal(a, b, opr.top()));
+			opr.pop();
+			if (opr.top() == '('&&c == ')') {
+				opr.pop();
+			}
+		}
+		if (c != ')')opr.push(c);
+	}
+	return nums.top();
 }
 int calculate_my(string s)
 {
@@ -5562,6 +5594,10 @@ TreeNode * invertTree(TreeNode * root)
 	root->left = invertTree(rt);
 	root->right = invertTree(lt);
 	return root;
+}
+int calculate_II(std::string s)
+{
+	return calculate_basic(s);
 }
 string fractionToDecimal(int numerator, int denominator)
 {

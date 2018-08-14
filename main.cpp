@@ -18,7 +18,7 @@ using namespace std;
 
 int main() {
 	TreeNode tn1(1);	TreeNode tn2(2); TreeNode tn3(3); TreeNode tn4(4);
-	auto ans = calculate_my("(1)");
+	auto ans = calculate_II("100000000/1/2/3/4/5/6/7/8/9/10");
 	return 0;
 
 }
