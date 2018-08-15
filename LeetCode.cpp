@@ -5599,6 +5599,29 @@ int calculate_II(std::string s)
 {
 	return calculate_basic(s);
 }
+vector<string> summaryRanges(vector<int>& nums)
+{
+	vector<string>ans;
+	if (nums.size() == 0)return ans;
+	if (nums.size() == 1) {
+		ans.push_back(to_string(nums[0]));
+		return ans;
+	}
+	int head = nums[0];
+	for (int i = 1; i < nums.size(); i++) {
+		if ((long long)nums[i] - (long long)nums[i - 1] > 1) {
+			if (head == nums[i - 1])ans.push_back(to_string(head));
+			else ans.push_back(to_string(head)+"->"+ to_string(nums[i - 1]));
+			head = nums[i];
+		}
+		if (i == nums.size() - 1) {
+			if (nums[i] - nums[i - 1] > 1)ans.push_back(to_string(nums[i]));
+			else ans.push_back(to_string(head) + "->" + to_string(nums[i]));
+			break;
+		}
+	}
+	return ans;
+}
 string fractionToDecimal(int numerator, int denominator)
 {
 /*

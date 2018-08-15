@@ -565,3 +565,5 @@ public:
 TreeNode* invertTree(TreeNode* root);
 //227. Basic Calculator II
 int calculate_II(std::string s);
+//228. Summary Ranges
+std::vector<std::string> summaryRanges(std::vector<int>& nums);
