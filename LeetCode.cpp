@@ -5615,10 +5615,24 @@ vector<string> summaryRanges(vector<int>& nums)
 			head = nums[i];
 		}
 		if (i == nums.size() - 1) {
-			if (nums[i] - nums[i - 1] > 1)ans.push_back(to_string(nums[i]));
+			if ((long long)nums[i] - (long long)nums[i - 1] > 1) ans.push_back(to_string(nums[i]));
 			else ans.push_back(to_string(head) + "->" + to_string(nums[i]));
 			break;
 		}
+	}
+	return ans;
+}
+std::vector<int> majorityElement_II(std::vector<int>& nums)
+{
+	unordered_map<int, int>count;
+	vector<int>ans;
+	for (int i : nums) {
+		if (count.find(i) == count.end())count[i] = 0;
+		else count[i]++;
+	}
+	int n = nums.size() / 3;
+	for (auto itr : count) {
+		if (itr.second >= n)ans.push_back(itr.first);
 	}
 	return ans;
 }
