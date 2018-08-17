@@ -5624,16 +5624,23 @@ vector<string> summaryRanges(vector<int>& nums)
 }
 std::vector<int> majorityElement_II(std::vector<int>& nums)
 {
-	unordered_map<int, int>count;
+	int m1 = INT_MAX; int c1 = 0; int m2 = INT_MAX; int c2 = 0;
+	bool has1 = false; bool has2 = false;
 	vector<int>ans;
 	for (int i : nums) {
-		if (count.find(i) == count.end())count[i] = 0;
-		else count[i]++;
+		if (has1&&i == m1)c1++;
+		else if (has2&&i ==m2)c2++;
+		else if (c1 == 0) { m1 = i; c1 = 1; has1 = true; }
+		else if (c2 == 0) { m2 = i; c2 = 1;has2 = true; }
+		else { c1--; c2--; }
 	}
-	int n = nums.size() / 3;
-	for (auto itr : count) {
-		if (itr.second >= n)ans.push_back(itr.first);
+	c1 = 0; c2 = 0;
+	for (int i : nums) {
+		if (i == m1)c1++;
+		if (i == m2)c2++;
 	}
+	if (c1 > nums.size() / 3)ans.push_back(m1);
+	if (c2 > nums.size() / 3)ans.push_back(m2);
 	return ans;
 }
 string fractionToDecimal(int numerator, int denominator)

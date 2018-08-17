@@ -568,4 +568,4 @@ int calculate_II(std::string s);
 //228. Summary Ranges
 std::vector<std::string> summaryRanges(std::vector<int>& nums);
 //229. Majority Element II
-vector<int> majorityElement(vector<int>& nums);
+std::vector<int> majorityElement_II(std::vector<int>& nums);
