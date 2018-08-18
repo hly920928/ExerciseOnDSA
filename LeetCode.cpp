@@ -5624,14 +5624,14 @@ vector<string> summaryRanges(vector<int>& nums)
 }
 std::vector<int> majorityElement_II(std::vector<int>& nums)
 {
-	int m1 = INT_MAX; int c1 = 0; int m2 = INT_MAX; int c2 = 0;
+	int m1 = -1; int c1 = 0; int m2 = -1; int c2 = 0;
 	bool has1 = false; bool has2 = false;
 	vector<int>ans;
 	for (int i : nums) {
 		if (has1&&i == m1)c1++;
 		else if (has2&&i ==m2)c2++;
 		else if (c1 == 0) { m1 = i; c1 = 1; has1 = true; }
-		else if (c2 == 0) { m2 = i; c2 = 1;has2 = true; }
+		else if (c2 == 0&&i!= m1) { m2 = i; c2 = 1;has2 = true; }
 		else { c1--; c2--; }
 	}
 	c1 = 0; c2 = 0;
@@ -5642,6 +5642,25 @@ std::vector<int> majorityElement_II(std::vector<int>& nums)
 	if (c1 > nums.size() / 3)ans.push_back(m1);
 	if (c2 > nums.size() / 3)ans.push_back(m2);
 	return ans;
+}
+int kthCount; int kSMT; int ansSMT; bool isFind;
+void inOrderKthSMT(TreeNode * root) {
+	if (root == nullptr)return;
+	if (isFind)return;
+	inOrderKthSMT(root->left);
+	if (isFind)return;
+	kthCount++;
+	if (kthCount == kSMT) {
+		ansSMT = root->val;
+		isFind = true; return;
+	}
+	inOrderKthSMT(root->right);
+}
+int kthSmallest(TreeNode * root, int k)
+{
+	kthCount = 0; kSMT = k; ansSMT = -1; isFind = false;
+	inOrderKthSMT(root);
+	return ansSMT;
 }
 string fractionToDecimal(int numerator, int denominator)
 {

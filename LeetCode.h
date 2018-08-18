@@ -569,3 +569,5 @@ int calculate_II(std::string s);
 std::vector<std::string> summaryRanges(std::vector<int>& nums);
 //229. Majority Element II
 std::vector<int> majorityElement_II(std::vector<int>& nums);
+//230. Kth Smallest Element in a BST
+int kthSmallest(TreeNode* root, int k);
