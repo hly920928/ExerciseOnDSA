@@ -5662,6 +5662,15 @@ int kthSmallest(TreeNode * root, int k)
 	inOrderKthSMT(root);
 	return ansSMT;
 }
+bool isPowerOfTwo(int n)
+{
+	int pT = 1;
+	for (int i = 1; i < 32; i++) {
+		if (n == pT)return true;
+		pT = pT << 1;
+	}
+	return false;
+}
 string fractionToDecimal(int numerator, int denominator)
 {
 /*

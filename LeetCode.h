@@ -571,3 +571,5 @@ std::vector<std::string> summaryRanges(std::vector<int>& nums);
 std::vector<int> majorityElement_II(std::vector<int>& nums);
 //230. Kth Smallest Element in a BST
 int kthSmallest(TreeNode* root, int k);
+//231. Power of Two
+bool isPowerOfTwo(int n);
