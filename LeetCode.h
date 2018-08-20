@@ -619,3 +619,6 @@ public:
 		return a.empty();
 	}
 };
+//233. Number of Digit One
+int countDigitOne(int n);
+int countDigitOneBF(int n);

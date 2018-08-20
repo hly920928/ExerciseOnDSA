@@ -5671,6 +5671,37 @@ bool isPowerOfTwo(int n)
 	}
 	return false;
 }
+int countDigitOne(int n)
+{
+	if (n <= 0)return 0;
+	unsigned int table[13];
+	table[0] = 0; table[1] = 1; int base = 10;
+	for (int i = 2; i < 13; i++) {table[i] = base + 10 * table[i - 1]; base *= 10;}
+	
+	int  ans = 0; int past = 0; base = 1; int t = 0;
+	while (n != 0) {
+
+		int m = n % 10;
+		if (m==1) {
+			ans = past + 1 + ans+ table[t];
+		}
+		else if(m>1){
+			ans = ans + base+(m)*table[t];
+		}
+		past += m*base; base *= 10; t++;
+		n /= 10;
+	}
+	return ans;
+}
+int countDigitOneBF(int n)
+{
+	int ans = 0;
+	for (int i = 1; i <= n; i++) {
+		string s = to_string(i);
+		for (char c : s)if (c == '1')ans++;
+	}
+	return ans;
+}
 string fractionToDecimal(int numerator, int denominator)
 {
 /*
