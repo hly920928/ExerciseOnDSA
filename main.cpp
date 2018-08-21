@@ -17,8 +17,16 @@
 using namespace std;
 
 int main() {
-	TreeNode tn1(1);	TreeNode tn2(2); TreeNode tn3(3); TreeNode tn4(4);
-	auto ans = countDigitOne(10);
+	TreeNode tn6(6);	TreeNode tn2(2); 
+	TreeNode tn8(8); TreeNode tn4(4);
+	TreeNode tn0(0);
+	TreeNode tn7(7); TreeNode tn9(9);
+	TreeNode tn3(7); TreeNode tn5(5);
+	tn6.left = &tn2; tn6.right = &tn8;
+	tn2.left = &tn0; tn2.right = &tn4;
+	tn4.left = &tn3; tn4.right = &tn5;
+	tn8.left = &tn7; tn8.right = &tn9;
+	auto ans = lowestCommonAncestor(&tn6, &tn2, &tn4);
 	return 0;
 
 }

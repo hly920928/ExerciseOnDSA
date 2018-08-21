@@ -5722,10 +5722,32 @@ bool isPalindrome(ListNode * head)
 	}
 	now = head;
 	while (halfpre != nullptr) {
-		if (halfpre->next != now->next)return false;
+		if (halfpre->val != now->val)return false;
 		halfpre = halfpre->next; now = now->next;
 	}
 	return true;
+}
+bool findPaths(vector<TreeNode* >&paths, TreeNode* now, TreeNode* target) {
+	if (now == nullptr)return false;
+	if (now == target) {
+		paths.push_back(now);
+		return true;
+	}
+	paths.push_back(now);
+	if (findPaths(paths, now->left, target))return true;
+	if (findPaths(paths, now->right, target))return true;
+	paths.pop_back();
+	return false;
+}
+TreeNode * lowestCommonAncestor(TreeNode * root, TreeNode * p, TreeNode * q)
+{
+	vector<TreeNode*>pPaths;	vector<TreeNode*>qPaths;
+	findPaths(pPaths, root, p);	findPaths(qPaths, root, q);
+	int n = min(pPaths.size(), qPaths.size());
+	for (int i = 0; i < n; i++) {
+		if (pPaths[i] != qPaths[i])return pPaths[i - 1];
+	}
+	return pPaths[n-1];
 }
 string fractionToDecimal(int numerator, int denominator)
 {
