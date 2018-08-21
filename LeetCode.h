@@ -622,3 +622,5 @@ public:
 //233. Number of Digit One
 int countDigitOne(int n);
 int countDigitOneBF(int n);
+//
+bool isPalindrome(ListNode* head);

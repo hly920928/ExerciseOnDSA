@@ -5702,6 +5702,31 @@ int countDigitOneBF(int n)
 	}
 	return ans;
 }
+bool isPalindrome(ListNode * head)
+{
+	int len = 0;
+	auto now = head;
+	while (now != nullptr) { len++; now = now->next; }
+	if (len <2)return true;
+	int half = len / 2;
+	if (len & 2 == 1)half++;
+	auto halfnow = head;
+	for (int i = 0; i < half; i++)halfnow = halfnow->next;
+	auto halfpre = (ListNode *)nullptr;
+	while (true) {
+		auto next = halfnow->next;
+		halfnow->next = halfpre;
+		halfpre = halfnow;
+		halfnow = next;
+		if (halfnow == nullptr)break;
+	}
+	now = head;
+	while (halfpre != nullptr) {
+		if (halfpre->next != now->next)return false;
+		halfpre = halfpre->next; now = now->next;
+	}
+	return true;
+}
 string fractionToDecimal(int numerator, int denominator)
 {
 /*
