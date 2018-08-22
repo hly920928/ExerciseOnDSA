@@ -5727,9 +5727,22 @@ bool isPalindrome(ListNode * head)
 	}
 	return true;
 }
+TreeNode *  LCABST_p;
+TreeNode *  LCABST_q;
+TreeNode * LCABST_re(TreeNode * root) {
+	if (root == nullptr)return nullptr;
+	if (root == LCABST_p)return LCABST_p;
+	if (root == LCABST_q)return LCABST_q;
+	if (root->val > LCABST_p->val&&root->val < LCABST_q->val)return root;
+	if (root->val <LCABST_p->val&&root->val>LCABST_q->val)return root;
+	if (root->val <LCABST_p->val&&root->val<LCABST_q->val)return LCABST_re(root->right);
+	if (root->val>LCABST_p->val&&root->val>LCABST_q->val)return LCABST_re(root->left);
+};
 TreeNode * lowestCommonAncestorBST(TreeNode * root, TreeNode * p, TreeNode * q)
 {
-	return nullptr;
+	LCABST_p = p;
+	LCABST_q = q;
+	return LCABST_re(root);
 }
 bool findPaths(vector<TreeNode* >&paths, TreeNode* now, TreeNode* target) {
 	if (now == nullptr)return false;
