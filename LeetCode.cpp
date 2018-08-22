@@ -5727,6 +5727,10 @@ bool isPalindrome(ListNode * head)
 	}
 	return true;
 }
+TreeNode * lowestCommonAncestorBST(TreeNode * root, TreeNode * p, TreeNode * q)
+{
+	return nullptr;
+}
 bool findPaths(vector<TreeNode* >&paths, TreeNode* now, TreeNode* target) {
 	if (now == nullptr)return false;
 	if (now == target) {
@@ -5749,6 +5753,7 @@ TreeNode * lowestCommonAncestor(TreeNode * root, TreeNode * p, TreeNode * q)
 	}
 	return pPaths[n-1];
 }
+
 string fractionToDecimal(int numerator, int denominator)
 {
 /*

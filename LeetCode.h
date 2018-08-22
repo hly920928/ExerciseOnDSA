@@ -625,4 +625,6 @@ int countDigitOneBF(int n);
 //234. Palindrome Linked List
 bool isPalindrome(ListNode* head);
 //235. Lowest Common Ancestor of a Binary Search Tree
+TreeNode* lowestCommonAncestorBST(TreeNode* root, TreeNode* p, TreeNode* q);
+//236. Lowest Common Ancestor of a Binary Tree
 TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q);
