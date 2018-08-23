@@ -628,3 +628,6 @@ bool isPalindrome(ListNode* head);
 TreeNode* lowestCommonAncestorBST(TreeNode* root, TreeNode* p, TreeNode* q);
 //236. Lowest Common Ancestor of a Binary Tree
 TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q);
+//237. Delete Node in a Linked List
+void deleteNode(ListNode* node);
+std::vector<int> productExceptSelf(std::vector<int>& nums);

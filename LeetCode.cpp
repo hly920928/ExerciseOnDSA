@@ -5766,17 +5766,30 @@ TreeNode * lowestCommonAncestor(TreeNode * root, TreeNode * p, TreeNode * q)
 	}
 	return pPaths[n-1];
 }
-ListNode * head;
 void deleteNode(ListNode * node)
 {
 
 	auto now = node;
 	while (true) {
 		if (now->next->next == nullptr) {
-			now->next = nullptr;
+			now->val = now->next->val;
+			now->next = nullptr; return;
 		}
 		now->val = now->next->val; now = now->next;
 	}
+}
+
+std::vector<int> productExceptSelf(std::vector<int>& nums)
+{
+	vector<int>left;	vector<int>right; vector<int>ans; int n = nums.size();
+	left.resize(n); right.resize(n); ans.resize(n);
+	left[0]=INT_MIN; left[1] = nums[0];
+	for (int i = 2; i < nums.size(); i++) left[i] = left[i -1] * nums[i - 1];
+	right[n-1]= INT_MIN; right[n-2] = nums.back();
+	for (int i =n-3; i >=0; i--) right[i] = right[i+1] * nums[i +1];
+	ans[0] = right[0]; ans[n-1] = left[n - 1];
+	for (int i =1; i < nums.size()-1; i++)ans[i] = left[i] * right[i];
+	return ans;
 }
 
 string fractionToDecimal(int numerator, int denominator)
