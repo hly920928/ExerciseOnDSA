@@ -5766,6 +5766,18 @@ TreeNode * lowestCommonAncestor(TreeNode * root, TreeNode * p, TreeNode * q)
 	}
 	return pPaths[n-1];
 }
+ListNode * head;
+void deleteNode(ListNode * node)
+{
+
+	auto now = node;
+	while (true) {
+		if (now->next->next == nullptr) {
+			now->next = nullptr;
+		}
+		now->val = now->next->val; now = now->next;
+	}
+}
 
 string fractionToDecimal(int numerator, int denominator)
 {
