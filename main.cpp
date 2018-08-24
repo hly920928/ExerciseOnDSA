@@ -17,9 +17,8 @@
 using namespace std;
 
 int main() {
-	vector < int >t;
-	t.push_back(1);	t.push_back(2);	t.push_back(3);	t.push_back(4);
-	auto ans = productExceptSelf(t);
+	vector < int >t({9,10,9,-7,-4,-8,2,-6});
+	auto ans = maxSlidingWindow(t,5);
 	return 0;
 
 }

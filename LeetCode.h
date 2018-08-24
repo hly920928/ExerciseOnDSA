@@ -631,3 +631,5 @@ TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q);
 //237. Delete Node in a Linked List
 void deleteNode(ListNode* node);
 std::vector<int> productExceptSelf(std::vector<int>& nums);
+//239. Sliding Window Maximum
+std::vector<int> maxSlidingWindow(std::vector<int>& nums, int k);

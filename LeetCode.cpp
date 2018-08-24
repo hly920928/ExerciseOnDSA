@@ -5792,6 +5792,32 @@ std::vector<int> productExceptSelf(std::vector<int>& nums)
 	return ans;
 }
 
+std::vector<int> maxSlidingWindow(std::vector<int>& nums, int k)
+{
+	vector<int>ans;
+	if (nums.size() == 0 || k == 0)return ans;
+	map<int, int>map;
+	for (int i = 0; i < k; i++) {
+		auto itr_lo = map.find(nums[i]);
+		if (itr_lo == map.end())map[nums[i]] = 1;
+		else  itr_lo->second++;
+	}
+	int lo = 0; int hi = k - 1;
+
+	while (true) {
+		ans.push_back(map.rbegin()->first);
+		if (hi == nums.size() - 1)break;
+		auto itr_lo =map.find(nums[lo]);
+		itr_lo->second--;;
+		if (itr_lo->second == 0)map.erase(itr_lo);
+		lo++; hi++;
+		auto itr_hi = map.find(nums[hi]);
+		if (itr_hi == map.end())map[nums[hi]]=1;
+		else itr_hi->second++;
+	}
+	return ans;
+}
+
 string fractionToDecimal(int numerator, int denominator)
 {
 /*
