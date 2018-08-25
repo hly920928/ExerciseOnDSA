@@ -5857,7 +5857,15 @@ bool searchMatrix_V2(std::vector<std::vector<int>>& matrix, int target)
 
 bool searchMatrix_V2_2(std::vector<std::vector<int>>& matrix, int target)
 {
-	return false;
+	int h = matrix.size(); if (h == 0)return false;
+	int w = matrix[0].size(); if (w == 0)return false;
+	int x = 0; int y = w - 1;
+	while (true) {
+		if (x >= h || y < 0)return false;
+		int now = matrix[x][y];
+		if (now == target)return true;
+		if (now > target)y--; else x++;
+	}
 }
 
 string fractionToDecimal(int numerator, int denominator)
