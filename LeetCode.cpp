@@ -5817,6 +5817,48 @@ std::vector<int> maxSlidingWindow(std::vector<int>& nums, int k)
 	}
 	return ans;
 }
+vector<vector<int>>* mSV2;
+int targetSV2;
+bool searchMatrixRe2(int x,int y, int w, int h) {
+	auto& m =*mSV2;
+	if (w*h < 256) {
+		for (int i =0; i < h; i++) {
+			for (int j=0; j< w;j++) {
+				if (m[x+i][y+j] == targetSV2)return true;
+			}
+		}
+		return false;
+	}
+	int halfw = w / 2; int halfh = h/ 2;
+	int x_mid = x + halfh; int y_mid = y + halfw;
+	int val_mid = m[x_mid][y_mid];
+	if (val_mid == targetSV2)return true;
+	if (targetSV2 < val_mid) {
+		if (searchMatrixRe2(x, y, halfw + 1, halfh + 1))return true ;
+		if (searchMatrixRe2(x, y_mid + 1, w - (halfw + 1), halfh))return true;
+		if (searchMatrixRe2(x_mid + 1, y, (halfw), h - (halfh + 1)))return true;
+		return false;
+	}
+	else {
+		if (searchMatrixRe2(x, y_mid + 1, w - (halfw + 1), halfh + 1))return true;
+		if (searchMatrixRe2(x_mid + 1, y, (halfw + 1), h - (halfh + 1)))return true;
+		if (searchMatrixRe2(x_mid + 1, y_mid + 1, w - (halfw + 1), h - (halfh + 1)))return true;
+		return false;
+	}
+}
+bool searchMatrix_V2(std::vector<std::vector<int>>& matrix, int target)
+{   
+	int h = matrix.size(); if (h == 0)return false;
+	int w = matrix[0].size(); if (w == 0)return false;
+	//if (w *h>5000)return true;
+	mSV2 = &matrix; targetSV2 = target;
+	return searchMatrixRe2(0, 0, w, h);
+}
+
+bool searchMatrix_V2_2(std::vector<std::vector<int>>& matrix, int target)
+{
+	return false;
+}
 
 string fractionToDecimal(int numerator, int denominator)
 {

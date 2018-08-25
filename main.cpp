@@ -17,8 +17,14 @@
 using namespace std;
 
 int main() {
-	vector < int >t({9,10,9,-7,-4,-8,2,-6});
-	auto ans = maxSlidingWindow(t,5);
+	const int w = 5; const int h = 5;
+	int mt[h][w] = { { 1,2,3,4,5 },{ 6,7,8,9,10 },{ 11,12,13,14,15 },{ 16,17,18,19,20 },{ 21,22,23,24,25 } };
+	vector<vector<int>>vmt; vmt.resize(h);
+	for (int i = 0; i < h; i++) {
+		vmt[i].resize( w);
+		for (int j = 0; j < w; j++)vmt[i][j] = mt[i][j];
+	}
+	auto ans = searchMatrix_V2(vmt,5);
 	return 0;
 
 }
