@@ -5867,6 +5867,22 @@ bool searchMatrix_V2_2(std::vector<std::vector<int>>& matrix, int target)
 		if (now > target)y--; else x++;
 	}
 }
+set<string>*set_dWTC;
+string*input_dWTC;
+vector<int>*ans_dWTC;
+void addPara(int n) {};
+void addParaAt(int pos) {};
+void RemoveParaAt(int pos) {};
+std::vector<int> diffWaysToCompute(std::string input)
+{
+	input_dWTC = &input;
+	vector<int>ans; ans_dWTC = &ans;
+	set<string>set; set_dWTC= &set;
+	int n = 0;
+	for (char c : input) if (c == '+' || c == '-' || c == '*')n++;
+	addPara(n);
+	return ans;
+}
 
 string fractionToDecimal(int numerator, int denominator)
 {

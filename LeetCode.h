@@ -636,3 +636,5 @@ std::vector<int> maxSlidingWindow(std::vector<int>& nums, int k);
 //240. Search a 2D Matrix II
 bool searchMatrix_V2(std::vector<std::vector<int>>& matrix, int target);
 bool searchMatrix_V2_2(std::vector<std::vector<int>>& matrix, int target);
+//241. Different Ways to Add Parentheses
+std::vector<int> diffWaysToCompute(std::string input);
