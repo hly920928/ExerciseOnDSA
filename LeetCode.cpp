@@ -5557,6 +5557,7 @@ int calculate_basic(string& s)
 		}
 		if (c != ')')opr.push(c);
 	}
+	s.pop_back();
 	return nums.top();
 }
 int calculate_my(string s)
@@ -5870,16 +5871,78 @@ bool searchMatrix_V2_2(std::vector<std::vector<int>>& matrix, int target)
 set<string>*set_dWTC;
 string*input_dWTC;
 vector<int>*ans_dWTC;
-void addPara(int n) {};
-void addParaAt(int pos) {};
-void RemoveParaAt(int pos) {};
+bool inline isOprDWtoC(char &c) { return c == '+' || c == '-' || c == '*'; }
+void addParaAt(int pos) {
+	auto& str = *input_dWTC;
+	int pCount = 0;
+	auto itr = str.begin() + pos-1;
+	while (true) {
+		if (*itr == ')') pCount++;
+		if (*itr == '(') pCount--; 
+		if (itr == str.begin()) { str.insert(itr, '('); break; }
+		if (isOprDWtoC(*itr) && pCount == 0) {str.insert(itr+1, '('); break;}
+		itr--;
+	}
+    itr = str.begin() + pos+2;
+	pCount = 0;
+	while (true) {
+		if (*itr == '(') pCount++;
+		if (*itr == ')') pCount--;
+		if (itr == str.end()-1) { str.insert(str.end(), ')'); break; }
+		if (isOprDWtoC(*itr) && pCount == 0) {str.insert(itr, ')'); break;}
+		itr++;
+	}
+};
+void RemoveParaAt(int pos) {
+	auto& str = *input_dWTC;
+	int pCount = 0;
+	auto itr = str.begin() + pos - 1;
+	while (true) {
+		if (itr == str.begin()) { str.erase(itr); break; }
+		if (*itr == '('&& pCount == 0) { str.erase(itr); break; }
+		if (*itr == ')') pCount++;
+		if (*itr == '(') pCount--;
+		itr--;
+	}
+	itr = str.begin() + pos ;
+	pCount = 0;
+	while (true) {
+		if (itr == str.end()-1) { str.erase(itr); break; }
+		if (*itr == ')'&& pCount == 0) { str.erase(itr); break; }
+		if (*itr == '(') pCount++;
+		if (*itr == ')') pCount--;
+		itr++;
+	}
+};
+void addPara(int n) {
+	auto& str = *input_dWTC;
+	if (n == 1) {
+		ans_dWTC->push_back(calculate_basic(*input_dWTC));
+		return;
+  }
+
+	int pCount=0;
+	for (int i = str.size()-1; i>=0;i--) {
+		if (str[i] == ')') {pCount++; continue;}
+		if (str[i] == '(') { pCount--; continue; }
+		if (isOprDWtoC(str[i])&& pCount==0) {
+			addParaAt(i);
+			if (set_dWTC->find(str)== set_dWTC->end()) {
+				set_dWTC->insert(str);
+				addPara(n - 1);
+			}
+			RemoveParaAt(i+1);
+		}
+	}
+};
+
 std::vector<int> diffWaysToCompute(std::string input)
 {
 	input_dWTC = &input;
 	vector<int>ans; ans_dWTC = &ans;
-	set<string>set; set_dWTC= &set;
+	set<string>set; set_dWTC = &set;
 	int n = 0;
-	for (char c : input) if (c == '+' || c == '-' || c == '*')n++;
+	for (char c : input) { if (isOprDWtoC(c)) { n++; } };
 	addPara(n);
 	return ans;
 }
