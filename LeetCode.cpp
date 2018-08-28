@@ -5868,83 +5868,39 @@ bool searchMatrix_V2_2(std::vector<std::vector<int>>& matrix, int target)
 		if (now > target)y--; else x++;
 	}
 }
-set<string>*set_dWTC;
-string*input_dWTC;
-vector<int>*ans_dWTC;
-bool inline isOprDWtoC(char &c) { return c == '+' || c == '-' || c == '*'; }
-void addParaAt(int pos) {
-	auto& str = *input_dWTC;
-	int pCount = 0;
-	auto itr = str.begin() + pos-1;
-	while (true) {
-		if (*itr == ')') pCount++;
-		if (*itr == '(') pCount--; 
-		if (itr == str.begin()) { str.insert(itr, '('); break; }
-		if (isOprDWtoC(*itr) && pCount == 0) {str.insert(itr+1, '('); break;}
-		itr--;
-	}
-    itr = str.begin() + pos+2;
-	pCount = 0;
-	while (true) {
-		if (*itr == '(') pCount++;
-		if (*itr == ')') pCount--;
-		if (itr == str.end()-1) { str.insert(str.end(), ')'); break; }
-		if (isOprDWtoC(*itr) && pCount == 0) {str.insert(itr, ')'); break;}
-		itr++;
+bool inline isOprDWtC(char c) { return c == '+' || c == '-' || c == '*'; }
+struct dataDWtC {
+	char type;
+	union {
+		int nums;
+		char opr;
+	};
+	dataDWtC(char t = '#', int val = -1) :type(t) {
+		if (t == 'n') { nums = val; }
+		else { opr = val; }
 	}
 };
-void RemoveParaAt(int pos) {
-	auto& str = *input_dWTC;
-	int pCount = 0;
-	auto itr = str.begin() + pos - 1;
-	while (true) {
-		if (itr == str.begin()) { str.erase(itr); break; }
-		if (*itr == '('&& pCount == 0) { str.erase(itr); break; }
-		if (*itr == ')') pCount++;
-		if (*itr == '(') pCount--;
-		itr--;
-	}
-	itr = str.begin() + pos ;
-	pCount = 0;
-	while (true) {
-		if (itr == str.end()-1) { str.erase(itr); break; }
-		if (*itr == ')'&& pCount == 0) { str.erase(itr); break; }
-		if (*itr == '(') pCount++;
-		if (*itr == ')') pCount--;
-		itr++;
-	}
-};
-void addPara(int n) {
-	auto& str = *input_dWTC;
-	if (n == 1) {
-		ans_dWTC->push_back(calculate_basic(*input_dWTC));
-		return;
-  }
+vector<dataDWtC>*dataListDWtC;
+void diffWaysToComputeRe(std::vector<int>& ans,int lo,int hi) {
 
-	int pCount=0;
-	for (int i = str.size()-1; i>=0;i--) {
-		if (str[i] == ')') {pCount++; continue;}
-		if (str[i] == '(') { pCount--; continue; }
-		if (isOprDWtoC(str[i])&& pCount==0) {
-			addParaAt(i);
-			if (set_dWTC->find(str)== set_dWTC->end()) {
-				set_dWTC->insert(str);
-				addPara(n - 1);
-			}
-			RemoveParaAt(i+1);
-		}
-	}
-};
-
+}
 std::vector<int> diffWaysToCompute(std::string input)
 {
-	input_dWTC = &input;
-	vector<int>ans; ans_dWTC = &ans;
-	set<string>set; set_dWTC = &set;
-	int n = 0;
-	for (char c : input) { if (isOprDWtoC(c)) { n++; } };
-	addPara(n);
-	return ans;
+	vector<int>ans;
+	if (input.size() == 0)return ans;
+	//preprocess
+	string str; vector<dateDWtC>data;
+	for (char c : input) {
+		if (isOprDWtC(c)) {
+			if (str.size() != 0) {
+				data.push_back(dateDWtC('n', atoi(str.data())));
+				data.clear();
+			}
+			data.push_back(dateDWtC('c',c));
+		}else str.push_back(c);
+	}
+	 diffWaysToComputeRe(ans, 0, data.size() - 1);
+	 return ans;
 }
 
 string fractionToDecimal(int numerator, int denominator)
