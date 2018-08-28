@@ -24,7 +24,7 @@ int main() {
 		vmt[i].resize( w);
 		for (int j = 0; j < w; j++)vmt[i][j] = mt[i][j];
 	}
-	auto ans = diffWaysToCompute("2-1-1");
+	auto ans = diffWaysToCompute("2*3-4*5");
 	return 0;
 
 }

@@ -5869,36 +5869,70 @@ bool searchMatrix_V2_2(std::vector<std::vector<int>>& matrix, int target)
 	}
 }
 bool inline isOprDWtC(char c) { return c == '+' || c == '-' || c == '*'; }
+int computeDWtC(char c,int a,int b) {
+	int ans = INT_MAX;
+	switch (c)
+	{
+	case('+') :{ ans = a + b; break; };
+	case('-'): { ans = a-b; break; };
+	case('*'): { ans = a *b; break; };
+	}
+	return ans;
+}
 struct dataDWtC {
 	char type;
 	union {
-		int nums;
+		int num;
 		char opr;
 	};
 	dataDWtC(char t = '#', int val = -1) :type(t) {
-		if (t == 'n') { nums = val; }
+		if (t == 'n') { num = val; }
 		else { opr = val; }
 	}
 };
 vector<dataDWtC>*dataListDWtC;
-void diffWaysToComputeRe(std::vector<int>& ans,int lo,int hi) {
-
+void diffWaysToComputeRe(vector<int>& ans,int lo,int hi) {
+	auto& data = *dataListDWtC;
+	if (lo == hi) {
+		ans.push_back(data[lo].num); return;
+	}
+	else if (hi - lo == 2) {
+		ans.push_back(computeDWtC(data[lo+1].opr,data[lo].num,data[hi].num)); return;
+	}
+	vector<int>left; vector<int>right;
+	for (int i = lo; i <= hi; i++) {
+		if (data[i].type == 'o') {
+			diffWaysToComputeRe(left, lo, i - 1);
+			diffWaysToComputeRe(right, i+1, hi);
+			for (int a : left) {
+				for (int b : right) {
+					ans.push_back(computeDWtC(data[i].opr, a, b));
+				}
+			}
+			left.clear(); right.clear();
+		}
+	}
 }
 std::vector<int> diffWaysToCompute(std::string input)
 {
 	vector<int>ans;
 	if (input.size() == 0)return ans;
 	//preprocess
-	string str; vector<dateDWtC>data;
+	string str; vector<dataDWtC>data;
 	for (char c : input) {
 		if (isOprDWtC(c)) {
 			if (str.size() != 0) {
-				data.push_back(dateDWtC('n', atoi(str.data())));
-				data.clear();
+				data.push_back(dataDWtC('n', atoi(str.data())));
+				str.clear();
 			}
-			data.push_back(dateDWtC('c',c));
+			data.push_back(dataDWtC('o',c));
 		}else str.push_back(c);
 	}
+	if (str.size() != 0) {
+		data.push_back(dataDWtC('n', atoi(str.data())));
+		str.clear();
+	}
+	dataListDWtC = &data;
 	 diffWaysToComputeRe(ans, 0, data.size() - 1);
 	 return ans;
 }
