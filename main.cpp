@@ -24,7 +24,7 @@ int main() {
 		vmt[i].resize( w);
 		for (int j = 0; j < w; j++)vmt[i][j] = mt[i][j];
 	}
-	auto ans = diffWaysToCompute("2*3-4*5");
+	auto ans = isAnagram("anagram","nagaram");
 	return 0;
 
 }

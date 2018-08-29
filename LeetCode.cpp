@@ -5900,7 +5900,7 @@ void diffWaysToComputeRe(vector<int>& ans,int lo,int hi) {
 		ans.push_back(computeDWtC(data[lo+1].opr,data[lo].num,data[hi].num)); return;
 	}
 	vector<int>left; vector<int>right;
-	for (int i = lo; i <= hi; i++) {
+	for (int i = hi; i >= lo; i--) {
 		if (data[i].type == 'o') {
 			diffWaysToComputeRe(left, lo, i - 1);
 			diffWaysToComputeRe(right, i+1, hi);
@@ -5935,6 +5935,19 @@ std::vector<int> diffWaysToCompute(std::string input)
 	dataListDWtC = &data;
 	 diffWaysToComputeRe(ans, 0, data.size() - 1);
 	 return ans;
+}
+
+bool isAnagram(std::string s, std::string t)
+{
+	if (s.size() != t.size())return false;
+	int table_s[26]; int table_t[26];
+	memset(table_s, 0, 26*4);	memset(table_t, 0, 26*4);
+	for (char c : s)table_s[c - 'a']++;
+	for (char c : t)table_t[c - 'a']++;
+	for (int i = 0; i < 26; i++) {
+		if (table_s[i] != table_t[i])return false;
+	}
+	return true;
 }
 
 string fractionToDecimal(int numerator, int denominator)
