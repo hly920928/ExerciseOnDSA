@@ -5949,6 +5949,31 @@ bool isAnagram(std::string s, std::string t)
 	}
 	return true;
 }
+string*nowTP;
+vector<string>*ansTP;
+void binaryTreePathsRe(TreeNode * root)
+{
+
+	string n = to_string(root->val);
+	nowTP->insert(nowTP->end(), n.begin(), n.end());
+	if (root->left == nullptr&&root->right == nullptr) { 
+		ansTP->push_back(*nowTP);
+		nowTP->erase(nowTP->end() - n.size(), nowTP->end());
+		return; }
+	nowTP->push_back('-');	nowTP->push_back('>');
+	if(root->left != nullptr)binaryTreePathsRe(root->left);	
+	if (root->right != nullptr)binaryTreePathsRe(root->right);
+	nowTP->erase(nowTP->end() - (n.size()+2), nowTP->end());
+ 
+}
+vector<string> binaryTreePaths(TreeNode * root)
+{
+	string now; nowTP = &now; 
+	vector<string>ans; ansTP = &ans;
+	if (root == nullptr)return ans;
+	binaryTreePathsRe(root);
+	return ans;
+}
 
 string fractionToDecimal(int numerator, int denominator)
 {
