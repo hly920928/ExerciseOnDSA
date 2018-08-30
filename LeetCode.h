@@ -640,3 +640,9 @@ bool searchMatrix_V2_2(std::vector<std::vector<int>>& matrix, int target);
 std::vector<int> diffWaysToCompute(std::string input);
 //242. Valid Anagram
 bool isAnagram(std::string s, std::string t);
+//257. Binary Tree Paths
+std::vector<std::string> binaryTreePaths(TreeNode* root);
+//258. Add Digits
+int addDigits(int num);
+//260. Single Number III
+std::vector<int> singleNumberIII(std::vector<int>& nums);

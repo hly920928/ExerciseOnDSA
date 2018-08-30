@@ -5975,6 +5975,28 @@ vector<string> binaryTreePaths(TreeNode * root)
 	return ans;
 }
 
+int addDigits(int num)
+{
+	if (num == 0)return 0;
+	int n = num% 9;
+   return (n ==0)?9: n;
+}
+
+std::vector<int> singleNumberIII(std::vector<int>& nums)
+{
+	int xor =0;
+	for (int i :nums) xor ^=i;
+	int num1 = 0;	int num2 = 0;
+	xor &= ~(xor-1);
+	for (int i : nums) {
+		if (i&xor > 0)num1 ^= i;
+		else num2 ^= i;
+	}
+	vector<int>ans;
+	ans.push_back(num1);	ans.push_back(num2);
+	return ans;
+}
+
 string fractionToDecimal(int numerator, int denominator)
 {
 /*
