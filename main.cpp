@@ -24,7 +24,7 @@ int main() {
 		vmt[i].resize( w);
 		for (int j = 0; j < w; j++)vmt[i][j] = mt[i][j];
 	}
-	auto ans = isAnagram("anagram","nagaram");
+	auto ans = nthUglyNumber(10);
 	return 0;
 
 }

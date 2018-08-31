@@ -6007,6 +6007,42 @@ bool isUgly(int num)
 	return num == 1;
 }
 
+int nthUglyNumber(int n)
+{
+	vector<int> v;  
+	v.push_back(1);
+	int i2 = 0; int i3 = 0; int i5 = 0;
+	long long  next2 = LONG_MAX;	long long next3 = INT_MAX; long long next5 = INT_MAX;
+	while (v.size() < n) {
+		if (next2 == INT_MAX)next2=v[i2] * 2;
+		if (next3 == INT_MAX) {
+			for (int i = i3; i < v.size(); i++) {
+				if (v[i] % 2 != 0) {
+					i3 = i;
+					next3 = v[i] * 3; break;
+				}
+			}
+		}
+		if (next5 == INT_MAX) {
+			for (int i = i5; i < v.size(); i++) {
+				if (v[i] % 2 != 0 && v[i] % 3 != 0) {
+					i5= i;
+					next5 = v[i] * 5; break;
+				}
+			}
+		}
+		if (next2 < next3&&next2 < next5) {
+			v.push_back(next2); i2++; next2 = INT_MAX;
+		}
+		else 	if (next3< next2&&next3< next5) {
+			v.push_back(next3); i3++; next3 = INT_MAX;
+		}else if (next5< next2&&next5< next3) {
+			v.push_back(next5); i5++; next5 = INT_MAX;
+		}
+	}
+	return  v.back();
+}
+
 string fractionToDecimal(int numerator, int denominator)
 {
 /*

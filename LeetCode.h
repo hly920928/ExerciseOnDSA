@@ -646,3 +646,7 @@ std::vector<std::string> binaryTreePaths(TreeNode* root);
 int addDigits(int num);
 //260. Single Number III
 std::vector<int> singleNumberIII(std::vector<int>& nums);
+//263. Ugly Number
+bool isUgly(int num);
+//264. Ugly Number II
+int nthUglyNumber(int n);
