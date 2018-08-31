@@ -5984,17 +5984,27 @@ int addDigits(int num)
 
 std::vector<int> singleNumberIII(std::vector<int>& nums)
 {
-	int xor =0;
-	for (int i :nums) xor ^=i;
+	int x =0;
+	for (int i :nums) x ^=i;
 	int num1 = 0;	int num2 = 0;
-	xor &= ~(xor-1);
+	x &= ~(x-1);
 	for (int i : nums) {
-		if (i&xor > 0)num1 ^= i;
+		if ((i&x)> 0)num1 ^= i;
 		else num2 ^= i;
 	}
 	vector<int>ans;
 	ans.push_back(num1);	ans.push_back(num2);
 	return ans;
+}
+
+bool isUgly(int num)
+{
+	if (num == 0)return false;
+	if (num == 1)return true;
+	while (num % 2 == 0)num /= 2;
+	while (num % 3== 0)num /=3;
+	while (num % 5== 0)num /=5;
+	return num == 1;
 }
 
 string fractionToDecimal(int numerator, int denominator)
