@@ -6012,35 +6012,46 @@ int nthUglyNumber(int n)
 	vector<int> v;  
 	v.push_back(1);
 	int i2 = 0; int i3 = 0; int i5 = 0;
-	long long  next2 = LONG_MAX;	long long next3 = INT_MAX; long long next5 = INT_MAX;
+	long long  next2 = LONG_MAX;	long long next3 = LONG_MAX; long long next5 = LONG_MAX;
 	while (v.size() < n) {
-		if (next2 == INT_MAX)next2=v[i2] * 2;
-		if (next3 == INT_MAX) {
+		if (next2 == LONG_MAX)next2= (long long)v[i2] * 2;
+		if (next3 == LONG_MAX) {
 			for (int i = i3; i < v.size(); i++) {
 				if (v[i] % 2 != 0) {
 					i3 = i;
-					next3 = v[i] * 3; break;
+					next3 = (long long)v[i] * 3; break;
 				}
 			}
 		}
-		if (next5 == INT_MAX) {
+		if (next5 == LONG_MAX) {
 			for (int i = i5; i < v.size(); i++) {
 				if (v[i] % 2 != 0 && v[i] % 3 != 0) {
 					i5= i;
-					next5 = v[i] * 5; break;
+					next5 =(long long) v[i] * 5; break;
 				}
 			}
 		}
 		if (next2 < next3&&next2 < next5) {
-			v.push_back(next2); i2++; next2 = INT_MAX;
+			v.push_back(next2); i2++; next2 = LONG_MAX;
 		}
 		else 	if (next3< next2&&next3< next5) {
-			v.push_back(next3); i3++; next3 = INT_MAX;
+			v.push_back(next3); i3++; next3 = LONG_MAX;
 		}else if (next5< next2&&next5< next3) {
-			v.push_back(next5); i5++; next5 = INT_MAX;
+			v.push_back(next5); i5++; next5 = LONG_MAX;
 		}
 	}
 	return  v.back();
+}
+
+int missingNumber(std::vector<int>& nums)
+{
+	int max = *max_element(nums.begin(), nums.end());
+	int min = *min_element(nums.begin(), nums.end());
+	if (min != 0)return 0;
+	int x = 0;
+	for (int i = 1; i <= max; i++) x ^= i;
+	for (int i : nums) x ^= i;
+	return (x==0)?max+1:x;
 }
 
 string fractionToDecimal(int numerator, int denominator)
