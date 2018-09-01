@@ -6045,13 +6045,53 @@ int nthUglyNumber(int n)
 
 int missingNumber(std::vector<int>& nums)
 {
-	int max = *max_element(nums.begin(), nums.end());
-	int min = *min_element(nums.begin(), nums.end());
-	if (min != 0)return 0;
+	int _max =INT_MIN;
+	int _min = INT_MAX;
+	for (int i : nums) {
+		_max = max(_max, i);
+		_min = min(_min, i);
+	}
+	if (_min != 0)return 0;
 	int x = 0;
-	for (int i = 1; i <= max; i++) x ^= i;
+	for (int i = 1; i <= _max; i++) x ^= i;
 	for (int i : nums) x ^= i;
-	return (x==0)?max+1:x;
+	return (x==0)? _max +1:x;
+}
+vector<int>*citationsHi;
+bool isHindex(int h) {
+	int hAbove = 0;
+	for (int&i : *citationsHi) {
+		if (i >= h)hAbove++;
+	}
+	return hAbove >= h;
+}
+int hIndexRe(int lo, int hi) {
+	if (lo == hi)return hi;
+	if (hi - lo == 1) {
+		if (isHindex(hi))return hi;
+		return lo;
+	}
+	int mid = (lo + hi) / 2;
+	if (isHindex(mid)) {
+		return hIndexRe(mid,hi);
+	}else return hIndexRe(lo, mid-1);
+}
+int hIndex(std::vector<int>& citations)
+{
+	if (citations.size() == 0)return 0;
+	if (citations.size() == 1) {
+		if (citations[0] == 0)return 0;
+		return 1;
+	}
+	citationsHi = &citations;
+	int _max = INT_MIN;
+	int _min = 0;
+	for (int i : citations) {
+		_max = max(_max, i);
+		_min = min(_min, i);
+	}
+	_max = min(_max,(int) citations.size());
+	return hIndexRe(_min, _max);
 }
 
 string fractionToDecimal(int numerator, int denominator)
