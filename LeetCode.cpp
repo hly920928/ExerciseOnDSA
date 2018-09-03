@@ -6137,8 +6137,8 @@ int numSquares(int n)
 		}
 		else {
 			int _min = INT_MAX;
-			for (int j = 1; j <=i/2;j++) {
-				_min = min(_min, table[j] + table[i - j]);
+			for (int j = sq; j >=0;j--) {
+				_min = min(_min, 1+ table[i - j*j]);
 				if (_min == 2)break;
 			}
 			table[i] = _min;
