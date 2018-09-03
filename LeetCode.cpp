@@ -6127,19 +6127,24 @@ int hIndexII(std::vector<int>& citations)
 	if (citations.back()==0)return 0;
 	return hIndexReII(0, citations.size()-1);
 }
-int firstBadVersionRe(long long lo, long long hi) {
-	if (lo == hi)return lo;
-	if (hi - lo == 1) {
-		if (isBadVersion(lo))return lo;
-		return hi;
-	}
-	int mid = (lo + hi) / 2;
-	if (isBadVersion(mid))return firstBadVersionRe(lo, mid);
-	else return firstBadVersionRe(mid, hi);
-}
-int firstBadVersion(int n)
+int numSquares(int n)
 {
-	return firstBadVersionRe(1,n);
+	vector<int>table; table.resize(n + 1);
+	for (int i = 1; i <= n; i++) {
+		int sq = sqrt(i);
+		if (i - sq*sq==0) {
+			table[i] = 1;
+		}
+		else {
+			int _min = INT_MAX;
+			for (int j = 1; j <=i/2;j++) {
+				_min = min(_min, table[j] + table[i - j]);
+				if (_min == 2)break;
+			}
+			table[i] = _min;
+		}
+	}
+	return table.back();
 }
 
 string fractionToDecimal(int numerator, int denominator)

@@ -17,8 +17,7 @@
 using namespace std;
 
 int main() {
-	vector<int>vmt({ 0,0,4,4 });
-	auto ans = hIndexII(vmt);
+	auto ans = numSquares(12);
 	return 0;
 
 }

@@ -656,6 +656,5 @@ int missingNumber(std::vector<int>& nums);
 int hIndex(std::vector<int>& citations);
 //275. H-Index II
 int hIndexII(std::vector<int>& citations);
-//
-bool isBadVersion(int version) { return false; };
-int firstBadVersion(int n);
+//279. Perfect Squares
+int numSquares(int n);
