@@ -650,3 +650,12 @@ std::vector<int> singleNumberIII(std::vector<int>& nums);
 bool isUgly(int num);
 //264. Ugly Number II
 int nthUglyNumber(int n);
+//268. Missing Number
+int missingNumber(std::vector<int>& nums);
+//274. H-Index
+int hIndex(std::vector<int>& citations);
+//275. H-Index II
+int hIndexII(std::vector<int>& citations);
+//
+bool isBadVersion(int version) { return false; };
+int firstBadVersion(int n);

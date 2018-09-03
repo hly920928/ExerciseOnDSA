@@ -6065,14 +6065,20 @@ bool isHindex(int h) {
 	}
 	return hAbove >= h;
 }
+bool isHindexII(int h) {
+	//auto&citations = *citationsHi;
+	auto itr = lower_bound(citationsHi->begin(), citationsHi->end(), h);
+	int n=citationsHi->end() - itr;
+	return n >= h;
+}
 int hIndexRe(int lo, int hi) {
 	if (lo == hi)return hi;
 	if (hi - lo == 1) {
-		if (isHindex(hi))return hi;
+		if (isHindexII(hi))return hi;
 		return lo;
 	}
 	int mid = (lo + hi) / 2;
-	if (isHindex(mid)) {
+	if (isHindexII(mid)) {
 		return hIndexRe(mid,hi);
 	}else return hIndexRe(lo, mid-1);
 }
@@ -6084,14 +6090,56 @@ int hIndex(std::vector<int>& citations)
 		return 1;
 	}
 	citationsHi = &citations;
-	int _max = INT_MIN;
+	sort(citations.begin(), citations.end());
+	int _max = citations.back();
 	int _min = 0;
-	for (int i : citations) {
-		_max = max(_max, i);
-		_min = min(_min, i);
-	}
 	_max = min(_max,(int) citations.size());
 	return hIndexRe(_min, _max);
+}
+int hIndexReII(int lo, int hi) {
+	int total = citationsHi->size();
+	int diff = hi - lo;
+	 if (diff == 1|| diff == 0) {
+		int val_lo = citationsHi->at(lo);
+		int val_hi = citationsHi->at(hi);
+		if (val_hi == 0)return 0;
+		if (val_lo >= total)return total;
+		if (val_lo >= total - lo)return total - lo;
+		if (val_hi >= total - hi)return  total - hi;
+	}
+
+	int mid = (lo + hi) / 2;
+	if (total - mid >= citationsHi->at(mid)) {
+		return hIndexReII(mid, hi);
+	}
+	else return hIndexReII(lo, mid);
+}
+int hIndexII(std::vector<int>& citations)
+{
+	if (citations.size() == 0)return 0;
+	if (citations.size() == 1) {
+		if (citations[0] == 0)return 0;
+		return 1;
+	}
+	citationsHi = &citations;
+	//sort(citations.begin(), citations.end());
+	if (citations.front() >= citations.size())return  citations.size();
+	if (citations.back()==0)return 0;
+	return hIndexReII(0, citations.size()-1);
+}
+int firstBadVersionRe(long long lo, long long hi) {
+	if (lo == hi)return lo;
+	if (hi - lo == 1) {
+		if (isBadVersion(lo))return lo;
+		return hi;
+	}
+	int mid = (lo + hi) / 2;
+	if (isBadVersion(mid))return firstBadVersionRe(lo, mid);
+	else return firstBadVersionRe(mid, hi);
+}
+int firstBadVersion(int n)
+{
+	return firstBadVersionRe(1,n);
 }
 
 string fractionToDecimal(int numerator, int denominator)
