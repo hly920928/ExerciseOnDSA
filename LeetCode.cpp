@@ -6137,7 +6137,7 @@ int numSquares(int n)
 		}
 		else {
 			int _min = INT_MAX;
-			for (int j = sq; j >=0;j--) {
+			for (int j = sq; j >=1;j--) {
 				_min = min(_min, 1+ table[i - j*j]);
 				if (_min == 2)break;
 			}
@@ -6145,6 +6145,43 @@ int numSquares(int n)
 		}
 	}
 	return table.back();
+}
+string* numsAopr;
+vector<string>*ansAopr;
+int targetAopr;
+void addOperatorsRe(string path, int pos, long long cur, long long prev) {
+	if (pos == numsAopr->size()) {
+		if (cur == targetAopr) {
+			ansAopr->push_back(path);
+		}
+		return;
+	}
+
+	string str;
+	for (int i = pos; i < numsAopr->size(); i++) {
+		str.push_back(numsAopr->at(i));
+		long long val = stoll(str);
+		string s_max = numsAopr->substr(i + 1, numsAopr->size() - i);
+		long _max =(s_max.size()==0)?1: stoll(s_max);
+		if (path == "") {
+			if (val*_max >= targetAopr)addOperatorsRe(str, i + 1, val, val);
+		}
+		else {
+		if (cur + val*_max >= targetAopr)addOperatorsRe(path + "*" + str, i + 1, cur - prev + prev*val, prev*val);
+		if (cur -val*_max >= targetAopr)addOperatorsRe(path + "-" + str, i + 1, cur-val,-val);
+		if ((cur*val==0&& _max >= targetAopr)||cur*val*_max >= targetAopr)addOperatorsRe(path + "+" + str, i + 1, cur + val, val);
+	
+		}
+		if (numsAopr->at(pos) == '0')return;
+	}
+}
+std::vector<std::string> addOperators(string num, int target)
+{
+	vector<string>ans;
+	if (num.size() == 0)return ans;
+	numsAopr = &num; ansAopr = &ans; targetAopr = target;
+	addOperatorsRe("", 0, 0, 0);
+	return ans;
 }
 
 string fractionToDecimal(int numerator, int denominator)

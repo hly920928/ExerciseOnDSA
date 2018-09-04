@@ -658,3 +658,5 @@ int hIndex(std::vector<int>& citations);
 int hIndexII(std::vector<int>& citations);
 //279. Perfect Squares
 int numSquares(int n);
+//282. Expression Add Operators
+std::vector<std::string> addOperators(std::string num, int target);

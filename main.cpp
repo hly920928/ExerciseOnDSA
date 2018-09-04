@@ -17,7 +17,7 @@
 using namespace std;
 
 int main() {
-	auto ans = numSquares(12);
+	auto ans = addOperators("123456789",45);
 	return 0;
 
 }
