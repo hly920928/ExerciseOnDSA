@@ -6161,15 +6161,15 @@ void addOperatorsRe(string path, int pos, long long cur, long long prev) {
 	for (int i = pos; i < numsAopr->size(); i++) {
 		str.push_back(numsAopr->at(i));
 		long long val = stoll(str);
-		string s_max = numsAopr->substr(i + 1, numsAopr->size() - i);
-		long _max =(s_max.size()==0)?1: stoll(s_max);
+		//string s_max = numsAopr->substr(i + 1, numsAopr->size() - i);
+		//long long _max =(s_max.size()==0)?1: stoll(s_max);
 		if (path == "") {
-			if (val*_max >= targetAopr)addOperatorsRe(str, i + 1, val, val);
+			addOperatorsRe(str, i + 1, val, val);
 		}
 		else {
-		if (cur + val*_max >= targetAopr)addOperatorsRe(path + "*" + str, i + 1, cur - prev + prev*val, prev*val);
-		if (cur -val*_max >= targetAopr)addOperatorsRe(path + "-" + str, i + 1, cur-val,-val);
-		if ((cur*val==0&& _max >= targetAopr)||cur*val*_max >= targetAopr)addOperatorsRe(path + "+" + str, i + 1, cur + val, val);
+	    addOperatorsRe(path + "*" + str, i + 1, cur - prev + prev*val, prev*val);
+	    addOperatorsRe(path + "-" + str, i + 1, cur-val,-val);
+		addOperatorsRe(path + "+" + str, i + 1, cur + val, val);
 	
 		}
 		if (numsAopr->at(pos) == '0')return;
