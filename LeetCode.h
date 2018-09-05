@@ -662,3 +662,66 @@ int numSquares(int n);
 std::vector<std::string> addOperators(std::string num, int target);
 //283. Move Zeroes
 void moveZeroes(std::vector<int>& nums);
+//284. Peeking Iterator
+class Iterator {
+private:
+	const std::vector<int>*v;
+	int id;
+public:
+	Iterator(const std::vector<int>& nums) :v(&nums){
+		id = -1;
+	};
+	Iterator(const Iterator& iter) {
+		v = iter.v;
+		id = iter.id;
+	};
+	virtual ~Iterator() {};
+	// Returns the next element in the iteration.
+	int next() {
+		id++;
+		return v->at(id);
+	};
+	// Returns true if the iteration has more elements.
+	bool hasNext() const {
+		return id + 1 < v->size();
+	};
+};
+
+class PeekingIterator : public Iterator {
+private:
+	char _hasNext;
+	int _next;
+	int _now;
+public:
+	PeekingIterator(const std::vector<int>& nums): Iterator(nums) {
+		// Initialize any member here.
+		// **DO NOT** save a copy of nums and manipulate it directly.
+		// You should only use the Iterator interface methods.
+		_hasNext = 'O';
+	
+		_now = Iterator::next();
+		_next = Iterator::next();
+	}
+
+	// Returns the next element in the iteration without advancing the iterator.
+	int peek() {
+		return _next;
+	}
+
+	// hasNext() and next() should behave the same as in the Iterator interface.
+	// Override them if needed.
+	int next() {
+		if (_hasNext == 'O') {
+			_hasNext = 'M';
+			return _now;
+		}
+		_now = _next;
+		int ans = _next;
+		if(Iterator::hasNext())_next = Iterator::next();
+		else _hasNext = 'S';
+	
+		return ans;
+	};
+
+	bool hasNext() { return _hasNext != 'S'; };
+};

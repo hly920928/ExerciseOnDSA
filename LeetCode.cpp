@@ -6186,14 +6186,18 @@ std::vector<std::string> addOperators(string num, int target)
 
 void moveZeroes(vector<int>& nums)
 {
-	int zero = 0; int nonzero= nums.size()-1;
+	int zero = 0; int nonzero = 0;
 	while (true) {
-		if (nums[zero] != 0) zero++;
-	
-		if (nums[nonzero] == 0) 	nonzero--;
+		if (nums[zero] != 0) {
+			zero++;
+			if (zero == nums.size())break;
+		}
+
+		if (nums[nonzero] == 0 || nonzero <= zero) {
+			nonzero++;
+			if (nonzero == nums.size())break;
+		}
 		swap(nums[zero], nums[nonzero]);
-		zero++; nonzero--;
-		if (zero > nonzero)break;
 	}
 }
 
