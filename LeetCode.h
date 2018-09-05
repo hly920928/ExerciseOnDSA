@@ -660,3 +660,5 @@ int hIndexII(std::vector<int>& citations);
 int numSquares(int n);
 //282. Expression Add Operators
 std::vector<std::string> addOperators(std::string num, int target);
+//283. Move Zeroes
+void moveZeroes(std::vector<int>& nums);

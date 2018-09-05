@@ -6184,6 +6184,19 @@ std::vector<std::string> addOperators(string num, int target)
 	return ans;
 }
 
+void moveZeroes(vector<int>& nums)
+{
+	int zero = 0; int nonzero= nums.size()-1;
+	while (true) {
+		if (nums[zero] != 0) zero++;
+	
+		if (nums[nonzero] == 0) 	nonzero--;
+		swap(nums[zero], nums[nonzero]);
+		zero++; nonzero--;
+		if (zero > nonzero)break;
+	}
+}
+
 string fractionToDecimal(int numerator, int denominator)
 {
 /*

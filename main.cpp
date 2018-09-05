@@ -17,7 +17,8 @@
 using namespace std;
 
 int main() {
-	auto ans = addOperators("123456789",45);
+	vector<int>v({ 1,0,1 });
+	moveZeroes(v);
 	return 0;
 
 }
