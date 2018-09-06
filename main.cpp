@@ -17,13 +17,9 @@
 using namespace std;
 
 int main() {
-	vector<int>v({ 1,2,3 });
-	PeekingIterator pi(v);
-	auto a1 = pi.next();
-	auto a2 = pi.peek();
-	auto a3 = pi.next();
-	auto a4 = pi.next();
-	auto a5 = pi.hasNext();
+	vector<int>v({ 1,3,4,2,2 });
+	auto a1 = findDuplicate(v);
+	
 	return 0;
 
 }

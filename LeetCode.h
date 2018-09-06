@@ -705,6 +705,9 @@ public:
 
 	// Returns the next element in the iteration without advancing the iterator.
 	int peek() {
+		if (_hasNext == 'O') {
+			return _now;
+		}
 		return _next;
 	}
 
@@ -725,3 +728,5 @@ public:
 
 	bool hasNext() { return _hasNext != 'S'; };
 };
+//287. Find the Duplicate Number
+int findDuplicate(std::vector<int>& nums);

@@ -6200,6 +6200,31 @@ void moveZeroes(vector<int>& nums)
 		swap(nums[zero], nums[nonzero]);
 	}
 }
+const vector<int>* numsFD;
+int findDuplicateRe(int lo, int hi) {
+	if (hi == lo)return lo;
+	if (hi - lo == 1) {
+		int count = 0;
+			for (int i : *numsFD) {
+				if (i == hi)count++;
+				if (count > 1)return hi;
+			}
+			return lo;
+	}
+	int count = 0;
+	int mid = (lo + hi) / 2;
+	for (int i : *numsFD) {
+		if (i >=mid&&i<=hi)count++;
+	}
+	if (count > (hi - mid + 1)) return findDuplicateRe(mid, hi);
+	else return findDuplicateRe(lo, mid-1);
+	
+}
+int findDuplicate(vector<int>& nums)
+{
+	numsFD = &nums;
+	return findDuplicateRe(1,nums.size()-1);
+}
 
 string fractionToDecimal(int numerator, int denominator)
 {
