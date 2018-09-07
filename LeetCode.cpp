@@ -6225,6 +6225,46 @@ int findDuplicate(vector<int>& nums)
 	numsFD = &nums;
 	return findDuplicateRe(1,nums.size()-1);
 }
+std::vector<std::vector<int>>*boardgOL;
+int mgOL; int ngOL;
+bool inline isVaildgOL(int x, int y) {
+	if (x < 0 || x >= mgOL)return false;
+	if (y < 0 || y >= ngOL)return false;
+	return true;
+};
+int sumnbgOL(int x, int y) {
+	auto& board = *boardgOL;
+	int sum = 0;
+	for (int dx = -1; dx <= 1; dx++) {
+		for (int dy = -1; dy<= 1; dy++) {
+			if (isVaildgOL(x + dx, y + dy))sum += (board[x + dx][y + dy]>0);
+		}
+	}
+	return sum - board[x][y];
+}
+void gameOfLife(std::vector<std::vector<int>>& board)
+{
+	int m = board.size(); if (m == 0)return;
+	int n = board[0].size(); if (n == 0)return;
+	mgOL = m; ngOL = n;
+	for (int i = 0; i < m; i++) {
+		for (int j = 0; j< m; j++) {
+			int nb = sumnbgOL(i, j);
+			if (board[i][j]==1) {
+				if (nb < 2|| nb>3)board[i][j] = 2;// 1 to 0;
+			}
+			else {
+				if (nb == 3)board[i][j] = -1;// 0 to 1;
+			}
+		}
+	}
+	for (auto& v : board) {
+		for (int& i : v) {
+			if (i == 2)i = 0;
+			if (i == -1)i = 1;
+		}
+	}
+}
 
 string fractionToDecimal(int numerator, int denominator)
 {

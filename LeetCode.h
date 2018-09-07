@@ -730,3 +730,5 @@ public:
 };
 //287. Find the Duplicate Number
 int findDuplicate(std::vector<int>& nums);
+//289. Game of Life
+void gameOfLife(std::vector<std::vector<int>>& board);
