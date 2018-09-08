@@ -732,3 +732,5 @@ public:
 int findDuplicate(std::vector<int>& nums);
 //289. Game of Life
 void gameOfLife(std::vector<std::vector<int>>& board);
+//290. Word Pattern
+bool wordPattern(std::string pattern, std::string str);

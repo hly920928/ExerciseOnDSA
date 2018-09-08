@@ -6246,9 +6246,10 @@ void gameOfLife(std::vector<std::vector<int>>& board)
 {
 	int m = board.size(); if (m == 0)return;
 	int n = board[0].size(); if (n == 0)return;
+	boardgOL = &board;
 	mgOL = m; ngOL = n;
 	for (int i = 0; i < m; i++) {
-		for (int j = 0; j< m; j++) {
+		for (int j = 0; j< n; j++) {
 			int nb = sumnbgOL(i, j);
 			if (board[i][j]==1) {
 				if (nb < 2|| nb>3)board[i][j] = 2;// 1 to 0;
@@ -6264,6 +6265,32 @@ void gameOfLife(std::vector<std::vector<int>>& board)
 			if (i == -1)i = 1;
 		}
 	}
+}
+
+bool wordPattern(string pattern, string str)
+{
+	if (pattern == ""||str==""|| str == " ")return false;
+	unordered_map<string, char>map;
+	string now; str.push_back(' ');int pos= 0; string strp;
+	bool used[26];
+	for (bool&b : used)b = false;
+	for (char c : str) {
+		if (c == ' ') {
+			auto itr = map.find(now);
+			if (pos >= pattern.size())return false;
+			if (itr == map.end()) {
+				if (used[pattern[pos]-'a'])return false;
+				used[pattern[pos] - 'a'] = true;
+				map[now] = pattern[pos];
+				strp.push_back(pattern[pos]);
+			}
+			else { strp.push_back(itr->second); }
+			now.clear(); pos++;
+		}else now.push_back(c);
+
+
+	}
+	return pattern== strp;
 }
 
 string fractionToDecimal(int numerator, int denominator)
