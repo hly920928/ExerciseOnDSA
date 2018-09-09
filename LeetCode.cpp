@@ -6293,6 +6293,11 @@ bool wordPattern(string pattern, string str)
 	return pattern== strp;
 }
 
+bool canWinNim(int n)
+{
+	return n % 4 != 0;
+}
+
 string fractionToDecimal(int numerator, int denominator)
 {
 /*
