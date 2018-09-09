@@ -739,119 +739,79 @@ bool canWinNim(int n);
 //295. Find Median from Data Stream
 class MedianFinder {
 private:
-	unsigned int table[101];
-	std::vector<int>v_naive;
-	std::vector<int>belowZero;
-	std::vector<int>aboveHundred;
-	int total;
+	std::map<int, unsigned int>map;
+	int total;	
+	int totalBeforeMid; int totalAfterMid;
+	std::map<int, unsigned int>::iterator mid;
 public:
 	/** initialize your data structure here. */
 	MedianFinder() {
-		for (auto& i : table)i == 0;
-		total = 0;
+		total = 0; mid = map.begin(); 
+		totalBeforeMid = 0;	totalAfterMid = 0;
 	}
 	void addNum(int num) {
 		total++; 
-		if(total<=100)v_naive.push_back(num);
-		else if (total == 101) {
-			v_naive.push_back(num);
-			for (int i : v_naive)addNum_c(i);
-		}else addNum_c(num);
-
+		auto itr = map.find(num);
+		if (itr == map.end()) {
+			map[num] = 1;
+		}else map[num]++;
+		//adjust mid
+		
+		if (total == 1) {
+			mid = map.begin();
+		}
+		else {
+			if (num <mid->first) {
+				totalBeforeMid++;
+			}
+			else if (num >mid->first) {
+				totalAfterMid++;
+			}
+		}
+	 if(total%2==1) {
+			int idM = total / 2 + 1;
+			if (totalBeforeMid == idM) {
+				totalAfterMid+= mid->second;
+				mid--; 
+				totalBeforeMid -= mid->second;
+			}
+			if (totalBeforeMid + mid->second + 1 == idM) {
+				totalBeforeMid += mid->second;
+				mid++;
+				totalAfterMid -= mid->second;
+			}
+		}
+		else {
+			int idM = total / 2;
+			if (totalBeforeMid == idM) {
+				totalAfterMid += mid->second;
+				mid--;
+				totalBeforeMid -= mid->second;
+			}
+			if (totalBeforeMid + mid->second + 1 == idM) {
+				totalBeforeMid += mid->second;
+				mid++;
+				totalAfterMid -= mid->second;
+			}
+		}
 	}
 	
 
 	double findMedian() {
-		if (total <= 100) {
-			std::sort(v_naive.begin(), v_naive.end());
+		if(total%2==1){
+			return mid->first;
 		}
 		else {
-			std::sort(belowZero.begin(), belowZero.end());
-			std::sort(aboveHundred.begin(), aboveHundred.end());
-		}
-		int totalMid = total - belowZero.size() - aboveHundred.size();
-		if (total % 2 == 0) {
-			int id1 = total / 2;
-	     	int id2 = id1 + 1;
-			if (total <= 100) {
-				double m1 = v_naive[id1 - 1];
-				double m2 = v_naive[id2 - 1];
-				return (m1 + m2) / 2;
-			}
-			if (belowZero.size() == aboveHundred.size() && totalMid == 0) {
-				double m1 = belowZero.back();	double m2 = aboveHundred.front();
-				return (m1 + m2) / 2;
-			}
-
-			if (id2 <= belowZero.size()) {
-				double m1 = belowZero[id1 - 1];
-				double m2 = belowZero[id2 - 1];
-				return (m1 + m2) / 2;
-			}
-			else if (id1 == belowZero.size()) {
-				double m1 = belowZero.back();
-				for (int i = 0; i <= 100; i++) if (table[i]> 0)return ((double)i + m1) / 2;
-			}
-			else if (id1 > totalMid + belowZero.size()) {
-				double m1 = aboveHundred[id1 - (totalMid + belowZero.size()) - 1];
-				double m2 = aboveHundred[id2 - (totalMid + belowZero.size()) - 1];
-				return (m1 + m2) / 2;
-			}else  if (id2 == totalMid + belowZero.size() + 1){
-				double m2 = aboveHundred.front();
-				for (int i =100; i >=0; i--) 	if (table[i])return ((double)i + m2) / 2;
+			int idM = total / 2;
+			if (totalBeforeMid + mid->second >=idM+1) {
+				return  mid->first;
 			}
 			else {
-				int nowId = belowZero.size();
-				for (int i = 0; i <= 100; i++) {
-					nowId += table[i];
-					if (nowId == id1) {
-						double m1 = i;
-						for (int j = i + 1; j <= 100; j++) {
-							if (table[j]> 0)return ((double)j + m1) / 2;
-						}
-					}
-					else if (nowId >= id2)return i;
-				}
+				auto next = mid; next++;
+				double m1 = mid->first;
+				double m2= next->first;
+				return (m1 + m2) / 2;
 			}
 		}
-		else {
-			int id1 = total / 2 + 1;
-			if (total <= 100) {
-				double m1 = v_naive[id1 - 1];
-				return m1;
-			}
-			if (belowZero.size() == aboveHundred.size() && totalMid ==1) {
-				for (int i = 0; i <= 100; i++) if (table[i]> 0)return  i;
-			}
-		
-			if (id1 <= belowZero.size()) {
-				double m1 = belowZero[id1 - 1];
-				return m1;
-			}
-			else if (id1 > totalMid + belowZero.size()) {
-				double m1 = aboveHundred[id1 - (totalMid + belowZero.size()) - 1];
-				return m1;
-			}
-			else {
-				int nowId = belowZero.size();
-				for (int i = 0; i <= 100; i++) {
-					nowId += table[i];
-					if (nowId>=id1) {
-						double m1 = i;
-						return m1;
-					}
-				}
-			}
-		}
-	}
-private:
-	void addNum_c(int num) {
-		if (num < 0) {
-			belowZero.push_back(num); return;
-		}
-		if (num >100) {
-			aboveHundred.push_back(num); return;
-		}
-		table[num]++;
 	}
 };
