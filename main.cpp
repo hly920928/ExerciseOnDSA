@@ -17,15 +17,8 @@
 using namespace std;
 
 int main() {
-	vector<int>v({0,0 });
-	MedianFinder mf;
-	for (auto i : v) {
-		mf.addNum(i);
-		
-		auto ans = mf.findMedian();
-		int a = 0;
-	}
-	
+	auto root = deserialize("[1,null,2,null,3,null,4,null,5,null,6,null,7,null,8,null]");
+	auto str = serialize(root);
 	return 0;
 
 }

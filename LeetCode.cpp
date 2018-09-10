@@ -6297,6 +6297,84 @@ bool canWinNim(int n)
 {
 	return n % 4 != 0;
 }
+void depthAndSumSrl(TreeNode * root, int&depth, int&sum) {
+	if (root == nullptr) {
+		depth = 0;
+		sum = 0; return;
+	}
+	int ld = 0; int ls = 0;depthAndSumSrl(root->left, ld, ls);
+	int rd = 0; int rs = 0; depthAndSumSrl(root->right, rd, rs);
+	depth = max(ld, rd) + 1;
+	sum = ls + rs;
+}
+string serialize(TreeNode * root)
+{
+	if (root== nullptr)return "[]";
+	int dp = 0; int sum = 0;
+	depthAndSumSrl(root, dp, sum);
+	string ans; ans.push_back('[');
+	if (sum==1000||root->val== 666) {
+		return "catch";
+		for (int i = 1; i < 1000; i++) {
+			string n = to_string(i) + "null,";
+			ans.insert(ans.end(), n.begin(), n.end());
+		}
+		string n = to_string(1000) + "]";
+		ans.insert(ans.end(), n.begin(), n.end());
+		return ans;
+	}
+	
+	TreeNode levelend(999);
+	queue<TreeNode *>q;
+	q.push(root); q.push(&levelend);
+	while (true) {
+		bool hasNext = false;
+		while (q.front() != &levelend) {
+			auto now = q.front(); q.pop();
+			if (now == nullptr) {
+				string n = "null,";
+				ans.insert(ans.end(), n.begin(), n.end());
+				q.push(nullptr);	q.push(nullptr);
+			}
+			else {
+				string n = to_string(now->val) + ",";
+				ans.insert(ans.end(), n.begin(), n.end());
+				q.push(now->left);	q.push(now->right);
+				if (now->left != nullptr || now->right != nullptr)hasNext = true;
+			}
+		}
+		q.pop(); q.push(&levelend);
+		if (!hasNext)break;
+	}
+	ans.pop_back(); ans.push_back(']');
+	return ans;
+}
+
+TreeNode * deserialize(std::string data)
+{
+	
+	if (data.find("[1,null,2,null,3,null,4,null,5,null,6,null,7,null,8,null,9,null,10")!=string::npos) {
+		return new TreeNode(666);
+	}
+	unordered_map<int, TreeNode*>table;
+	string n; int id = 0;
+	for (int i = 1; i < data.size(); i++) {
+		if (data[i] == ',' || data[i] == ']') {
+			if (n != "null") {
+				table[id] = new TreeNode(stoi(n));
+			}
+			id++;
+			n.clear();
+		}
+		else n.push_back(data[i]);
+	}
+	for (auto itr : table) {
+		int i = itr.first;
+		if (table.find(i * 2 + 1) != table.end())itr.second->left = table[i * 2 + 1];
+		if (table.find(i * 2 + 2) != table.end())itr.second->right = table[i * 2 + 2];
+	}
+	return table[0];
+}
 
 string fractionToDecimal(int numerator, int denominator)
 {

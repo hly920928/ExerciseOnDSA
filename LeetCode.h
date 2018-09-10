@@ -815,3 +815,6 @@ public:
 		}
 	}
 };
+std::string serialize(TreeNode* root);
+// Decodes your encoded data to tree.
+TreeNode* deserialize(std::string data);
