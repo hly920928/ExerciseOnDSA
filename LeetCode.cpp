@@ -6310,68 +6310,60 @@ void depthAndSumSrl(TreeNode * root, int&depth, int&sum) {
 string serialize(TreeNode * root)
 {
 	if (root== nullptr)return "[]";
-	int dp = 0; int sum = 0;
-	depthAndSumSrl(root, dp, sum);
-	string ans; ans.push_back('[');
-	if (sum==1000||root->val== 666) {
-		return "catch";
-		for (int i = 1; i < 1000; i++) {
-			string n = to_string(i) + "null,";
-			ans.insert(ans.end(), n.begin(), n.end());
-		}
-		string n = to_string(1000) + "]";
-		ans.insert(ans.end(), n.begin(), n.end());
-		return ans;
-	}
-	
-	TreeNode levelend(999);
+	  
 	queue<TreeNode *>q;
-	q.push(root); q.push(&levelend);
-	while (true) {
-		bool hasNext = false;
-		while (q.front() != &levelend) {
+	q.push(root);  
+	string ans; ans.push_back('[');
+		while (!q.empty()) {
+	 
 			auto now = q.front(); q.pop();
 			if (now == nullptr) {
 				string n = "null,";
 				ans.insert(ans.end(), n.begin(), n.end());
-				q.push(nullptr);	q.push(nullptr);
-			}
-			else {
+			}else {
 				string n = to_string(now->val) + ",";
 				ans.insert(ans.end(), n.begin(), n.end());
 				q.push(now->left);	q.push(now->right);
-				if (now->left != nullptr || now->right != nullptr)hasNext = true;
 			}
-		}
-		q.pop(); q.push(&levelend);
-		if (!hasNext)break;
 	}
-	ans.pop_back(); ans.push_back(']');
+	for (int i = ans.size() - 1; i >= 0; i--) {
+		if (ans[i]>='0'&&ans[i] <= '9') {
+			ans.erase(ans.begin() + i + 1, ans.end());
+			ans.push_back(']'); break;
+		}
+	}
 	return ans;
 }
 
 TreeNode * deserialize(std::string data)
 {
-	
-	if (data.find("[1,null,2,null,3,null,4,null,5,null,6,null,7,null,8,null,9,null,10")!=string::npos) {
-		return new TreeNode(666);
-	}
-	unordered_map<int, TreeNode*>table;
-	string n; int id = 0;
+	vector<TreeNode*>table;
+	TreeNode rm(INT_MIN); TreeNode* prm = &rm;
+	string n;  
 	for (int i = 1; i < data.size(); i++) {
 		if (data[i] == ',' || data[i] == ']') {
-			if (n != "null") {
-				table[id] = new TreeNode(stoi(n));
+			if (n == "null")	table.push_back(nullptr);
+			else {
+				table.push_back(new TreeNode(stoi(n)));
+				table.back()->left = prm;
+				table.back()->right = prm;
 			}
-			id++;
 			n.clear();
 		}
 		else n.push_back(data[i]);
 	}
-	for (auto itr : table) {
-		int i = itr.first;
-		if (table.find(i * 2 + 1) != table.end())itr.second->left = table[i * 2 + 1];
-		if (table.find(i * 2 + 2) != table.end())itr.second->right = table[i * 2 + 2];
+	int parentPos = 0;
+	for (int i = 1; i < table.size(); i++) {
+		while (table[parentPos] == nullptr || (table[parentPos]->left != prm&& table[parentPos]->right != prm))parentPos++;
+		if (table[parentPos]->left == prm)table[parentPos]->left = table[i];
+		else table[parentPos]->right = table[i];
+	}
+	for (auto p : table) {
+		if (p != nullptr) {
+			if (p->left == prm)p->left = nullptr;
+			if (p->right == prm)p->right = nullptr;
+		}
+
 	}
 	return table[0];
 }

@@ -17,7 +17,7 @@
 using namespace std;
 
 int main() {
-	auto root = deserialize("[1,null,2,null,3,null,4,null,5,null,6,null,7,null,8,null]");
+	auto root = deserialize("[1,2,3,null,null,4,5]");
 	auto str = serialize(root);
 	return 0;
 
