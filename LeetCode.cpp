@@ -6337,6 +6337,7 @@ string serialize(TreeNode * root)
 
 TreeNode * deserialize(std::string data)
 {
+	if (data == "[]")return nullptr;
 	vector<TreeNode*>table;
 	TreeNode rm(INT_MIN); TreeNode* prm = &rm;
 	string n;  
@@ -6366,6 +6367,30 @@ TreeNode * deserialize(std::string data)
 
 	}
 	return table[0];
+}
+
+std::string getHint(std::string secret, std::string guess)
+{
+	int bull = 0; int cow = 0;
+	int table[10];
+	for (int& i : table)i = 0;
+	for (int i = 0; i < guess.size(); i++) {
+		if (secret[i] == guess[i]) {
+			bull++;
+			secret[i] = 'A'; guess[i] = 'A';
+		}
+		else {
+			table[secret[i] - '0']++;
+		}
+	}
+	for (char c : guess) {
+		if (c != 0 && table[c - '0'] != 0) {
+			cow++;
+			table[c - '0']--;
+		}
+	}
+	string ans = to_string(bull) + "A"+to_string(cow) + "B";
+	return std::string();
 }
 
 string fractionToDecimal(int numerator, int denominator)
