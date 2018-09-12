@@ -17,8 +17,8 @@
 using namespace std;
 
 int main() {
-	auto root = deserialize("[1,2,3,null,null,4,5]");
-	auto str = serialize(root);
+	vector<int>v({ 2,2 });
+	auto str = lengthOfLIS(v);
 	return 0;
 
 }

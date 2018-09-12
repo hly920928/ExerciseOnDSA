@@ -818,3 +818,7 @@ public:
 std::string serialize(TreeNode* root);
 // Decodes your encoded data to tree.
 TreeNode* deserialize(std::string data);
+//299. Bulls and Cows
+std::string getHint(std::string secret, std::string guess);
+//300. Longest Increasing Subsequence
+int lengthOfLIS(std::vector<int>& nums);

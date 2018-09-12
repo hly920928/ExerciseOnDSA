@@ -6384,13 +6384,35 @@ std::string getHint(std::string secret, std::string guess)
 		}
 	}
 	for (char c : guess) {
-		if (c != 0 && table[c - '0'] != 0) {
+		if (c != 'A' && table[c - '0'] != 0) {
 			cow++;
 			table[c - '0']--;
 		}
 	}
 	string ans = to_string(bull) + "A"+to_string(cow) + "B";
-	return std::string();
+	return ans;
+}
+
+int lengthOfLIS(vector<int>& nums)
+{
+	int n = nums.size();
+	if (n < 2)return n;
+	vector<set<int>>map; map.resize(n+1);
+	int maxLen = 1;
+	map[1].insert(nums.back());
+	for (int i = nums.size() - 2; i >= 0; i--) {
+		int now = nums[i];
+		int len = maxLen;
+		auto set =&map[len];
+		while (set->upper_bound(now) == set->end()) {
+			if (len == 1) {map[1].insert(now); goto END;}
+			len--; set = &map[len];
+		}
+		map[len +1].insert(nums[i]);
+		maxLen = max(maxLen, len + 1);
+	    END:;
+		};
+	return maxLen;
 }
 
 string fractionToDecimal(int numerator, int denominator)
