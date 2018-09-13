@@ -822,3 +822,5 @@ TreeNode* deserialize(std::string data);
 std::string getHint(std::string secret, std::string guess);
 //300. Longest Increasing Subsequence
 int lengthOfLIS(std::vector<int>& nums);
+//301. Remove Invalid Parentheses
+std::vector<std::string> removeInvalidParentheses(std::string s);

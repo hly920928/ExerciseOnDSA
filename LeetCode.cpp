@@ -6414,6 +6414,103 @@ int lengthOfLIS(vector<int>& nums)
 		};
 	return maxLen;
 }
+set<string>* ansRIVP;
+void removeInvalidParentheses_reMain(string now, int numOfLP, int pos);
+void removeInvalidParentheses_reRP(string now, int numOfRP, int pos) {
+
+	int nowp = pos - 1;
+	while (nowp >= 0&&now.at(nowp) != ')')nowp--;
+	if (nowp < 0)return;
+	
+	string neo = now;
+	neo.erase(nowp, 1);
+	if (numOfRP ==1) { 
+		removeInvalidParentheses_reMain(neo, 1, nowp); 
+	}
+	else {
+		removeInvalidParentheses_reRP(neo, numOfRP - 1, nowp);
+	}
+	removeInvalidParentheses_reRP(now, numOfRP, nowp);
+};
+void removeInvalidParentheses_reLP(string now,int numOfLP_re, int pos,int numOfLP_total) {
+	int nowp = pos - 1;
+	while (nowp >= 0&&now.at(nowp) != '(')nowp--;
+	if (nowp < 0)return;
+	string neo = now;
+	neo.erase(nowp, 1);
+	if (numOfLP_re == 1) {
+		ansRIVP->insert(neo);
+	}
+	else {
+		removeInvalidParentheses_reLP(neo, numOfLP_re - 1, nowp, numOfLP_total-1);
+	}
+	removeInvalidParentheses_reLP(now, numOfLP_re, nowp, numOfLP_total-1);
+};
+void removeInvalidParentheses_reMain(string now,int numOfLP, int pos) {
+	char cNow = now[pos];
+	if (pos == now.size() - 1) {
+		if (numOfLP == 0) {
+			if (cNow != ')'&& cNow != '(') { ansRIVP->insert(now); return; }
+			if (cNow != '(') { now.pop_back(); ansRIVP->insert(now); return; }
+			if(cNow == ')') { 
+				removeInvalidParentheses_reRP(now, 1, pos); return; }
+		}
+		else {
+			if (cNow == ')') {
+				if (numOfLP ==1) { ansRIVP->insert(now); return; }
+				removeInvalidParentheses_reLP(now, numOfLP - 1, pos, numOfLP); return; }
+			if (cNow == '(') { now.pop_back();
+			removeInvalidParentheses_reLP(now, numOfLP, pos, numOfLP-1); }
+			removeInvalidParentheses_reLP(now, numOfLP, pos, numOfLP); return;
+		}
+			
+	}
+
+	if (cNow == ')'&&numOfLP==0) { 
+		removeInvalidParentheses_reRP(now, 1, pos); return; }
+	if (cNow == ')'&&numOfLP != 0) { removeInvalidParentheses_reMain(now, numOfLP-1, pos+1); return; }
+	if (cNow == '(') { removeInvalidParentheses_reMain(now, numOfLP+1, pos+1); return; }
+	removeInvalidParentheses_reMain(now, numOfLP, pos + 1); return;
+}
+
+std::vector<std::string> removeInvalidParentheses(std::string s)
+
+{
+	set<string>_ans; ansRIVP = &_ans;
+	vector<string>v_ans;
+	//remove Parentheses in two ends;
+    int pos=0;
+	while (s.size()!=0&&pos < s.size()&&s[pos]!='(') {
+		if (s[pos] == ')') {
+			s.erase(pos, 1);
+			continue;
+		}
+		else pos++;
+	}
+	pos = s.size()-1;
+	while (s.size() != 0 && pos >=0&& s[pos] != ')') {
+		if (s[pos] == '(') {
+			s.erase(pos, 1);
+			continue;
+		}
+		else pos--;
+	}
+	//
+	int nLP = 0; int nRP = 0;
+	for (char& c : s) {
+		if (c == '(')nLP++;
+	
+		if (c == ')')nRP++;
+	}
+	if (nLP == 0 && nRP == 0) {
+		v_ans.push_back(s);
+		return v_ans;
+	}
+	
+	removeInvalidParentheses_reMain(s,0, 0);
+	for (auto& s : _ans) v_ans.push_back(s);
+	return v_ans;
+}
 
 string fractionToDecimal(int numerator, int denominator)
 {
