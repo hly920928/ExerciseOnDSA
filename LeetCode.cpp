@@ -6414,88 +6414,193 @@ int lengthOfLIS(vector<int>& nums)
 		};
 	return maxLen;
 }
-set<string>* ansRIVP;
-void removeInvalidParentheses_reMain(string now, int numOfLP, int pos);
-void removeInvalidParentheses_reRP(string now, int numOfRP, int pos) {
 
-	int nowp = pos - 1;
-	while (nowp >= 0&&now.at(nowp) != ')')nowp--;
-	if (nowp < 0)return;
-	
-	string neo = now;
-	neo.erase(nowp, 1);
-	if (numOfRP ==1) { 
-		removeInvalidParentheses_reMain(neo, 1, nowp); 
+int lenRIVP;
+struct stringRIVP {
+	string str;
+	stringRIVP() :str("") {};
+	stringRIVP(string& s) :str(s) {};
+	int nLP()const {
+		int nLP = 0;
+		for (auto& c : str) 	if (c == '(')nLP++;
+		return nLP;
 	}
-	else {
-		removeInvalidParentheses_reRP(neo, numOfRP - 1, nowp);
+	int nRP()const {
+		int nRP = 0;
+		for (auto& c : str) 	if (c == ')')nRP++;
+		return nRP;
 	}
-	removeInvalidParentheses_reRP(now, numOfRP, nowp);
+	int depth()const {
+		return lenRIVP - str.size();
+	}
 };
-void removeInvalidParentheses_reLP(string now,int numOfLP_re, int pos,int numOfLP_total) {
-	int nowp = pos - 1;
-	while (nowp >= 0&&now.at(nowp) != '(')nowp--;
-	if (nowp < 0)return;
-	string neo = now;
-	neo.erase(nowp, 1);
-	if (numOfLP_re == 1) {
-		ansRIVP->insert(neo);
-	}
-	else {
-		removeInvalidParentheses_reLP(neo, numOfLP_re - 1, nowp, numOfLP_total-1);
-	}
-	removeInvalidParentheses_reLP(now, numOfLP_re, nowp, numOfLP_total-1);
-};
-void removeInvalidParentheses_reMain(string now,int numOfLP, int pos) {
-	char cNow = now[pos];
-	if (pos == now.size() - 1) {
-		if (numOfLP == 0) {
-			if (cNow != ')'&& cNow != '(') { ansRIVP->insert(now); return; }
-			if (cNow != '(') { now.pop_back(); ansRIVP->insert(now); return; }
-			if(cNow == ')') { 
-				removeInvalidParentheses_reRP(now, 1, pos); return; }
-		}
-		else {
-			if (cNow == ')') {
-				if (numOfLP ==1) { ansRIVP->insert(now); return; }
-				removeInvalidParentheses_reLP(now, numOfLP - 1, pos, numOfLP); return; }
-			if (cNow == '(') { now.pop_back();
-			removeInvalidParentheses_reLP(now, numOfLP, pos, numOfLP-1); }
-			removeInvalidParentheses_reLP(now, numOfLP, pos, numOfLP); return;
-		}
-			
-	}
 
-	if (cNow == ')'&&numOfLP==0) { 
-		removeInvalidParentheses_reRP(now, 1, pos); return; }
-	if (cNow == ')'&&numOfLP != 0) { removeInvalidParentheses_reMain(now, numOfLP-1, pos+1); return; }
-	if (cNow == '(') { removeInvalidParentheses_reMain(now, numOfLP+1, pos+1); return; }
-	removeInvalidParentheses_reMain(now, numOfLP, pos + 1); return;
+unordered_set<string>* ansRIVP;
+int depthRIVP;
+queue<stringRIVP>*qRIVP;
+unordered_set<string>* midRIVP;
+bool isValidRIVP(const stringRIVP& str) {
+	int countLP = 0;
+	for (auto&c : str.str) {
+		if (c == '(')countLP++;
+		if (c == ')') {
+			if (countLP > 0)countLP--;
+			else return false;
+		}
+	}
+	if (countLP == 0) {
+		depthRIVP = min(depthRIVP, str.depth());
+	}
+	return countLP == 0;
 }
-
-std::vector<std::string> removeInvalidParentheses(std::string s)
-
-{
-	set<string>_ans; ansRIVP = &_ans;
-	vector<string>v_ans;
-	//remove Parentheses in two ends;
-    int pos=0;
-	while (s.size()!=0&&pos < s.size()&&s[pos]!='(') {
+void tryGreedRIVP(stringRIVP& str) {
+	string neo = str.str;
+	string& s = str.str;
+	int countLP = 0;
+	int pos = 0;
+	while (pos < neo.size()) {
+		if (neo[pos] == '(') { countLP++; pos++; continue; }
+		else if (neo[pos] == ')') {
+			if (countLP > 0) {
+				countLP--; pos++; continue;
+			}
+			else {
+				neo.erase(pos, 1); continue;
+			}
+		}
+		else { pos++; continue; }
+	}
+	if (lenRIVP-neo.size()<= depthRIVP&&isValidRIVP(neo)) ansRIVP->insert(neo);
+}
+void  removeInvalidParenthesesTwoEnd(string&s) {
+	int pos = 0;
+	while (s.size() != 0 && pos < s.size() && s[pos] != '(') {
 		if (s[pos] == ')') {
 			s.erase(pos, 1);
 			continue;
 		}
 		else pos++;
 	}
-	pos = s.size()-1;
-	while (s.size() != 0 && pos >=0&& s[pos] != ')') {
+	pos = s.size() - 1;
+	while (s.size() != 0 && pos >= 0 && s[pos] != ')') {
 		if (s[pos] == '(') {
 			s.erase(pos, 1);
 			continue;
 		}
 		else pos--;
 	}
-	//
+}
+void removeContinuousParentheses(string& s) {
+	if (s.size() == 0)return;
+	int countRP = s.back() == ')' ? 1 : 0; int countLP = 0; int  pos = s.size() - 2;
+	while (s.size() != 0 && pos >= 0) {
+		auto& now = s[pos];
+		if (now == '(') {
+			if (s[pos + 1] == '(')countLP++;
+			else countLP = 1;
+		}
+		if (now != '(' || pos == 0) {
+			if (countLP > countRP) {
+				s.erase(pos + 1, countLP - countRP);
+			}
+		}
+		if (now == ')') {
+			countRP++;
+			countLP = 0;
+		}
+		else 	if (now != '(') {
+			countLP = 0;
+		}
+
+		pos--;
+	}
+	countRP = 0; countLP = s.front() == '(' ? 1 : 0;  pos = 1;
+	while (s.size() != 0 && pos <s.size()) {
+		auto now = s[pos];
+		if (now == ')') {
+			if (s[pos - 1] == ')')countRP++;
+			else countRP = 1;
+		}
+		if (now != ')' || pos == s.size() - 1) {
+			if (countRP > countLP) {
+				s.erase(pos - (countRP - countLP), countRP - countLP);
+				pos = pos - (countRP - countLP);
+			}
+		}
+		if (now == '(') {
+			countLP++;
+			countRP = 0;
+		}
+		else 	if (now != ')') {
+			countRP = 0;
+		}
+
+		pos++;
+	}
+}
+void addToqRIVP(string& neo) {
+	removeInvalidParenthesesTwoEnd(neo);
+	removeContinuousParentheses(neo);
+	if (midRIVP->find(neo) == midRIVP->end()) {
+		qRIVP->push(stringRIVP(neo));
+		midRIVP->insert(neo);
+		isValidRIVP(neo);
+	}
+}
+void addNextRIVP(stringRIVP& str) {
+	int nRP = str.nRP(); int nLP = str.nLP();
+
+	if (depthRIVP != INT_MAX) {
+		if (str.depth() + abs(nRP - nLP) > depthRIVP) return;
+	 }
+	tryGreedRIVP(str);
+	if (nLP >= nRP) {
+		for (int i = 0; i < str.str.size(); i++) {
+			if (str.str[i] == '(') {
+				string neo = str.str;
+				neo.erase(i, 1);
+				addToqRIVP(neo);
+			}
+		}
+		for (int i = 0; i < str.str.size(); i++) {
+			if (str.str[i] == ')') {
+				string neo = str.str;
+				neo.erase(i, 1);
+				addToqRIVP(neo);
+			}
+		}
+	}
+	else {
+		for (int i = 0; i < str.str.size(); i++) {
+			if (str.str[i] == ')') {
+				string neo = str.str;
+				neo.erase(i, 1);
+				addToqRIVP(neo);
+			}
+		}
+		for (int i = 0; i < str.str.size(); i++) {
+			if (str.str[i] == '(') {
+				string neo = str.str;
+				neo.erase(i, 1);
+				addToqRIVP(neo);
+			}
+		}
+	}
+};
+
+std::vector<std::string> removeInvalidParentheses(std::string s)
+
+{
+	unordered_set<string>_ans; ansRIVP = &_ans; depthRIVP = INT_MAX;
+	queue<stringRIVP>_qRIVP; qRIVP = &_qRIVP;
+	vector<string>v_ans; lenRIVP = s.size();
+	unordered_set<string>_mid; midRIVP = &_mid;
+	//remove Parentheses in two ends;
+	removeInvalidParenthesesTwoEnd(s);
+	//remove continuous Parentheses;
+	removeContinuousParentheses(s);
+	
+	//count remain
 	int nLP = 0; int nRP = 0;
 	for (char& c : s) {
 		if (c == '(')nLP++;
@@ -6506,9 +6611,19 @@ std::vector<std::string> removeInvalidParentheses(std::string s)
 		v_ans.push_back(s);
 		return v_ans;
 	}
-	
-	removeInvalidParentheses_reMain(s,0, 0);
-	for (auto& s : _ans) v_ans.push_back(s);
+	_qRIVP.push(stringRIVP(s));
+	while (_qRIVP.size() != 0) {
+		auto now = _qRIVP.front(); _qRIVP.pop();
+		if (isValidRIVP(now.str)) {
+			_ans.insert(now.str);
+			depthRIVP = min(depthRIVP, now.depth());
+		}
+		else {
+			addNextRIVP(now);
+		}
+	}
+	int maxLenght = lenRIVP - depthRIVP;
+	for (auto& s : _ans)if(maxLenght==s.size()) v_ans.push_back(s);
 	return v_ans;
 }
 

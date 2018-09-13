@@ -18,7 +18,7 @@ using namespace std;
 
 int main() {
 	vector<int>v({ 2,2 });
-	auto str = removeInvalidParentheses("()(()((");
+	auto str = removeInvalidParentheses("(()");
 	return 0;
 
 }
