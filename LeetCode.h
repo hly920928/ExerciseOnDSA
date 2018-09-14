@@ -824,3 +824,71 @@ std::string getHint(std::string secret, std::string guess);
 int lengthOfLIS(std::vector<int>& nums);
 //301. Remove Invalid Parentheses
 std::vector<std::string> removeInvalidParentheses(std::string s);
+//303. Range Sum Query - Immutable
+class NumArray {
+private:
+	std::vector<int>table;
+	std::vector<int>_nums;
+public:
+	NumArray(std::vector<int> nums) {
+		_nums = nums;
+		int n = nums.size();
+		table.resize((n*n - n) / 2);
+		for (int &i : table)i = INT_MIN;
+	}
+
+	int sumRange(int i, int j) {
+		int ans = INT_MIN;
+		if (!IsVaild(i, j))return INT_MIN;
+		if (i == j) {
+			ans = _nums[i];
+			return ans;
+		}
+		int pre = isExisted(i,j);
+		if (pre != INT_MIN)return pre;
+	
+		if (IsVaild(i+1,j)) {
+			pre = isExisted(i + 1, j);
+			if (pre != INT_MIN) { ans = pre + _nums[i]; 	table[getID(i, j)] = ans;
+			return ans; }
+			
+		}
+		if (IsVaild(i -1, j) ) {
+			pre = isExisted(i - 1, j);
+			if (pre != INT_MIN) { ans = pre - _nums[i - 1]; 	table[getID(i, j)] = ans;
+			return ans;
+			}
+		}
+		if (IsVaild(i, j-1)) {
+			pre = isExisted(i, j - 1);
+			if (pre != INT_MIN){ ans = pre + _nums[j]; 	table[getID(i, j)] = ans;
+			return ans;
+			}
+			
+		}
+		if (IsVaild(i, j +1)  ) {
+			pre = isExisted(i, j + 1);
+			if (pre != INT_MIN) { ans = pre - _nums[j + 1];	table[getID(i, j)] = ans;
+			return ans;
+			}
+		}
+		ans = sumRange(i + 1, j) + _nums[i];
+		table[getID(i, j)] = ans;
+		return ans;
+	}
+	bool IsVaild(int i, int j) {
+		if (j< i)return false;
+		if (i < 0 || i >= _nums.size())return false;
+		if (j < 0 ||j>= _nums.size())return false;
+		return true;
+	}
+	int isExisted(int i, int j) {
+		if (i == j)return _nums[i];
+		return table[getID(i,j)];
+	}
+	int inline getID(int i, int j) {
+		int n = _nums.size();
+		int id = i*(n - 1) + i*(i - 1) / 2 * -1 + j-i-1;
+		return id;
+	}
+};

@@ -17,8 +17,11 @@
 using namespace std;
 
 int main() {
-	vector<int>v({ 2,2 });
-	auto str = removeInvalidParentheses("(()");
+	vector<int>v({1,4,-6 });
+	NumArray as(v);
+	auto s1 = as.sumRange(0, 2);
+	auto s2 = as.sumRange(1,2);
+	auto s3 = as.sumRange(0, 1);
 	return 0;
 
 }
