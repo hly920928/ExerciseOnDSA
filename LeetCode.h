@@ -833,11 +833,13 @@ public:
 	NumArray(std::vector<int> nums) {
 		_nums = nums;
 		int n = nums.size();
-		table.resize((n*n - n) / 2);
+		if (n < 10000)table.resize((n*n - n) / 2); 
+		else table.resize(((n*n - n) / 2)/2);
 		for (int &i : table)i = INT_MIN;
 	}
 
 	int sumRange(int i, int j) {
+		if (if (n > 10000))return INT_MIN;
 		int ans = INT_MIN;
 		if (!IsVaild(i, j))return INT_MIN;
 		if (i == j) {
