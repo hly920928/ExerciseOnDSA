@@ -825,83 +825,120 @@ int lengthOfLIS(std::vector<int>& nums);
 //301. Remove Invalid Parentheses
 std::vector<std::string> removeInvalidParentheses(std::string s);
 //303. Range Sum Query - Immutable
+
 class NumArray {
 private:
 	std::vector<int>table;
 	std::vector<int>_nums;
+	int mod;
+	int cache_hit;
+	int total_hit;
 public:
 	NumArray(std::vector<int> nums) {
 		_nums = nums;
 		int n = nums.size();
+		mod = 2;
+		cache_hit = 0; total_hit = 0;
 		//if (n < 10000)table.resize((n*n - n) / 2); 
 		//else
-			table.resize(((n*n - n) / 2) / 3 + 10);
+			table.resize(((n*n - n) / 2) / mod + 10);
 		for (int &i : table)i = INT_MIN;
 	}
 
 	int sumRange(int i, int j) {
-	
+		total_hit++;
 		int ans = INT_MIN;
 		if (!IsVaild(i, j))return INT_MIN;
+		
 		if (i == j) {
+			cache_hit++;
 			ans = _nums[i];
 			return ans;
 		}
 		if (true) {
 			int id = getID(i, j);
 			int pre = INT_MIN; int ans = INT_MIN;
-			switch (id % 3) {
+			switch (id % 2) {
 			case 0: {
 				ans = get(id);
 				int pre = INT_MIN;
-				if (ans != INT_MIN)return ans;
-				if (IsVaild(i+2, j)) {
+				if (ans != INT_MIN) {
+					cache_hit++;
+					return ans;
+				}
 					pre = get(i + 2, j);
-					if (pre != INT_MIN) {
+					if (pre != INT_MIN) 
+					{
+						cache_hit++;
 						ans = pre + _nums[i] + _nums[i + 1];
 						set(id, ans);
 						return ans;
-				}
-				}
-				if (IsVaild(i -2, j)) {
+					}
 					pre = get(i - 2, j);
-					if (pre != INT_MIN) {
+					if (pre != INT_MIN) 
+					{
+						cache_hit++;
 						ans = pre - _nums[i - 2] - _nums[i - 1];
 						set(id, ans);
 						return ans;
 					}
-				}
-				if (IsVaild(i, j+2)) {
-					pre = get(i , j+2);
-					if (pre != INT_MIN) {
+					pre = get(i, j + 2);
+					if (pre != INT_MIN) 
+					{
+						cache_hit++;
 						ans = pre - _nums[j + 1] - _nums[j + 2];
 						set(id, ans);
 						return ans;
 					}
-				}
-				if (IsVaild(i, j - 2)) {
-					pre = get(i, j- 2);
-					if (pre != INT_MIN) {
-						ans = pre+ _nums[j -1] +_nums[j];
+					pre = get(i, j - 2);
+					if (pre != INT_MIN)
+					{
+						cache_hit++;
+						ans = pre + _nums[j - 1] + _nums[j];
 						set(id, ans);
 						return ans;
 					}
+				//
+				int mid = (i + j) / 2;
+				if (j - i >6) {
+					ans = sumRange(i, mid - 2) + _nums[mid -1]+ _nums[mid] + _nums[mid+1] + sumRange(mid + 2, j);
 				}
-				ans = sumRange(i+1,j)+_nums[i];
+				else {
+					ans = sumRange(i+1,j) + _nums[i] ;
+				}
 				set(id, ans);
 				return ans;
 			}
 			case 1: {
-				ans = sumRange(i, j-1) + _nums[j];
-				return ans;
-			}
-			case 2: {
-				if (IsVaild(i, j + 1)) {
-					ans = sumRange(i, j +1) - _nums[j+1];
+				int pre = get(i, j - 1);
+				if (pre != INT_MIN) {
+					cache_hit++;
+					ans = pre + _nums[j]; return ans;
+				}
+				pre = get(i, j + 1);
+				if (pre != INT_MIN) {
+					cache_hit++;
+					ans = pre - _nums[j+1]; return ans;
+				}
+				pre = get(i+1, j);
+				if (pre != INT_MIN) {
+					cache_hit++;
+					ans = pre + _nums[i]; return ans;
+				}
+				pre = get(i-1, j );
+				if (pre != INT_MIN) {
+					cache_hit++;
+					ans = pre - _nums[i-1]; return ans;
+				}
+				//
+				int mid = (i + j) / 2;
+				if (j - i >6) {
+					ans = sumRange(i, mid -1) + _nums[mid] + sumRange(mid + 1, j);
 				}
 				else {
-					ans = sumRange(i, j -1)  + _nums[j];
+					ans = sumRange(i + 1, j) + _nums[i];
 				}
+			
 				return ans;
 			}
 			}
@@ -956,17 +993,20 @@ public:
 	}
 	int inline get(int id) {
 	 
-		if (id % 3 != 0)return INT_MIN;
-		return table[id / 3];
+		if (id % mod != 0)return INT_MIN;
+		return table[id / mod];
 	}
 	int inline get(int i,int j) {
+		if(!IsVaild(i, j))return INT_MIN;
+		if (i == j)return _nums[i];
 		int id = getID(i, j);
-		if (id % 3 != 0)return INT_MIN;
-		return table[id / 3];
+
+		if (id % mod != 0)return INT_MIN;
+		return table[id / mod];
 	}
 	void inline set(int id,int sum) {
   
-		if (id % 3 != 0)return;
-		 table[id / 3]= sum;
+		if (id %mod != 0)return;
+		 table[id / mod]= sum;
 	}
 };
