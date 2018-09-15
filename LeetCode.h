@@ -833,18 +833,78 @@ public:
 	NumArray(std::vector<int> nums) {
 		_nums = nums;
 		int n = nums.size();
-		if (n < 10000)table.resize((n*n - n) / 2); 
-		else table.resize(((n*n - n) / 2)/2);
+		//if (n < 10000)table.resize((n*n - n) / 2); 
+		//else
+			table.resize(((n*n - n) / 2) / 3 + 10);
 		for (int &i : table)i = INT_MIN;
 	}
 
 	int sumRange(int i, int j) {
-		if (if (n > 10000))return INT_MIN;
+	
 		int ans = INT_MIN;
 		if (!IsVaild(i, j))return INT_MIN;
 		if (i == j) {
 			ans = _nums[i];
 			return ans;
+		}
+		if (true) {
+			int id = getID(i, j);
+			int pre = INT_MIN; int ans = INT_MIN;
+			switch (id % 3) {
+			case 0: {
+				ans = get(id);
+				int pre = INT_MIN;
+				if (ans != INT_MIN)return ans;
+				if (IsVaild(i+2, j)) {
+					pre = get(i + 2, j);
+					if (pre != INT_MIN) {
+						ans = pre + _nums[i] + _nums[i + 1];
+						set(id, ans);
+						return ans;
+				}
+				}
+				if (IsVaild(i -2, j)) {
+					pre = get(i - 2, j);
+					if (pre != INT_MIN) {
+						ans = pre - _nums[i - 2] - _nums[i - 1];
+						set(id, ans);
+						return ans;
+					}
+				}
+				if (IsVaild(i, j+2)) {
+					pre = get(i , j+2);
+					if (pre != INT_MIN) {
+						ans = pre - _nums[j + 1] - _nums[j + 2];
+						set(id, ans);
+						return ans;
+					}
+				}
+				if (IsVaild(i, j - 2)) {
+					pre = get(i, j- 2);
+					if (pre != INT_MIN) {
+						ans = pre+ _nums[j -1] +_nums[j];
+						set(id, ans);
+						return ans;
+					}
+				}
+				ans = sumRange(i+1,j)+_nums[i];
+				set(id, ans);
+				return ans;
+			}
+			case 1: {
+				ans = sumRange(i, j-1) + _nums[j];
+				return ans;
+			}
+			case 2: {
+				if (IsVaild(i, j + 1)) {
+					ans = sumRange(i, j +1) - _nums[j+1];
+				}
+				else {
+					ans = sumRange(i, j -1)  + _nums[j];
+				}
+				return ans;
+			}
+			}
 		}
 		int pre = isExisted(i,j);
 		if (pre != INT_MIN)return pre;
@@ -878,6 +938,7 @@ public:
 		table[getID(i, j)] = ans;
 		return ans;
 	}
+
 	bool IsVaild(int i, int j) {
 		if (j< i)return false;
 		if (i < 0 || i >= _nums.size())return false;
@@ -892,5 +953,20 @@ public:
 		int n = _nums.size();
 		int id = i*(n - 1) + i*(i - 1) / 2 * -1 + j-i-1;
 		return id;
+	}
+	int inline get(int id) {
+	 
+		if (id % 3 != 0)return INT_MIN;
+		return table[id / 3];
+	}
+	int inline get(int i,int j) {
+		int id = getID(i, j);
+		if (id % 3 != 0)return INT_MIN;
+		return table[id / 3];
+	}
+	void inline set(int id,int sum) {
+  
+		if (id % 3 != 0)return;
+		 table[id / 3]= sum;
 	}
 };
