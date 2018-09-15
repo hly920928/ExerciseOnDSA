@@ -830,18 +830,10 @@ class NumArray {
 private:
 	std::vector<int>table;
 	std::vector<int>_nums;
-	int mod;
-	int cache_hit;
-	int total_hit;
 public:
 	NumArray(std::vector<int> nums) {
 		_nums = nums;
-		int n = nums.size();
-		mod = 2;
-		cache_hit = 0; total_hit = 0;
-		//if (n < 10000)table.resize((n*n - n) / 2); 
-		//else
-			table.resize(((n*n - n) / 2) / mod + 10);
+		table.resize(n);
 		for (int &i : table)i = INT_MIN;
 	}
 
