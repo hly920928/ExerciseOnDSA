@@ -829,176 +829,52 @@ std::vector<std::string> removeInvalidParentheses(std::string s);
 class NumArray {
 private:
 	std::vector<int>table;
-	std::vector<int>_nums;
 public:
 	NumArray(std::vector<int> nums) {
-		_nums = nums;
-		table.resize(n);
-		for (int &i : table)i = INT_MIN;
+		int n = nums.size();
+		table.resize(n); int sum = 0;
+		for (int i = 0; i < n;i++) {
+			sum += nums[i];
+			table[i] = sum;
+		}
 	}
 
 	int sumRange(int i, int j) {
-		total_hit++;
-		int ans = INT_MIN;
-		if (!IsVaild(i, j))return INT_MIN;
+		if (i == 0)return  table[j];
+		return table[j] - table[i - 1];
+	}
+
+};
+
+class NumMatrix {
+private:
+	std::vector<std::vector<int>> matrix_table;
+	int m; int n;
+public:
+	NumMatrix(std::vector<std::vector<int>> matrix) {
+		int rowSum = 0;m = matrix.size();
+		if (m == 0)return;
+		matrix_table.resize(m);
+		n = matrix[0].size();
+		if (n == 0)return;
 		
-		if (i == j) {
-			cache_hit++;
-			ans = _nums[i];
-			return ans;
-		}
-		if (true) {
-			int id = getID(i, j);
-			int pre = INT_MIN; int ans = INT_MIN;
-			switch (id % 2) {
-			case 0: {
-				ans = get(id);
-				int pre = INT_MIN;
-				if (ans != INT_MIN) {
-					cache_hit++;
-					return ans;
-				}
-					pre = get(i + 2, j);
-					if (pre != INT_MIN) 
-					{
-						cache_hit++;
-						ans = pre + _nums[i] + _nums[i + 1];
-						set(id, ans);
-						return ans;
-					}
-					pre = get(i - 2, j);
-					if (pre != INT_MIN) 
-					{
-						cache_hit++;
-						ans = pre - _nums[i - 2] - _nums[i - 1];
-						set(id, ans);
-						return ans;
-					}
-					pre = get(i, j + 2);
-					if (pre != INT_MIN) 
-					{
-						cache_hit++;
-						ans = pre - _nums[j + 1] - _nums[j + 2];
-						set(id, ans);
-						return ans;
-					}
-					pre = get(i, j - 2);
-					if (pre != INT_MIN)
-					{
-						cache_hit++;
-						ans = pre + _nums[j - 1] + _nums[j];
-						set(id, ans);
-						return ans;
-					}
-				//
-				int mid = (i + j) / 2;
-				if (j - i >6) {
-					ans = sumRange(i, mid - 2) + _nums[mid -1]+ _nums[mid] + _nums[mid+1] + sumRange(mid + 2, j);
-				}
-				else {
-					ans = sumRange(i+1,j) + _nums[i] ;
-				}
-				set(id, ans);
-				return ans;
+		for (int i = 0; i < m; i++) {
+			matrix_table[i].resize(n);
+			for (int j = 0; j< n;j++) {
+				rowSum += matrix[i][j];
+				matrix_table[i][j] =get(i-1,j)+ rowSum;
 			}
-			case 1: {
-				int pre = get(i, j - 1);
-				if (pre != INT_MIN) {
-					cache_hit++;
-					ans = pre + _nums[j]; return ans;
-				}
-				pre = get(i, j + 1);
-				if (pre != INT_MIN) {
-					cache_hit++;
-					ans = pre - _nums[j+1]; return ans;
-				}
-				pre = get(i+1, j);
-				if (pre != INT_MIN) {
-					cache_hit++;
-					ans = pre + _nums[i]; return ans;
-				}
-				pre = get(i-1, j );
-				if (pre != INT_MIN) {
-					cache_hit++;
-					ans = pre - _nums[i-1]; return ans;
-				}
-				//
-				int mid = (i + j) / 2;
-				if (j - i >6) {
-					ans = sumRange(i, mid -1) + _nums[mid] + sumRange(mid + 1, j);
-				}
-				else {
-					ans = sumRange(i + 1, j) + _nums[i];
-				}
-			
-				return ans;
-			}
-			}
+			rowSum = 0;
 		}
-		int pre = isExisted(i,j);
-		if (pre != INT_MIN)return pre;
-	
-		if (IsVaild(i+1,j)) {
-			pre = isExisted(i + 1, j);
-			if (pre != INT_MIN) { ans = pre + _nums[i]; 	table[getID(i, j)] = ans;
-			return ans; }
-			
-		}
-		if (IsVaild(i -1, j) ) {
-			pre = isExisted(i - 1, j);
-			if (pre != INT_MIN) { ans = pre - _nums[i - 1]; 	table[getID(i, j)] = ans;
-			return ans;
-			}
-		}
-		if (IsVaild(i, j-1)) {
-			pre = isExisted(i, j - 1);
-			if (pre != INT_MIN){ ans = pre + _nums[j]; 	table[getID(i, j)] = ans;
-			return ans;
-			}
-			
-		}
-		if (IsVaild(i, j +1)  ) {
-			pre = isExisted(i, j + 1);
-			if (pre != INT_MIN) { ans = pre - _nums[j + 1];	table[getID(i, j)] = ans;
-			return ans;
-			}
-		}
-		ans = sumRange(i + 1, j) + _nums[i];
-		table[getID(i, j)] = ans;
-		return ans;
 	}
-
-	bool IsVaild(int i, int j) {
-		if (j< i)return false;
-		if (i < 0 || i >= _nums.size())return false;
-		if (j < 0 ||j>= _nums.size())return false;
-		return true;
+	int sumRegion(int row1, int col1, int row2, int col2) {
+		if (m*n == 0)return 0;
+		return get(row2, col2) - get(row2, col1 - 1) - get(row1 - 1, col2) + get(row1 - 1, col1 - 1);
 	}
-	int isExisted(int i, int j) {
-		if (i == j)return _nums[i];
-		return table[getID(i,j)];
-	}
-	int inline getID(int i, int j) {
-		int n = _nums.size();
-		int id = i*(n - 1) + i*(i - 1) / 2 * -1 + j-i-1;
-		return id;
-	}
-	int inline get(int id) {
-	 
-		if (id % mod != 0)return INT_MIN;
-		return table[id / mod];
-	}
-	int inline get(int i,int j) {
-		if(!IsVaild(i, j))return INT_MIN;
-		if (i == j)return _nums[i];
-		int id = getID(i, j);
-
-		if (id % mod != 0)return INT_MIN;
-		return table[id / mod];
-	}
-	void inline set(int id,int sum) {
-  
-		if (id %mod != 0)return;
-		 table[id / mod]= sum;
+	int inline get(int x, int y) {
+		if (x < 0 ||y<0)return 0;
+		x = std::min(x, (int)matrix_table.size()-1);
+		y = std::min(y, (int)matrix_table[0].size()-1);
+		return matrix_table[x][y];
 	}
 };
