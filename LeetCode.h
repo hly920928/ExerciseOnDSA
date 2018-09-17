@@ -878,3 +878,5 @@ public:
 		return matrix_table[x][y];
 	}
 };
+//306. Additive Number
+bool isAdditiveNumber(std::string num);

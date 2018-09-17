@@ -6626,6 +6626,43 @@ std::vector<std::string> removeInvalidParentheses(std::string s)
 	for (auto& s : _ans)if(maxLenght==s.size()) v_ans.push_back(s);
 	return v_ans;
 }
+string* strIAN;
+bool isAdditiveNumber_Re(unsigned long long first, unsigned long long second,int pos) {
+	unsigned long long sum = first + second;
+	int sumlen = (sum == 0) ? 1 : log10(sum) + 1;
+	if (pos + sumlen > strIAN->size())return false;
+	unsigned long long next = stoull(strIAN->substr(pos, sumlen));
+	if (sum != next)return false;
+	else {
+		if (pos + sumlen ==strIAN->size())return true;
+	}
+	return isAdditiveNumber_Re(second, next, pos + sumlen);
+}
+
+bool isAdditiveNumber(std::string num)
+{
+	strIAN = &num;	string first; string second;
+	for (int l1 = 1; l1 <= num.size() / 2; l1++) {
+		first.push_back(num[l1 - 1]);
+		
+		for (int l2 = 1; l1 <= num.size() / 2; l2++) {
+			if (l1 + l2 > num.size())break;
+			second.push_back(num[l1 + l2 - 1]);
+			unsigned long long a= stoull(first);
+			unsigned long long b = stoull(second);
+			int lenF = (a == 0) ? 1 : log10(a) + 1;
+			int lenS = (b==0)?1: log10(b) + 1;
+			int lenSum = (a+b == 0) ? 1 : log10(a + b) + 1;
+			if (lenF+ lenS+ lenSum> num.size())break;
+			if (isAdditiveNumber_Re(a, b, lenF + lenS))return true;
+			if (second[0] == '0')break;
+		}
+		
+		second.clear();
+		if (num[0] == '0')break;;
+	}
+	return false;
+}
 
 string fractionToDecimal(int numerator, int denominator)
 {
