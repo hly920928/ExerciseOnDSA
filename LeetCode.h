@@ -843,7 +843,10 @@ public:
 		if (i == 0)return  table[j];
 		return table[j] - table[i - 1];
 	}
-
+	void update(int i, int val) {
+		int diff = (i == 0) ? val - table[0] : val - table[i]+ table[i-1];
+		for (int t = i; i < table.size(); t++)table[t] += diff;
+	}
 };
 
 class NumMatrix {
