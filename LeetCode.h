@@ -825,18 +825,27 @@ int lengthOfLIS(std::vector<int>& nums);
 //301. Remove Invalid Parentheses
 std::vector<std::string> removeInvalidParentheses(std::string s);
 //303. Range Sum Query - Immutable
-
 class NumArray {
 private:
 	std::vector<int>table;
 public:
-	NumArray(std::vector<int> nums) {
+	NumArray(std::vector<int>& nums) {
 		int n = nums.size();
-		table.resize(n); int sum = 0;
-		for (int i = 0; i < n;i++) {
-			sum += nums[i];
-			table[i] = sum;
+		int level = std::log2(n) + 1;
+		table.resize(n+1); 
+		for (int i = 1; i <=level; i++) {
+			int base = std::pow(2, i - 1);
+			int step= std::pow(2, i);
+			for (int pos = base; pos <= n; pos += step) {
+				table[pos] = nums[pos - 1];
+				int stepBack = 1;
+				for (int backC = i - 1; backC> 0; backC--) {
+					table[pos] += table[pos - stepBack];
+					stepBack *= 2;
+				}
+			}
 		}
+
 	}
 
 	int sumRange(int i, int j) {
@@ -845,7 +854,11 @@ public:
 	}
 	void update(int i, int val) {
 		int diff = (i == 0) ? val - table[0] : val - table[i]+ table[i-1];
-		for (int t = i; i < table.size(); t++)table[t] += diff;
+		for (int t = i;t< table.size(); t++)table[t] += diff;
+	}
+	int sum(int x) {
+
+		return 0;
 	}
 };
 

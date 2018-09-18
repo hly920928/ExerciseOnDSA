@@ -17,8 +17,8 @@
 using namespace std;
 
 int main() {
-	 
-	auto a1 = isAdditiveNumber("1002003005008001300");
+	vector<int>v({1,2,3,4,5,6,7,8,9,10});
+	NumArray a1(v);
  
 	return 0;
 
