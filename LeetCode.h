@@ -828,11 +828,15 @@ std::vector<std::string> removeInvalidParentheses(std::string s);
 class NumArray {
 private:
 	std::vector<int>table;
+	std::vector<int>_nums;
+	int top;
 public:
-	NumArray(std::vector<int>& nums) {
+	NumArray(std::vector<int> nums) {
 		int n = nums.size();
+		_nums = nums;
 		int level = std::log2(n) + 1;
 		table.resize(n+1); 
+		top = pow(2, level);
 		for (int i = 1; i <=level; i++) {
 			int base = std::pow(2, i - 1);
 			int step= std::pow(2, i);
@@ -849,16 +853,34 @@ public:
 	}
 
 	int sumRange(int i, int j) {
-		if (i == 0)return  table[j];
-		return table[j] - table[i - 1];
+		if (i ==j)return  _nums[j];
+		return sum(j)-sum(i-1);
 	}
 	void update(int i, int val) {
-		int diff = (i == 0) ? val - table[0] : val - table[i]+ table[i-1];
-		for (int t = i;t< table.size(); t++)table[t] += diff;
+		int diff = val - _nums[i]; _nums[i] = val;
+		update(i+1, diff, top/2, top);
 	}
 	int sum(int x) {
+		if (x < 0)return 0;
+		if (x == 0)return _nums[0];
+		return sum(x+1,0, top/2,top);
+	}
+	int sum(int x, int _s,int lo,int hi) {
+		if (lo == x)return _s + table[x];
+		if (lo > x) {
+			return sum(x, _s,lo-(hi-lo)/2, lo);
 
-		return 0;
+		}
+		return sum(x,_s+table[lo],(lo+hi)/2,hi);
+	}
+	void update(int x, int diff, int lo, int hi) {
+		if(lo > table.size())return;
+		if (lo == x) { table[x] += diff; return; }
+		if (lo > x) {
+			if (lo <table.size())table[lo] += diff;
+			update(x, diff, lo - (hi - lo) / 2, lo);
+		}
+		else{ update(x, diff, (lo + hi) / 2, hi); }
 	}
 };
 
