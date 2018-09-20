@@ -874,7 +874,6 @@ public:
 		return sum(x,_s+table[lo],(lo+hi)/2,hi);
 	}
 	void update(int x, int diff, int lo, int hi) {
-		if(lo > table.size())return;
 		if (lo == x) { table[x] += diff; return; }
 		if (lo > x) {
 			if (lo <table.size())table[lo] += diff;
@@ -918,3 +917,5 @@ public:
 };
 //306. Additive Number
 bool isAdditiveNumber(std::string num);
+//309. Best Time to Buy and Sell Stock with Cooldown
+int maxProfit_WCD(std::vector<int>& prices);

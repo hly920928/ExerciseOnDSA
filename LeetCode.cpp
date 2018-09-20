@@ -6663,6 +6663,28 @@ bool isAdditiveNumber(std::string num)
 	}
 	return false;
 }
+vector<int>* pricesWCD;
+int maxSumWCD;
+void maxProfit_WCD_re(int pos, int none, int hold, int buy, int sell) {
+	if (pos == pricesWCD->size()) {
+		maxSumWCD = max(max(none, hold), max(buy, sell)); return;
+	}
+	maxProfit_WCD_re(
+		pos + 1,
+		max(none, sell),
+		max(buy, hold),
+		none- pricesWCD->at(pos),
+		max(buy+ pricesWCD->at(pos), hold + pricesWCD->at(pos))
+	);
+
+}
+int maxProfit_WCD(std::vector<int>& prices)
+{
+	maxSumWCD = 0; pricesWCD = &prices;
+	if (prices.size() == 0)return 0;
+	maxProfit_WCD_re(1, 0, -1 * prices[0], -1 * prices[0], 0);
+	return maxSumWCD;
+}
 
 string fractionToDecimal(int numerator, int denominator)
 {
