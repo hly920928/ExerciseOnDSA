@@ -6686,39 +6686,72 @@ int maxProfit_WCD(std::vector<int>& prices)
 	return maxSumWCD;
 }
 
+struct nodeFMHT {
+	int id; int height;
+	vector<int>nb;
+	nodeFMHT(int i = INT_MIN, int h = INT_MIN):id(i), height(h){
+
+	}
+};
+int minHeight;
+vector<nodeFMHT>*tableFMHT;
+int  height(int nowId, int postId, int dist) {
+	auto& table = *tableFMHT;
+	auto&now = tableFMHT->at(nowId);
+	if (now.nb.size()==1) {
+		if (postId != -1) {
+			return 1;
+		}
+		else {
+			for (auto i : now.nb) {
+				now.height = max(now.height, height(i, nowId, dist + 1) + 1);
+			}
+			return  now.height;
+		}
+
+	}
+	else {
+		now.height = max(now.height, dist+1);
+		int otherH = INT_MIN;
+		for (auto i : now.nb) {
+			if(i!= postId)otherH = max(otherH, height(i, nowId, dist + 1)+1);
+		}
+		now.height = max(now.height, otherH);
+		return otherH;
+	}
+	
+}
 std::vector<int> findMinHeightTrees(int n, std::vector<std::pair<int, int>>& edges)
 {
-	vector<vector<int>>table; table.resize(n);
-	for (auto&v : table) {
-		v.resize(n);
-		for (auto&i : v)i = n*n;
+	vector<int>ans;
+	if (n == 0) {
+		ans.push_back(0); return ans;
 	}
+	minHeight = INT_MAX;
+
+	vector<nodeFMHT>table; table.resize(n);
+	tableFMHT = &table;
+	for (int i = 0; i < n; i++)table[i].id = i;
 	for (auto& e : edges) {
-		table[e.first][e.second] = 1;
-		table[e.second][e.first] = 1;
+		table[e.first].nb.push_back(e.second);
+		table[e.second].nb.push_back(e.first);
 	}
-		for (int mid = 0; mid < n; mid++) {
-			for (int start = 0; start < n; start++) {
-				for (int end = start+1; end < n; end++) {
-					int dist = table[start][mid] + table[mid][end];
-					if (dist < table[start][end]) {
-						table[start][end] = dist;
-						table[end][start] = dist;
-					}
-				}
-			}
+	vector<int>leaf;
+	for (int i = 0; i < n; i++) {
+		if (table[i].nb.size() == 1)leaf.push_back(i);
+	}
+	for (int i : leaf)height(i, -1, 0);
+	int minH = INT_MAX;
+	for (int i = 0; i < n; i++) {
+		if (table[i].height == minH)ans.push_back(i);
+		if (table[i].height < minH) {
+			ans.clear();
+			ans.push_back(i);
+			minH = table[i].height;
 		}
-		vector<int> ans; int MinHeight = INT_MAX;
-		for (int i=0; i < n; i++) {
-			int MaxHeight =0;
-			for (int dist : table[i]) { if (dist != n*n) { MaxHeight = max(MaxHeight, dist); } };
-			if (MaxHeight == MinHeight) ans.push_back(i);
-			if (MaxHeight !=0&&MaxHeight < MinHeight) {
-				ans.clear(); ans.push_back(i); MinHeight = MaxHeight;
-			}
-		
-		}
-		return ans;
+	
+	}
+	return ans;
 }
 
 string fractionToDecimal(int numerator, int denominator)
