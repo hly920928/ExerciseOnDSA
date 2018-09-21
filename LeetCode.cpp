@@ -6673,8 +6673,8 @@ void maxProfit_WCD_re(int pos, int none, int hold, int buy, int sell) {
 		pos + 1,
 		max(none, sell),
 		max(buy, hold),
-		none- pricesWCD->at(pos),
-		max(buy+ pricesWCD->at(pos), hold + pricesWCD->at(pos))
+		none - pricesWCD->at(pos),
+		max(buy + pricesWCD->at(pos), hold + pricesWCD->at(pos))
 	);
 
 }
@@ -6684,6 +6684,41 @@ int maxProfit_WCD(std::vector<int>& prices)
 	if (prices.size() == 0)return 0;
 	maxProfit_WCD_re(1, 0, -1 * prices[0], -1 * prices[0], 0);
 	return maxSumWCD;
+}
+
+std::vector<int> findMinHeightTrees(int n, std::vector<std::pair<int, int>>& edges)
+{
+	vector<vector<int>>table; table.resize(n);
+	for (auto&v : table) {
+		v.resize(n);
+		for (auto&i : v)i = n*n;
+	}
+	for (auto& e : edges) {
+		table[e.first][e.second] = 1;
+		table[e.second][e.first] = 1;
+	}
+		for (int mid = 0; mid < n; mid++) {
+			for (int start = 0; start < n; start++) {
+				for (int end = start+1; end < n; end++) {
+					int dist = table[start][mid] + table[mid][end];
+					if (dist < table[start][end]) {
+						table[start][end] = dist;
+						table[end][start] = dist;
+					}
+				}
+			}
+		}
+		vector<int> ans; int MinHeight = INT_MAX;
+		for (int i=0; i < n; i++) {
+			int MaxHeight =0;
+			for (int dist : table[i]) { if (dist != n*n) { MaxHeight = max(MaxHeight, dist); } };
+			if (MaxHeight == MinHeight) ans.push_back(i);
+			if (MaxHeight !=0&&MaxHeight < MinHeight) {
+				ans.clear(); ans.push_back(i); MinHeight = MaxHeight;
+			}
+		
+		}
+		return ans;
 }
 
 string fractionToDecimal(int numerator, int denominator)

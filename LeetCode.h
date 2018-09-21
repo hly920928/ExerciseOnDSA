@@ -919,3 +919,5 @@ public:
 bool isAdditiveNumber(std::string num);
 //309. Best Time to Buy and Sell Stock with Cooldown
 int maxProfit_WCD(std::vector<int>& prices);
+//310. Minimum Height Trees
+std::vector<int> findMinHeightTrees(int n, std::vector<std::pair<int, int>>& edges);

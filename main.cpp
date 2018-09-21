@@ -17,14 +17,8 @@
 using namespace std;
 
 int main() {
-	vector<int>v({ 1,2,3,0,2 });
-	NumArray a1(v);
-	a1.update(4, 5);
-	a1.update(1,7);
-	a1.update(0, 8);
-	int a2 = maxProfit_WCD(v);
-	a1.update(1, 2);
-	a2 = a1.sumRange(0, 2);
+	vector<pair<int, int>>edges({ {0, 3}, {1, 3}, {2, 3}, {4, 3}, {5, 4} });
+	auto ans = findMinHeightTrees(6, edges);
 	return 0;
 
 }
