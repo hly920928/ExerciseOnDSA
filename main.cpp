@@ -17,8 +17,8 @@
 using namespace std;
 
 int main() {
-	vector<pair<int, int>>edges({ {0, 1} ,{ 1, 2 } ,{ 1, 3} ,{ 2, 4 } ,{ 3,5} ,{ 4,6 } });
-	auto ans = findMinHeightTrees(7, edges);
+	vector<pair<int, int>>edges({ {1,0} ,{ 1, 2 } ,{ 1, 3} });
+	auto ans = findMinHeightTrees(4, edges);
 	return 0;
 
 }

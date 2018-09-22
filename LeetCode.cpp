@@ -6693,63 +6693,62 @@ struct nodeFMHT {
 
 	}
 };
-int minHeight;
-vector<nodeFMHT>*tableFMHT;
-int  height(int nowId, int postId, int dist) {
-	auto& table = *tableFMHT;
-	auto&now = tableFMHT->at(nowId);
-	if (now.nb.size()==1) {
-		if (postId != -1) {
-			return 1;
+bool isLeafFMHT(nodeFMHT& nf, vector<bool>&tableVisited) {
+	int degrees = 0;
+	for (int i : nf.nb) {
+		if (!tableVisited[i]) {
+			degrees++;
 		}
-		else {
-			for (auto i : now.nb) {
-				now.height = max(now.height, height(i, nowId, dist + 1) + 1);
-			}
-			return  now.height;
-		}
-
-	}
-	else {
-		now.height = max(now.height, dist+1);
-		int otherH = INT_MIN;
-		for (auto i : now.nb) {
-			if(i!= postId)otherH = max(otherH, height(i, nowId, dist + 1)+1);
-		}
-		now.height = max(now.height, otherH);
-		return otherH;
+	
 	}
 	
-}
+	return degrees<=1; }
 std::vector<int> findMinHeightTrees(int n, std::vector<std::pair<int, int>>& edges)
 {
 	vector<int>ans;
 	if (n == 0) {
 		ans.push_back(0); return ans;
 	}
-	minHeight = INT_MAX;
 
+	vector<bool> tableVisited; tableVisited.resize(n);
+	for (int i = 0; i < n; i++)tableVisited[i] = false;
 	vector<nodeFMHT>table; table.resize(n);
-	tableFMHT = &table;
-	for (int i = 0; i < n; i++)table[i].id = i;
+ 	for (int i = 0; i < n; i++)table[i].id = i;
 	for (auto& e : edges) {
 		table[e.first].nb.push_back(e.second);
 		table[e.second].nb.push_back(e.first);
 	}
-	vector<int>leaf;
+	queue<int>leaf;
 	for (int i = 0; i < n; i++) {
-		if (table[i].nb.size() == 1)leaf.push_back(i);
-	}
-	for (int i : leaf)height(i, -1, 0);
-	int minH = INT_MAX;
-	for (int i = 0; i < n; i++) {
-		if (table[i].height == minH)ans.push_back(i);
-		if (table[i].height < minH) {
-			ans.clear();
-			ans.push_back(i);
-			minH = table[i].height;
+		if (table[i].nb.size() == 1) { leaf.push(i);// tableVisited[i] = true;
 		}
-	
+	}
+	leaf.push(-1);
+	while (true) {
+		unordered_set<int>next;
+		while (leaf.front() != -1) {
+			auto&now = table[leaf.front()]; leaf.pop();
+			tableVisited[now.id] = true;
+			for (int i : now.nb) {
+				if (!tableVisited[i])next.insert(i);
+			}
+			}
+		for (int i : next) {
+			if (isLeafFMHT(table[i], tableVisited)) {
+				leaf.push(i);
+			}
+		}
+			leaf.pop(); leaf.push(-1);
+			if (leaf.size() < 4) {
+				int uv = 0;
+				for (bool b : tableVisited)if (!b)uv++;
+				if (uv == leaf.size() - 1)break;
+			}
+	}
+		
+
+	while (leaf.size() !=1) {
+		ans.push_back(leaf.front()); leaf.pop();
 	}
 	return ans;
 }
