@@ -921,3 +921,5 @@ bool isAdditiveNumber(std::string num);
 int maxProfit_WCD(std::vector<int>& prices);
 //310. Minimum Height Trees
 std::vector<int> findMinHeightTrees(int n, std::vector<std::pair<int, int>>& edges);
+//312. Burst Balloons
+int maxCoins(std::vector<int>& nums);

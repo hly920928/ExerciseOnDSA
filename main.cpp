@@ -17,8 +17,8 @@
 using namespace std;
 
 int main() {
-	vector<pair<int, int>>edges({ {1,0} ,{ 1, 2 } ,{ 1, 3} });
-	auto ans = findMinHeightTrees(4, edges);
+	vector<int>edges({ 3,1,5,8 });
+	auto ans = maxCoins(edges);
 	return 0;
 
 }

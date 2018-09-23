@@ -6706,10 +6706,13 @@ bool isLeafFMHT(nodeFMHT& nf, vector<bool>&tableVisited) {
 std::vector<int> findMinHeightTrees(int n, std::vector<std::pair<int, int>>& edges)
 {
 	vector<int>ans;
-	if (n == 0) {
+	if (n == 1) {
 		ans.push_back(0); return ans;
 	}
-
+	if (n == 2) {
+		ans.push_back(edges[0].first); ans.push_back(edges[0].second);
+		return ans;
+	}
 	vector<bool> tableVisited; tableVisited.resize(n);
 	for (int i = 0; i < n; i++)tableVisited[i] = false;
 	vector<nodeFMHT>table; table.resize(n);
@@ -6751,6 +6754,32 @@ std::vector<int> findMinHeightTrees(int n, std::vector<std::pair<int, int>>& edg
 		ans.push_back(leaf.front()); leaf.pop();
 	}
 	return ans;
+}
+
+int maxCoins(std::vector<int>& nums)
+{
+	nums.insert(nums.begin(), 1);
+	nums.push_back(1);
+	int n = nums.size();
+	vector<vector<int>>table; table.resize(n);
+	for (int i = 0; i < n; i++) {
+		table[i].resize(n);
+		for (int j= 0; j <n; j++)table[i][j] = 0;
+	}
+	for (int len = 1; len <= n - 2; len++) {
+		for (int begin = 1; begin < n -1; begin++) {
+			int end = begin + len - 1;
+			if (end > n - 2)break;
+			for (int last = begin; last <= end; last++) {
+				table[begin][end] = max(table[begin][end],
+					table[begin][last-1]+
+					nums[begin -1]* nums[last]* nums[end +1]+
+					table[last+1][end]
+					);
+			}
+		}
+	}
+	return table[1][n-1];
 }
 
 string fractionToDecimal(int numerator, int denominator)
