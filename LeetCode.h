@@ -923,3 +923,5 @@ int maxProfit_WCD(std::vector<int>& prices);
 std::vector<int> findMinHeightTrees(int n, std::vector<std::pair<int, int>>& edges);
 //312. Burst Balloons
 int maxCoins(std::vector<int>& nums);
+//313. Super Ugly Number
+int nthSuperUglyNumber(int n, std::vector<int>& primes);

@@ -6779,7 +6779,31 @@ int maxCoins(std::vector<int>& nums)
 			}
 		}
 	}
-	return table[1][n-1];
+	return table[1][n-2];
+}
+class smaller {
+public:
+	bool operator()(int x, int y) {
+		return x > y;
+	}
+};
+int nthSuperUglyNumber(int n, std::vector<int>& primes)
+{
+	vector<int>table; set<int>set;
+	set.insert(1);
+	for (int i =0; i < n-1; i++) {
+		int now = *set.crbegin();
+		vector<int>cand;
+		for (auto& i : primes) {
+			auto itr = set.upper_bound(now / i);
+			if (itr != set.end()) {
+				cand.push_back((*itr)*i);
+			}
+		}
+		int min = *min_element(cand.begin(), cand.end());
+		set.insert(min);
+	}
+	return   *set.crbegin();
 }
 
 string fractionToDecimal(int numerator, int denominator)

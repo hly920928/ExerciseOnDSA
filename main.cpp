@@ -17,8 +17,8 @@
 using namespace std;
 
 int main() {
-	vector<int>edges({ 3,1,5,8 });
-	auto ans = maxCoins(edges);
+	vector<int>edges({ 2,7,13,19 });
+	auto ans = nthSuperUglyNumber(12,edges);
 	return 0;
 
 }
