@@ -6789,19 +6789,19 @@ public:
 };
 int nthSuperUglyNumber(int n, std::vector<int>& primes)
 {
-	vector<int>table; set<int>set;
-	set.insert(1);
+	vector<int>table; 
+	table.push_back(1);
 	for (int i =0; i < n-1; i++) {
-		int now = *set.crbegin();
+		int now = table.back();
 		vector<int>cand;
 		for (auto& i : primes) {
-			auto itr = set.upper_bound(now / i);
-			if (itr != set.end()) {
+			auto itr =upper_bound(table.begin(),table.end(),now / i);
+			if (itr != table.end()&&(*itr*i)>now) {
 				cand.push_back((*itr)*i);
 			}
 		}
 		int min = *min_element(cand.begin(), cand.end());
-		set.insert(min);
+		table.push_back(min);
 	}
 	return   *set.crbegin();
 }
