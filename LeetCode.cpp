@@ -6790,20 +6790,22 @@ public:
 int nthSuperUglyNumber(int n, std::vector<int>& primes)
 {
 	vector<int>table; 
-	table.push_back(1);
+	table.push_back(1); vector<int>ptr;
+	for (int i = 0; i < primes.size(); i++)ptr.push_back(0);
 	for (int i =0; i < n-1; i++) {
 		int now = table.back();
 		vector<int>cand;
-		for (auto& i : primes) {
-			auto itr =upper_bound(table.begin(),table.end(),now / i);
-			if (itr != table.end()&&(*itr*i)>now) {
-				cand.push_back((*itr)*i);
+		for (int k= 0;k< primes.size();k++) {
+			int candI = table[ptr[k]] * primes[k];
+			while (candI <= now) {
+				ptr[k]++; candI = table[ptr[k]] * primes[k];
 			}
+	        cand.push_back(candI);
 		}
 		int min = *min_element(cand.begin(), cand.end());
 		table.push_back(min);
 	}
-	return   *set.crbegin();
+	return   table.back();
 }
 
 string fractionToDecimal(int numerator, int denominator)
