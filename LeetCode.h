@@ -925,3 +925,5 @@ std::vector<int> findMinHeightTrees(int n, std::vector<std::pair<int, int>>& edg
 int maxCoins(std::vector<int>& nums);
 //313. Super Ugly Number
 int nthSuperUglyNumber(int n, std::vector<int>& primes);
+//315. Count of Smaller Numbers After Self
+std::vector<int> countSmaller(std::vector<int>& nums);

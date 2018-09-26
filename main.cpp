@@ -17,8 +17,8 @@
 using namespace std;
 
 int main() {
-	vector<int>edges({ 2,7,13,19 });
-	auto ans = nthSuperUglyNumber(12,edges);
+	vector<int>edges({ 5,2,6,1 });
+	auto ans = countSmaller(edges);
 	return 0;
 
 }

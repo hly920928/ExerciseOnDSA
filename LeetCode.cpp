@@ -6807,6 +6807,55 @@ int nthSuperUglyNumber(int n, std::vector<int>& primes)
 	}
 	return   table.back();
 }
+vector<int>*numsCountSmaller;
+vector<int>*indexCountSmaller;
+vector<int>*ansCountSmaller;
+void mergeCount(int lo, int hi) {
+
+	const auto&nums = *numsCountSmaller;
+	auto&index = *indexCountSmaller;
+	auto&ans = *ansCountSmaller;
+	if (hi == lo)return;
+	if (hi - lo == 1) {
+		if (nums[hi] < nums[lo]) {
+			ans[lo]++;
+			swap(index[lo], index[hi]);
+		}
+		return;
+	}
+	int mid = (hi +lo) / 2;
+
+	mergeCount(lo, mid); mergeCount(mid+1, hi);
+	int pos = mid + 1;
+	for (int i = lo; i <= mid; i++) {
+		while (pos <= hi&& nums[index[pos]] < nums[index[i]]) 	pos++;
+		if(pos!= mid + 1&& pos != hi+1)ans[index[i]] += pos - (mid + 1) ;
+		else if(pos == mid + 1) {
+			if (nums[index[mid+1]]<nums[index[i]])ans[index[i]]++;
+		}
+		else if (pos == hi+1) {
+			if (nums[index[hi]]<nums[index[i]])ans[index[i]]+=hi-(mid+1)+1;
+			else ans[index[i]] += hi - (mid + 1);
+		}
+	}
+	inplace_merge(index.begin() + lo,
+		index.begin() + mid+1,
+		index.begin() + hi + 1,
+		[&](int a, int b) {return nums[a] < nums[b]; }
+	);
+
+}
+std::vector<int> countSmaller(std::vector<int>& nums)
+{
+	if (nums.size() == 0)return 	vector<int>();
+	int n = nums.size();
+	vector<int>ans(n, 0);
+	vector<int>index; numsCountSmaller = &nums;
+	for (int i = 0; i < n; i++)index.push_back(i);
+	indexCountSmaller = &index; ansCountSmaller = &ans;
+	mergeCount(0, n - 1);
+	return ans;
+}
 
 string fractionToDecimal(int numerator, int denominator)
 {
