@@ -6872,24 +6872,76 @@ void removeDuplicateLetters_Re(string& str) {
 	for (auto& i : table1)i = -1;	for (auto& i : table2)i = -1;
 	for (int i = 0; i < s1.size(); i++)table1[s1[i] - 'a'] = i;
 	for (int i = 0; i < s2.size(); i++)table2[s2[i] - 'a'] = i;
-   
+	int n=0;
 	for (int i = 0; i < 26; i++) {
-		if (table1[i] != -1 && table2[i] != -1) {
-			string e1 = s1; e1.erase(table1[i], 1);
-			string e2 = s2; e2.erase(table2[2], 1);
-			if (e1 + s2 < s1 + e2) {
-				s1 = e1;
-			}
-			else { s2 = e2; }
-		}
+		if (table1[i] != -1 || table2[i] != -1)n++;
 	}
 	str = s1 + s2;
+	for (int i = 0; i < n; i++) {
+		for (char c = 'a'; c <= 'z'; c++) {
+			int pos = -1;
+			for (int j = i; j < str.size(); j++) {
+				if (str[j] == c) { pos = j; break; }
+			}
+			if (pos != -1) {
+				bool canEraseAll = true;
+				for (int before = i ; before < pos; before++) {
+					char cNow = str[before];
+					bool isExisted = false;
+					for (int after = pos + 1; after < str.size(); after++) {
+						if (str[after] == cNow) {
+							isExisted = true; break;
+						}
+					}
+					if (!isExisted) { canEraseAll = false; break; }
+				}
+				if (canEraseAll) {
+					if(pos!=i)str.erase(str.begin() + i, str.begin() + pos);
+					for (int now = i+1; now < str.size(); now++) {
+						if (str[now] == c) { str.erase(now, 1); break; }
+					}
+					break;
+				}
+			}
+		}
+	}
+	
 
 }
-std::string removeDuplicateLetters(std::string s)
+std::string removeDuplicateLetters(std::string str)
 {
-	removeDuplicateLetters_Re(s);
-	return s;
+	if (str.size() == 0)return str;
+	vector<int>table[26];
+	for (int i = 0; i < str.size(); i++) {table[str[i] - 'a'].push_back(i);}
+	int n = 0;
+	for (auto& v : table) { if (v.size() != 0)n++; }
+	int nowLast = 0;
+	for (int i = 0; i < n; i++) {
+		for (char c = 'a'; c <= 'z'; c++) {
+			int pos = -1;
+			for (int j = nowLast; j < str.size(); j++) {
+				if (str[j] == c) { pos = j; break; }
+			}
+			if (pos != -1) {
+				bool canEraseAll = true;
+				for (int before = nowLast; before < pos; before++) {
+					char cNow = str[before];
+					if (cNow == '#')continue;
+					if (table[cNow - 'a'].back() < pos) {
+						canEraseAll = false; break;
+					}
+				}
+				if (canEraseAll) {
+					for (int i = nowLast; i < pos;i++) {str[i] = '#';}
+					for (int i : table[c - 'a']) {if(i!=pos)	str[i] = '#';}
+					nowLast = pos+1; break;
+				}
+			}
+		}
+	}
+	string ans;
+	for (char& c : str) { if (c != '#')ans.push_back(c); }
+	return ans;
 }
 
 string fractionToDecimal(int numerator, int denominator)

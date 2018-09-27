@@ -18,7 +18,7 @@ using namespace std;
 
 int main() {
 	vector<int>edges({ 5,2,6,1 });
-	auto ans = removeDuplicateLetters("bcabc");
+	auto ans = removeDuplicateLetters("cbacdcbc");
 	return 0;
 
 }
