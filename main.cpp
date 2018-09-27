@@ -18,7 +18,7 @@ using namespace std;
 
 int main() {
 	vector<int>edges({ 5,2,6,1 });
-	auto ans = countSmaller(edges);
+	auto ans = removeDuplicateLetters("bcabc");
 	return 0;
 
 }

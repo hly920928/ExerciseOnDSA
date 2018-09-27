@@ -927,3 +927,5 @@ int maxCoins(std::vector<int>& nums);
 int nthSuperUglyNumber(int n, std::vector<int>& primes);
 //315. Count of Smaller Numbers After Self
 std::vector<int> countSmaller(std::vector<int>& nums);
+//316. Remove Duplicate Letters
+std::string removeDuplicateLetters(std::string s);

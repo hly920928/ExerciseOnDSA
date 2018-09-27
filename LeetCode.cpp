@@ -6856,6 +6856,41 @@ std::vector<int> countSmaller(std::vector<int>& nums)
 	mergeCount(0, n - 1);
 	return ans;
 }
+void removeDuplicateLetters_Re(string& str) {
+	if (str.size() == 1)return;
+	if (str.size() == 2) {
+		if (str[0] == str[1]) {
+			str.erase(1, 1);
+		}
+		return;
+	}
+	string s1= str.substr(0, str.size() / 2);
+	string s2 = str.substr(str.size() / 2, str.size());
+	removeDuplicateLetters_Re(s1); removeDuplicateLetters_Re(s2);
+	//merge
+	int table1[26]; int table2[26];
+	for (auto& i : table1)i = -1;	for (auto& i : table2)i = -1;
+	for (int i = 0; i < s1.size(); i++)table1[s1[i] - 'a'] = i;
+	for (int i = 0; i < s2.size(); i++)table2[s2[i] - 'a'] = i;
+   
+	for (int i = 0; i < 26; i++) {
+		if (table1[i] != -1 && table2[i] != -1) {
+			string e1 = s1; e1.erase(table1[i], 1);
+			string e2 = s2; e2.erase(table2[2], 1);
+			if (e1 + s2 < s1 + e2) {
+				s1 = e1;
+			}
+			else { s2 = e2; }
+		}
+	}
+	str = s1 + s2;
+
+}
+std::string removeDuplicateLetters(std::string s)
+{
+	removeDuplicateLetters_Re(s);
+	return s;
+}
 
 string fractionToDecimal(int numerator, int denominator)
 {
