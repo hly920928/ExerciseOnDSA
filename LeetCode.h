@@ -929,3 +929,5 @@ int nthSuperUglyNumber(int n, std::vector<int>& primes);
 std::vector<int> countSmaller(std::vector<int>& nums);
 //316. Remove Duplicate Letters
 std::string removeDuplicateLetters(std::string s);
+//318. Maximum Product of Word Lengths
+int maxProduct_w(std::vector<std::string>& words);

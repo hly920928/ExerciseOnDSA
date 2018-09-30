@@ -4289,6 +4289,7 @@ int maxProductWithoutZero(vector<int>& nums)
 	
 	return _max;
 }
+
 int maxProduct(vector<int>& nums) {
 	vector<int>segment; int _max = INT_MIN;
 	if (nums.size() >  500) {//counter extreme test case 184
@@ -6942,6 +6943,43 @@ std::string removeDuplicateLetters(std::string str)
 	string ans;
 	for (char& c : str) { if (c != '#')ans.push_back(c); }
 	return ans;
+}
+class stringMPW {
+public:
+	string* str;
+	int len;
+	int table;
+	stringMPW(string& s) {
+		str = &s; len = s.size();
+		table = 0;
+		for (char c : s) {
+			table = table | (1 << (c - 'a'));
+	   }
+	
+	};
+	bool isShared(const stringMPW& b) { return (table&b.table)!=0; }
+
+};
+bool operator<(const stringMPW& a, const stringMPW& b) {
+	return a.len < b.len;
+}
+int maxProduct_w(std::vector<std::string>& words)
+{
+	int _max = 0; int n = words.size();
+	if (n == 0)return _max;
+	vector<stringMPW>vstr;
+	for (auto&s : words)vstr.push_back(stringMPW(s));
+	sort(vstr.begin(), vstr.end());
+	for (int i = n - 1; i >= 0; i--) {
+		for (int j = i - 1; j >= 0; j--) {
+			int pdNow = vstr[i].len*vstr[j].len;
+			if (pdNow <= _max)break;
+			if (!vstr[i].isShared(vstr[j])) {
+				_max = pdNow;
+			}
+		}
+	}
+	return _max;
 }
 
 string fractionToDecimal(int numerator, int denominator)

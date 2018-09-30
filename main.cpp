@@ -17,8 +17,8 @@
 using namespace std;
 
 int main() {
-	vector<int>edges({ 5,2,6,1 });
-	auto ans = removeDuplicateLetters("cbacdcbc");
+	vector<string>edges({ "a","aa","aaa","aaaa" });
+	auto ans = maxProduct_w(edges);
 	return 0;
 
 }
