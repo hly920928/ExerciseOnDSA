@@ -6982,6 +6982,18 @@ int maxProduct_w(std::vector<std::string>& words)
 	return _max;
 }
 
+int bulbSwitch(int n)
+{
+	if (n ==0)return 0;
+	if (n == 1)return 1;
+	int now= 1;
+	int ans = 0;
+	while (now*now < n) {
+		ans++; now++;
+	}
+	return ans;
+}
+
 string fractionToDecimal(int numerator, int denominator)
 {
 /*
