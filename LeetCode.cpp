@@ -6994,19 +6994,78 @@ int bulbSwitch(int n)
 	return ans;
 }
 vector<int>*table1mN; vector<int>*table2mN; vector<int>*ansMN; vector<int>*nowMN;
+int mMN; int nMN; int kMN;
+bool isSmallerMN(vector<int>&a, vector<int>&b, int k) {
+	for (int i = 0; i < k; i++) {
+		if (a[i] < b[i])return true;
+		if (a[i] >b[i])return false;
+	}
+	
+	return false;
+}
+int getNextMN(vector<int>*table, int pos, int remain, int max) {
+	int numK = 0;
+	return numK;
+}
 void maxNumber_Re(int pos1, int pos2, int posK) {
-
+	auto& ans = *ansMN;
+	auto& now = *nowMN;
+	if (isSmallerMN(now, ans, posK))return;
+	if (posK == ansMN->size()) {
+		for (int i = 0; i < kMN; i++) {
+			if (ansMN->at(i) > nowMN->at(i)) break;
+			if (ansMN->at(i) < nowMN->at(i)) {
+				*ansMN = *nowMN;
+				break;
+			}
+		}
+		return;
+	}
+	int n_pos1 = -1; int n_pos2 = -1; int numsK=-1;
+	int remainK = kMN - posK - 1;
+	for (int num = 9; num >= 0; num--) {
+		auto& v1 = table1mN[num];
+		auto& v2 = table2mN[num];
+		auto itr1 = lower_bound(v1.begin(), v1.end(), pos1);
+		auto itr2= lower_bound(v2.begin(), v2.end(), pos2);
+		if (itr1 != v1.end()) {
+			int n1 = *itr1;
+			int remainN = mMN - n1 - 1 + nMN - pos2;
+			if (remainN >= remainK) {
+				n_pos1 = n1;
+			}
+		}
+		if (itr2!= v2.end()) {
+			int n2 = *itr2;
+			int remainN = mMN - pos1 + nMN - n2 - 1;
+			if (remainN >= remainK) {
+				n_pos2 = n2;
+			}
+		}
+		if (n_pos1 != -1 || n_pos2 != -1) {
+			numsK = num;
+			break;
+		}
+	}
+	if (numsK != -1) {
+		nowMN->at(posK) = numsK;
+		if (n_pos1 != -1) { maxNumber_Re(n_pos1 + 1, pos2, posK + 1); }
+		if (n_pos2 != -1) { maxNumber_Re(pos1, n_pos2 + 1, posK + 1); }
+		nowMN->at(posK) = 0;
+	}
+	
 }
 std::vector<int> maxNumber(std::vector<int>& nums1, std::vector<int>& nums2, int k)
 {
-	vector<int>table1[10]; vector<int>table2[10]; vector<int>ans;
+	vector<int>table1[10]; vector<int>table2[10]; vector<int>ans; vector<int>now;
 	if (k == 0)return ans;
 	ans.resize(k); for (auto&i : ans)i =0;
-	vector<int>now;
+	now.resize(k); for (auto&i : now)i = 0;
 	//preparing table;
+	mMN = nums1.size();	nMN = nums2.size(); kMN = k; nowMN = &now;
 	for (int i = 0; i < nums1.size(); i++)table1[nums1[i]].push_back(i);
 	for (int i = 0; i < nums2.size(); i++)table2[nums2[i]].push_back(i);
-	table1mN = table1;	table2mN = table2; ansMN = &ans; nowMN = &now;
+	table1mN = table1;	table2mN = table2; ansMN = &ans;
 	maxNumber_Re(0, 0, 0);
 	return ans;
 }

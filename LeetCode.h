@@ -933,3 +933,4 @@ std::string removeDuplicateLetters(std::string s);
 int maxProduct_w(std::vector<std::string>& words);
 //319. Bulb Switcher
 int bulbSwitch(int n);
+std::vector<int> maxNumber(std::vector<int>& nums1, std::vector<int>& nums2, int k);
