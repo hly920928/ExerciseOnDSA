@@ -6988,9 +6988,26 @@ int bulbSwitch(int n)
 	if (n == 1)return 1;
 	int now= 1;
 	int ans = 0;
-	while (now*now < n) {
+	while (now*now <= n) {
 		ans++; now++;
 	}
+	return ans;
+}
+vector<int>*table1mN; vector<int>*table2mN; vector<int>*ansMN; vector<int>*nowMN;
+void maxNumber_Re(int pos1, int pos2, int posK) {
+
+}
+std::vector<int> maxNumber(std::vector<int>& nums1, std::vector<int>& nums2, int k)
+{
+	vector<int>table1[10]; vector<int>table2[10]; vector<int>ans;
+	if (k == 0)return ans;
+	ans.resize(k); for (auto&i : ans)i =0;
+	vector<int>now;
+	//preparing table;
+	for (int i = 0; i < nums1.size(); i++)table1[nums1[i]].push_back(i);
+	for (int i = 0; i < nums2.size(); i++)table2[nums2[i]].push_back(i);
+	table1mN = table1;	table2mN = table2; ansMN = &ans; nowMN = &now;
+	maxNumber_Re(0, 0, 0);
 	return ans;
 }
 

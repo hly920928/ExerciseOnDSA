@@ -931,3 +931,5 @@ std::vector<int> countSmaller(std::vector<int>& nums);
 std::string removeDuplicateLetters(std::string s);
 //318. Maximum Product of Word Lengths
 int maxProduct_w(std::vector<std::string>& words);
+//319. Bulb Switcher
+int bulbSwitch(int n);
