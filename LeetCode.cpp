@@ -6994,14 +6994,14 @@ int bulbSwitch(int n)
 	return ans;
 }
 vector<int>*table1mN; vector<int>*table2mN; vector<int>*ansMN; vector<int>*nowMN;
-int mMN; int nMN; int kMN;
+int mMN; int nMN; int kMN; vector<vector<vector<char>>>*dpTable;
 struct stateMN {
 	unsigned short pos1; unsigned short  pos2; unsigned short  posK; char  last;
 	stateMN(unsigned short p1 = 65535, unsigned short p2 = 65535, unsigned short pK = 65535, unsigned short l = 0) :pos1(p1), pos2(p2), posK(pK), last(l) {};
 	bool isNull()const {
 		return pos1 == 65535;
 	}
-	void productNext(list<stateMN>&list, int&maxNext) {
+	void productNext(queue<stateMN>&list, int&maxNext) {
 		auto& ans = *ansMN;
 		auto& now = *nowMN;
 		int n_pos1 = -1; int n_pos2 = -1; int numsK = -1;
@@ -7032,13 +7032,102 @@ struct stateMN {
 		}
 		if (numsK != -1&&maxNext<=numsK) {
 			maxNext = numsK;
-			if (n_pos1 != -1) { list.push_back(stateMN(n_pos1 + 1, pos2, posK + 1, numsK)); };
-			if (n_pos2 != -1) { list.push_back(stateMN(pos1, n_pos2 + 1, posK + 1, numsK)); };
+			if (n_pos1 != -1) { list.push(stateMN(n_pos1 + 1, pos2, posK + 1, numsK)); };
+			if (n_pos2 != -1) { list.push(stateMN(pos1, n_pos2 + 1, posK + 1, numsK)); };
 		}
 	}
 };
 bool operator<(const stateMN&a, const stateMN&b) {
 	return a.last < b.last;
+}
+char stateToChar(int dir, int num) {
+	return dir * 10 + num;
+}
+void charToState(char c,int& dir, int& num) {
+	dir = c / 10; num = c % 10;
+}
+
+char getStateMN(int posK, int pos1, int pos2) {
+	auto& dp = *dpTable;
+	if (dp[posK][pos1][pos2] != 0)return dp[posK][pos1][pos2];
+		int n_pos1 = -1; int n_pos2 = -1; int numsK = -1;
+		int remainK = kMN - posK - 1;
+		for (int num = 9; num >= 0; num--) {
+			auto& v1 = table1mN[num];
+			auto& v2 = table2mN[num];
+			auto itr1 = lower_bound(v1.begin(), v1.end(), pos1);
+			auto itr2 = lower_bound(v2.begin(), v2.end(), pos2);
+			if (itr1 != v1.end()) {
+				int n1 = *itr1;
+				int remainN = mMN - n1 - 1 + nMN - pos2;
+				if (remainN >= remainK) {
+					n_pos1 = n1;
+				}
+			}
+			if (itr2 != v2.end()) {
+				int n2 = *itr2;
+				int remainN = mMN - pos1 + nMN - n2 - 1;
+				if (remainN >= remainK) {
+					n_pos2 = n2;
+				}
+			}
+			if (n_pos1 != -1 || n_pos2 != -1) {
+				numsK = num;
+				break;
+			}
+		}
+		if (numsK != -1) {
+			if (n_pos1 != -1 && n_pos2 != -1) {
+				dp[posK][pos1][pos2] = 30 + numsK;
+			}
+			else if (n_pos1 != -1) {
+				dp[posK][pos1][pos2] =10 + numsK;
+			}
+			else if (n_pos2 != -1) {
+				dp[posK][pos1][pos2] =20 + numsK;
+			}
+		}
+		else {
+			dp[posK][pos1][pos2] = 1;
+		}
+		return dp[posK][pos1][pos2];
+	}
+void  maxNumber_ReV2(int posK, int pos1, int pos2, bool isUpdate) {
+	char state = getStateMN(posK, pos1, pos2);
+	auto& ans = *ansMN;
+	if (state == 1)return;
+	int dir = -1; int num = -1;
+	charToState(state, dir, num);
+	if (dir == 0)return;
+	if (num < ansMN->at(posK) && !isUpdate)return;
+	if (num > ansMN->at(posK)|| isUpdate) {
+		ansMN->at(posK) = num;
+		if (dir == 3) {
+			maxNumber_ReV2(posK + 1, pos1 + 1, pos2, true);
+			maxNumber_ReV2(posK + 1, pos1, pos2 + 1, true);
+		}
+		else if (dir == 1) {
+			maxNumber_ReV2(posK + 1, pos1 + 1, pos2, true);
+		}
+		else if (dir == 2) {
+			maxNumber_ReV2(posK + 1, pos1, pos2 + 1, true);
+		}
+
+
+	}
+	if (num == ansMN->at(posK)) {
+		if (dir == 3) {
+			maxNumber_ReV2(posK + 1, pos1 + 1, pos2, false);
+			maxNumber_ReV2(posK + 1, pos1, pos2 + 1, false);
+		}
+		else if (dir == 1) {
+			maxNumber_ReV2(posK + 1, pos1 + 1, pos2, false);
+		}
+		else if (dir == 2) {
+			maxNumber_ReV2(posK + 1, pos1, pos2 + 1, false);
+		}
+
+	}
 }
 bool isSmallerMN(vector<int>&a, vector<int>&b, int k) {
 	for (int i = 0; i < k; i++) {
@@ -7096,8 +7185,10 @@ void maxNumber_Re(int pos1, int pos2, int posK) {
 	}
 	
 }
+
 std::vector<int> maxNumber(std::vector<int>& nums1, std::vector<int>& nums2, int k)
 {
+
 	vector<int>table1[10]; vector<int>table2[10]; vector<int>ans; vector<int>now;
 	if (k == 0)return ans;
 	ans.resize(k); for (auto&i : ans)i =0;
@@ -7107,19 +7198,15 @@ std::vector<int> maxNumber(std::vector<int>& nums1, std::vector<int>& nums2, int
 	for (int i = 0; i < nums1.size(); i++)table1[nums1[i]].push_back(i);
 	for (int i = 0; i < nums2.size(); i++)table2[nums2[i]].push_back(i);
 	table1mN = table1;	table2mN = table2; ansMN = &ans;
-	list<stateMN>list; list.push_back(stateMN(0, 0, 0, 0)); list.push_back(stateMN());
-	int maxNow=-1; int maxNext=-1;
-	for (int i = 0; i < k; i++) {
-		
-		while (!list.front().isNull()) {
-			auto& stateNow = list.front();
-			if(!(stateNow.last<maxNow))stateNow.productNext(list, maxNext);
-			list.pop_front();
+	vector<vector<vector<char>>>dptable; dpTable = &dptable;
+	dptable.resize(k);
+	for (auto&v1 : dptable) {
+		v1.resize(mMN);
+		for (auto&v2 : v1) {
+			v2.resize(nMN);
 		}
-		list.pop_front(); list.push_back(stateMN());
-		maxNow = maxNext; maxNext = -1;
-		ans[i]=maxNow;
 	}
+	maxNumber_ReV2(0, 0, 0, false);
 	return ans;
 }
 

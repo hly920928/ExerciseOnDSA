@@ -17,7 +17,7 @@
 using namespace std;
 
 int main() {
-	vector<int>n1({ 6, 7 }); vector<int>n2({ 6, 0, 4 });
+	vector<int>n1({ 3, 4, 6, 5 }); vector<int>n2({ 9, 1, 2, 5, 8, 3 });
 	auto ans = maxNumber(n1,n2,5);
 	return 0;
 
