@@ -6994,7 +6994,6 @@ int bulbSwitch(int n)
 	return ans;
 }
 vector<int>*table1mN; vector<int>*table2mN; vector<int>*ansMN; vector<int>*nowMN;
-<<<<<<< HEAD
 int mMN; int nMN; int kMN; vector<vector<vector<char>>>*dpTable;
 struct stateMN {
 	unsigned short pos1; unsigned short  pos2; unsigned short  posK; char  last;
@@ -7130,9 +7129,6 @@ void  maxNumber_ReV2(int posK, int pos1, int pos2, bool isUpdate) {
 
 	}
 }
-=======
-int mMN; int nMN; int kMN;
->>>>>>> parent of 2c0b8f3... LeetCode 321. Create Maximum Number
 bool isSmallerMN(vector<int>&a, vector<int>&b, int k) {
 	for (int i = 0; i < k; i++) {
 		if (a[i] < b[i])return true;
@@ -7140,10 +7136,6 @@ bool isSmallerMN(vector<int>&a, vector<int>&b, int k) {
 	}
 	
 	return false;
-}
-int getNextMN(vector<int>*table, int pos, int remain, int max) {
-	int numK = 0;
-	return numK;
 }
 void maxNumber_Re(int pos1, int pos2, int posK) {
 	auto& ans = *ansMN;
@@ -7206,7 +7198,6 @@ std::vector<int> maxNumber(std::vector<int>& nums1, std::vector<int>& nums2, int
 	for (int i = 0; i < nums1.size(); i++)table1[nums1[i]].push_back(i);
 	for (int i = 0; i < nums2.size(); i++)table2[nums2[i]].push_back(i);
 	table1mN = table1;	table2mN = table2; ansMN = &ans;
-<<<<<<< HEAD
 	vector<vector<vector<char>>>dptable; dpTable = &dptable;
 	dptable.resize(k);
 	for (auto&v1 : dptable) {
@@ -7216,9 +7207,6 @@ std::vector<int> maxNumber(std::vector<int>& nums1, std::vector<int>& nums2, int
 		}
 	}
 	maxNumber_ReV2(0, 0, 0, false);
-=======
-	maxNumber_Re(0, 0, 0);
->>>>>>> parent of 2c0b8f3... LeetCode 321. Create Maximum Number
 	return ans;
 }
 
