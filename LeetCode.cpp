@@ -7096,6 +7096,7 @@ void maxNumber_Re(int pos1, int pos2, int posK) {
 	}
 	
 }
+void productNext(unordered_set<int>&set, int&maxNext,int now,int posK) {}
 std::vector<int> maxNumber(std::vector<int>& nums1, std::vector<int>& nums2, int k)
 {
 	vector<int>table1[10]; vector<int>table2[10]; vector<int>ans; vector<int>now;
