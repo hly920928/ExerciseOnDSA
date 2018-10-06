@@ -6995,14 +6995,18 @@ int bulbSwitch(int n)
 }
 vector<int>*table1mN; vector<int>*table2mN; vector<int>*ansMN; vector<int>*nowMN;
 <<<<<<< HEAD
+<<<<<<< HEAD
 int mMN; int nMN; int kMN; vector<vector<vector<char>>>*dpTable;
+=======
+int mMN; int nMN; int kMN;
+>>>>>>> parent of e8bec9b... LeetCode 321. Create Maximum Number
 struct stateMN {
 	unsigned short pos1; unsigned short  pos2; unsigned short  posK; char  last;
 	stateMN(unsigned short p1 = 65535, unsigned short p2 = 65535, unsigned short pK = 65535, unsigned short l = 0) :pos1(p1), pos2(p2), posK(pK), last(l) {};
 	bool isNull()const {
 		return pos1 == 65535;
 	}
-	void productNext(queue<stateMN>&list, int&maxNext) {
+	void productNext(list<stateMN>&list, int&maxNext) {
 		auto& ans = *ansMN;
 		auto& now = *nowMN;
 		int n_pos1 = -1; int n_pos2 = -1; int numsK = -1;
@@ -7033,14 +7037,15 @@ struct stateMN {
 		}
 		if (numsK != -1&&maxNext<=numsK) {
 			maxNext = numsK;
-			if (n_pos1 != -1) { list.push(stateMN(n_pos1 + 1, pos2, posK + 1, numsK)); };
-			if (n_pos2 != -1) { list.push(stateMN(pos1, n_pos2 + 1, posK + 1, numsK)); };
+			if (n_pos1 != -1) { list.push_back(stateMN(n_pos1 + 1, pos2, posK + 1, numsK)); };
+			if (n_pos2 != -1) { list.push_back(stateMN(pos1, n_pos2 + 1, posK + 1, numsK)); };
 		}
 	}
 };
 bool operator<(const stateMN&a, const stateMN&b) {
 	return a.last < b.last;
 }
+<<<<<<< HEAD
 char stateToChar(int dir, int num) {
 	return dir * 10 + num;
 }
@@ -7133,6 +7138,8 @@ void  maxNumber_ReV2(int posK, int pos1, int pos2, bool isUpdate) {
 =======
 int mMN; int nMN; int kMN;
 >>>>>>> parent of 2c0b8f3... LeetCode 321. Create Maximum Number
+=======
+>>>>>>> parent of e8bec9b... LeetCode 321. Create Maximum Number
 bool isSmallerMN(vector<int>&a, vector<int>&b, int k) {
 	for (int i = 0; i < k; i++) {
 		if (a[i] < b[i])return true;
@@ -7193,10 +7200,8 @@ void maxNumber_Re(int pos1, int pos2, int posK) {
 	}
 	
 }
-
 std::vector<int> maxNumber(std::vector<int>& nums1, std::vector<int>& nums2, int k)
 {
-
 	vector<int>table1[10]; vector<int>table2[10]; vector<int>ans; vector<int>now;
 	if (k == 0)return ans;
 	ans.resize(k); for (auto&i : ans)i =0;
@@ -7207,18 +7212,35 @@ std::vector<int> maxNumber(std::vector<int>& nums1, std::vector<int>& nums2, int
 	for (int i = 0; i < nums2.size(); i++)table2[nums2[i]].push_back(i);
 	table1mN = table1;	table2mN = table2; ansMN = &ans;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	vector<vector<vector<char>>>dptable; dpTable = &dptable;
 	dptable.resize(k);
 	for (auto&v1 : dptable) {
 		v1.resize(mMN);
 		for (auto&v2 : v1) {
 			v2.resize(nMN);
+=======
+	list<stateMN>list; list.push_back(stateMN(0, 0, 0, 0)); list.push_back(stateMN());
+	int maxNow=-1; int maxNext=-1;
+	for (int i = 0; i < k; i++) {
+		
+		while (!list.front().isNull()) {
+			auto& stateNow = list.front();
+			if(!(stateNow.last<maxNow))stateNow.productNext(list, maxNext);
+			list.pop_front();
+>>>>>>> parent of e8bec9b... LeetCode 321. Create Maximum Number
 		}
+		list.pop_front(); list.push_back(stateMN());
+		maxNow = maxNext; maxNext = -1;
+		ans[i]=maxNow;
 	}
+<<<<<<< HEAD
 	maxNumber_ReV2(0, 0, 0, false);
 =======
 	maxNumber_Re(0, 0, 0);
 >>>>>>> parent of 2c0b8f3... LeetCode 321. Create Maximum Number
+=======
+>>>>>>> parent of e8bec9b... LeetCode 321. Create Maximum Number
 	return ans;
 }
 
