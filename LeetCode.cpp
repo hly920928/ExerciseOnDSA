@@ -7096,7 +7096,65 @@ void maxNumber_Re(int pos1, int pos2, int posK) {
 	}
 	
 }
-void productNext(unordered_set<int>&set, int&maxNext,int now,int posK) {}
+struct pair2NS {
+	unsigned short pos1;
+	unsigned short pos2;
+};
+union dataMN{
+	pair2NS p;
+	unsigned int i;
+};
+void productNextMN(unordered_set<int>&set, int&maxNext,int nowd,int posK) {
+	auto& ans = *ansMN;
+	dataMN d;d.i = nowd;
+	unsigned short pos1=d.p.pos1;
+
+	unsigned short pos2= d.p.pos2;
+	int n_pos1 = -1; int n_pos2 = -1; int numsK = -1;
+	int remainK = kMN - posK - 1;
+	for (int num = 9; num >= 0; num--) {
+		auto& v1 = table1mN[num];
+		auto& v2 = table2mN[num];
+		auto itr1 = lower_bound(v1.begin(), v1.end(), pos1);
+		auto itr2 = lower_bound(v2.begin(), v2.end(), pos2);
+		if (itr1 != v1.end()) {
+			int n1 = *itr1;
+			int remainN = mMN - n1 - 1 + nMN - pos2;
+			if (remainN >= remainK) {
+				n_pos1 = n1;
+			}
+		}
+		if (itr2 != v2.end()) {
+			int n2 = *itr2;
+			int remainN = mMN - pos1 + nMN - n2 - 1;
+			if (remainN >= remainK) {
+				n_pos2 = n2;
+			}
+		}
+		if (n_pos1 != -1 || n_pos2 != -1) {
+			numsK = num;
+			break;
+		}
+	}
+	if (numsK != -1&& numsK>= maxNext) {
+		if (numsK > maxNext) {
+			set.clear(); maxNext = numsK;
+	 }
+		if (n_pos1 != -1) {
+		dataMN nd; 
+		nd.p.pos1 = n_pos1 + 1; 
+		nd.p.pos2=pos2;
+		set.insert(nd.i);
+		}
+		if (n_pos2 != -1) {
+			dataMN nd;
+			nd.p.pos1 =pos1;
+			nd.p.pos2 = n_pos2+1;
+			set.insert(nd.i);
+		}
+	}
+}
+
 std::vector<int> maxNumber(std::vector<int>& nums1, std::vector<int>& nums2, int k)
 {
 	vector<int>table1[10]; vector<int>table2[10]; vector<int>ans; vector<int>now;
@@ -7110,16 +7168,16 @@ std::vector<int> maxNumber(std::vector<int>& nums1, std::vector<int>& nums2, int
 	table1mN = table1;	table2mN = table2; ansMN = &ans;
 	list<stateMN>list; list.push_back(stateMN(0, 0, 0, 0)); list.push_back(stateMN());
 	int maxNow=-1; int maxNext=-1;
+	unordered_set<int>*pNow; unordered_set<int>*pNext; unordered_set<int>p1; unordered_set<int>p2;
+	pNow = &p1; pNext = &p2; pNow->insert(0);
 	for (int i = 0; i < k; i++) {
 		
-		while (!list.front().isNull()) {
-			auto& stateNow = list.front();
-			if(!(stateNow.last<maxNow))stateNow.productNext(list, maxNext);
-			list.pop_front();
+		for (auto&it: *pNow) {
+			productNextMN(*pNext, maxNext, it, i);
 		}
-		list.pop_front(); list.push_back(stateMN());
 		maxNow = maxNext; maxNext = -1;
 		ans[i]=maxNow;
+		swap(pNow, pNext); pNext->clear();
 	}
 	return ans;
 }
