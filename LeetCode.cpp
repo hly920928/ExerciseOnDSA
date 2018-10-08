@@ -7166,7 +7166,6 @@ std::vector<int> maxNumber(std::vector<int>& nums1, std::vector<int>& nums2, int
 	for (int i = 0; i < nums1.size(); i++)table1[nums1[i]].push_back(i);
 	for (int i = 0; i < nums2.size(); i++)table2[nums2[i]].push_back(i);
 	table1mN = table1;	table2mN = table2; ansMN = &ans;
-	list<stateMN>list; list.push_back(stateMN(0, 0, 0, 0)); list.push_back(stateMN());
 	int maxNow=-1; int maxNext=-1;
 	unordered_set<int>*pNow; unordered_set<int>*pNext; unordered_set<int>p1; unordered_set<int>p2;
 	pNow = &p1; pNext = &p2; pNow->insert(0);
@@ -7180,6 +7179,32 @@ std::vector<int> maxNumber(std::vector<int>& nums1, std::vector<int>& nums2, int
 		swap(pNow, pNext); pNext->clear();
 	}
 	return ans;
+}
+
+int coinChange(std::vector<int>& coins, int amount)
+{
+	vector<int>table; table.resize(amount + 1);
+	vector<int>table_t;
+	for (auto& i : table)i= -1;
+	for (auto& i : coins) {
+
+		if(i<=amount)table[i] = 1;
+	}
+	for (long long i = 0; i <= amount; i++) {
+		table_t.clear();
+		if (table[i] == -1) {
+			for (long long  c : coins) {
+				if (i - c >= 0) {
+					if(table[i - c] != -1)table_t.push_back(table[i - c] + 1);
+				}
+			}
+			if (table_t.size() != 0) {
+				table[i] = *min_element(table_t.begin(), table_t.end());
+			}
+		}
+		
+	}
+	return table.back();
 }
 
 string fractionToDecimal(int numerator, int denominator)

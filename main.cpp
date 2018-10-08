@@ -17,8 +17,8 @@
 using namespace std;
 
 int main() {
-	vector<int>n1({ 3, 9 }); vector<int>n2({ 8,9 });
-	auto ans = maxNumber(n1,n2,3);
+	vector<int>n1({ 2147483647 }); vector<int>n2({ 8,9 });
+	auto ans = coinChange(n1,2);
 	return 0;
 
 }
