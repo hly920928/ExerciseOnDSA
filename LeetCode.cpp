@@ -7183,6 +7183,7 @@ std::vector<int> maxNumber(std::vector<int>& nums1, std::vector<int>& nums2, int
 
 int coinChange(std::vector<int>& coins, int amount)
 {
+	if (amount == 0)return 0;
 	vector<int>table; table.resize(amount + 1);
 	vector<int>table_t;
 	for (auto& i : table)i= -1;
@@ -7205,6 +7206,36 @@ int coinChange(std::vector<int>& coins, int amount)
 		
 	}
 	return table.back();
+}
+
+void wiggleSort(vector<int>& nums)
+{
+
+	sort(nums.begin(), nums.end());
+	vector<int>table;
+	int n = nums.size(); table.resize(n);
+	copy(nums.begin(), nums.end(), table.begin()); nums.clear();
+	int mid=n / 2;
+	int head = 0; int tail =n-1;
+	if (n % 2) {
+		for (int i = 0; i < mid; i++) {
+			nums.push_back(table[head]);
+			nums.push_back(table[tail]);
+			if (table[head]== table[tail]){
+         
+}
+			head++; tail--;
+		}
+		nums.push_back(table[head]);
+	}
+	else {
+		for (int i = 0; i < mid; i++) {
+			nums.push_back(table[head]);
+			nums.push_back(table[tail]);
+			if (table[head] == table[tail])
+			head++; tail--;
+		}
+	}
 }
 
 string fractionToDecimal(int numerator, int denominator)

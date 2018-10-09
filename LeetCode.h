@@ -937,3 +937,5 @@ int bulbSwitch(int n);
 std::vector<int> maxNumber(std::vector<int>& nums1, std::vector<int>& nums2, int k);
 //322. Coin Change
 int coinChange(std::vector<int>& coins, int amount);
+//324. Wiggle Sort II
+void wiggleSort(std::vector<int>& nums);

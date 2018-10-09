@@ -17,8 +17,8 @@
 using namespace std;
 
 int main() {
-	vector<int>n1({ 2147483647 }); vector<int>n2({ 8,9 });
-	auto ans = coinChange(n1,2);
+	vector<int>n1({ 1,5,1,1,6,4 }); vector<int>n2({ 8,9 });
+	wiggleSort(n1);
 	return 0;
 
 }
