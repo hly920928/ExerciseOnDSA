@@ -7210,20 +7210,16 @@ int coinChange(std::vector<int>& coins, int amount)
 
 void wiggleSort(vector<int>& nums)
 {
-
 	sort(nums.begin(), nums.end());
 	vector<int>table;
 	int n = nums.size(); table.resize(n);
 	copy(nums.begin(), nums.end(), table.begin()); nums.clear();
-	int mid=n / 2;
-	int head = 0; int tail =n-1;
+	int mid = n / 2;
+	int head = 0; int tail = n - 1;
 	if (n % 2) {
 		for (int i = 0; i < mid; i++) {
 			nums.push_back(table[head]);
 			nums.push_back(table[tail]);
-			if (table[head]== table[tail]){
-         
-}
 			head++; tail--;
 		}
 		nums.push_back(table[head]);
@@ -7232,8 +7228,29 @@ void wiggleSort(vector<int>& nums)
 		for (int i = 0; i < mid; i++) {
 			nums.push_back(table[head]);
 			nums.push_back(table[tail]);
-			if (table[head] == table[tail])
 			head++; tail--;
+		}
+	}
+	if (n % 2) {
+		int hi = n - 2; int min = 0;
+		for (int hi = n - 2; hi > 0; hi -= 2) {
+			if (nums[hi + 1] == nums[hi]) {
+				swap(nums[hi + 1], nums[min]); min += 2;
+			}
+			if (nums[hi -1] == nums[hi]) {
+				swap(nums[hi - 1], nums[min]); min += 2;
+			}
+		}
+	}
+	else {
+		int hi = n -1; int min = 0;
+		for (int hi = n - 1; hi > 0; hi -= 2) {
+			if (hi + 1<n&&nums[hi + 1] == nums[hi]) {
+				swap(nums[hi + 1], nums[min]); min += 2;
+			}
+			if (nums[hi - 1] == nums[hi]) {
+				swap(nums[hi - 1], nums[min]); min += 2;
+			}
 		}
 	}
 }

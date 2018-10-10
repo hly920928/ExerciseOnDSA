@@ -17,7 +17,7 @@
 using namespace std;
 
 int main() {
-	vector<int>n1({ 1,5,1,1,6,4 }); vector<int>n2({ 8,9 });
+	vector<int>n1({1,3,2,2,3,1}); vector<int>n2({ 8,9 });
 	wiggleSort(n1);
 	return 0;
 
