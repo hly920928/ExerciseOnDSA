@@ -7255,6 +7255,11 @@ void wiggleSort(vector<int>& nums)
 	}
 }
 
+bool isPowerOfThree(int n)
+{
+	return (n>0&& 1162261467%n==0);//1162261467 3^19 max 3^n which int can represent
+}
+
 string fractionToDecimal(int numerator, int denominator)
 {
 /*
