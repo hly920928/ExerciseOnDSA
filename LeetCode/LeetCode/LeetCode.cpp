@@ -7,8 +7,8 @@
 using namespace std;
 int main()
 { 
-	std::vector<int>nums({ 1,2,3 });
-	countRangeSum(nums, 1, 2);
+	std::vector<int>nums({0,0});
+	auto ans=countRangeSum(nums, 0, 0);
     return 0;
 }
 
