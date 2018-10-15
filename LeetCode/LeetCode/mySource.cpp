@@ -47,3 +47,41 @@ int countRangeSum(std::vector<int>& nums, int lower, int upper) {
 	countRangeSumRe(0, n);
 	return countCRS;
 }
+
+ListNode * buildList(vector<int>& v)
+{
+	ListNode*head;
+	ListNode* now = new ListNode(v[0]);
+	head = now;
+	for (int i = 1; i < v.size(); i++) {
+		now->next = new ListNode(v[i]);
+		now = now->next;
+	}
+	return head;
+}
+
+ListNode * oddEvenList(ListNode * head)
+{
+	if (head==nullptr||head->next == nullptr)return head;
+	auto odd = head;
+	
+	auto even = head->next; 
+	auto evenHead = even;
+	auto now = head->next->next;
+	bool isEven = false;
+	while (now != nullptr) {
+		if (isEven) {
+			even->next = now;
+			even = even->next;
+		}
+		else {
+			odd->next = now;
+			odd = odd->next;
+		}
+		isEven = !isEven;
+		now = now->next;
+	}
+	even->next = nullptr;
+	odd->next = evenHead;
+	return head;
+}
