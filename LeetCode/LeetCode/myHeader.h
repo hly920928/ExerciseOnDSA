@@ -10,3 +10,5 @@ struct ListNode {
 };
 ListNode* buildList(std::vector<int>&v);
 ListNode* oddEvenList(ListNode* head);
+//329. Longest Increasing Path in a Matrix
+int longestIncreasingPath(std::vector<std::vector<int>>& matrix);

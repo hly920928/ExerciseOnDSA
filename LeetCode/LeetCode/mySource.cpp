@@ -2,6 +2,8 @@
 #include "myHeader.h"
 #include "iostream"
 #include<algorithm>
+#include<queue>
+#include<unordered_set>
 using namespace std;
 vector<int>*numsCRS;
 vector<long long>*sumCRS;
@@ -84,4 +86,86 @@ ListNode * oddEvenList(ListNode * head)
 	even->next = nullptr;
 	odd->next = evenHead;
 	return head;
+}
+struct pos_my {
+	unsigned short x;
+	unsigned short y;
+};
+union pos_u{
+	pos_my pos;
+	int i;
+};
+class lIPSolver {
+private:
+	std::vector<std::vector<int>>*ptr_m;
+	//std::vector<std::vector<int>>table;
+	int  m; int n; int ans;
+public:
+	lIPSolver(std::vector<std::vector<int>>&matrix) :ptr_m(&matrix) {
+		m = 0; n = 0; ans = 0;
+		m = ptr_m->size();  
+		if (m != 0)n = ptr_m->at(0).size();
+	}
+	int solver() {
+		if (m == 0 || n == 0)return 0;
+		/*table.resize(m);
+		for (auto& v : table) {
+			v.resize(n);
+			for (auto& i : v)i = 0;
+		}*/
+		unordered_set<int>q1; 	unordered_set<int>q2;
+		unordered_set<int>*qnow; unordered_set<int>*qnext;
+		qnow = &q1; qnext = &q2;
+		int now = 0;
+		for (int i = 0; i < m; i++) {
+			for (int j = 0; j < n; j++) {
+				int up = get(i - 1, j);
+				int down = get(i +1, j);
+				int left = get(i, j-1);
+				int right = get(i, j +1);
+				int now = get(i, j);
+				if (up <= now&&down <= now&&up <= now&&right <= now) {
+					//table[i][j] = 1;
+					pos_u p; p.pos.x = i; p.pos.y=j;
+					q1.insert(p.i);
+				}
+			}
+		}
+		while (!qnow->empty()) {
+			now++;
+			for (auto& i : *qnow) {
+				pos_u p;
+				p.i = i;
+				int now_x = p.pos.x;
+				int now_y = p.pos.y;
+				int val_now = get(now_x, now_y);
+				tryAt(now_x + 1, now_y, val_now, *qnext);
+				tryAt(now_x - 1, now_y, val_now, *qnext);
+				tryAt(now_x, now_y+1, val_now, *qnext);
+				tryAt(now_x, now_y-1, val_now, *qnext);
+			}
+			swap(qnow, qnext);
+			qnext->clear();
+		}
+		return now;
+	};
+private:
+	int get(int x, int y) {
+		if (x < 0 && x >= m)return INT_MIN;
+		if (y < 0 && y>= n)return INT_MIN;
+		return ptr_m->at(x)[y];
+	}
+	void tryAt(int x, int y, int v, unordered_set<int>&set) {
+		int v_now = get(x, y);
+		if (v_now == INT_MIN)return;
+		if (v_now < v) {
+			pos_u p; p.pos.x = x; p.pos.y = y;
+			set.insert(p.i);
+		}
+	}
+};
+int longestIncreasingPath(std::vector<std::vector<int>>& matrix)
+{
+	lIPSolver sv(matrix);
+	return sv.solver();
 }
