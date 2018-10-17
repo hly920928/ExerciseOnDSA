@@ -98,7 +98,7 @@ union pos_u{
 class lIPSolver {
 private:
 	std::vector<std::vector<int>>*ptr_m;
-	//std::vector<std::vector<int>>table;
+	std::vector<std::vector<int>>table;
 	int  m; int n; int ans;
 public:
 	lIPSolver(std::vector<std::vector<int>>&matrix) :ptr_m(&matrix) {
@@ -108,11 +108,6 @@ public:
 	}
 	int solver() {
 		if (m == 0 || n == 0)return 0;
-		/*table.resize(m);
-		for (auto& v : table) {
-			v.resize(n);
-			for (auto& i : v)i = 0;
-		}*/
 		unordered_set<int>q1; 	unordered_set<int>q2;
 		unordered_set<int>*qnow; unordered_set<int>*qnext;
 		qnow = &q1; qnext = &q2;
@@ -149,10 +144,48 @@ public:
 		}
 		return now;
 	};
+	int solverV2() {
+		table.resize(m);
+		for (auto& v : table) {
+			v.resize(n);
+			for (auto& i : v)i = 0;
+		}
+		for (int i = 0; i < m; i++) {
+			for (int j = 0; j < n; j++) {
+				int up = get(i - 1, j);
+				int down = get(i + 1, j);
+				int left = get(i, j - 1);
+				int right = get(i, j + 1);
+				int now = get(i, j);
+				if (up <= now&&down <= now&&up <= now&&right <= now) {
+					table[i][j] = 1;
+				}
+			}
+		}
+		int now = 1;
+		bool hasNext = true;
+		while (hasNext) {
+			hasNext = false;
+			for (int i = 0; i < m; i++) {
+				for (int j = 0; j < n; j++) {
+					int val = get(i, j);
+					bool b1 = tryAtV2(i + 1, j, val, now);
+					bool b2 = tryAtV2(i -1, j, val, now);
+					bool b3 = tryAtV2(i , j+1, val, now);
+					bool b4 = tryAtV2(i, j-1, val, now);
+					if (b1 || b2 || b3 || b4) {
+						table[i][j] = now + 1;
+						hasNext = true;
+					}
+				}
+			}
+			if (hasNext)now++;
+		}
+		return now; };
 private:
 	int get(int x, int y) {
-		if (x < 0 && x >= m)return INT_MIN;
-		if (y < 0 && y>= n)return INT_MIN;
+		if (x < 0 ||x >= m)return INT_MIN;
+		if (y < 0 || y>= n)return INT_MIN;
 		return ptr_m->at(x)[y];
 	}
 	void tryAt(int x, int y, int v, unordered_set<int>&set) {
@@ -161,6 +194,15 @@ private:
 		if (v_now < v) {
 			pos_u p; p.pos.x = x; p.pos.y = y;
 			set.insert(p.i);
+		}
+	}
+	bool tryAtV2(int x,int y,int val,int now) {
+		int v_now = get(x, y);
+		if (v_now == INT_MIN)return false;
+		if (v_now <= val) return false;
+		if (v_now>val){
+			if (table[x][y] ==now)return true;
+			else return false;
 		}
 	}
 };
