@@ -196,6 +196,7 @@ public:
 	};
 	int solverV3() {
 	//build graph
+	
 		buildGraph();
 		vector<pair<int, int>>peaks;
 		findPeaks(peaks);
@@ -229,7 +230,27 @@ private:
 		}
 	}
 	void buildGraph() {
-
+		tableNode.resize(m);
+		for (auto& v : tableNode) {
+			v.resize(n);
+		}
+		for (int i = 0; i < m; i++) {
+			for (int j = 0; j < n; j++) {
+				auto& nodeData = tableNode[i][j];
+				int center = get(i , j);
+				buildEdge(nodeData.up, center, get(i - 1, j));
+				buildEdge(nodeData.down, center, get(i+ 1, j));
+				buildEdge(nodeData.left, center, get(i, j - 1));
+				buildEdge(nodeData.right, center, get(i, j + 1));
+			}
+		}
+	}
+	void buildEdge(char&r, int val, int next) {
+		if (next == INT_MIN||val==next) {
+			r = '#';
+		}
+		else if (next > val) { r = 'u'; }
+		else r = 'd';
 	}
 	void findPeaks(vector<pair<int,int>>&v) {}
 	int depth(int x,int y){
