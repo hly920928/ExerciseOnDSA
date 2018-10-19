@@ -252,9 +252,30 @@ private:
 		else if (next > val) { r = 'u'; }
 		else r = 'd';
 	}
-	void findPeaks(vector<pair<int,int>>&v) {}
+	void findPeaks(vector<pair<int,int>>&v) {
+		for (int i = 0; i < m; i++) {
+			for (int j = 0; j < n; j++) {
+				int up = get(i - 1, j);
+				int down = get(i + 1, j);
+				int left = get(i, j - 1);
+				int right = get(i, j + 1);
+				int now = get(i, j);
+				if (up <= now&&down <= now&&up <= now&&right <= now) {
+					v.push_back({i,j});
+				}
+			}
+		}
+	}
 	int depth(int x,int y){
-	
+		if (get(x, y) == INT_MIN)return INT_MIN;
+		auto& n = tableNode[x][y];
+		if (n.depth != INT_MIN)return n.depth;
+		int up = (n.up == 'd') ? depth(x - 1, y) : INT_MIN;
+		int down = (n.down == 'd') ? depth(x + 1, y) : INT_MIN;
+		int left = (n.left == 'd') ? depth(x, y-1) : INT_MIN;
+		int right = (n.right == 'd') ? depth(x, y +1) : INT_MIN;
+		n.depth = max(max(up, down), max(left, right));
+		return 	n.depth;
 	}
 };
 int longestIncreasingPath(std::vector<std::vector<int>>& matrix)
