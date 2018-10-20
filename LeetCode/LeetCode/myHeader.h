@@ -11,5 +11,6 @@ struct ListNode {
 ListNode* buildList(std::vector<int>&v);
 ListNode* oddEvenList(ListNode* head);
 //329. Longest Increasing Path in a Matrix
+int longestIncreasingPath(std::vector<std::vector<int>>& matrix);
 //331. Verify Preorder Serialization of a Binary Tree
 bool isValidSerialization(std::string preorder);

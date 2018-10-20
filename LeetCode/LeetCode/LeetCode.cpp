@@ -9,7 +9,7 @@ int main()
 { 
 	std::vector<int>nums({1,2,3,4,5});
 	auto head = buildList(nums);
-	auto ans= oddEvenList(head);
+	auto ans= isValidSerialization("9,3,4,#,#,1,#,#,2,#,6,#,#");
     return 0;
 }
 

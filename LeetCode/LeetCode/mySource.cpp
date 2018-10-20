@@ -283,14 +283,31 @@ int longestIncreasingPath(std::vector<std::vector<int>>& matrix)
 	lIPSolver sv(matrix);
 	return sv.solverV3();
 }
-bool isValidSerialization_re(int id, bool canLeaf) {
-
+vector<bool>*tableIVS;
+bool isValidSerialization_re(int id, int numOfnull) {
+	auto&table = *tableIVS;
+	if (id == -1)return numOfnull==1;
+	if (table[id] == false) {
+	  return isValidSerialization_re(id - 1, numOfnull + 1);
+	}
+	else {
+		if (numOfnull >= 2) {
+			return isValidSerialization_re(id - 1, numOfnull - 1);
+		}return false;
+	}
 }
 bool isValidSerialization(string preorder)
 {    
 
 	//to vector
-	vector<bool>table;
-
-	return false;
+	vector<bool>table; tableIVS = &table;
+	if (preorder.back() != '#')return false;
+	for (int i = 0; i < preorder.size(); i++) {
+		if (preorder[i]== ',') {
+			if (preorder[i - 1] == '#')table.push_back(false);
+			else table.push_back(true);
+		}
+	}
+	table.push_back(false);
+	return isValidSerialization_re(table.size() - 1,0);
 }
