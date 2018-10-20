@@ -196,7 +196,7 @@ public:
 	};
 	int solverV3() {
 	//build graph
-	
+		if (m == 0 || n == 0)return 0;
 		buildGraph();
 		vector<pair<int, int>>peaks;
 		findPeaks(peaks);
@@ -267,19 +267,30 @@ private:
 		}
 	}
 	int depth(int x,int y){
-		if (get(x, y) == INT_MIN)return INT_MIN;
+		if (get(x, y) == INT_MIN)return 0;
 		auto& n = tableNode[x][y];
 		if (n.depth != INT_MIN)return n.depth;
-		int up = (n.up == 'd') ? depth(x - 1, y) : INT_MIN;
-		int down = (n.down == 'd') ? depth(x + 1, y) : INT_MIN;
-		int left = (n.left == 'd') ? depth(x, y-1) : INT_MIN;
-		int right = (n.right == 'd') ? depth(x, y +1) : INT_MIN;
-		n.depth = max(max(up, down), max(left, right));
+		int up = (n.up == 'd') ? depth(x - 1, y) : 0;
+		int down = (n.down == 'd') ? depth(x + 1, y) : 0;
+		int left = (n.left == 'd') ? depth(x, y-1) : 0;
+		int right = (n.right == 'd') ? depth(x, y +1) : 0;
+		n.depth = max(max(up, down), max(left, right))+1;
 		return 	n.depth;
 	}
 };
 int longestIncreasingPath(std::vector<std::vector<int>>& matrix)
 {
 	lIPSolver sv(matrix);
-	return sv.solverV2();
+	return sv.solverV3();
+}
+bool isValidSerialization_re(int id, bool canLeaf) {
+
+}
+bool isValidSerialization(string preorder)
+{    
+
+	//to vector
+	vector<bool>table;
+
+	return false;
 }
