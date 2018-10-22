@@ -14,3 +14,5 @@ ListNode* oddEvenList(ListNode* head);
 int longestIncreasingPath(std::vector<std::vector<int>>& matrix);
 //331. Verify Preorder Serialization of a Binary Tree
 bool isValidSerialization(std::string preorder);
+//330. Patching Array
+int minPatches(std::vector<int>& nums, int n);

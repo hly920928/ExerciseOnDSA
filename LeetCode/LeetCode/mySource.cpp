@@ -4,6 +4,7 @@
 #include<algorithm>
 #include<queue>
 #include<unordered_set>
+#include <math.h>
 using namespace std;
 vector<int>*numsCRS;
 vector<long long>*sumCRS;
@@ -310,4 +311,38 @@ bool isValidSerialization(string preorder)
 	}
 	table.push_back(false);
 	return isValidSerialization_re(table.size() - 1,0);
+}
+
+int minPatches(vector<int>& nums, int n)
+{
+	long long top = 1; int ans = 0; int id = 1;
+	if (nums.size() == 0) {
+		while(n != 0) {
+			n = n >> 1;
+			ans++;
+		}
+		return ans;
+	}
+	if (nums.front() != 1) { ans = 1; id = 0; }
+	for (int i = id; i < nums.size(); i++) {
+		if (nums[i] <= top + 1) {
+			top += nums[i];
+			if (top >= n)return ans;
+		}
+		else {
+			while (top + 1 < nums[i]) {
+				top = top * 2 + 1;
+				ans++;
+				if (top >= n)return ans;
+			}
+			top += nums[i];
+			if (top >= n)return ans;
+		}
+
+	}
+	while(top < n) {
+		top = top * 2 + 1;
+		ans++;
+	}
+	return ans;
 }

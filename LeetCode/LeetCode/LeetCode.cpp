@@ -7,9 +7,9 @@
 using namespace std;
 int main()
 { 
-	std::vector<int>nums({1,2,3,4,5});
+	std::vector<int>nums({1,2,2,6,34,38,41,44,47,47,56,59,62,73,77,83,87,89,94});
 	auto head = buildList(nums);
-	auto ans= isValidSerialization("9,3,4,#,#,1,#,#,2,#,6,#,#");
+	auto ans= minPatches(nums,20);
     return 0;
 }
 
