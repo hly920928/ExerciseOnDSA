@@ -4,6 +4,8 @@
 #include<algorithm>
 #include<queue>
 #include<unordered_set>
+#include<unordered_map>
+#include<map>
 #include <math.h>
 using namespace std;
 vector<int>*numsCRS;
@@ -344,5 +346,44 @@ int minPatches(vector<int>& nums, int n)
 		top = top * 2 + 1;
 		ans++;
 	}
+	return ans;
+}
+unordered_map<string, map<string, int>>*p_tableFI;
+vector<string>*ansFI; int targetLenFI;
+bool findItinerary_re(string now) {
+	auto&table = *p_tableFI; auto& ans = *ansFI;
+	if (ans.size() == targetLenFI)return true;
+	auto&map = table[now];
+	if (map.size() == 0) {
+		if (ans.size() == targetLenFI)return true;
+		else return false;
+	}
+	for (auto itr : map) {
+		if (itr.second == 0)continue;
+		ans.push_back(itr.first);
+		now = itr.first;
+		map[itr.first]--;
+		if (findItinerary_re(now))return true;
+		ans.pop_back();
+		map[itr.first]++;
+	}
+	return false;
+}
+std::vector<std::string> findItinerary(std::vector<pair<std::string, std::string>> tickets)
+{
+	unordered_map<string, map<string, int>>table;		p_tableFI = &table;
+	vector<string>ans; ansFI = &ans; 
+	targetLenFI = tickets.size() + 1;
+	if (tickets.size() == 0)return ans;
+	for (auto& t : tickets) {
+		auto& map= table[t.first];
+		if (map.find(t.second)== map.end()) {
+			map[t.second] = 1;
+		}
+		else map[t.second]++;
+	}
+
+	string now = "JFK"; ans.push_back(now);
+	findItinerary_re(now);
 	return ans;
 }

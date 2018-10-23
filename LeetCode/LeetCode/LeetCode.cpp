@@ -7,9 +7,8 @@
 using namespace std;
 int main()
 { 
-	std::vector<int>nums({1,2,2,6,34,38,41,44,47,47,56,59,62,73,77,83,87,89,94});
-	auto head = buildList(nums);
-	auto ans= minPatches(nums,20);
+	std::vector<pair<string,string>>tickets({{"JFK", "SFO"}, {"JFK", "ATL"}, {"SFO", "ATL"}, {"ATL", "JFK"}, {"ATL", "SFO"}});
+	auto ans = findItinerary(tickets);
     return 0;
 }
 

@@ -16,3 +16,5 @@ int longestIncreasingPath(std::vector<std::vector<int>>& matrix);
 bool isValidSerialization(std::string preorder);
 //330. Patching Array
 int minPatches(std::vector<int>& nums, int n);
+//332. Reconstruct Itinerary
+std::vector<std::string> findItinerary(std::vector<std::pair<std::string, std::string>> tickets);
