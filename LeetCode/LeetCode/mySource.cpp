@@ -387,3 +387,26 @@ std::vector<std::string> findItinerary(std::vector<pair<std::string, std::string
 	findItinerary_re(now);
 	return ans;
 }
+
+bool increasingTriplet(std::vector<int>& nums)
+{
+	int n = nums.size();
+	if (n<3)return false;
+	vector<int>minBefore;
+	vector<int>maxAfter;
+	int _min = INT_MAX; minBefore.push_back(_min);
+	for (int i = 1; i < n; i++) {
+		_min = min(_min, nums[i - 1]);
+		minBefore.push_back(_min);
+	}
+	int _max= INT_MIN; maxAfter.push_back(_max);
+	for (int i =n-2; i>=0; i--) {
+		_max = max(_max, nums[i +1]);
+		maxAfter.push_back(_max);
+	}
+	reverse(maxAfter.begin(), maxAfter.end());
+	for (int i = 1; i < n - 1; i++) {
+		if (minBefore[i] < nums[i] && nums[i] < maxAfter[i])return true;
+	}
+	return false;
+}
