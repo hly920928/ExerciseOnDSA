@@ -410,3 +410,84 @@ bool increasingTriplet(std::vector<int>& nums)
 	}
 	return false;
 }
+bool inBetween(int a, int b, int x) {
+	if (a > b)swap(a, b); 
+	if (a <= x&&x <= b)return true;
+	return false;
+}
+bool isSelfCrossing(std::vector<int>& x)
+{
+	int now_x = 0; int now_y = 0;  
+	for (int i = 0; i < x.size(); i++) {
+		switch (i % 4) {
+		case 0:{
+			now_y += x[i];
+			x[i] = now_x;
+			if (i >= 3) {
+				if (now_y >= x[i - 3]) {
+					int a = INT_MIN; int b = INT_MIN;
+					if (i - 3 == 0) {
+						a = 0; b = x[1];
+					}
+					else {
+						a = x[i-3+1]; b = x[i - 3-1];
+					}
+					if (inBetween(a, b, now_x))return true;
+				}
+			}
+				break;
+			}
+		case 1: {
+			now_x -= x[i];
+			x[i] = now_y;
+			if (i >= 3) {
+				if (now_x <= x[i - 3]) {
+					int a = INT_MIN; int b = INT_MIN;
+					if (i - 3 == 0) {
+						a = 0; b = x[1];
+					}
+					else {
+						a = x[i - 3 + 1]; b = x[i - 3 - 1];
+					}
+					if (inBetween(a, b, now_y))return true;
+				}
+			}
+			break;
+		}
+		case 2: {
+			now_y -= x[i];
+			x[i] = now_x;
+			if (i >= 3) {
+				if (now_y <= x[i - 3]) {
+					int a = INT_MIN; int b = INT_MIN;
+					if (i - 3 == 0) {
+						a = 0; b = x[1];
+					}
+					else {
+						a = x[i - 3 + 1]; b = x[i - 3 - 1];
+					}
+				}
+			}
+			break;
+		}
+		case 3: {
+			now_x += x[i];
+			x[i] = now_y;
+			if (i >= 3) {
+				if (now_x >= x[i - 3]) {
+					int a = INT_MIN; int b = INT_MIN;
+					if (i - 3 == 0) {
+						a = 0; b = x[1];
+					}
+					else {
+						a = x[i - 3 + 1]; b = x[i - 3 - 1];
+					}
+					if (inBetween(a, b, now_y))return true;
+				}
+			}
+			break;
+		}
+		}
+	}
+	return false;
+}

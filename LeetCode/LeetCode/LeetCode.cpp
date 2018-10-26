@@ -7,8 +7,8 @@
 using namespace std;
 int main()
 { 
-	std::vector<pair<string,string>>tickets({{"JFK", "SFO"}, {"JFK", "ATL"}, {"SFO", "ATL"}, {"ATL", "JFK"}, {"ATL", "SFO"}});
-	auto ans = findItinerary(tickets);
+	vector<int>v({ 1,2,3,4 });
+	auto ans = isSelfCrossing(v);
     return 0;
 }
 

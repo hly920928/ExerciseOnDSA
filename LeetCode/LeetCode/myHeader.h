@@ -18,3 +18,7 @@ bool isValidSerialization(std::string preorder);
 int minPatches(std::vector<int>& nums, int n);
 //332. Reconstruct Itinerary
 std::vector<std::string> findItinerary(std::vector<std::pair<std::string, std::string>> tickets);
+//334. Increasing Triplet Subsequence
+bool increasingTriplet(std::vector<int>& nums);
+//335. Self Crossing
+bool isSelfCrossing(std::vector<int>& x);
