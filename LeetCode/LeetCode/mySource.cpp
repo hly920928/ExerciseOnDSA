@@ -416,78 +416,23 @@ bool inBetween(int a, int b, int x) {
 	return false;
 }
 bool isSelfCrossing(std::vector<int>& x)
-{
-	int now_x = 0; int now_y = 0;  
-	for (int i = 0; i < x.size(); i++) {
-		switch (i % 4) {
-		case 0:{
-			now_y += x[i];
-			x[i] = now_x;
-			if (i >= 3) {
-				if (now_y >= x[i - 3]) {
-					int a = INT_MIN; int b = INT_MIN;
-					if (i - 3 == 0) {
-						a = 0; b = x[1];
-					}
-					else {
-						a = x[i-3+1]; b = x[i - 3-1];
-					}
-					if (inBetween(a, b, now_x))return true;
-				}
+{ 
+	int n = x.size();
+	for (int i = 3; i < n; i++) {
+		if (i >= 5) {
+			int a = x[i - 5]; int b = x[i -4]; int c = x[i - 3];
+			int d = x[i - 2]; int e = x[i - 1]; int f = x[i];
+			if (d >= b&&a<=c) {
+				if (e >= c - a&&e <= c&&f >= d - b)return true;
 			}
-				break;
-			}
-		case 1: {
-			now_x -= x[i];
-			x[i] = now_y;
-			if (i >= 3) {
-				if (now_x <= x[i - 3]) {
-					int a = INT_MIN; int b = INT_MIN;
-					if (i - 3 == 0) {
-						a = 0; b = x[1];
-					}
-					else {
-						a = x[i - 3 + 1]; b = x[i - 3 - 1];
-					}
-					if (inBetween(a, b, now_y))return true;
-				}
-			}
-			break;
 		}
-		case 2: {
-			now_y -= x[i];
-			x[i] = now_x;
-			if (i >= 3) {
-				if (now_y <= x[i - 3]) {
-					int a = INT_MIN; int b = INT_MIN;
-					if (i - 3 == 0) {
-						a = 0; b = x[1];
-					}
-					else {
-						a = x[i - 3 + 1]; b = x[i - 3 - 1];
-					}
-				}
-			}
-			break;
+		if (i >=4) {
+			int a = x[i - 4]; int b = x[i - 3]; int c = x[i - 2];
+			int d = x[i - 1]; int e = x[i]; int f = x[i];
+			if (b == d && (a + e) >= c)return true;
 		}
-		case 3: {
-			now_x += x[i];
-			x[i] = now_y;
-			if (i >= 3) {
-				if (now_x >= x[i - 3]) {
-					int a = INT_MIN; int b = INT_MIN;
-					if (i - 3 == 0) {
-						a = 0; b = x[1];
-					}
-					else {
-						a = x[i - 3 + 1]; b = x[i - 3 - 1];
-					}
-					if (inBetween(a, b, now_y))return true;
-				}
-			}
-			break;
-		}
-		}
+		int a = x[i - 3];	int b = x[i - 2]; int c = x[i - 1]; int d = x[i];
+		if (d >= b&&a>=c)return true;
 	}
 	return false;
 }
