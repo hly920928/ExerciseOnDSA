@@ -428,11 +428,30 @@ bool isSelfCrossing(std::vector<int>& x)
 		}
 		if (i >=4) {
 			int a = x[i - 4]; int b = x[i - 3]; int c = x[i - 2];
-			int d = x[i - 1]; int e = x[i]; int f = x[i];
+			int d = x[i - 1]; int e = x[i];
 			if (b == d && (a + e) >= c)return true;
 		}
 		int a = x[i - 3];	int b = x[i - 2]; int c = x[i - 1]; int d = x[i];
 		if (d >= b&&a>=c)return true;
 	}
 	return false;
+}
+void robIII_re(TreeNode * root, int& valT, int& valF) {
+	if (root!= nullptr&&root->left == nullptr&&root->right == nullptr) {
+		valT = root->val; valF = 0; return;
+	}
+	int TR = 0; int FR = 0; int TL = 0; int FL = 0;
+	if (root->left != nullptr)robIII_re(root->left, TL, FL);
+	if (root->right != nullptr)robIII_re(root->right, TR, FR);
+	valT = FL + FR+ root->val;
+	valF =max(TL, FL)+ max(TR, FR);
+	return;
+}
+int robIII(TreeNode * root)
+{
+	if (root == nullptr)return 0;
+	if (root->left == nullptr&&root->right == nullptr)return root->val;
+	int valT = 0; int valF = 0;
+	robIII_re(root, valT, valF);
+	return max(valT,valF);
 }

@@ -22,3 +22,10 @@ std::vector<std::string> findItinerary(std::vector<std::pair<std::string, std::s
 bool increasingTriplet(std::vector<int>& nums);
 //335. Self Crossing
 bool isSelfCrossing(std::vector<int>& x);
+struct TreeNode {
+	int val;
+	TreeNode *left;
+	TreeNode *right;
+	TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+};
+int robIII(TreeNode* root);
