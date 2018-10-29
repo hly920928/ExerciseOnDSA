@@ -455,3 +455,15 @@ int robIII(TreeNode * root)
 	robIII_re(root, valT, valF);
 	return max(valT,valF);
 }
+unordered_map<string, int>*_sufixPP;
+bool isPalindrome(const string& str, int head, int tail) {
+	return false;
+}
+void produceAllsufix(const string& str) {};
+vector<vector<int>> palindromePairs(vector<string>& words)
+{
+	unordered_map<string, int>total; int n = words.size();
+	unordered_map<string, int>sufix; _sufixPP = &sufix;
+	vector<vector<int>>ans;
+	return ans;
+}
