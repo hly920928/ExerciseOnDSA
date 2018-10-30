@@ -456,8 +456,13 @@ int robIII(TreeNode * root)
 	return max(valT,valF);
 }
 unordered_map<string, int>*_sufixPP;
-bool isPalindrome(const string& str, int head, int tail) {
-	return false;
+bool isPalindrome(const string& str, int lo, int hi) {
+	while (true) {
+		if (lo >= hi)return true;
+		if (str[lo] != str[hi])return false;
+		lo++; hi--;
+	}
+	return true;
 }
 void produceAllsufix(const string& str) {};
 vector<vector<int>> palindromePairs(vector<string>& words)

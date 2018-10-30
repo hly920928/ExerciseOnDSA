@@ -29,3 +29,4 @@ struct TreeNode {
 	TreeNode(int x) : val(x), left(NULL), right(NULL) {}
 };
 int robIII(TreeNode* root);
+std::vector<std::vector<int>> palindromePairs(std::vector<std::string>& words);
