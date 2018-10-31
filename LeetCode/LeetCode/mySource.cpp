@@ -455,7 +455,7 @@ int robIII(TreeNode * root)
 	robIII_re(root, valT, valF);
 	return max(valT,valF);
 }
-unordered_map<string, int>*_sufixPP;
+unordered_map<string, vector<int>>*_sufixPP;
 bool isPalindrome(const string& str, int lo, int hi) {
 	while (true) {
 		if (lo >= hi)return true;
@@ -464,11 +464,20 @@ bool isPalindrome(const string& str, int lo, int hi) {
 	}
 	return true;
 }
-void produceAllsufix(const string& str) {};
+void produceAllsufix(const string& str,int id) {
+	auto& table = *_sufixPP;
+	string sufix; sufix.push_back(str.back());
+	int n = str.size();
+	for (int i = n - 2; i >= 0; i++) {
+		if (isPalindrome(str, 0, i))table[sufix].push_back(id);
+		sufix.push_back(str[i]);
+	}
+
+};
 vector<vector<int>> palindromePairs(vector<string>& words)
 {
 	unordered_map<string, int>total; int n = words.size();
-	unordered_map<string, int>sufix; _sufixPP = &sufix;
+	unordered_map<string, vector<int>>sufix; _sufixPP = &sufix;
 	vector<vector<int>>ans;
 	return ans;
 }
