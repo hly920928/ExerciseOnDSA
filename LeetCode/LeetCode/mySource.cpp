@@ -464,6 +464,22 @@ bool isPalindrome(const string& str, int lo, int hi) {
 	}
 	return true;
 }
+//Tries method
+class TrieNodePP;
+vector<TrieNodePP>*tnTablePP;
+class TrieNodePP {
+private:
+	int nextID[26];
+public:
+	TrieNodePP() {
+		for (int &i : nextID)i = -1;
+	}
+	const TrieNodePP& getNext(char c){
+		return tnTablePP->at(nextID[c - 'a']);
+}
+};
+void buildTrie(vector<string>& words,  TrieNodePP&root) {};
+void findPair(const string& str, vector<vector<int>>&ans, const TrieNodePP&root) {};
 void produceAllsufix(const string& str,int id) {
 	auto& table = *_sufixPP;
 	string sufix; sufix.push_back(str.back());
@@ -476,8 +492,9 @@ void produceAllsufix(const string& str,int id) {
 };
 vector<vector<int>> palindromePairs(vector<string>& words)
 {
-	unordered_map<string, int>total; int n = words.size();
-	unordered_map<string, vector<int>>sufix; _sufixPP = &sufix;
-	vector<vector<int>>ans;
+	vector<TrieNodePP>tablePP; tnTablePP = &tablePP; vector<vector<int>>ans;
+	TrieNodePP root;
+	buildTrie(words, root);
+	for (auto& str : words)findPair(str, ans, root);
 	return ans;
 }
