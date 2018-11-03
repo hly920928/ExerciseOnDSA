@@ -7,8 +7,8 @@
 using namespace std;
 int main()
 { 
-	vector<int>v({ 1,2,3,4 });
-	auto ans = isSelfCrossing(v);
+	vector<string>v({ "a","b","c","ab","ac","aa" });
+	auto ans = palindromePairs(v);
     return 0;
 }
 

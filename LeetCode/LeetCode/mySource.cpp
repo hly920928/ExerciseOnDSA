@@ -455,7 +455,6 @@ int robIII(TreeNode * root)
 	robIII_re(root, valT, valF);
 	return max(valT,valF);
 }
-unordered_map<string, vector<int>>*_sufixPP;
 bool isPalindrome(const string& str, int lo, int hi) {
 	while (true) {
 		if (lo >= hi)return true;
@@ -466,35 +465,105 @@ bool isPalindrome(const string& str, int lo, int hi) {
 }
 //Tries method
 class TrieNodePP;
-vector<TrieNodePP>*tnTablePP;
+struct strDate {
+	unsigned short id;
+	bool isFull;
+	strDate(unsigned short i=63356, bool f=false) :id(i), isFull(f) {};
+};
 class TrieNodePP {
 private:
-	int nextID[26];
+	TrieNodePP* next[26];
 public:
+	vector<strDate> strID;
 	TrieNodePP() {
-		for (int &i : nextID)i = -1;
+		for (auto &i : next)i =nullptr;
 	}
-	const TrieNodePP& getNext(char c){
-		return tnTablePP->at(nextID[c - 'a']);
+	~TrieNodePP() {
+		for (auto &i : next)delete i;
+
+	}
+	TrieNodePP*  getNext(char c){
+		 if (next[c - 'a'] == nullptr) {
+			 next[c - 'a'] = new TrieNodePP();
+		}
+		return  next[c - 'a'];
 }
 };
-void buildTrie(vector<string>& words,  TrieNodePP&root) {};
-void findPair(const string& str, vector<vector<int>>&ans, const TrieNodePP&root) {};
-void produceAllsufix(const string& str,int id) {
-	auto& table = *_sufixPP;
-	string sufix; sufix.push_back(str.back());
-	int n = str.size();
-	for (int i = n - 2; i >= 0; i++) {
-		if (isPalindrome(str, 0, i))table[sufix].push_back(id);
-		sufix.push_back(str[i]);
+void buildTrie(vector<string>& words,  TrieNodePP&root,int& nullID) {
+	
+	for (int id = 0; id < words.size();id++) {
+		
+		auto& str = words[id];
+		if (str.size() == 1) {
+			root.getNext(str[0])->strID.push_back(strDate(id,true));
+			continue;
+		}
+		if (str == "") {
+			nullID = id;
+			continue;
+		}
+		int len = str.size(); auto now = root.getNext(str.back());
+		for (int i = len - 2; i >= 0; i--) {
+			if (isPalindrome(str, 0, i)) {
+				now->strID.push_back(strDate(id, false));
+			}
+			now = now->getNext(str[i]);
+		}
+		 now->strID.push_back(strDate(id, true));
+	 }
+	
+};
+void findPair(int now_id, const string& str, vector<vector<int>>&ans, TrieNodePP&root, int size) {
+	if (str == "")return;
+	vector<bool>visited; int len = str.size(); visited.resize(size);
+	for (int i = 0; i < len; i++)visited[i] = false;
+	visited[now_id] = true;
+	auto now = root.getNext(str.front());
+	if (len == 1) {
+		for (auto& data : now->strID) {
+			if (!visited[data.id]) {
+				ans.push_back(vector<int>({ now_id, data.id }));
+				visited[data.id] = true;
+			}
+		}
+		return;
 	}
-
+	for (int i = 1; i <=len-1; i++) {
+		if (isPalindrome(str, i, len-1)) {
+			for (auto& data : now->strID) {
+				if (data.isFull&&!visited[data.id]) {
+					ans.push_back(vector<int>({ now_id, data.id }));
+					visited[data.id] = true;
+				}
+			}
+		}
+		now = now->getNext(str[i]);
+		if (now == nullptr)break;
+	}
+	if (now != nullptr) {
+		now = now->getNext(str.back());
+		for (auto& data : now->strID) {
+			if (!visited[data.id]) {
+				ans.push_back(vector<int>({ now_id, data.id }));
+				visited[data.id] = true;
+			}
+		}
+   }
 };
 vector<vector<int>> palindromePairs(vector<string>& words)
 {
-	vector<TrieNodePP>tablePP; tnTablePP = &tablePP; vector<vector<int>>ans;
-	TrieNodePP root;
-	buildTrie(words, root);
-	for (auto& str : words)findPair(str, ans, root);
+ vector<vector<int>>ans;
+ TrieNodePP root; int size = words.size(); int nullID = -1;
+	buildTrie(words, root, nullID);
+	for (int id = 0; id < words.size(); id++) {
+		if (nullID != -1&&words[id]!="") {
+			if(isPalindrome(words[id],0,words[id].size()-1)){
+				ans.push_back(vector<int>({ id,nullID }));
+				ans.push_back(vector<int>({ nullID,id }));
+			}
+		}
+		findPair(id, words[id], ans, root, size);
+	
+	}
 	return ans;
 }
