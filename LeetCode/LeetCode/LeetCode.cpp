@@ -7,7 +7,7 @@
 using namespace std;
 int main()
 { 
-	vector<string>v({ "a","" });
+	vector<string>v({ "abcd","dcba","lls","s","sssll" });
 	auto ans = palindromePairs(v);
     return 0;
 }
