@@ -465,17 +465,18 @@ bool isPalindrome(const string& str, int lo, int hi) {
 	return true;
 }
 //Tries method
-
+#define US_MAX 65500
 class TrieNodePP;
 vector<TrieNodePP>*tablePP;
 class TrieNodePP {
 	
 public:
 	unsigned short next[26];
-	int idFull;
+	unsigned short  idFull;
+	unsigned short  idFull_f;
 	vector<unsigned short> strID;
 	TrieNodePP() {
-		idFull = -1;
+		idFull = US_MAX; idFull_f = US_MAX;
 		for (auto &i : next)i = US_MAX;
 	}
 
@@ -492,18 +493,31 @@ TrieNodePP*  getNext(int& nowID,char c) {
 		nowID = table[nowID].next[c - 'a'];
 		return ans;
 }
+void addToTrie_FF(string& str, TrieNodePP*root, int id) {
+	auto &table = *tablePP;
+	if (str == "") { root->idFull_f = id; return; }
+	int len = str.size();
+	auto now = root; int nowID = 0;
+	for (int i =0; i <len -1; i++) {
+		now = getNext(nowID, str[i]);
+	}
+	now = getNext(nowID, str[len - 1]);
+	now->idFull_f = id;
+	return;
+};
 void addToTrie(string& str,  TrieNodePP*root,int id) {
 	auto &table = *tablePP;
 	if (str == "") { root->idFull = id; return; }
 	int len = str.size();
-	if (isPalindrome(str, 0, len - 1)) {
-		root->strID.push_back(id);
+	if (root->idFull_f!= US_MAX) {
+		if(isPalindrome(str, 0, len - 1))root->strID.push_back(id);
+		
 	}
 	auto now = root; int nowID = 0;
 	for (int i = len - 1; i > 0; i--) {
 		 now = getNext(nowID,str[i]);
-		 if (isPalindrome(str, 0, i - 1)) {
-			 now->strID.push_back(id);
+		 if (now->idFull_f != US_MAX) {
+			 if(isPalindrome(str, 0, i - 1))now->strID.push_back(id);
 		 }
 	}
 	now = getNext(nowID, str[0]);
@@ -525,8 +539,8 @@ void findPair(int now_id, const string& str, vector<vector<int>>&ans, TrieNodePP
 		return;
 	}
 	int len = str.size();
-	if (isPalindrome(str, 0, len - 1)) {
-		if (root->idFull != -1&& !table[root->idFull]) {
+	if (root->idFull != US_MAX && !table[root->idFull]) {
+		if (isPalindrome(str, 0, len - 1)) {
 			ans.push_back(vector<int>({ now_id,root->idFull }));
 			table[root->idFull] = true;
 		}
@@ -535,15 +549,15 @@ void findPair(int now_id, const string& str, vector<vector<int>>&ans, TrieNodePP
 	auto now = root; int nowID = 0;
 	for (int i =0; i <len-1; i++) {
 		now = getNext(nowID, str[i]);
-		if (isPalindrome(str, i+1, len-1)) {
-				if (now->idFull!=-1&&!table[now->idFull]) {
+		if (now->idFull != US_MAX && !table[now->idFull]) {
+				if (isPalindrome(str, i + 1, len - 1)) {
 					ans.push_back(vector<int>({ now_id,now->idFull }));
 					table[now->idFull] = true;
 				}
 		}
 	}
 	now = getNext(nowID, str[len-1]);
-	if (now->idFull != -1 && !table[now->idFull]) {
+	if (now->idFull != US_MAX && !table[now->idFull]) {
 		ans.push_back(vector<int>({ now_id,now->idFull }));
 		table[now->idFull] = true;
 	}
@@ -560,6 +574,7 @@ vector<vector<int>> palindromePairs(vector<string>& words)
 	vector<vector<int>>ans; vector<TrieNodePP>table; tablePP = &table;
 	TrieNodePP root; int size = words.size(); 
 	table.push_back(root);
+	for (int id = 0; id < words.size(); id++)addToTrie_FF(words[id], &table[0], id);
  for (int id = 0; id < words.size(); id++)addToTrie(words[id], &table[0], id);
  for (int id = 0; id < words.size(); id++)findPair(id,words[id],ans, &table[0], size);
 	return ans;
