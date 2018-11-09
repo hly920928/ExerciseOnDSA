@@ -8,7 +8,7 @@ using namespace std;
 int main()
 { 
 	vector<string>v({ "bat","tab","cat" });
-	auto ans = palindromePairs(v);
+	auto ans = countBits(5);
     return 0;
 }
 

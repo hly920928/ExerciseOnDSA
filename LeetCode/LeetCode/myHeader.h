@@ -30,3 +30,4 @@ struct TreeNode {
 };
 int robIII(TreeNode* root);
 std::vector<std::vector<int>> palindromePairs(std::vector<std::string>& words);
+std::vector<int> countBits(int num);

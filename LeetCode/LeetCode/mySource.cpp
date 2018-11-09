@@ -579,3 +579,23 @@ vector<vector<int>> palindromePairs(vector<string>& words)
  for (int id = 0; id < words.size(); id++)findPair(id,words[id],ans, &table[0], size);
 	return ans;
 }
+
+std::vector<int> countBits(int num)
+{
+	vector<int>ans;
+	ans.push_back(0);
+	if (num == 0)return ans;
+
+	int step = 1;
+	for (int i = 1; i <= num; i++) {
+		if (i == step) {
+			ans.push_back(1);
+			step = step << 1;
+		}
+		else {
+			ans.push_back(1+ans[i-step/2]);
+		}
+
+	}
+	return ans;
+}
