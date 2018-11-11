@@ -31,3 +31,56 @@ struct TreeNode {
 int robIII(TreeNode* root);
 std::vector<std::vector<int>> palindromePairs(std::vector<std::string>& words);
 std::vector<int> countBits(int num);
+class NestedInteger;
+class NestedInteger {
+private:
+	std::vector<NestedInteger>list;
+	int ing;
+	public:
+		NestedInteger(int i = INT_MIN) {
+			ing = i;
+		}
+		NestedInteger(std::vector<NestedInteger>*p = nullptr) {
+			if (p != nullptr)list = *p;
+		}
+		     // Return true if this NestedInteger holds a single integer, rather than a nested list.
+		bool isInteger() const { return list.size()==0; };
+		
+		     // Return the single integer that this NestedInteger holds, if it holds a single integer
+			     // The result is undefined if this NestedInteger holds a nested list
+		int getInteger() const { return ing; };
+		
+			   // Return the nested list that this NestedInteger holds, if it holds a nested list
+		     // The result is undefined if this NestedInteger holds a single integer
+		const std::vector<NestedInteger> &getList() const { return list; };
+};
+class NestedIterator {
+private:
+	std::vector<int>list;
+	int now;
+public:
+	NestedIterator(std::vector<NestedInteger> &nestedList) {
+		now = 0;
+		for (auto& i : nestedList)flat(i);
+		
+	}
+
+	int next() {
+		int ans = list[now]; now++;
+		return ans;
+	}
+
+	bool hasNext() {
+		return now < list.size();
+	}
+private:
+	void flat(const NestedInteger& ni) {
+		if (ni.isInteger()) {
+			list.push_back(ni.getInteger());
+		}
+		else {
+			auto& l = ni.getList();
+			for (auto& i : l)flat(i);
+		}
+	}
+};
