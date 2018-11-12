@@ -599,3 +599,15 @@ std::vector<int> countBits(int num)
 	}
 	return ans;
 }
+
+bool isPowerOfFour(int num)
+{
+	if (num <= 0)return false;
+	int msk = (1 | 1 << 2 | 1 << 4 | 1 << 6 | 1 << 8 |
+		1 << 10 | 1 << 12 | 1 << 14 | 1 << 16 |1<<18|
+		1 << 20 | 1 << 22 | 1 << 24 | 1 << 26 | 1 << 28 |
+		1 << 30
+		);
+	int n = num&msk;
+	return (n == num) && ((num&(num - 1))== 0);
+}
