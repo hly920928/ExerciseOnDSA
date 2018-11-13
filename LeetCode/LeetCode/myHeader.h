@@ -86,3 +86,5 @@ private:
 };
 //342. Power of Four
 bool isPowerOfFour(int num);
+//343. Integer Break
+int integerBreak(int n);

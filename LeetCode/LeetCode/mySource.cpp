@@ -609,5 +609,22 @@ bool isPowerOfFour(int num)
 		1 << 30
 		);
 	int n = num&msk;
-	return (n == num) && ((num&(num - 1))== 0);
+	return (n==num)&&((num&(num - 1))==0);
+}
+int integerBreakN(int n, int p) {
+	int n1 = n / p; int n2 = n1 + 1;
+	int m1 = pow(n1, p - 1)*(n - n1*(p - 1));
+	int m2 = INT_MIN;
+	if (n2 < n) {
+		m2= pow(n2, p - 1)*(n - n2*(p - 1));
+	}
+	return max(m1,m2);
+}
+int integerBreak(int n)
+{
+	int _max = 1;
+	for (int i = 2; i < n; i++) {
+		_max = max(_max, integerBreakN(n, i));
+	}
+	return _max;
 }

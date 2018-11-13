@@ -7,7 +7,7 @@
 using namespace std;
 int main()
 { 
-	auto ans = isPowerOfFour(16);
+	auto ans = integerBreak(8);
     return 0;
 }
 
