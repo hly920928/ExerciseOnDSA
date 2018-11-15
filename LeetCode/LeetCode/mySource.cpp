@@ -628,3 +628,28 @@ int integerBreak(int n)
 	}
 	return _max;
 }
+
+string reverseString(string s)
+{
+	string ans;
+	for (int i = s.size() - 1; i >= 0; i--)ans.push_back(s[i]);
+	return ans;
+}
+
+string reverseVowels(string s)
+{
+	vector<int>v;
+	for (int i = 0; i < s.size(); i++) {
+		if (s[i] == 'a' || s[i] == 'e' || s[i] == 'i' || s[i] == 'o' || s[i] == 'u'||
+			s[i] == 'A' || s[i] == 'E' || s[i] == 'I' || s[i] == 'O' || s[i] == 'U') {
+			v.push_back(i);
+		}
+	}
+	string ans = s;
+	int lo = 0; int hi = v.size() - 1;
+	while (lo < hi) {
+		swap(ans[v[lo]], ans[v[hi]]);
+		lo++; hi--;
+	}
+	return ans;
+}

@@ -88,3 +88,7 @@ private:
 bool isPowerOfFour(int num);
 //343. Integer Break
 int integerBreak(int n);
+//344. Reverse String
+std::string reverseString(std::string s);
+//345. Reverse Vowels of a String
+std::string reverseVowels(std::string s);
