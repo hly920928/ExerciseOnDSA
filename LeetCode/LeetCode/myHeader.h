@@ -92,3 +92,5 @@ int integerBreak(int n);
 std::string reverseString(std::string s);
 //345. Reverse Vowels of a String
 std::string reverseVowels(std::string s);
+//347. Top K Frequent Elements
+std::vector<int> topKFrequent(std::vector<int>& nums, int k);

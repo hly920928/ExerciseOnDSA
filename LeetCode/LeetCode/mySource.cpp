@@ -653,3 +653,28 @@ string reverseVowels(string s)
 	}
 	return ans;
 }
+
+std::vector<int> topKFrequent(std::vector<int>& nums, int k)
+{
+	unordered_map<int, int>map;
+	for (auto i : nums) {
+		if (map.find(i) == map.end())map[i] = 1;
+		else map[i]++;
+	}
+	vector<vector<int>>bucket; bucket.resize(nums.size() + 1);
+	for (auto itr : map) {
+		bucket[itr.second].push_back(itr.first);
+	}
+	int _k = k; vector<int>ans;
+	for (int i = nums.size(); i >= 0; i--) {
+		if (bucket[i].size() != 0) {
+			for (auto i : bucket[i]) {
+				ans.push_back(i);
+				_k--;
+				if (_k == 0)goto OUT;
+			}
+		}
+	}
+	OUT:
+	return ans;
+}
