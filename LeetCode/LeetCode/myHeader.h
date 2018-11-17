@@ -94,3 +94,7 @@ std::string reverseString(std::string s);
 std::string reverseVowels(std::string s);
 //347. Top K Frequent Elements
 std::vector<int> topKFrequent(std::vector<int>& nums, int k);
+//349. Intersection of Two Arrays
+std::vector<int> intersection(std::vector<int>& nums1, std::vector<int>& nums2);
+350. Intersection of Two Arrays II
+std::vector<int> intersectionII(std::vector<int>& nums1, std::vector<int>& nums2);

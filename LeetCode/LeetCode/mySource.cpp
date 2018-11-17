@@ -678,3 +678,41 @@ std::vector<int> topKFrequent(std::vector<int>& nums, int k)
 	OUT:
 	return ans;
 }
+
+std::vector<int> intersection(std::vector<int>& nums1, std::vector<int>& nums2)
+{
+	vector<int>ans;
+	if (nums1.size() == 0 || nums2.size() == 0)return ans;
+	unordered_set<int>set;
+	for (auto i : nums1)set.insert(i);
+	for (auto i : nums2) {
+		if (set.find(i) != set.end()) {
+			ans.push_back(i);
+			set.erase(i);
+		}
+	}
+	return ans;
+}
+
+std::vector<int> intersectionII(std::vector<int>& nums1, std::vector<int>& nums2)
+{
+	vector<int>ans;
+	if (nums1.size() == 0 || nums2.size() == 0)return ans;
+	unordered_map<int,char>map;
+	for (auto i : nums1) {
+		if (map.find(i) == map.end()) {
+			map[i] = 1;
+		}
+		else map[i]++;
+	}
+	for (auto i : nums2) {
+		auto itr = map.find(i);
+		if (itr != map.end()) {
+			if (itr->second != 0) {
+				ans.push_back(i);
+				map[i]--;
+		   }
+		}
+	}
+	return ans;
+}
