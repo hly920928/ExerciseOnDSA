@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+#include <map>
 //327. Count of Range Sum
 int countRangeSum(std::vector<int>& nums, int lower, int upper);
 //328. Odd Even Linked List
@@ -96,5 +97,56 @@ std::string reverseVowels(std::string s);
 std::vector<int> topKFrequent(std::vector<int>& nums, int k);
 //349. Intersection of Two Arrays
 std::vector<int> intersection(std::vector<int>& nums1, std::vector<int>& nums2);
-350. Intersection of Two Arrays II
+//350. Intersection of Two Arrays II
 std::vector<int> intersectionII(std::vector<int>& nums1, std::vector<int>& nums2);
+//
+struct Interval {
+	int start;
+	int end;
+	Interval() : start(0), end(0) {}
+	Interval(int s, int e) : start(s), end(e) {}
+};
+class SummaryRanges {
+private:
+	std::map<int, int>map;
+public:
+	/** Initialize your data structure here. */
+	SummaryRanges() {
+
+	}
+
+	void addNum(int val) {
+		auto itr_b = map.upper_bound(val);
+		auto itr_s = itr_b; 
+		if (itr_b != map.end()) { itr_s--; }
+		else if (map.size() > 0) { itr_s = map.end(); itr_s--; }
+		char type = 'I';
+		if (itr_s !=map.end()) {
+			if (itr_s->first <= val&&itr_s->second >= val)type = 'U';
+			if (itr_s->second == val - 1)type = 'F';
+		}
+		if (itr_b != map.end()) {
+			if (itr_b->first <= val)type = 'U';
+			if (itr_b->first == val+1)type = 'A';
+		}
+		if (itr_b != map.end()&& itr_s != map.end()) {
+			if (itr_b->first == val + 1&& itr_s->second == val - 1)type = 'M';
+		}
+		switch (type)
+		{
+		case'U':break;
+		case 'I': {map[val] = val; break; }
+		case 'F': {map[itr_s->first] = val; break; }
+		case 'A': {map[val] = itr_b->second; map.erase(itr_b->first); break; }
+		case 'M': {map[itr_s->first] = itr_b->second; map.erase(itr_b->first); break; }
+		}
+	}
+
+	std::vector<Interval> getIntervals() {
+		std::vector<Interval>ans;
+		for (auto itr : map) {
+			ans.push_back(Interval(itr.first, itr.second));
+		}
+		return ans;
+	}
+};
