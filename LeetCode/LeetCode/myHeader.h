@@ -1,6 +1,11 @@
 #pragma once
 #include <vector>
 #include <map>
+#include <unordered_map>
+#include <unordered_set>
+#include <queue>
+#include <stack>
+#include<algorithm>
 //327. Count of Range Sum
 int countRangeSum(std::vector<int>& nums, int lower, int upper);
 //328. Odd Even Linked List
@@ -32,7 +37,7 @@ struct TreeNode {
 int robIII(TreeNode* root);
 std::vector<std::vector<int>> palindromePairs(std::vector<std::string>& words);
 std::vector<int> countBits(int num);
-class NestedInteger;
+/*class NestedInteger;
 class NestedInteger {
 private:
 	std::vector<NestedInteger>list;
@@ -53,7 +58,8 @@ private:
 		
 			   // Return the nested list that this NestedInteger holds, if it holds a nested list
 		     // The result is undefined if this NestedInteger holds a single integer
-		const std::vector<NestedInteger> &getList() const { return list; };
+      std::vector<NestedInteger> &getList()  { return list; };
+	  const std::vector<NestedInteger> &getList()const { return list; };
 };
 class NestedIterator {
 private:
@@ -75,7 +81,7 @@ public:
 		return now < list.size();
 	}
 private:
-	void flat(const NestedInteger& ni) {
+	void flat( NestedInteger& ni) {
 		if (ni.isInteger()) {
 			list.push_back(ni.getInteger());
 		}
@@ -84,7 +90,7 @@ private:
 			for (auto& i : l)flat(i);
 		}
 	}
-};
+};*/
 //342. Power of Four
 bool isPowerOfFour(int num);
 //343. Integer Break
@@ -151,21 +157,59 @@ public:
 	}
 };
 //355. Design Twitter
+struct Tweet {
+	int uID;
+	int tID;
+	Tweet(int u = INT_MIN, int t = INT_MIN): uID(u),tID(t){};
+};
+class UserData{
+private:
+	std::stack<Tweet>ts;
+public:
+	UserData() {
+	}
+	void addTweet(Tweet t) {
+		ts.push(t);
+	}
+	void getTweet(std::vector<int>& v,std::unordered_set<int>&f) {
+		std::vector<Tweet>vt;
+		while (vt.size() < 10&&!ts.empty()) {
+			auto t = ts.top(); ts.pop();
+			if (f.find(t.uID) != f.end())vt.push_back(t);
+		}
+		for (int i = vt.size() - 1; i >= 0; i--) ts.push(vt[i]);
+		for (int i =0; i < vt.size(); i++) v.push_back(vt[i].tID);
+	}
+};
 class Twitter {
+private:
+	std::unordered_map<int, std::unordered_set<int>>fellower;
+	std::unordered_map<int, std::unordered_set<int>>fellowee;
+	std::unordered_map<int, UserData>tweetData;
 public:
 	Twitter() {
 
 	}
 	void postTweet(int userId, int tweetId) {
-
+		fellower[userId].insert(userId);
+		fellowee[userId].insert(userId);
+		for (int uID : fellower[userId]) {
+			tweetData[uID].addTweet(Tweet(userId, tweetId));
+		}
 	}
-	vector<int> getNewsFeed(int userId) {
-
+	std::vector<int> getNewsFeed(int userId) {
+		std::vector<int>ans;
+		tweetData[userId].getTweet(ans, fellowee[userId]);
+		return ans;
 	}
 	void follow(int followerId, int followeeId) {
-
+		fellower[followeeId].insert(followeeId);
+		fellower[followeeId].insert(followerId);
+		fellowee[followerId].insert(followeeId);
+		fellowee[followerId].insert(followerId);
 	}
 	void unfollow(int followerId, int followeeId) {
-
+		fellower[followeeId].erase(followerId);
+		fellowee[followerId].erase(followeeId);
 	}
 };
