@@ -8,6 +8,7 @@
 #include<unordered_map>
 #include<map>
 #include <math.h>
+#include <set>
 using namespace std;
 vector<int>*numsCRS;
 vector<long long>*sumCRS;
@@ -715,4 +716,48 @@ std::vector<int> intersectionII(std::vector<int>& nums1, std::vector<int>& nums2
 		}
 	}
 	return ans;
+}
+class Envelope {
+public:
+	unsigned char num;
+	unsigned short x; unsigned short y;
+	Envelope(int _x = 0, int _y = 0) :x(_x), y(_y), num(1) {};
+	bool canInto(const Envelope&b) {
+		if (x > b.x&&y>b.y) { return true; };
+		return false;
+	}
+};
+bool operator<(const Envelope&a, const Envelope&b) {
+	if (a.num < b.num) { return true; };
+	if (a.num > b.num) { return false; };
+	if (a.x> b.x) { return true; };
+	if (a.y> b.y) { return true; };
+	if (a.x< b.x) { return false; };
+	if (a.y< b.y) { return false; };
+	return false;
+}
+int maxEnvelopes(vector<pair<int, int>>& envelopes)
+{
+	if (envelopes.size() <= 1)return envelopes.size();
+	sort(envelopes.begin(), envelopes.end());
+	set<Envelope>set;
+	for (auto&p : envelopes) {
+		Envelope now(p.first, p.second);
+		if (set.size() == 0)set.insert(now);
+		else {
+			auto itr = set.end(); itr--;
+			while (itr != set.begin()) {
+				if (now.canInto(*itr)) {
+					break;
+				}
+				itr--;
+			}
+			if (now.canInto(*itr)) {
+				now.num = itr->num + 1;
+			}
+			set.insert(now);
+		}
+	}
+	auto itr = set.end(); itr--;
+	return itr->num;
 }
