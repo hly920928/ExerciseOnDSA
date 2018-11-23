@@ -213,3 +213,6 @@ public:
 		fellowee[followerId].erase(followeeId);
 	}
 };
+//354. Russian Doll Envelopes
+int maxEnvelopes(std::vector<std::pair<int, int>>& envelopes);
+int maxEnvelopes_V2(std::vector<std::pair<int, int>>& envelopes);

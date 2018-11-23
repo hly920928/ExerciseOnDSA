@@ -4,10 +4,12 @@
 #include "stdafx.h"
 #include "myHeader.h"
 #include <vector>
+#include <iostream>
 using namespace std;
 int main()
 { 
-	auto ans = integerBreak(8);
+	vector<pair<int, int>>ens({ {5,4 }, { 6,4 }, { 6,7 }, { 2,3 } });
+	auto ans = maxEnvelopes_V2(ens);
     return 0;
 }
 

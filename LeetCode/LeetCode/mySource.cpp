@@ -761,3 +761,44 @@ int maxEnvelopes(vector<pair<int, int>>& envelopes)
 	auto itr = set.end(); itr--;
 	return itr->num;
 }
+int maxEvs;
+vector<vector<int>>*bME;
+vector<pair<int, int>>* evsME;
+int searchEnv(int eID, int lo, int hi) {
+	if (lo > hi)return -1;
+	if (lo == hi) {
+		maxEvs = max(maxEvs, lo);
+		bME->at(lo).push_back(eID);
+		return lo;
+	}
+	int mid = 0;
+	if (hi - lo == 1)mid = hi;
+	else mid = (hi + lo) / 2;
+	auto& nowEnvs = bME->at(mid);
+	auto& nowEn = evsME->at(eID);
+	bool isFind = false;
+	for (auto&id : nowEnvs) {
+		auto&p = evsME->at(id);
+		if (p.first < nowEn.first&&p.second < nowEn.second) {
+			isFind = true;
+			searchEnv(eID, mid, hi);
+		}
+	}
+	if (!isFind) {
+		searchEnv(eID, lo, mid-1);
+		searchEnv(eID, mid, hi);
+	}
+};
+int maxEnvelopes_V2(vector<pair<int, int>>& envelopes)
+{
+	if (envelopes.size() <= 1)return envelopes.size();
+	auto&max = maxEvs;
+	maxEvs = 0;
+	sort(envelopes.begin(), envelopes.end());
+	vector<vector<int>>bucket; bME = &bucket; bucket.resize(envelopes.size() + 1);
+	evsME = &envelopes;
+	for (int i = 0; i < envelopes.size(); i++) {
+		searchEnv(i, 1, i + 1);
+	}
+	return maxEvs;
+}
