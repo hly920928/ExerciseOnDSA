@@ -760,45 +760,85 @@ int maxEnvelopes(vector<pair<int, int>>& envelopes)
 	}
 	auto itr = set.end(); itr--;
 	return itr->num;
-}
-int maxEvs;
+};
 vector<vector<int>>*bME;
 vector<pair<int, int>>* evsME;
-int searchEnv(int eID, int lo, int hi) {
-	if (lo > hi)return -1;
-	if (lo == hi) {
-		maxEvs = max(maxEvs, lo);
-		bME->at(lo).push_back(eID);
-		return lo;
-	}
-	int mid = 0;
-	if (hi - lo == 1)mid = hi;
-	else mid = (hi + lo) / 2;
-	auto& nowEnvs = bME->at(mid);
+bool searchAtEnv(int eID, int n) {
+	auto& nowEnvs = bME->at(n);
 	auto& nowEn = evsME->at(eID);
 	bool isFind = false;
-	for (auto&id : nowEnvs) {
+	for (auto id : nowEnvs) {
 		auto&p = evsME->at(id);
 		if (p.first < nowEn.first&&p.second < nowEn.second) {
-			isFind = true;
-			searchEnv(eID, mid, hi);
+			return true;
+		}
+		if (p.first*p.second >= nowEn.first*nowEn.second)break;
+	}
+	return false;
+}
+
+int searchEnvBin(int eID, int lo, int hi,bool isLoSearched,bool isHiSearched) {
+	if (lo > hi)return 0;
+	if (eID == 0) {
+		return 1;
+}
+	if (lo == hi) {
+		if (hi == 1)return 1;
+		if (isLoSearched) {
+			return lo;
+		}
+		else {
+			if (searchAtEnv(eID, hi-1))return hi;
+			return 0;
 		}
 	}
-	if (!isFind) {
-		searchEnv(eID, lo, mid-1);
-		searchEnv(eID, mid, hi);
+	if (hi - lo == 1) {
+		if (isHiSearched)return hi;
+		if (searchAtEnv(eID, hi-1))return hi;
+		if (lo == 1|| isLoSearched)return lo;
+		if (searchAtEnv(eID, lo-1))return lo;
+		return 0;
+	}
+	if (searchAtEnv(eID, hi - 1))return hi;
+	hi--;
+	if (hi - lo == 1) {
+		if (isHiSearched)return hi;
+		if (searchAtEnv(eID, hi - 1))return hi;
+		if (lo == 1 || isLoSearched)return lo;
+		if (searchAtEnv(eID, lo - 1))return lo;
+		return 0;
+	}
+	int mid = (lo+hi)/2;
+	if (searchAtEnv(eID, mid)) return searchEnvBin(eID, mid + 1, hi, true, isHiSearched);
+	else {
+		int ansh = searchEnvBin(eID, mid + 2, hi, false, isHiSearched);
+		if (ansh != 0)return ansh;
+		return searchEnvBin(eID, lo, mid, isLoSearched, false);
 	}
 };
+int searchLinear(int eID, int hi,int reMain) {
+	int max = hi - 1;
+	for (int i = hi - 1; i >= 1; i--) {
+		if (i + 1 + reMain <= max)return 0;
+		if (searchAtEnv(eID, i))return i + 1;
+	}
+	return 1;
+}
+bool areaCompare(const pair<int, int>&a, pair<int, int>&b) {
+	return a.first*a.second < b.first*b.second;
+}
 int maxEnvelopes_V2(vector<pair<int, int>>& envelopes)
 {
 	if (envelopes.size() <= 1)return envelopes.size();
-	auto&max = maxEvs;
-	maxEvs = 0;
-	sort(envelopes.begin(), envelopes.end());
+	int maxEvs = 0;
+	sort(envelopes.begin(), envelopes.end(), areaCompare);
 	vector<vector<int>>bucket; bME = &bucket; bucket.resize(envelopes.size() + 1);
 	evsME = &envelopes;
 	for (int i = 0; i < envelopes.size(); i++) {
-		searchEnv(i, 1, i + 1);
+		//lo+1+ envelopes.size()-i-1>= maxEvs + 1
+		int ans= searchEnvBin(i,max(1, maxEvs + 1 + i - (int)envelopes.size()),maxEvs+1, false,false);
+		bucket[ans].push_back(i);
+		maxEvs = max(maxEvs, ans);
 	}
 	return maxEvs;
 }
