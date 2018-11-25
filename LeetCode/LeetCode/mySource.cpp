@@ -842,9 +842,31 @@ int maxEnvelopes_V2(vector<pair<int, int>>& envelopes)
 	}
 	return maxEvs;
 }
-//357. Count Numbers with Unique Digits
 
-int countNumbersWithUniqueDigits(int n)
+int factorial10(int n) {
+	int table[11] = { 1,1,2,6,24,120,720,5040,40320,362880,3628800 };
+	return table[n];
+}
+int combination10(int m, int n) {
+	int ans = 1;
+	for (int i = m-n+1; i <= m; i++)ans *= i;
+	return ans / factorial10(n);
+}
+int countNumbersWithUniqueDigitsN(int n)
 {
-	return 0;
+	int digit = n;
+	if (n >= 10)digit =10;
+	int ans = 0;
+	//no 0
+	if(digit!=10)ans += combination10(9, digit)*factorial10(digit);
+	// have 0
+	if (digit != 1)ans += combination10(9, digit -1)*(digit-1)*factorial10(digit -1);
+	return ans;
+}
+int countNumbersWithUniqueDigits(int n) {
+	int ans = 0;
+	for (int i = 1; i <= min(10, n); i++) {
+		ans += countNumbersWithUniqueDigitsN(i);
+	}
+	return ans+1;
 }

@@ -8,8 +8,9 @@
 using namespace std;
 int main()
 { 
-	vector<pair<int, int>>ens({ {5,4 }, { 6,4 }, { 6,7 }, { 2,3 } });
-	auto ans = maxEnvelopes_V2(ens);
+	for (int n = 1; n < 20; n++) {
+		int ans = countNumbersWithUniqueDigits(n);
+	}
     return 0;
 }
 

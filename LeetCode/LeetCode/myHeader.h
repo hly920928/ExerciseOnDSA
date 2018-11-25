@@ -216,3 +216,5 @@ public:
 //354. Russian Doll Envelopes
 int maxEnvelopes(std::vector<std::pair<int, int>>& envelopes);
 int maxEnvelopes_V2(std::vector<std::pair<int, int>>& envelopes);
+////357. Count Numbers with Unique Digits
+int countNumbersWithUniqueDigits(int n);
