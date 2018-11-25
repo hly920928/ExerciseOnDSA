@@ -842,3 +842,9 @@ int maxEnvelopes_V2(vector<pair<int, int>>& envelopes)
 	}
 	return maxEvs;
 }
+//357. Count Numbers with Unique Digits
+
+int countNumbersWithUniqueDigits(int n)
+{
+	return 0;
+}
