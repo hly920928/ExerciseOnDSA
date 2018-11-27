@@ -181,35 +181,76 @@ public:
 		for (int i =0; i < vt.size(); i++) v.push_back(vt[i].tID);
 	}
 };
+class UserDataV2 {
+private:
+	int tweets[11]; int head; int tail;
+public:
+	int size;
+	UserDataV2():head(0), tail(-1) {
+		for (int& i : tweets)i = -1;
+		size = 0;
+	
+	};
+	void addTweets(int t) {
+		 tail = (tail + 1) % 11;
+		 tweets[tail] = t;
+		 size = std::min(10, size + 1);
+		 if ((tail + 1) % 11 == head) {
+			 tweets[head] = -1;
+			 head = (head + 1) % 11;
+
+		 }
+	}
+	int getTweets(int id) {
+		if (id > 9|| id<0)return INT_MIN;
+		int t = tweets[(head + id) % 11];
+		if(t==-1)return INT_MIN;
+		return t;
+	}
+	void getAll(std::vector<int>&v) {
+		for (int i = 0; i <=9; i++) {
+			int t = getTweets(i);
+			if (t == INT_MIN)break;
+			v.push_back(t);
+		}
+	}
+};
 class Twitter {
 private:
-	std::unordered_map<int, std::unordered_set<int>>fellower;
 	std::unordered_map<int, std::unordered_set<int>>fellowee;
-	std::unordered_map<int, UserData>tweetData;
+	std::unordered_map<int, UserDataV2>tweetData;
 public:
 	Twitter() {
 
 	}
 	void postTweet(int userId, int tweetId) {
-		fellower[userId].insert(userId);
 		fellowee[userId].insert(userId);
-		for (int uID : fellower[userId]) {
-			tweetData[uID].addTweet(Tweet(userId, tweetId));
-		}
+		tweetData[userId].addTweets(tweetId);
 	}
 	std::vector<int> getNewsFeed(int userId) {
-		std::vector<int>ans;
-		tweetData[userId].getTweet(ans, fellowee[userId]);
+		std::vector<std::pair<int,std::pair<int, int>>>felloweeData;
+		std::vector<int> ans;
+		for (int fe : fellowee[userId])felloweeData.push_back({ fe,{tweetData[fe].size-1,tweetData[fe].getTweets(tweetData[fe].size - 1)} });
+		for (int i = 0; i < 10; i++) {
+			int maxT = INT_MIN; int max_V=-1;
+			for (int n = 0; n < felloweeData.size(); n++) {
+				if (felloweeData[n].second.second > maxT) {
+					maxT = felloweeData[n].second.second;
+					max_V = n;
+				}
+			}
+				if (maxT == INT_MIN)break;
+				ans.push_back(maxT);
+				felloweeData[max_V].second.first--;
+				felloweeData[max_V].second.second = tweetData[felloweeData[max_V].first].getTweets(felloweeData[max_V].second.first);
+		}
 		return ans;
 	}
 	void follow(int followerId, int followeeId) {
-		fellower[followeeId].insert(followeeId);
-		fellower[followeeId].insert(followerId);
-		fellowee[followerId].insert(followeeId);
 		fellowee[followerId].insert(followerId);
+		fellowee[followeeId].insert(followeeId);
 	}
 	void unfollow(int followerId, int followeeId) {
-		fellower[followeeId].erase(followerId);
 		fellowee[followerId].erase(followeeId);
 	}
 };
