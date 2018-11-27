@@ -218,39 +218,47 @@ public:
 class Twitter {
 private:
 	std::unordered_map<int, std::unordered_set<int>>fellowee;
-	std::unordered_map<int, UserDataV2>tweetData;
+	std::unordered_map<int, UserDataV2>userData;
+	std::unordered_map<int, int>tweetData;
+	int timeStamp;
 public:
 	Twitter() {
-
+		timeStamp = 0;
 	}
 	void postTweet(int userId, int tweetId) {
 		fellowee[userId].insert(userId);
-		tweetData[userId].addTweets(tweetId);
+		userData[userId].addTweets(tweetId);
+		tweetData[tweetId] = timeStamp;
+		timeStamp++;
 	}
 	std::vector<int> getNewsFeed(int userId) {
 		std::vector<std::pair<int,std::pair<int, int>>>felloweeData;
 		std::vector<int> ans;
-		for (int fe : fellowee[userId])felloweeData.push_back({ fe,{tweetData[fe].size-1,tweetData[fe].getTweets(tweetData[fe].size - 1)} });
+		auto& fes = fellowee[userId];
+		for (int fe : fes)felloweeData.push_back({ fe,{ userData[fe].size-1,userData[fe].getTweets(userData[fe].size - 1)} });
 		for (int i = 0; i < 10; i++) {
 			int maxT = INT_MIN; int max_V=-1;
 			for (int n = 0; n < felloweeData.size(); n++) {
-				if (felloweeData[n].second.second > maxT) {
-					maxT = felloweeData[n].second.second;
+				int tID = felloweeData[n].second.second;
+				if (tID!= INT_MIN&&tweetData[tID]> maxT) {
+					maxT = tweetData[tID];
 					max_V = n;
 				}
 			}
 				if (maxT == INT_MIN)break;
-				ans.push_back(maxT);
+				ans.push_back(felloweeData[max_V].second.second);
 				felloweeData[max_V].second.first--;
-				felloweeData[max_V].second.second = tweetData[felloweeData[max_V].first].getTweets(felloweeData[max_V].second.first);
+				felloweeData[max_V].second.second = userData[felloweeData[max_V].first].getTweets(felloweeData[max_V].second.first);
 		}
 		return ans;
 	}
 	void follow(int followerId, int followeeId) {
+
 		fellowee[followerId].insert(followerId);
-		fellowee[followeeId].insert(followeeId);
+		fellowee[followerId].insert(followeeId);
 	}
 	void unfollow(int followerId, int followeeId) {
+		if (followerId == followeeId)return;
 		fellowee[followerId].erase(followeeId);
 	}
 };
