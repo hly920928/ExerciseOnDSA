@@ -8,9 +8,14 @@
 using namespace std;
 int main()
 { 
-	for (int n = 1; n < 20; n++) {
-		int ans = countNumbersWithUniqueDigits(n);
-	}
+	Twitter twitter;
+	twitter.postTweet(1, 5);
+	auto v1= twitter.getNewsFeed(1);
+	twitter.follow(1, 2);
+	twitter.postTweet(2, 6);
+	auto v2 = twitter.getNewsFeed(1);
+	twitter.unfollow(1, 2);
+	auto v3= twitter.getNewsFeed(1);
     return 0;
 }
 

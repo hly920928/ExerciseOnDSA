@@ -267,3 +267,5 @@ int maxEnvelopes(std::vector<std::pair<int, int>>& envelopes);
 int maxEnvelopes_V2(std::vector<std::pair<int, int>>& envelopes);
 ////357. Count Numbers with Unique Digits
 int countNumbersWithUniqueDigits(int n);
+//365. Water and Jug Problem
+bool canMeasureWater(int x, int y, int z);
