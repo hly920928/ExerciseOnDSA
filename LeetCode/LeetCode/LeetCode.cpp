@@ -10,12 +10,7 @@ int main()
 { 
 	Twitter twitter;
 	twitter.postTweet(1, 5);
-	auto v1= twitter.getNewsFeed(1);
-	twitter.follow(1, 2);
-	twitter.postTweet(2, 6);
-	auto v2 = twitter.getNewsFeed(1);
-	twitter.unfollow(1, 2);
-	auto v3= twitter.getNewsFeed(1);
+	auto v1= canMeasureWater(22003,31237,123);
     return 0;
 }
 
