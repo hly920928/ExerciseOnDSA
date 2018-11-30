@@ -870,3 +870,46 @@ int countNumbersWithUniqueDigits(int n) {
 	}
 	return ans+1;
 }
+unordered_set<unsigned long long>*setCMW;
+unsigned int xCMW; unsigned int yCMW; unsigned int zCMW;
+bool canMeasureWaterRe(unsigned int x, unsigned int y) {
+	auto&set = *setCMW;
+	if (x + y == zCMW)return true;
+	unsigned long long code = x; code = code << 32; code += y;
+	if (set.find(code)!=set.end())return false;
+	set.insert(code);
+	if (x + y > zCMW) {
+		if (canMeasureWaterRe(0, y))return true;
+		if (canMeasureWaterRe(x, 0))return true;
+		if (canMeasureWaterRe(xCMW, y))return true;
+		if (canMeasureWaterRe(x, yCMW))return true;
+	}
+	else {
+		if (canMeasureWaterRe(xCMW, y))return true;
+		if (canMeasureWaterRe(x, yCMW))return true;
+		if (canMeasureWaterRe(0, y))return true;
+		if (canMeasureWaterRe(x, 0))return true;
+	}
+	//y into x
+	int xNow = min(y + x, xCMW);
+	if (canMeasureWaterRe(xNow, x+y- xNow))return true;
+	//x into y;
+	int yNow = min(y + x, yCMW);
+	if (canMeasureWaterRe(y+x- yNow, yNow))return true;
+	return false;
+}
+bool canMeasureWater(int x, int y, int z)
+{
+	if (z == 0)return true;
+	if (x == 0 || y == 0) {
+		if (y != 0 && z == y)return true;
+		if (x != 0 && z == x)return true;
+		return false;
+	}
+	if (z<0 || z>x + y)return false;
+	int _max = max(x, y); int _min = min(x, y);
+	int mod = _max%_min;
+	if (mod == 0)return z%_min==0;
+	if (_min%mod==0)return z%mod == 0;
+	return true;
+}
