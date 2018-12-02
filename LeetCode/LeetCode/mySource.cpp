@@ -913,3 +913,14 @@ bool canMeasureWater(int x, int y, int z)
 	if (_min%mod==0)return z%mod == 0;
 	return true;
 }
+bool isPerfectSquare_re(unsigned int lo,unsigned int hi,int num)
+{
+	if (lo == hi) {
+		if (lo*lo = num)return true;
+	}
+	return false;
+}
+bool isPerfectSquare(int num)
+{
+	return isPerfectSquare_re(0, 2 << 16, num);
+}
