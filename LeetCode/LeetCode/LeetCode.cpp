@@ -10,7 +10,7 @@ int main()
 { 
 	Twitter twitter;
 	twitter.postTweet(1, 5);
-	auto v1= isPerfectSquare(16);
+	auto v1= canMeasureWater(22003,31237,123);
     return 0;
 }
 
