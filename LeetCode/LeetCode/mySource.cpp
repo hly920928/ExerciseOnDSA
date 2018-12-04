@@ -913,12 +913,37 @@ bool canMeasureWater(int x, int y, int z)
 	if (_min%mod==0)return z%mod == 0;
 	return true;
 }
-bool isPerfectSquare_re(unsigned int lo,unsigned int hi,int num)
+void produceRowSumTable() {};
+void producePartailRowSum() {};
+int findRowInterval() {};
+int maxSumSubmatrix(vector<vector<int>>& matrix, int k)
+{
+	//
+	int m = matrix.size(); int n = matrix[0].size();
+	produceRowSumTable(); int ans = 0;
+	for (int i = 0; i < n; i++) {
+		for (int j=i; j < n; j++) {
+			producePartailRowSum();
+			ans = max(findRowInterval(), ans);
+		}
+	}
+	return ans;
+}
+bool isPerfectSquare_re( int lo,int hi,int num)
 {
 	if (lo == hi) {
-		if (lo*lo = num)return true;
+		if (lo*lo==num)return true;
+		return false;
 	}
-	return false;
+	if (hi - lo == 1) {
+		if (lo*lo == num)return true;
+		if (hi*hi == num)return true;
+		return false;
+	}
+	long long mid = (hi + lo) / 2;
+	long long sq =mid*mid;
+	if (sq > num)return isPerfectSquare_re(lo, mid, num);
+	return isPerfectSquare_re(mid, hi, num);;
 }
 bool isPerfectSquare(int num)
 {

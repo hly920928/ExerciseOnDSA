@@ -269,5 +269,7 @@ int maxEnvelopes_V2(std::vector<std::pair<int, int>>& envelopes);
 int countNumbersWithUniqueDigits(int n);
 //365. Water and Jug Problem
 bool canMeasureWater(int x, int y, int z);
-//
+//363. Max Sum of Rectangle No Larger Than K
+int maxSumSubmatrix(std::vector<std::vector<int>>& matrix, int k);
+//367. Valid Perfect Square
 bool isPerfectSquare(int num);
