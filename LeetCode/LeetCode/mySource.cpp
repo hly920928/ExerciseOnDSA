@@ -915,7 +915,7 @@ bool canMeasureWater(int x, int y, int z)
 }
 void produceRowSumTable(vector<vector<int>>& matrix) {
 	int m = matrix.size(); int n = matrix[0].size();
-	for (int i = 0; i < n; i++) {
+	for (int i = 0; i < m; i++) {
 		for (int j = 1; j < n; j++) {
 			matrix[i][j] = matrix[i][j] + matrix[i][j - 1];
 		}
@@ -925,10 +925,10 @@ void producePartailRowSum(vector<int>& v, int lo, int hi, vector<vector<int>>& m
 	int m = matrix.size();
 	for (int i = 0; i < m; i++) {
 		if (lo == 0) {
-			v.push_back(matrix[i][hi]);
+			v[i]=matrix[i][hi];
 		}
 		else {
-			v.push_back(matrix[i][hi] - matrix[i][lo - 1]);
+			v[i]=matrix[i][hi] - matrix[i][lo - 1];
 		}
 	}
 
@@ -940,7 +940,7 @@ int findRowInterval(vector<int>& v, int k) {
 		if (map.find(i) != map.end())map[i]++;
 		else map[i] = 1;
 	}
-	auto itr1 = map.upper_bound(k); itr1--;
+	auto itr1 = map.upper_bound(k); 
 	int ans = INT_MIN;
 	if (itr1 != map.begin()){
 	   itr1--;
@@ -955,6 +955,7 @@ int findRowInterval(vector<int>& v, int k) {
 		if (itr != map.begin()) {
 			itr--;
 			ans = max(ans,itr->first-i);
+			if (ans == k)return k;
 		}
 	}
 	return ans;
@@ -964,12 +965,14 @@ int maxSumSubmatrix(vector<vector<int>>& matrix, int k)
 	//
 	int m = matrix.size(); if (m == 0)return 0;
 	int n = matrix[0].size(); if (n == 0)return 0;
-	produceRowSumTable(matrix); int ans = 0;
-	for (int i = 0; i < n; i++) {
+	produceRowSumTable(matrix); int ans =INT_MIN;
+	vector<int>partialSum; partialSum.resize(m);
+	for (int i = 0; i <n; i++) {
 		for (int j=i; j < n; j++) {
-			vector<int>partialSum;
+			
 			producePartailRowSum(partialSum,i,j, matrix);
-			ans = max(findRowInterval(partialSum), ans);
+			ans = max(findRowInterval(partialSum,k), ans);
+			if (ans == k)return k;
 		}
 	}
 	return ans;
