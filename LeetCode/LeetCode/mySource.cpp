@@ -849,18 +849,18 @@ int factorial10(int n) {
 }
 int combination10(int m, int n) {
 	int ans = 1;
-	for (int i = m-n+1; i <= m; i++)ans *= i;
+	for (int i = m - n + 1; i <= m; i++)ans *= i;
 	return ans / factorial10(n);
 }
 int countNumbersWithUniqueDigitsN(int n)
 {
 	int digit = n;
-	if (n >= 10)digit =10;
+	if (n >= 10)digit = 10;
 	int ans = 0;
 	//no 0
-	if(digit!=10)ans += combination10(9, digit)*factorial10(digit);
+	if (digit != 10)ans += combination10(9, digit)*factorial10(digit);
 	// have 0
-	if (digit != 1)ans += combination10(9, digit -1)*(digit-1)*factorial10(digit -1);
+	if (digit != 1)ans += combination10(9, digit - 1)*(digit - 1)*factorial10(digit - 1);
 	return ans;
 }
 int countNumbersWithUniqueDigits(int n) {
@@ -868,7 +868,7 @@ int countNumbersWithUniqueDigits(int n) {
 	for (int i = 1; i <= min(10, n); i++) {
 		ans += countNumbersWithUniqueDigitsN(i);
 	}
-	return ans+1;
+	return ans + 1;
 }
 unordered_set<unsigned long long>*setCMW;
 unsigned int xCMW; unsigned int yCMW; unsigned int zCMW;
@@ -876,7 +876,7 @@ bool canMeasureWaterRe(unsigned int x, unsigned int y) {
 	auto&set = *setCMW;
 	if (x + y == zCMW)return true;
 	unsigned long long code = x; code = code << 32; code += y;
-	if (set.find(code)!=set.end())return false;
+	if (set.find(code) != set.end())return false;
 	set.insert(code);
 	if (x + y > zCMW) {
 		if (canMeasureWaterRe(0, y))return true;
@@ -892,10 +892,10 @@ bool canMeasureWaterRe(unsigned int x, unsigned int y) {
 	}
 	//y into x
 	int xNow = min(y + x, xCMW);
-	if (canMeasureWaterRe(xNow, x+y- xNow))return true;
+	if (canMeasureWaterRe(xNow, x + y - xNow))return true;
 	//x into y;
 	int yNow = min(y + x, yCMW);
-	if (canMeasureWaterRe(y+x- yNow, yNow))return true;
+	if (canMeasureWaterRe(y + x - yNow, yNow))return true;
 	return false;
 }
 bool canMeasureWater(int x, int y, int z)
@@ -909,22 +909,67 @@ bool canMeasureWater(int x, int y, int z)
 	if (z<0 || z>x + y)return false;
 	int _max = max(x, y); int _min = min(x, y);
 	int mod = _max%_min;
-	if (mod == 0)return z%_min==0;
-	if (_min%mod==0)return z%mod == 0;
+	if (mod == 0)return z%_min == 0;
+	if (_min%mod == 0)return z%mod == 0;
 	return true;
 }
-void produceRowSumTable() {};
-void producePartailRowSum() {};
-int findRowInterval() {};
+void produceRowSumTable(vector<vector<int>>& matrix) {
+	int m = matrix.size(); int n = matrix[0].size();
+	for (int i = 0; i < n; i++) {
+		for (int j = 1; j < n; j++) {
+			matrix[i][j] = matrix[i][j] + matrix[i][j - 1];
+		}
+	}
+};
+void producePartailRowSum(vector<int>& v, int lo, int hi, vector<vector<int>>& matrix) {
+	int m = matrix.size();
+	for (int i = 0; i < m; i++) {
+		if (lo == 0) {
+			v.push_back(matrix[i][hi]);
+		}
+		else {
+			v.push_back(matrix[i][hi] - matrix[i][lo - 1]);
+		}
+	}
+
+};
+int findRowInterval(vector<int>& v, int k) {
+	map<int, int>map;
+	for (int j = 1; j < v.size(); j++) { v[j] = v[j] + v[j - 1]; }
+	for (auto i : v) {
+		if (map.find(i) != map.end())map[i]++;
+		else map[i] = 1;
+	}
+	auto itr1 = map.upper_bound(k); itr1--;
+	int ans = INT_MIN;
+	if (itr1 != map.begin()){
+	   itr1--;
+	   ans = itr1->first;
+}
+	for (auto i : v) {
+		if (map[i] == 1) {
+			map.erase(i);
+		}else map[i]--;
+		int upper = k + i;
+		auto itr = map.upper_bound(upper);
+		if (itr != map.begin()) {
+			itr--;
+			ans = max(ans,itr->first-i);
+		}
+	}
+	return ans;
+};
 int maxSumSubmatrix(vector<vector<int>>& matrix, int k)
 {
 	//
-	int m = matrix.size(); int n = matrix[0].size();
-	produceRowSumTable(); int ans = 0;
+	int m = matrix.size(); if (m == 0)return 0;
+	int n = matrix[0].size(); if (n == 0)return 0;
+	produceRowSumTable(matrix); int ans = 0;
 	for (int i = 0; i < n; i++) {
 		for (int j=i; j < n; j++) {
-			producePartailRowSum();
-			ans = max(findRowInterval(), ans);
+			vector<int>partialSum;
+			producePartailRowSum(partialSum,i,j, matrix);
+			ans = max(findRowInterval(partialSum), ans);
 		}
 	}
 	return ans;
