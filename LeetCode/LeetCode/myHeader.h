@@ -273,3 +273,5 @@ bool canMeasureWater(int x, int y, int z);
 int maxSumSubmatrix(std::vector<std::vector<int>>& matrix, int k);
 //367. Valid Perfect Square
 bool isPerfectSquare(int num);
+//368. Largest Divisible Subset
+std::vector<int> largestDivisibleSubset(std::vector<int>& nums);

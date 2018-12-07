@@ -997,3 +997,9 @@ bool isPerfectSquare(int num)
 {
 	return isPerfectSquare_re(0, 2 << 16, num);
 }
+vector<int> largestDivisibleSubset(vector<int>& nums)
+{
+	vector<int>ans; int n = nums.size();
+	if (nums.size() == 0)return ans;
+	return;
+}
