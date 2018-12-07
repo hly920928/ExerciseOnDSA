@@ -997,9 +997,47 @@ bool isPerfectSquare(int num)
 {
 	return isPerfectSquare_re(0, 2 << 16, num);
 }
+#define U_MAX 65500
 vector<int> largestDivisibleSubset(vector<int>& nums)
 {
 	vector<int>ans; int n = nums.size();
 	if (nums.size() == 0)return ans;
-	return;
+	sort(nums.begin(), nums.end());
+	vector<unsigned short>next; next.resize(n);
+	for (auto&i : next)i = U_MAX;
+	vector<vector<int>>bucket; bucket.resize(2);
+	bucket[1].push_back(nums.size()-1);
+	for (int id= n - 2; id >= 0; id--) {
+		int now = nums[id]; 
+		int nowlen = 0; 
+		int nextID = U_MAX;
+		for (int len = bucket.size()-1; len >= 1; len--) {
+			auto& v = bucket[len];
+			for (auto& x : v) {
+				int in = nums[x];
+				if (in%now == 0) {
+					nowlen = len + 1;
+					nextID = x;
+					break;
+				}
+			}
+			if (nowlen != 0)break;
+		}
+		if (nowlen == 0)nowlen++;
+		if (nowlen > bucket.size() - 1) {
+			bucket.push_back(vector<int>());
+			bucket.back().push_back(id);
+			next[id] = nextID;
+		}
+		else {
+			bucket[nowlen].push_back(id);
+			next[id] = nextID;
+		}
+	}
+	int nowID = bucket.back().front();
+	while (nowID != U_MAX) {
+		ans.push_back(nums[nowID]);
+		nowID = next[nowID];
+	}
+	return ans;
 }
