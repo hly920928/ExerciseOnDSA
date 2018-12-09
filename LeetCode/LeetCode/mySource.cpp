@@ -1041,3 +1041,46 @@ vector<int> largestDivisibleSubset(vector<int>& nums)
 	}
 	return ans;
 }
+#define U_MAX 65500
+vector<int>* p1KSP; vector<int>* p2KSP;
+class dataKSP {
+public:
+	unsigned short i; unsigned short j;
+	int sum;
+	dataKSP(int _i = U_MAX, int _j = U_MAX) :i(_i), j(_j) {
+		const auto& nums1 = *p1KSP;	const auto& nums2 = *p2KSP;
+		sum = nums1[i] + nums2[j];
+	};
+	void addPair(std::vector<std::pair<int, int>>&ans)const {
+		const auto& nums1 = *p1KSP;	const auto& nums2 = *p2KSP;
+		ans.push_back({ nums1[i] , nums2[j] });
+	}
+};
+bool operator<(const dataKSP&a,const  dataKSP&b) {
+	if (a.sum< b.sum)return true;
+	if (a.sum> b.sum)return false;
+	if (a.i< b.i)return true;
+	if (a.i> b.i)return false;
+	if (a.j< b.j)return true;
+	if (a.j> b.j)return false;
+	return false;
+}
+std::vector<std::pair<int, int>> kSmallestPairs(std::vector<int>& nums1, std::vector<int>& nums2, int k)
+{
+	p1KSP = &nums1; p2KSP = &nums2;
+	std::vector<std::pair<int, int>>ans;
+	if (nums1.size() == 0 || nums2.size() == 0)return ans;
+	set<dataKSP>set;
+	for (int i = 0; i < nums1.size(); i++) {
+		set.insert(dataKSP(i, 0));
+	
+	}
+	for (int i = 0; i < k; i++) {
+		if (set.empty())break;
+		auto itr = set.begin();
+		itr->addPair(ans);
+		if(itr->j<nums2.size()-1)set.insert(dataKSP(itr->i,itr->j+1));
+		set.erase(itr);
+	}
+	return ans;
+}
