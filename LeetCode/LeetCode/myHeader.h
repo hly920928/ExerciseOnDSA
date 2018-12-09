@@ -275,3 +275,5 @@ int maxSumSubmatrix(std::vector<std::vector<int>>& matrix, int k);
 bool isPerfectSquare(int num);
 //368. Largest Divisible Subset
 std::vector<int> largestDivisibleSubset(std::vector<int>& nums);
+//373. Find K Pairs with Smallest Sums
+std::vector<std::pair<int, int>> kSmallestPairs(std::vector<int>& nums1, std::vector<int>& nums2, int k);
