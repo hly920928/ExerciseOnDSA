@@ -7,9 +7,9 @@
 #include <iostream>
 using namespace std;
 int main()
-{ 
-	vector<int> v1({1,1,2 });	vector<int> v2({ 1,2,3 });
-	auto ans= kSmallestPairs(v1,v2,2);
+{
+	vector<int> v1({0,0,0,0,0,0,0,0,0,0,0});	vector<int> v2({ 1,2,3 });
+	auto ans = wiggleMaxLength(v1);
 	
     return 0;
 }

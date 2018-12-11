@@ -1084,3 +1084,20 @@ std::vector<std::pair<int, int>> kSmallestPairs(std::vector<int>& nums1, std::ve
 	}
 	return ans;
 }
+
+int wiggleMaxLength(std::vector<int>& nums1)
+{
+		 if (nums1.size() < 2) return nums1.size();
+		 vector<int>nums; nums.push_back(nums1[0]);
+		 for (int i = 1; i < nums1.size(); i++) {
+			 if (nums1[i - 1] != nums1[i])nums.push_back(nums1[i]);
+		 }
+		 if (nums.size() <= 2) return nums.size();
+		 int remove = 0;
+		 for (int i = 1; i < nums.size() - 1; i++) {
+			 if (nums[i - 1] < nums[i] && nums[i] < nums[i + 1]) remove++;
+			 if (nums[i - 1] > nums[i] && nums[i] > nums[i + 1]) remove++;
+		 }
+		int ans = nums.size() - remove;
+		return ans;
+}

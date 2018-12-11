@@ -277,3 +277,5 @@ bool isPerfectSquare(int num);
 std::vector<int> largestDivisibleSubset(std::vector<int>& nums);
 //373. Find K Pairs with Smallest Sums
 std::vector<std::pair<int, int>> kSmallestPairs(std::vector<int>& nums1, std::vector<int>& nums2, int k);
+//376. Wiggle Subsequence
+int wiggleMaxLength(std::vector<int>& nums);
