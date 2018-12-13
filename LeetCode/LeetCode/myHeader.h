@@ -279,3 +279,5 @@ std::vector<int> largestDivisibleSubset(std::vector<int>& nums);
 std::vector<std::pair<int, int>> kSmallestPairs(std::vector<int>& nums1, std::vector<int>& nums2, int k);
 //376. Wiggle Subsequence
 int wiggleMaxLength(std::vector<int>& nums);
+//377. Combination Sum IV
+int combinationSum4(std::vector<int>& nums, int target);

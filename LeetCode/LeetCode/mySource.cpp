@@ -1101,3 +1101,8 @@ int wiggleMaxLength(std::vector<int>& nums1)
 		int ans = nums.size() - remove;
 		return ans;
 }
+
+int combinationSum4(std::vector<int>& nums, int target)
+{
+	return 0;
+}
