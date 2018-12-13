@@ -1104,5 +1104,16 @@ int wiggleMaxLength(std::vector<int>& nums1)
 
 int combinationSum4(std::vector<int>& nums, int target)
 {
-	return 0;
+	vector<int>table; table.resize(target + 1);
+	for (auto&i : table)i = 0;
+	for (auto&i : nums) {
+		if (i <= target)table[i] = 1;
+	}
+	for (int t_now = 1; t_now <= target; t_now++) {
+		for (auto&n_now : nums) {
+			int diff = t_now - n_now;
+			if (diff > 0)table[t_now] += table[diff];
+		}
+	}
+	return table.back();
 }

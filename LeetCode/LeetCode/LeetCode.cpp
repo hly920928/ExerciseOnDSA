@@ -8,8 +8,8 @@
 using namespace std;
 int main()
 {
-	vector<int> v1({0,0,0,0,0,0,0,0,0,0,0});	vector<int> v2({ 1,2,3 });
-	auto ans = wiggleMaxLength(v1);
+	vector<int> v1({ 1, 2, 3 });	vector<int> v2({ 1,2,3 });
+	auto ans = combinationSum4(v1,4);
 	
     return 0;
 }
