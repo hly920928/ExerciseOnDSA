@@ -1117,3 +1117,8 @@ int combinationSum4(std::vector<int>& nums, int target)
 	}
 	return table.back();
 }
+
+int kthSmallest(std::vector<std::vector<int>>& matrix, int k)
+{
+	return 0;
+}
