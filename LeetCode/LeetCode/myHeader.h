@@ -281,3 +281,5 @@ std::vector<std::pair<int, int>> kSmallestPairs(std::vector<int>& nums1, std::ve
 int wiggleMaxLength(std::vector<int>& nums);
 //377. Combination Sum IV
 int combinationSum4(std::vector<int>& nums, int target);
+//378. Kth Smallest Element in a Sorted Matrix
+int kthSmallest(std::vector<std::vector<int>>& matrix, int k);

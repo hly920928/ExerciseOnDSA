@@ -1117,8 +1117,29 @@ int combinationSum4(std::vector<int>& nums, int target)
 	}
 	return table.back();
 }
+class dataKSM {
+public:
+	int val; int i; int j;
+	dataKSM(int v = INT_MAX, int _i = -1, int _j = -1) :val(v), i(_i), j(_j) {};
+};
+bool operator<(const dataKSM&a, const dataKSM&b) {
+	return a.val > b.val;
 
+}
 int kthSmallest(std::vector<std::vector<int>>& matrix, int k)
 {
-	return 0;
+	int m = matrix.size();	
+	if (k == 1)return matrix[0][0];
+	if(m==1)return matrix[0][k - 1];
+	int n = matrix[0].size(); 
+	if (n ==1 )return matrix[k - 1][0];
+	priority_queue<dataKSM>pq;
+	for (int i = 0; i < m; i++)pq.push(dataKSM(matrix[i][0], i, 0));
+	for (int i = 1; i <= k - 1; i++) {
+		auto top = pq.top(); pq.pop();
+		if (top.j != n - 1) {
+			pq.push(dataKSM(matrix[top.i][top.j + 1], top.i, top.j + 1));
+		}
+	}
+	return pq.top().val;
 }
