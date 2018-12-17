@@ -1143,3 +1143,8 @@ int kthSmallest(std::vector<std::vector<int>>& matrix, int k)
 	}
 	return pq.top().val;
 }
+
+std::vector<int> lexicalOrder(int n)
+{
+	return std::vector<int>();
+}

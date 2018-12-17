@@ -283,3 +283,5 @@ int wiggleMaxLength(std::vector<int>& nums);
 int combinationSum4(std::vector<int>& nums, int target);
 //378. Kth Smallest Element in a Sorted Matrix
 int kthSmallest(std::vector<std::vector<int>>& matrix, int k);
+//386. Lexicographical Numbers
+std::vector<int> lexicalOrder(int n);
