@@ -1146,5 +1146,22 @@ int kthSmallest(std::vector<std::vector<int>>& matrix, int k)
 
 std::vector<int> lexicalOrder(int n)
 {
-	return std::vector<int>();
+	vector<int>ans; int now = 1;
+	while (true) {
+		ans.push_back(now);
+		if (now * 10 <= n) {
+			now = now * 10;
+			continue;
+		}else  if (now+1 <= n&&((now + 1)/10)==(now/10)) {
+		
+			now = now + 1;
+			continue;
+		}
+		else  if (now / 10!=0) {
+			now = now / 10 + 1;
+			continue;
+		}else break;
+
+	}
+	return ans;
 }
