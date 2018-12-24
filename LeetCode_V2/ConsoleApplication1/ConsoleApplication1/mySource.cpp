@@ -1155,3 +1155,18 @@ std::vector<int> lexicalOrder(int n)
 	lexicalOrder_re(1, n, ans);
 	return ans;
 }
+
+bool canConstruct(std::string ransomNote, std::string magazine)
+{
+	int table[255];
+	for (int&i : table)i = 0;
+	for (char c : magazine) {
+		table[c]++;
+	}
+	for (char c : ransomNote) {
+		auto itr = table.find(c);
+		if (itr == table.end()||itr->second==0)return false;
+		else table[c] --;
+	}
+	return true;
+}

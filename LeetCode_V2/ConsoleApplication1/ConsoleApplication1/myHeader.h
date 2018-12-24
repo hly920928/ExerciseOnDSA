@@ -285,3 +285,5 @@ int combinationSum4(std::vector<int>& nums, int target);
 int kthSmallest(std::vector<std::vector<int>>& matrix, int k);
 //386. Lexicographical Numbers
 std::vector<int> lexicalOrder(int n);
+//383. Ransom Note
+bool canConstruct(std::string ransomNote, std::string magazine);
