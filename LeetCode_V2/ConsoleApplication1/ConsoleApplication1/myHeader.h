@@ -287,3 +287,5 @@ int kthSmallest(std::vector<std::vector<int>>& matrix, int k);
 std::vector<int> lexicalOrder(int n);
 //383. Ransom Note
 bool canConstruct(std::string ransomNote, std::string magazine);
+//387. First Unique Character in a String
+int firstUniqChar(std::string s);

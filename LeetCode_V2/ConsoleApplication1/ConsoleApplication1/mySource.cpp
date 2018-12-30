@@ -1164,9 +1164,13 @@ bool canConstruct(std::string ransomNote, std::string magazine)
 		table[c]++;
 	}
 	for (char c : ransomNote) {
-		auto itr = table.find(c);
-		if (itr == table.end()||itr->second==0)return false;
+		if (table[c]==0)return false;
 		else table[c] --;
 	}
 	return true;
+}
+
+int firstUniqChar(std::string s)
+{
+	return 0;
 }
