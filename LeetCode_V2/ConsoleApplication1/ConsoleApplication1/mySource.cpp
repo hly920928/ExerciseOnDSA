@@ -1172,5 +1172,16 @@ bool canConstruct(std::string ransomNote, std::string magazine)
 
 int firstUniqChar(std::string s)
 {
-	return 0;
+	int first[26];
+	int null = s.size() + 5;
+	for (int&i : first)i = null;
+	for (int i = 0; i < s.size();i++) {
+		char c = s[i];
+		if (first[c - 'a'] != null) {
+			if(first[c - 'a']!=null+1)first[c - 'a'] = null + 1;
+		}
+		else first[c - 'a'] = i;
+	}
+	int ans = *min_element(first, first + 26);
+	return (ans<null)?ans:-1;
 }
