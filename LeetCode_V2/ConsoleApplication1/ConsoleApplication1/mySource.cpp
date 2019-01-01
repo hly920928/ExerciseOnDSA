@@ -1185,3 +1185,8 @@ int firstUniqChar(std::string s)
 	int ans = *min_element(first, first + 26);
 	return (ans<null)?ans:-1;
 }
+
+int lengthLongestPath(std::string input)
+{
+	return 0;
+}

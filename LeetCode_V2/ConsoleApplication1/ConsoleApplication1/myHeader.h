@@ -289,3 +289,5 @@ std::vector<int> lexicalOrder(int n);
 bool canConstruct(std::string ransomNote, std::string magazine);
 //387. First Unique Character in a String
 int firstUniqChar(std::string s);
+//388. Longest Absolute File Path
+int lengthLongestPath(std::string input);
