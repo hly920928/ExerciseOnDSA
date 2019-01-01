@@ -1188,5 +1188,55 @@ int firstUniqChar(std::string s)
 
 int lengthLongestPath(std::string input)
 {
-	return 0;
+	int ans = 0;
+	if (input.find('\n') == input.npos) {
+		if (input.find('.') != input.npos) {
+			return input.size();
+		}
+		return 0;
+	}
+	input.push_back('\n');  int pre_d = 0; int id = 0;
+	string now; vector<int>path; int acc_len = 0;
+	while (true) {
+		if (input[id] == '\n') {
+			//compute pathLen
+			if (pre_d == 0) {
+				acc_len += now.size();
+				path.push_back(now.size());
+			}
+			else {
+				acc_len += (now.size() + 1);
+				path.push_back(now.size() + 1);
+			}
+			if (now.find('.') != input.npos) {
+				ans = max(ans, acc_len);
+			}
+
+			if (id + 1 == input.size())break;
+			//next word
+			id++; int nowD = 0;
+			while (input[id] == '\t') { id++; nowD++; }
+
+			if (pre_d + 1 != nowD) {
+				while (true) {
+					if (pre_d == nowD) {
+						acc_len -= path.back();
+						path.pop_back();
+						break;
+					}
+					else {
+						acc_len -= path.back();
+						path.pop_back();
+						pre_d--;
+					}
+				}
+			}
+			pre_d = nowD;
+			now.clear();
+		}
+		else {
+			now.push_back(input[id]); id++;
+		}
+	}
+	return ans;
 }
