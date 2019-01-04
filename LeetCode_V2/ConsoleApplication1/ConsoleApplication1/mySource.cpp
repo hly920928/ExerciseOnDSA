@@ -1243,5 +1243,16 @@ int lengthLongestPath(std::string input)
 
 char findTheDifference(string s, string t)
 {
-	return 0;
+	int t1[26];	int t2[26];
+	for (int i = 0; i < 26; i++) {
+		t1[i] = 0;	t2[i] = 0;
+	}
+	for (char c : s)t1[c - 'a']++;
+	for (char c : t)t2[c - 'a']++;
+	for (int i = 0; i < 26; i++) {
+		if (t1[i] != t2[i]) {
+			return i + 'a';
+		}
+	}
+return 0;
 }
