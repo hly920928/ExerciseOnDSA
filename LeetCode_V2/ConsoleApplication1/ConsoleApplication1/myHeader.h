@@ -291,3 +291,5 @@ bool canConstruct(std::string ransomNote, std::string magazine);
 int firstUniqChar(std::string s);
 //388. Longest Absolute File Path
 int lengthLongestPath(std::string input);
+//389. Find the Difference
+char findTheDifference(std::string s, std::string t);

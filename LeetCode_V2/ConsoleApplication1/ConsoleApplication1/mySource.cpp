@@ -1240,3 +1240,8 @@ int lengthLongestPath(std::string input)
 	}
 	return ans;
 }
+
+char findTheDifference(string s, string t)
+{
+	return 0;
+}
