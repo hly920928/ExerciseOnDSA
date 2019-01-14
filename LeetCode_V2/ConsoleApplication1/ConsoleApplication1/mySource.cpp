@@ -1256,3 +1256,10 @@ char findTheDifference(string s, string t)
 	}
 return 0;
 }
+int lastRemaining(int n,int turn)
+{
+}
+int lastRemaining(int n)
+{
+	return lastRemaining(n,1);
+}

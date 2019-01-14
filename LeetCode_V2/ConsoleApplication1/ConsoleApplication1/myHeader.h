@@ -293,3 +293,5 @@ int firstUniqChar(std::string s);
 int lengthLongestPath(std::string input);
 //389. Find the Difference
 char findTheDifference(std::string s, std::string t);
+//390. Elimination Game
+int lastRemaining(int n);
