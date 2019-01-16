@@ -1265,3 +1265,11 @@ int lastRemaining(int n)
 	int x = lastRemaining(half);
 	return 2 * (half + 1) - 2 * x;
 }
+
+bool isSubsequence(std::string s, std::string t)
+{
+	vector<int>table[26];
+	//preprocess t
+	//determine s
+	return false;
+}

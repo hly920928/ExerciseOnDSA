@@ -295,3 +295,5 @@ int lengthLongestPath(std::string input);
 char findTheDifference(std::string s, std::string t);
 //390. Elimination Game
 int lastRemaining(int n);
+//392. Is Subsequence
+bool isSubsequence(std::string s, std::string t);
