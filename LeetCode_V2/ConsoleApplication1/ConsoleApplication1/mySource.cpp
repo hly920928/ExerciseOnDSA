@@ -1270,6 +1270,17 @@ bool isSubsequence(std::string s, std::string t)
 {
 	vector<int>table[26];
 	//preprocess t
+	for (int i = 0; i < t.size(); i++)table[t[i] - 'a'].push_back(i);
+	
 	//determine s
-	return false;
+	if (s.size() == 0)return true;
+	if (table[s[0] - 'a'].size() == 0)return false;
+	int now = table[s[0] - 'a'].front();
+	for (int i = 1; i < s.size(); i++) {
+		auto& v = table[s[i] - 'a'];
+		auto itr = upper_bound(v.begin(), v.end(), now);
+		if (itr == v.end())return false;
+		now = *itr;
+	}
+	return true;
 }
