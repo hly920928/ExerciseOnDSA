@@ -297,3 +297,5 @@ char findTheDifference(std::string s, std::string t);
 int lastRemaining(int n);
 //392. Is Subsequence
 bool isSubsequence(std::string s, std::string t);
+//393. UTF-8 Validation
+bool validUtf8(std::vector<int>& data);

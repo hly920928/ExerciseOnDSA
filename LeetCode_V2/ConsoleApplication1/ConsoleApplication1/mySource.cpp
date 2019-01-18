@@ -1284,3 +1284,8 @@ bool isSubsequence(std::string s, std::string t)
 	}
 	return true;
 }
+bool validUtf8test(std::vector<int>& data, int begin, int len) {};
+bool validUtf8(std::vector<int>& data)
+{
+	return false;
+}
