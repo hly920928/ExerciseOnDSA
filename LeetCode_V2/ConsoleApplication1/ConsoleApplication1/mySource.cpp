@@ -1284,8 +1284,30 @@ bool isSubsequence(std::string s, std::string t)
 	}
 	return true;
 }
-bool validUtf8test(std::vector<int>& data, int begin, int len) {};
+bool validUtf8test(std::vector<int>& data, int begin, int len) {
+	int min = 1 << 7; int max = 1 << 7 + 1 << 6;
+	for (int i = begin; i < begin + len; i++) {
+		unsigned char now = data[i];
+		if (!(now >= min&&now < max))return false;
+
+	}
+	return true;
+};
 bool validUtf8(std::vector<int>& data)
 {
+	int nowHead = 0;
+	while (nowHead < data.size()) {
+		unsigned char head = data[nowHead];
+		int n = 0;
+		if (head < 1 << 7) {
+			nowHead++; continue;
+		}
+		else{
+			while (head >= 1 << 7) {n++; head = head << 1;}
+			if (nowHead + n >= data.size())return false;
+			if (!validUtf8test(data, nowHead + 1, n))return false;
+			nowHead = nowHead + n + 1;
+		}
+	}
 	return false;
 }
