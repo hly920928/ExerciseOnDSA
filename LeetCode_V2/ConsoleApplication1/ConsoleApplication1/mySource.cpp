@@ -7,6 +7,7 @@
 #include<unordered_set>
 #include<unordered_map>
 #include<map>
+#include<bitset>
 #include <math.h>
 #include <set>
 using namespace std;
@@ -1285,9 +1286,11 @@ bool isSubsequence(std::string s, std::string t)
 	return true;
 }
 bool validUtf8test(std::vector<int>& data, int begin, int len) {
-	int min = 1 << 7; int max = 1 << 7 + 1 << 6;
+	int min = 1 << 7; int max =(1 << 7) + (1 << 6);
+	//bitset<8>mn = min; bitset<8>mx = max;
 	for (int i = begin; i < begin + len; i++) {
 		unsigned char now = data[i];
+		bitset<8>n = now;
 		if (!(now >= min&&now < max))return false;
 
 	}
@@ -1296,17 +1299,22 @@ bool validUtf8test(std::vector<int>& data, int begin, int len) {
 bool validUtf8(std::vector<int>& data)
 {
 	int nowHead = 0;
-	while (nowHead < data.size()) {
+	while (true) {
+		if (nowHead == data.size())return true;
 		unsigned char head = data[nowHead];
+		bitset<8>nw = head;
 		int n = 0;
 		if (head < 1 << 7) {
 			nowHead++; continue;
 		}
 		else{
-			while (head >= 1 << 7) {n++; head = head << 1;}
-			if (nowHead + n >= data.size())return false;
-			if (!validUtf8test(data, nowHead + 1, n))return false;
-			nowHead = nowHead + n + 1;
+			if(head<(1 << 7) + (1 << 6))return false;
+			while (head >= 1 << 7) {
+				n++; head = head << 1; nw = head;
+			}
+			if (nowHead + n-1 >= data.size())return false;
+			if (!validUtf8test(data, nowHead + 1, n-1))return false;
+			nowHead = nowHead + n ;
 		}
 	}
 	return false;
