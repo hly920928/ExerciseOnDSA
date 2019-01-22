@@ -1312,10 +1312,16 @@ bool validUtf8(std::vector<int>& data)
 			while (head >= 1 << 7) {
 				n++; head = head << 1; nw = head;
 			}
+			if (n>4)return false;
 			if (nowHead + n-1 >= data.size())return false;
 			if (!validUtf8test(data, nowHead + 1, n-1))return false;
 			nowHead = nowHead + n ;
 		}
 	}
 	return false;
+}
+
+std::string decodeString(std::string s)
+{
+	return std::string();
 }
