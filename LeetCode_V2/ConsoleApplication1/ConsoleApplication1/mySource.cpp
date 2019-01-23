@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "myHeader.h"
 #include "iostream"
+#include "sstream"
 #include<algorithm>
 #include<queue>
 #define US_MAX 65500
@@ -1255,7 +1256,7 @@ char findTheDifference(string s, string t)
 			return i + 'a';
 		}
 	}
-return 0;
+	return 0;
 }
 int lastRemaining(int n)
 {
@@ -1272,7 +1273,7 @@ bool isSubsequence(std::string s, std::string t)
 	vector<int>table[26];
 	//preprocess t
 	for (int i = 0; i < t.size(); i++)table[t[i] - 'a'].push_back(i);
-	
+
 	//determine s
 	if (s.size() == 0)return true;
 	if (table[s[0] - 'a'].size() == 0)return false;
@@ -1286,7 +1287,7 @@ bool isSubsequence(std::string s, std::string t)
 	return true;
 }
 bool validUtf8test(std::vector<int>& data, int begin, int len) {
-	int min = 1 << 7; int max =(1 << 7) + (1 << 6);
+	int min = 1 << 7; int max = (1 << 7) + (1 << 6);
 	//bitset<8>mn = min; bitset<8>mx = max;
 	for (int i = begin; i < begin + len; i++) {
 		unsigned char now = data[i];
@@ -1307,21 +1308,51 @@ bool validUtf8(std::vector<int>& data)
 		if (head < 1 << 7) {
 			nowHead++; continue;
 		}
-		else{
-			if(head<(1 << 7) + (1 << 6))return false;
+		else {
+			if (head < (1 << 7) + (1 << 6))return false;
 			while (head >= 1 << 7) {
 				n++; head = head << 1; nw = head;
 			}
-			if (n>4)return false;
-			if (nowHead + n-1 >= data.size())return false;
-			if (!validUtf8test(data, nowHead + 1, n-1))return false;
-			nowHead = nowHead + n ;
+			if (n > 4)return false;
+			if (nowHead + n - 1 >= data.size())return false;
+			if (!validUtf8test(data, nowHead + 1, n - 1))return false;
+			nowHead = nowHead + n;
 		}
 	}
 	return false;
 }
+bool isNumDS(char c) { return c >= '0'&&c <= '9'; }
+string repeatDS(string& str, int n) {
+	string ans = "";
+	for (int i = 1; i <= n; i++) {
+		ans = ans + str;
+	}
+	return ans;
+}
+string decodeString_re(string& s, int& lo)
+{
+	string ans = "";  string sN = ""; 
+	while (lo<s.size()) {
+		if (s[lo] == '[') {
+			int n = atoi(sN.data()); lo++;
+			string in = decodeString_re(s, lo);
+			ans = ans + repeatDS(in, n);
+			sN = "";
+		}
+		else if (s[lo] == ']') {
+			lo++;
+			return ans;
+		}else{
+	if (!isNumDS(s[lo])) { ans.push_back(s[lo]); }
+	else { sN.push_back(s[lo]); }
+	lo++;
+}
+	}
+	return ans;
+}
 
 std::string decodeString(std::string s)
 {
-	return std::string();
+	int lo = 0;
+	return decodeString_re(s,lo);
 }
