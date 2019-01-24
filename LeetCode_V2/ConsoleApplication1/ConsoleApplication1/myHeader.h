@@ -301,3 +301,5 @@ bool isSubsequence(std::string s, std::string t);
 bool validUtf8(std::vector<int>& data);
 //394. Decode String
 std::string decodeString(std::string s);
+//391. Perfect Rectangle
+bool isRectangleCover(vector<vector<int>>& rectangles);

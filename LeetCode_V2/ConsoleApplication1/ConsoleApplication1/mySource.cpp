@@ -1356,3 +1356,13 @@ std::string decodeString(std::string s)
 	int lo = 0;
 	return decodeString_re(s,lo);
 }
+
+bool isRectangleCover(std::vector<std::vector<int>>& rectangles)
+{
+	// find top-left and button-right O(n)
+
+	//compute area O(n)
+
+	//chech overlapping by count O(n)
+	return false;
+}
