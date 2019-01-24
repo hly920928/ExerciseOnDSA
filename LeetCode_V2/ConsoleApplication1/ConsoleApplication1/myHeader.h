@@ -302,4 +302,4 @@ bool validUtf8(std::vector<int>& data);
 //394. Decode String
 std::string decodeString(std::string s);
 //391. Perfect Rectangle
-bool isRectangleCover(vector<vector<int>>& rectangles);
+bool isRectangleCover(std::vector<std::vector<int>>& rectangles);

@@ -1356,13 +1356,27 @@ std::string decodeString(std::string s)
 	int lo = 0;
 	return decodeString_re(s,lo);
 }
-
+class RectangleCoverChecker {
+private:
+	std::vector<std::vector<int>>& rectangles;
+	pair<int, int>topleft; pair<int, int>topright;
+	pair<int, int>buttomleft; pair<int, int>buttomright;
+	unordered_map<pair<int, int>, bitset<4>>table;
+public:
+	RectangleCoverChecker(std::vector<std::vector<int>>&r):rectangles(r) {};
+	bool isRectangleCover() { return false; }
+private:
+	bool  findCorner() { return false; }
+	bool buildPointSet() { return false; }
+	bool checkAllPoint(){ return false; }
+	bool canAtCorner(pair<int,int>&p) { return false; }
+	bool canAtBoundary(pair<int, int>&p){ return false; }
+	bool canAtInside(pair<int, int>&p) { return false; }
+	int area(pair<int, int>&p1, pair<int, int>&p2) { return 0; }
+};
 bool isRectangleCover(std::vector<std::vector<int>>& rectangles)
 {
-	// find top-left and button-right O(n)
-
-	//compute area O(n)
-
-	//chech overlapping by count O(n)
-	return false;
+	RectangleCoverChecker rcc(rectangles);
+	
+	return rcc.isRectangleCover();
 }
