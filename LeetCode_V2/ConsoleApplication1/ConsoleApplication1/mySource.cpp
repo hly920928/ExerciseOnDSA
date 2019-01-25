@@ -9,6 +9,7 @@
 #include<unordered_map>
 #include<map>
 #include<bitset>
+#include<functional>
 #include <math.h>
 #include <set>
 using namespace std;
@@ -1364,21 +1365,39 @@ enum class pointTypeLocal:char {
 	TopRight=3
 };
 enum class pointTypeGobal :char {
-	Corner_ButtomLeft, Corner_ButtomRight, Corner_TopLeft, Corner_TopRight,
-	Boundary_Buttom, Boundary_Top, Boundary_Left, Boundary_Right,
-	Inside, Outside
+	Corner_ButtomLeft   =0,
+	Corner_ButtomRight=1, 
+	Corner_TopLeft        =2,
+	Corner_TopRight     =3,
+	Boundary_Buttom    =4,
+	Boundary_Top          =5,
+	Boundary_Left         =6,
+	Boundary_Right      =7,
+	Inside                     =8,
+	Outside                 =9
 };
-enum class pointTypeTarget :char {
-	Corner_ButtomLeftT=   0b00000001,
-	Corner_ButtomRightT= 0b00000010,
-	Corner_TopLeftT=         0b00000100, 
-	Corner_TopRightT =      0b00001000,
-	Boundary_ButtomT=     0b00000011,
-	Boundary_TopT=          0b00001100,
-	Boundary_LeftT=          0b00000101,
-	Boundary_RightT=       0b00001010,
-	InsideT=                       0b00001111,
-	OutsideT=                    0b00000000
+char pointTypeTarget[10] ={
+	0b00000001,//Corner_ButtomLeft
+	0b00000010,//Corner_ButtomRight
+	0b00000100, //Corner_TopLeft
+	0b00001000,//Corner_TopRight
+	0b00000011,//Boundary_Buttom
+	0b00001100,//Boundary_Top       
+	0b00000101,//Boundary_Left
+	0b00001010,//Boundary_Right       
+	0b00001111,//Inside                     
+	0b00000000//Outside
+};
+enum class checkTypeResult :char {
+	Finished,Unfinished,Error
+};
+class Pointhasher {
+public:
+	size_t operator()(const pair<int, int>& p)const {
+		unsigned long long ull = ((unsigned long long)p.first) << 32 + p.second;
+		hash<unsigned long long> hull;
+		return hull(ull);
+	}
 };
 class dataPS {
 private:
@@ -1389,21 +1408,42 @@ public:
 		type = _type;
 		for (int i = 0; i < 4; i++)count[i] = false;
 	}
-	bool checkType()const {
-		char typeNow = count.to_ulong();
-		switch (type) {
-
-
-		default:return false;
-		}
+	checkTypeResult checkType()const {
+		
+		return check(type, count);
 	}
+	bool checkFinished() {
+		if (type == pointTypeGobal::Inside) {
+			char now = count.to_ulong();
+			bool flag = (now == pointTypeTarget[4]) ||
+				(now == pointTypeTarget[5]) ||
+				(now == pointTypeTarget[6]) ||
+				(now == pointTypeTarget[7]) ||
+				(now == pointTypeTarget[8]);
+			return flag;
+
+		}
+		else {return check(type, count)== checkTypeResult::Finished;}
+	return false;
+	}
+private:
+	checkTypeResult check(pointTypeGobal t, bitset<4> count)const {
+		char target = pointTypeTarget[(char)t];
+		char now = count.to_ulong();
+		if (target == now)return checkTypeResult::Finished;
+		char diff = (target^now);
+		if((target&diff)!= diff)return checkTypeResult::Error;
+		if (target>now)return checkTypeResult::Unfinished;
+		return checkTypeResult::Error;
+	}
+	
 };
 class RectangleCoverChecker {
 private:
 	std::vector<std::vector<int>>& rects;
 	pair<int, int>buttomLeft; pair<int, int>buttomRight;
 	pair<int, int>topLeft; pair<int, int>topRight;
-	unordered_map<long long, dataPS>table;
+	unordered_map<pair<int, int>, dataPS, Pointhasher>table;
 public:
 	RectangleCoverChecker(std::vector<std::vector<int>>&r) :rects(r) {};
 	bool isRectangleCover() {
@@ -1417,18 +1457,28 @@ private:
 	bool  findCorner() {
 		int x_min = rects[0][0]; int x_min_id = 0;
 		int x_max = rects[0][2]; int x_max_id = 0;
-		for (int i = 0; i < rects.size(); i++) {
-			if (rects[i][0] <= x_min) {
-				if (rects[i][1] < rects[x_min_id][1]) {
+		for (int i =1; i < rects.size(); i++) {
+			if (rects[i][0] < x_min) {
+				if (rects[i][1] <= rects[x_min_id][1]) {
 					x_min = rects[i][0];
 					x_min_id = i;
 				}
+			}else if (rects[i][0] == x_min) {
+				if (rects[i][1] < rects[x_min_id][1]) {
+					x_min = rects[i][0];
+					x_min_id = i;
+				}else if (rects[i][1] == rects[x_min_id][1])return false;
 			}
-			if (rects[i][2] >= x_max) {
-				if (rects[i][3] > rects[x_max_id][3]) {
+			if (rects[i][2] > x_max) {
+				if (rects[i][3] >= rects[x_max_id][3]) {
 					x_max = rects[i][2];
 					x_max_id = i;
 				}
+			}else if (rects[i][2] == x_max) {
+				if (rects[i][3] > rects[x_max_id][3]) {
+					x_max = rects[i][2];
+					x_max_id = i;
+				}else if (rects[i][3]== rects[x_max_id][3])return false;
 			}
 		}
 		int y_min = rects[x_min_id][1];
@@ -1452,12 +1502,14 @@ private:
 			if (!addPointToSet(buttomLeft, pointTypeLocal::ButtomLeft))return false;
 			if (!addPointToSet(buttomRight, pointTypeLocal::ButtomRight))return false;
 			if (!addPointToSet(topLeft, pointTypeLocal::TopLeft))return false;
-			if (!addPointToSet(topLeft, pointTypeLocal::TopRight))return false;
+			if (!addPointToSet(topRight, pointTypeLocal::TopRight))return false;
 		}
 		
 		return true; }
 	bool checkAllPoint() const { 
-		for (auto itr : table) { if (itr.second.checkType())return false; }
+		for (auto itr : table) {
+		if (!itr.second.checkFinished())return false;
+		}
 		return true; 
 	}
 	
@@ -1471,16 +1523,18 @@ private:
 	unsigned long long area(vector<int>& r) const { return abs(((long long)(r[2] - r[0]))*((long long)(r[3] - r[1]))); }
 	bool addPointToSet(pair<int, int>&p,pointTypeLocal type) { 
 		char tL = (char)type;
-		auto id = pointToLL(p); pointTypeGobal typeG = getType(p);
-		auto itr = table.find(id);
+		pointTypeGobal typeG = getType(p);
+		if (typeG == pointTypeGobal::Outside)return false;
+		auto itr = table.find(p);
 		if (itr == table.end()) {
-			table[id] = dataPS(typeG);
-			table[id].count[tL] = true;
+			table[p] = dataPS(typeG);
+			table[p].count[tL] = true;
 			return true;
 		}
 		else {
-			if (table[id].checkType()||table[id].count[tL])return false;
-			table[id].count[tL] = true;
+			if (table[p].checkType()== checkTypeResult::Finished||table[p].count[tL])return false;
+			table[p].count[tL] = true;
+			if (table[p].checkType() == checkTypeResult::Error)return false;
 			return true;
 		}
  }
@@ -1494,12 +1548,10 @@ private:
 		if (p.first == buttomLeft.first)return pointTypeGobal::Boundary_Left;
 		if (p.first == topRight.first)return pointTypeGobal::Boundary_Right;
 		if (p.second == buttomLeft.second)return pointTypeGobal::Boundary_Buttom;
-		if (p.first == topRight.second)return pointTypeGobal::Boundary_Top;
+		if (p.second == topRight.second)return pointTypeGobal::Boundary_Top;
 		return  pointTypeGobal::Outside;
 	}
-	long long pointToLL(pair<int, int>&p)const {
-		return  (((long long)p.first) << 32) + (p.second);
-	}
+	
 };
 bool isRectangleCover(std::vector<std::vector<int>>& rectangles)
 {
