@@ -1356,23 +1356,71 @@ std::string decodeString(std::string s)
 	int lo = 0;
 	return decodeString_re(s,lo);
 }
+struct dataPS {
+	char type;
+	bitset<4> count;
+	dataPS(char c = 'U') :type(c) { 
+		for (int i = 0; i < 4; i++)count[i] = false;
+	}
+
+};
 class RectangleCoverChecker {
 private:
-	std::vector<std::vector<int>>& rectangles;
-	pair<int, int>topleft; pair<int, int>topright;
-	pair<int, int>buttomleft; pair<int, int>buttomright;
-	unordered_map<pair<int, int>, bitset<4>>table;
+	std::vector<std::vector<int>>& rects;
+	pair<int, int>topLeft; pair<int, int>topRight;
+	pair<int, int>buttomLeft; pair<int, int>buttomRight;
+	unordered_map<long long, dataPS>table;
 public:
-	RectangleCoverChecker(std::vector<std::vector<int>>&r):rectangles(r) {};
-	bool isRectangleCover() { return false; }
+	RectangleCoverChecker(std::vector<std::vector<int>>&r):rects(r) {};
+	bool isRectangleCover() { 
+		if (!findCorner())return false;
+		if (!checkaArea())return false;
+		
+		return false; }
 private:
-	bool  findCorner() { return false; }
+	bool  findCorner() { 
+		int x_min = rects[0][0]; int x_min_id =0;
+		int x_max = rects[0][2]; int x_max_id =0;
+		for (int i = 0; i < rects.size(); i++) {
+			if (rects[i][0] <= x_min) {
+				if (rects[i][1]<rects[x_min_id][1]) {
+					x_min = rects[i][0];
+					x_min_id = i;
+				}
+			}
+			if (rects[i][2] >= x_max) {
+				if (rects[i][3]>rects[x_max_id][3]) {
+					x_max = rects[i][2];
+					x_max_id = i;
+			}
+			}
+		}
+		int y_min = rects[x_min_id][1];
+		int y_max = rects[x_max_id][3];
+		for (int i = 0; i < rects.size(); i++) {
+			if (rects[i][1] < y_min)return false;
+			if (rects[i][3] > y_max) return false;
+		}
+		topLeft = { x_min,y_min }; topRight = { x_max,y_min };
+		buttomLeft = { x_min,y_max }; buttomRight = { x_max,y_max };
+		return true; 
+	}
 	bool buildPointSet() { return false; }
-	bool checkAllPoint(){ return false; }
-	bool canAtCorner(pair<int,int>&p) { return false; }
-	bool canAtBoundary(pair<int, int>&p){ return false; }
-	bool canAtInside(pair<int, int>&p) { return false; }
-	int area(pair<int, int>&p1, pair<int, int>&p2) { return 0; }
+	bool checkPoint(dataPS& d){ return false; }
+	char getType(pair<int, int>&p){ return 'U'; }
+	
+	
+	unsigned long long area(vector<int>& r) { return abs(((long long)(r[2] - r[0]))*((long long)(r[3] - r[1]))); }
+	bool checkaArea() {
+		vector<int>bound({ topLeft.first,topLeft.second,buttomRight.first,buttomRight.second });
+		unsigned	long long areaC = area(bound);
+		unsigned long long areaA = 0;
+		for (auto&r : rects)areaA += area(r);
+		return areaC == areaA;
+	}
+	long long pointToll(pair<int, int>&p) {
+		long long ans = (((long long)p.first)<< 32) +(p.second << 32);
+	}
 };
 bool isRectangleCover(std::vector<std::vector<int>>& rectangles)
 {
