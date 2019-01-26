@@ -1391,11 +1391,12 @@ char pointTypeTarget[10] ={
 enum class checkTypeResult :char {
 	Finished,Unfinished,Error
 };
+hash<unsigned int> hull;
 class Pointhasher {
 public:
-	size_t operator()(const pair<int, int>& p)const {
-		unsigned long long ull = ((unsigned long long)p.first) << 32 + p.second;
-		hash<unsigned long long> hull;
+	size_t operator()(const pair< short,  short>& p)const {
+		unsigned int ull = ((unsigned int)p.first) << 16 + p.second;
+		
 		return hull(ull);
 	}
 };
@@ -1441,9 +1442,9 @@ private:
 class RectangleCoverChecker {
 private:
 	std::vector<std::vector<int>>& rects;
-	pair<int, int>buttomLeft; pair<int, int>buttomRight;
-	pair<int, int>topLeft; pair<int, int>topRight;
-	unordered_map<pair<int, int>, dataPS, Pointhasher>table;
+	pair< short,  short>buttomLeft; pair< short,  short>buttomRight;
+	pair< short,  short>topLeft; pair< short,  short>topRight;
+	unordered_map<pair<short, short>, dataPS, Pointhasher>table;
 public:
 	RectangleCoverChecker(std::vector<std::vector<int>>&r) :rects(r) {};
 	bool isRectangleCover() {
@@ -1452,6 +1453,10 @@ public:
 		if (!buildPointSet())return false;
 		if (!checkAllPoint())return false;
 		return true;
+	}
+	bool isRectangleCoverV2() {
+		
+		return false;
 	}
 private:
 	bool  findCorner() {
@@ -1495,10 +1500,10 @@ private:
 	
 	bool buildPointSet() { 
 		for (auto& r : rects) {
-			pair<int, int>buttomLeft = { r[0],r[1] }; //type =0
-			pair<int, int>buttomRight = { r[2],r[1] }; //type =1
-			pair<int, int>topLeft = { r[0],r[3] }; //type =2
-			pair<int, int>topRight = { r[2],r[3] };//type =3
+			pair< short,  short>buttomLeft = { r[0],r[1] }; //type =0
+			pair< short,  short>buttomRight = { r[2],r[1] }; //type =1
+			pair< short,  short>topLeft = { r[0],r[3] }; //type =2
+			pair< short,  short>topRight = { r[2],r[3] };//type =3
 			if (!addPointToSet(buttomLeft, pointTypeLocal::ButtomLeft))return false;
 			if (!addPointToSet(buttomRight, pointTypeLocal::ButtomRight))return false;
 			if (!addPointToSet(topLeft, pointTypeLocal::TopLeft))return false;
@@ -1521,7 +1526,7 @@ private:
 		return areaC == areaA;
 	}
 	unsigned long long area(vector<int>& r) const { return abs(((long long)(r[2] - r[0]))*((long long)(r[3] - r[1]))); }
-	bool addPointToSet(pair<int, int>&p,pointTypeLocal type) { 
+	bool addPointToSet(pair< short,short>&p,pointTypeLocal type) {
 		char tL = (char)type;
 		pointTypeGobal typeG = getType(p);
 		if (typeG == pointTypeGobal::Outside)return false;
@@ -1538,7 +1543,7 @@ private:
 			return true;
 		}
  }
-	pointTypeGobal getType(pair<int, int>&p)const {
+	pointTypeGobal getType(pair< short,  short>&p)const {
 		if (p == buttomLeft)return pointTypeGobal::Corner_ButtomLeft;
 		if (p == buttomRight)return pointTypeGobal::Corner_ButtomRight;
 	    if(p== topLeft)return pointTypeGobal::Corner_TopLeft;
