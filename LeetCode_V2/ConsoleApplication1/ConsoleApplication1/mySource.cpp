@@ -1391,11 +1391,16 @@ char pointTypeTarget[10] ={
 enum class checkTypeResult :char {
 	Finished,Unfinished,Error
 };
+unsigned int pointToUI(const pair< short, short>& p) {
+	unsigned int ull = ((unsigned int)p.first) << 16 + p.second;
+
+	return ull;
+}
 hash<unsigned int> hull;
 class Pointhasher {
 public:
 	size_t operator()(const pair< short,  short>& p)const {
-		unsigned int ull = ((unsigned int)p.first) << 16 + p.second;
+		unsigned int ull = pointToUI(p);
 		
 		return hull(ull);
 	}
@@ -1439,12 +1444,13 @@ private:
 	}
 	
 };
+
 class RectangleCoverChecker {
 private:
 	std::vector<std::vector<int>>& rects;
 	pair< short,  short>buttomLeft; pair< short,  short>buttomRight;
 	pair< short,  short>topLeft; pair< short,  short>topRight;
-	unordered_map<pair<short, short>, dataPS, Pointhasher>table;
+	unordered_map<int, dataPS>table;
 public:
 	RectangleCoverChecker(std::vector<std::vector<int>>&r) :rects(r) {};
 	bool isRectangleCover() {
@@ -1526,9 +1532,10 @@ private:
 		return areaC == areaA;
 	}
 	unsigned long long area(vector<int>& r) const { return abs(((long long)(r[2] - r[0]))*((long long)(r[3] - r[1]))); }
-	bool addPointToSet(pair< short,short>&p,pointTypeLocal type) {
+	bool addPointToSet(pair< short,short>&pt,pointTypeLocal type) {
 		char tL = (char)type;
-		pointTypeGobal typeG = getType(p);
+		pointTypeGobal typeG = getType(pt);
+		unsigned int p = pointToUI(pt);
 		if (typeG == pointTypeGobal::Outside)return false;
 		auto itr = table.find(p);
 		if (itr == table.end()) {
