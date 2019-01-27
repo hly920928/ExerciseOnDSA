@@ -1357,26 +1357,26 @@ std::string decodeString(std::string s)
 	int lo = 0;
 	return decodeString_re(s,lo);
 }
-
-enum class pointTypeLocal:char {
-	ButtomLeft=0, 
-	ButtomRight=1, 
-	TopLeft=2, 
-	TopRight=3
+//391. Perfect Rectangle
+enum class pointTypeLocal :char {
+	ButtomLeft = 0,
+	ButtomRight = 1,
+	TopLeft = 2,
+	TopRight = 3
 };
 enum class pointTypeGobal :char {
-	Corner_ButtomLeft   =0,
-	Corner_ButtomRight=1, 
-	Corner_TopLeft        =2,
-	Corner_TopRight     =3,
-	Boundary_Buttom    =4,
-	Boundary_Top          =5,
-	Boundary_Left         =6,
-	Boundary_Right      =7,
-	Inside                     =8,
-	Outside                 =9
+	Corner_ButtomLeft = 0,
+	Corner_ButtomRight = 1,
+	Corner_TopLeft = 2,
+	Corner_TopRight = 3,
+	Boundary_Buttom = 4,
+	Boundary_Top = 5,
+	Boundary_Left = 6,
+	Boundary_Right = 7,
+	Inside = 8,
+	Outside = 9
 };
-char pointTypeTarget[10] ={
+char pointTypeTarget[10] = {
 	0b00000001,//Corner_ButtomLeft
 	0b00000010,//Corner_ButtomRight
 	0b00000100, //Corner_TopLeft
@@ -1389,19 +1389,17 @@ char pointTypeTarget[10] ={
 	0b00000000//Outside
 };
 enum class checkTypeResult :char {
-	Finished,Unfinished,Error
+	Finished, Unfinished, Error
 };
-unsigned int pointToUI(const pair< short, short>& p) {
-	unsigned int ull = ((unsigned int)p.first) << 16 + p.second;
-
-	return ull;
-}
 hash<unsigned int> hull;
+unsigned int pointToUI(const pair< short, short>& p) {
+	return (((unsigned int)p.first) << 16) + p.second;
+}
 class Pointhasher {
 public:
-	size_t operator()(const pair< short,  short>& p)const {
+	size_t operator()(const pair< short, short>& p)const {
 		unsigned int ull = pointToUI(p);
-		
+
 		return hull(ull);
 	}
 };
@@ -1410,12 +1408,12 @@ private:
 	pointTypeGobal type;
 public:
 	bitset<4> count;
-	dataPS(pointTypeGobal _type= pointTypeGobal::Outside){
+	dataPS(pointTypeGobal _type = pointTypeGobal::Outside) {
 		type = _type;
 		for (int i = 0; i < 4; i++)count[i] = false;
 	}
 	checkTypeResult checkType()const {
-		
+
 		return check(type, count);
 	}
 	bool checkFinished() {
@@ -1429,8 +1427,8 @@ public:
 			return flag;
 
 		}
-		else {return check(type, count)== checkTypeResult::Finished;}
-	return false;
+		else { return check(type, count) == checkTypeResult::Finished; }
+		return false;
 	}
 private:
 	checkTypeResult check(pointTypeGobal t, bitset<4> count)const {
@@ -1438,19 +1436,18 @@ private:
 		char now = count.to_ulong();
 		if (target == now)return checkTypeResult::Finished;
 		char diff = (target^now);
-		if((target&diff)!= diff)return checkTypeResult::Error;
+		if ((target&diff) != diff)return checkTypeResult::Error;
 		if (target>now)return checkTypeResult::Unfinished;
 		return checkTypeResult::Error;
 	}
-	
-};
 
+};
 class RectangleCoverChecker {
 private:
 	std::vector<std::vector<int>>& rects;
-	pair< short,  short>buttomLeft; pair< short,  short>buttomRight;
-	pair< short,  short>topLeft; pair< short,  short>topRight;
-	unordered_map<int, dataPS>table;
+	pair< short, short>buttomLeft; pair< short, short>buttomRight;
+	pair< short, short>topLeft; pair< short, short>topRight;
+	unordered_map<unsigned int, dataPS>table;
 public:
 	RectangleCoverChecker(std::vector<std::vector<int>>&r) :rects(r) {};
 	bool isRectangleCover() {
@@ -1460,36 +1457,36 @@ public:
 		if (!checkAllPoint())return false;
 		return true;
 	}
-	bool isRectangleCoverV2() {
-		
-		return false;
-	}
 private:
 	bool  findCorner() {
 		int x_min = rects[0][0]; int x_min_id = 0;
 		int x_max = rects[0][2]; int x_max_id = 0;
-		for (int i =1; i < rects.size(); i++) {
+		for (int i = 1; i < rects.size(); i++) {
 			if (rects[i][0] < x_min) {
 				if (rects[i][1] <= rects[x_min_id][1]) {
 					x_min = rects[i][0];
 					x_min_id = i;
 				}
-			}else if (rects[i][0] == x_min) {
+			}
+			else if (rects[i][0] == x_min) {
 				if (rects[i][1] < rects[x_min_id][1]) {
 					x_min = rects[i][0];
 					x_min_id = i;
-				}else if (rects[i][1] == rects[x_min_id][1])return false;
+				}
+				else if (rects[i][1] == rects[x_min_id][1])return false;
 			}
 			if (rects[i][2] > x_max) {
 				if (rects[i][3] >= rects[x_max_id][3]) {
 					x_max = rects[i][2];
 					x_max_id = i;
 				}
-			}else if (rects[i][2] == x_max) {
+			}
+			else if (rects[i][2] == x_max) {
 				if (rects[i][3] > rects[x_max_id][3]) {
 					x_max = rects[i][2];
 					x_max_id = i;
-				}else if (rects[i][3]== rects[x_max_id][3])return false;
+				}
+				else if (rects[i][3] == rects[x_max_id][3])return false;
 			}
 		}
 		int y_min = rects[x_min_id][1];
@@ -1503,27 +1500,28 @@ private:
 
 		return true;
 	}
-	
-	bool buildPointSet() { 
+
+	bool buildPointSet() {
 		for (auto& r : rects) {
-			pair< short,  short>buttomLeft = { r[0],r[1] }; //type =0
-			pair< short,  short>buttomRight = { r[2],r[1] }; //type =1
-			pair< short,  short>topLeft = { r[0],r[3] }; //type =2
-			pair< short,  short>topRight = { r[2],r[3] };//type =3
+			pair< short, short>buttomLeft = { r[0],r[1] }; //type =0
+			pair< short, short>buttomRight = { r[2],r[1] }; //type =1
+			pair< short, short>topLeft = { r[0],r[3] }; //type =2
+			pair< short, short>topRight = { r[2],r[3] };//type =3
 			if (!addPointToSet(buttomLeft, pointTypeLocal::ButtomLeft))return false;
 			if (!addPointToSet(buttomRight, pointTypeLocal::ButtomRight))return false;
 			if (!addPointToSet(topLeft, pointTypeLocal::TopLeft))return false;
 			if (!addPointToSet(topRight, pointTypeLocal::TopRight))return false;
 		}
-		
-		return true; }
-	bool checkAllPoint() const { 
-		for (auto itr : table) {
-		if (!itr.second.checkFinished())return false;
-		}
-		return true; 
+
+		return true;
 	}
-	
+	bool checkAllPoint() const {
+		for (auto itr : table) {
+			if (!itr.second.checkFinished())return false;
+		}
+		return true;
+	}
+
 	bool checkArea()const {
 		vector<int>bound({ topLeft.first,topLeft.second,buttomRight.first,buttomRight.second });
 		unsigned	long long areaC = area(bound);
@@ -1532,28 +1530,28 @@ private:
 		return areaC == areaA;
 	}
 	unsigned long long area(vector<int>& r) const { return abs(((long long)(r[2] - r[0]))*((long long)(r[3] - r[1]))); }
-	bool addPointToSet(pair< short,short>&pt,pointTypeLocal type) {
+	bool addPointToSet(pair< short, short>&pt, pointTypeLocal type) {
 		char tL = (char)type;
 		pointTypeGobal typeG = getType(pt);
-		unsigned int p = pointToUI(pt);
+		auto p = pointToUI(pt);
 		if (typeG == pointTypeGobal::Outside)return false;
 		auto itr = table.find(p);
 		if (itr == table.end()) {
-			table[p] = dataPS(typeG);
-			table[p].count[tL] = true;
+		    dataPS now(typeG); now.count[tL] = true;
+			table.insert({ p,now });
 			return true;
 		}
 		else {
-			if (table[p].checkType()== checkTypeResult::Finished||table[p].count[tL])return false;
-			table[p].count[tL] = true;
-			if (table[p].checkType() == checkTypeResult::Error)return false;
+			if (itr->second.checkType() == checkTypeResult::Finished || itr->second.count[tL])return false;
+			itr->second.count[tL] = true;
+			if (itr->second.checkType() == checkTypeResult::Error)return false;
 			return true;
 		}
- }
-	pointTypeGobal getType(pair< short,  short>&p)const {
+	}
+	pointTypeGobal getType(pair< short, short>&p)const {
 		if (p == buttomLeft)return pointTypeGobal::Corner_ButtomLeft;
 		if (p == buttomRight)return pointTypeGobal::Corner_ButtomRight;
-	    if(p== topLeft)return pointTypeGobal::Corner_TopLeft;
+		if (p == topLeft)return pointTypeGobal::Corner_TopLeft;
 		if (p == topRight)return pointTypeGobal::Corner_TopRight;
 		if (p.first > buttomLeft.first&&p.first<topRight.first&&p.second>buttomLeft.second&&p.second < topRight.second)return  pointTypeGobal::Inside;
 		if (p.first<buttomLeft.first || p.first>topRight.first || p.second < buttomLeft.second || p.second > topRight.second)return  pointTypeGobal::Outside;
@@ -1563,7 +1561,7 @@ private:
 		if (p.second == topRight.second)return pointTypeGobal::Boundary_Top;
 		return  pointTypeGobal::Outside;
 	}
-	
+
 };
 bool isRectangleCover(std::vector<std::vector<int>>& rectangles)
 {
