@@ -303,3 +303,5 @@ bool validUtf8(std::vector<int>& data);
 std::string decodeString(std::string s);
 //391. Perfect Rectangle
 bool isRectangleCover(std::vector<std::vector<int>>& rectangles);
+//395. Longest Substring with At Least K Repeating Characters
+int longestSubstring(std::string s, int k);

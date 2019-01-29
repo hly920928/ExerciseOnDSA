@@ -1569,3 +1569,81 @@ bool isRectangleCover(std::vector<std::vector<int>>& rectangles)
 	
 	return rcc.isRectangleCover();
 }
+class longestSubstringSolver {
+private:
+	const string& s;
+	int k;
+	vector<unsigned short>count[26];
+	vector<bool>isIncluded;
+	vector<pair<unsigned short, unsigned short>>intervals;
+	int answer;
+public:
+	longestSubstringSolver(const string& _s, int _k) :s(_s), k(_k) {
+		answer = 0;
+		isIncluded.resize(s.size());
+		for (auto&b : isIncluded)b = true;
+	};
+	int solve() {
+		
+		buildCount();
+		buildIntervals();
+		for (auto&i : intervals)checkInterval(i);
+		return answer;
+	};
+private:
+	void buildCount() {
+		for (int i = 0; i < s.size(); i++) {
+			count[s[i] - 'a'].push_back(i);
+		}
+		for (int i = 0; i < s.size(); i++) {
+			if (count[s[i] - 'a'].size() < k)
+			{isIncluded[i] = false;
+			}else {
+				isIncluded[i] = true;}
+		}
+}
+	void buildIntervals() {
+		isIncluded.push_back(false);
+		int head = -1;
+		for (int i = 0; i <= s.size(); i++) {
+			if (isIncluded[i] == true && head == -1) {
+				head = i;
+			}
+			if (isIncluded[i] == false && head != -1) {
+				
+				intervals.push_back({ head,i - 1 });
+					head = -1;
+			}
+		}
+
+	};
+	void checkInterval(pair<unsigned short, unsigned short>&itv) {
+		char localTable[26];
+		for (auto&c : localTable)c = 'U';
+		for (int i = itv.first; i <= itv.second; i++) {
+			if (localTable[s[i] == 'T')continue;
+			if (localTable[s[i] == 'F') {
+				isIncluded[i] = false;
+			}else{
+				if (checkChar_InInterval(itv, s[i])) {
+					localTable[s[i]]='T';
+				}
+				else {
+					localTable[s[i]]= 'F';
+					isIncluded[i] = false;}
+			}
+		}
+	
+	};
+	bool checkChar_InInterval(pair<unsigned short, unsigned short>&itv,char c) {
+	
+		return true;
+	
+	};
+	int findLongest(pair<unsigned short, unsigned short>&itv) { return 0; };
+};
+int longestSubstring(std::string s, int k)
+{
+	longestSubstringSolver solver(s, k);
+	return solver.solve();
+}
