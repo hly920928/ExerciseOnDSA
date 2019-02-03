@@ -305,3 +305,5 @@ std::string decodeString(std::string s);
 bool isRectangleCover(std::vector<std::vector<int>>& rectangles);
 //395. Longest Substring with At Least K Repeating Characters
 int longestSubstring(std::string s, int k);
+//396. Rotate Function
+int maxRotateFunction(std::vector<int>& A);

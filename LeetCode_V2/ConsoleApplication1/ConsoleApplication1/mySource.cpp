@@ -1571,7 +1571,7 @@ bool isRectangleCover(std::vector<std::vector<int>>& rectangles)
 }
 class longestSubstringSolver {
 private:
-	 string& s;
+	string& s;
 	int k;
 	vector<bool>isIncluded;
 	queue<pair<unsigned short, unsigned short>>intervals;
@@ -1634,4 +1634,9 @@ int longestSubstring(std::string s, int k)
 {
 	longestSubstringSolver solver(s, k);
 	return solver.solve();
+}
+
+int maxRotateFunction(std::vector<int>& A)
+{
+	return 0;
 }
