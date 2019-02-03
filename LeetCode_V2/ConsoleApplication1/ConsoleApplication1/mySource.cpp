@@ -1638,5 +1638,15 @@ int longestSubstring(std::string s, int k)
 
 int maxRotateFunction(std::vector<int>& A)
 {
-	return 0;
+	int ans = 0; int sum = 0; int innerP = 0;
+	for (int i = 0; i < A.size(); i++) {
+		ans += i*A[i];
+		sum +=A[i];
+	}
+	innerP = ans;
+	for (int i = A.size()-1; i >=1; i--) {
+		innerP = innerP + sum - A.size()* A[i];
+		ans = max(ans, innerP);
+	}
+	return ans;
 }
