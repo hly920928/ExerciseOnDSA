@@ -1650,3 +1650,35 @@ int maxRotateFunction(std::vector<int>& A)
 	}
 	return ans;
 }
+
+int guess(int num)
+{
+	int ans = 1;
+	if (num == ans)return 0;
+	if (num >ans)return 1;
+	if (num <ans)return -1;
+}
+
+int guessNumber(int n)
+{
+		long long lo = 1; long long hi = n;
+		long long now = (lo + hi) / 2;
+		while (true) {
+			if (guess(now) == 0)return now;
+			if (hi - lo == 1) {
+				if (guess(hi) == 0)return hi;
+				return lo;
+			}
+			// guess behaviour is reversed with defination
+			else if (guess(now) == 1) {
+				lo = now;
+				now = (lo + hi) / 2;
+				
+			}
+			else {
+				hi = now;
+				now = (lo + hi) / 2;
+			}
+		}
+}
+

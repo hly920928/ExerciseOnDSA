@@ -307,3 +307,6 @@ bool isRectangleCover(std::vector<std::vector<int>>& rectangles);
 int longestSubstring(std::string s, int k);
 //396. Rotate Function
 int maxRotateFunction(std::vector<int>& A);
+//374. Guess Number Higher or Lower
+int guess(int num);
+int guessNumber(int n);
