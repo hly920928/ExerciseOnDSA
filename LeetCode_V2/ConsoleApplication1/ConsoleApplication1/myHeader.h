@@ -310,3 +310,5 @@ int maxRotateFunction(std::vector<int>& A);
 //374. Guess Number Higher or Lower
 int guess(int num);
 int guessNumber(int n);
+//397. Integer Replacement
+int integerReplacement(int n);

@@ -1681,4 +1681,31 @@ int guessNumber(int n)
 			}
 		}
 }
+unordered_map<unsigned int, unsigned short>* tableIntRPM;
+int integerReplacement_re(unsigned int n)
+{
+	auto itr = tableIntRPM->find(n);
+	if (itr != tableIntRPM->end())return itr->second;
+	if (n % 2 == 0) {
+		int ans= integerReplacement_re(n / 2) + 1;
+		tableIntRPM->insert({ n,ans });
+		return ans;
+	}
+	int ans = min(integerReplacement_re(n+1), integerReplacement_re(n -1))+1;
+	tableIntRPM->insert({ n,ans });
+	return ans;
+	return ans;
+}
+int integerReplacement(int n)
+{
+	unordered_map<unsigned int, unsigned short>tableInt;
+	tableIntRPM = &tableInt;
+	unsigned short count = 0; unsigned int now = 1;
+	while (now <= n) {
+		tableInt[now] = count;
+		now *= 2;
+		count++;
+	}
+	return integerReplacement_re(n);
+}
 
