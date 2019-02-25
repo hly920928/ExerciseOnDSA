@@ -317,23 +317,18 @@ int integerReplacement(int n);
 //398. RandomPickIndex
 class  RandomPickIndex {
 private:
-	std::map<int, std::vector<unsigned short>>table;
-	std::mt19937 generator ;
-	double max;
+	std::vector<int> v;
 public:
-	
-	RandomPickIndex(std::vector<int> nums):generator(nums.size()){
-		max = generator.max();
-		for (unsigned short i = 0; i < nums.size(); i++) {
-			auto itr = table.find(nums[i]);
-			if (itr == table.end())table.insert({ nums[i],std::vector<unsigned short>() });
-			table[nums[i]].push_back(i);
-		}
-}
-
+	RandomPickIndex(std::vector<int> nums) :v(std::move(nums)) {};
 	int pick(int target) {
-		auto& vnow = table[target];
-		unsigned short index = ((double)generator() /max)*vnow.size();
-		return vnow[index];
-	}
+		int count = 0;
+		int ans = -1;
+		for (int i = 0; i < v.size(); i++) {
+			if (v[i] == target) {
+				count++;
+				if (rand() % count == 0)ans = i;//Reservoir sampling Reservoir size=1
+			}
+	   }
+		return ans;
+	};
 };
