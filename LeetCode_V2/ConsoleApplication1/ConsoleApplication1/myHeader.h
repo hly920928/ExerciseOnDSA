@@ -6,6 +6,8 @@
 #include <queue>
 #include <stack>
 #include<algorithm>
+#include <random>
+#include <chrono>
 //327. Count of Range Sum
 int countRangeSum(std::vector<int>& nums, int lower, int upper);
 //328. Odd Even Linked List
@@ -312,3 +314,26 @@ int guess(int num);
 int guessNumber(int n);
 //397. Integer Replacement
 int integerReplacement(int n);
+//398. RandomPickIndex
+class  RandomPickIndex {
+private:
+	std::map<int, std::vector<unsigned short>>table;
+	std::mt19937 generator ;
+	double max;
+public:
+	
+	RandomPickIndex(std::vector<int> nums):generator(nums.size()){
+		max = generator.max();
+		for (unsigned short i = 0; i < nums.size(); i++) {
+			auto itr = table.find(nums[i]);
+			if (itr == table.end())table.insert({ nums[i],std::vector<unsigned short>() });
+			table[nums[i]].push_back(i);
+		}
+}
+
+	int pick(int target) {
+		auto& vnow = table[target];
+		unsigned short index = ((double)generator() /max)*vnow.size();
+		return vnow[index];
+	}
+};

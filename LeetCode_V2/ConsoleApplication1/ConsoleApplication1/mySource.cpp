@@ -1694,7 +1694,6 @@ int integerReplacement_re(unsigned int n)
 	int ans = min(integerReplacement_re(n+1), integerReplacement_re(n -1))+1;
 	tableIntRPM->insert({ n,ans });
 	return ans;
-	return ans;
 }
 int integerReplacement(int n)
 {
