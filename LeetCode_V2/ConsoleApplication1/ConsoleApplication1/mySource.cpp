@@ -1707,4 +1707,19 @@ int integerReplacement(int n)
 	}
 	return integerReplacement_re(n);
 }
+vector<vector<pair<double, int>>>*tableCalcEquation;
+vector<pair<double, int>>*DFSRecord;
+void DFScalcEquation(int id, pair<double, int>p) {
+
+}
+vector<double> calcEquation(vector<pair<string, string>> equations, vector<double>& values, vector<pair<string, string>> queries)
+{
+	unordered_map<string, int>map;
+	vector<vector<pair<double, int>>>table;
+	//build table
+	//DFS
+	//build answer;
+	vector<double> ans;
+	return ans;
+}
 
