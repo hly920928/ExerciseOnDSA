@@ -1710,16 +1710,58 @@ int integerReplacement(int n)
 vector<vector<pair<double, int>>>*tableCalcEquation;
 vector<pair<double, int>>*DFSRecord;
 void DFScalcEquation(int id, pair<double, int>p) {
-
+	auto&record = *DFSRecord;
+	auto& now = record[id];
+	if (now.second != -1)return;
+	now = p; double& nowp = p.first; int& nowbase = p.second;
+	for (auto& next : tableCalcEquation->at(id)) {
+		DFScalcEquation(next.second, {next.first*nowp ,nowbase });
+	}
 }
 vector<double> calcEquation(vector<pair<string, string>> equations, vector<double>& values, vector<pair<string, string>> queries)
 {
 	unordered_map<string, int>map;
-	vector<vector<pair<double, int>>>table;
-	//build table
+	vector<vector<pair<double, int>>>table; tableCalcEquation = &table;
+	//build map
+	int id = 0;
+	for (auto&p : equations) {
+		auto itr_a = map.find(p.first);	auto itr_b = map.find(p.second);
+		if (itr_a == map.end()) {
+			map[p.first] = id; id++;
+		}
+		if (itr_b == map.end()) {
+			map[p.second] = id; id++;
+		}
+	}
+	//build graph table
+	table.resize(map.size());
+	for (int i = 0; i < equations.size();i++) {
+		auto& p = equations[i];
+		int aId = map[p.first];	auto bId = map[p.second];
+		table[aId].push_back({ 1/values[i],bId });
+		table[bId].push_back({ values[i], aId});
+	}
+	
 	//DFS
+	vector<pair<double, int>>record; record.resize(map.size());
+	for (auto&p : record) { p.first = -1; p.second = -1; }
+	DFSRecord = &record;
+	for (int i = 0; i < record.size(); i++) {
+		if (record[i].second == -1) {
+			DFScalcEquation(i, { 1,i });
+		}
+	}
 	//build answer;
-	vector<double> ans;
+	vector<double> ans; 
+	for (auto&p : queries) {
+		auto itr_a = map.find(p.first);	auto itr_b = map.find(p.second);
+		if (itr_a == map.end()|| itr_b == map.end()) {
+			ans.push_back(-1); continue;
+		}
+		auto ra = record[itr_a->second];	auto rb = record[itr_b->second];
+		if (ra.second != rb.second){ ans.push_back(-1); }
+		else { ans.push_back(ra.first/rb.first); }
+	}
 	return ans;
 }
 
