@@ -1765,3 +1765,13 @@ vector<double> calcEquation(vector<pair<string, string>> equations, vector<doubl
 	return ans;
 }
 
+int findNthDigit(int n)
+{
+	//find lenght
+
+	//find number
+
+	//find  digit
+	return 0;
+}
+
