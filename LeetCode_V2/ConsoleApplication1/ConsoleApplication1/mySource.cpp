@@ -1767,11 +1767,29 @@ vector<double> calcEquation(vector<pair<string, string>> equations, vector<doubl
 
 int findNthDigit(int n)
 {
+	unsigned long long len = 1; unsigned long long first = 1; unsigned long long last = 9; unsigned long long total = 0;
 	//find lenght
-
+	while (true) {
+		unsigned long long totalAtLen = (last - first + 1)*len;
+		if (total + totalAtLen > n)break;
+		total += totalAtLen;
+		len++;
+		first = first * 10;
+		last = last * 10 + 9;
+	}
 	//find number
-
+	unsigned long long num = first - 1 + (n - total) / len;
 	//find  digit
-	return 0;
+	if ((n - total) % len == 0) {
+		return num%10;
+	}else{
+		num++;
+		int digit = len-(n - total) % len+1; int lastD = -1;
+		for (int i = 0; i < digit; i++) {
+			lastD = num % 10;
+			num /= 10;
+		}
+		return lastD;
+	}
 }
 
