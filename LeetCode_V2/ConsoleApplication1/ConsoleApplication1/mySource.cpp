@@ -1792,4 +1792,16 @@ int findNthDigit(int n)
 		return lastD;
 	}
 }
+std::vector<std::string>* readBinaryWatch_ans;
+bitset<10>* readBinaryWatch_display;
+void readBinaryWatch_re(int nowDig, int nowNum) {
+
+}
+std::vector<std::string> readBinaryWatch(int num)
+{
+	bitset<10>display; readBinaryWatch_display = &display;
+	std::vector<std::string>ans; readBinaryWatch_ans = &ans;
+	readBinaryWatch_re(0, num);
+	return ans;
+}
 

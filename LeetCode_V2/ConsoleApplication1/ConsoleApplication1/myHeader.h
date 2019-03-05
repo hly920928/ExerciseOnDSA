@@ -335,3 +335,5 @@ public:
 std::vector<double> calcEquation(std::vector<std::pair<std::string, std::string>> equations, std::vector<double>& values, std::vector<std::pair<std::string, std::string>> queries);
 //400. Nth Digit
 int findNthDigit(int n);
+//401. Binary Watch
+std::vector<std::string> readBinaryWatch(int num);
