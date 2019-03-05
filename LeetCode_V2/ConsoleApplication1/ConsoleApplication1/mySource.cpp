@@ -1795,7 +1795,29 @@ int findNthDigit(int n)
 std::vector<std::string>* readBinaryWatch_ans;
 bitset<10>* readBinaryWatch_display;
 void readBinaryWatch_re(int nowDig, int nowNum) {
-
+	auto& display = *readBinaryWatch_display;
+	if (nowDig == 10) {
+		if (nowNum != 0)return;
+		unsigned int hour = readBinaryWatch_display->to_ulong();
+		unsigned char minute = readBinaryWatch_display->to_ulong();
+		hour = hour >> 6;
+		if (hour > 11)return;
+		minute = minute & 0b00111111;
+		if (minute >59)return;
+		string str_m;
+		if (minute == 0)str_m = "00";
+		 else if (minute <10)str_m ="0"+to_string(minute);
+		 else str_m =to_string(minute);
+		readBinaryWatch_ans->push_back(to_string(hour) + ":" + str_m);
+		return;
+	}
+	
+	if (nowNum != 0) {
+		display[nowDig] = 1;
+		readBinaryWatch_re(nowDig + 1, nowNum - 1);
+	}
+	display[nowDig] =0;
+	readBinaryWatch_re(nowDig + 1, nowNum);
 }
 std::vector<std::string> readBinaryWatch(int num)
 {
