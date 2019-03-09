@@ -337,3 +337,5 @@ std::vector<double> calcEquation(std::vector<std::pair<std::string, std::string>
 int findNthDigit(int n);
 //401. Binary Watch
 std::vector<std::string> readBinaryWatch(int num);
+//402. Remove K Digits
+std::string removeKdigits(std::string num, int k);

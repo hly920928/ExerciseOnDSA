@@ -1827,3 +1827,26 @@ std::vector<std::string> readBinaryWatch(int num)
 	return ans;
 }
 
+std::string removeKdigits(std::string num, int k)
+{
+	if (num.size() <= k)return "0";
+	int head = 0; int remainInOld = num.size(); int remainInNew = remainInOld - k - 1;
+	int tail = remainInOld - remainInNew + head - 1;
+	string ans = "";
+	while (ans.size()<num.size() - k) {
+		int id =head;
+		for (int i = head; i < tail + 1; i++) {
+			if (num[i] < num[id])id = i;
+		}
+		ans.push_back(num[id]);
+		
+		head = id + 1; remainInOld = num.size() - 1 - head + 1;
+		remainInNew--;
+		tail = remainInOld - remainInNew + head - 1;
+	}
+	int realhead = 0;
+	while (ans[realhead] == '0'&&realhead != ans.size() - 1)realhead++;
+	if (realhead == 0)return ans;
+	return ans.substr(realhead, ans.size() - 1 - realhead + 1);
+}
+
