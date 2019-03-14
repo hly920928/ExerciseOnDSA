@@ -339,3 +339,5 @@ int findNthDigit(int n);
 std::vector<std::string> readBinaryWatch(int num);
 //402. Remove K Digits
 std::string removeKdigits(std::string num, int k);
+//403. Frog Jump  
+bool canCross(std::vector<int>& stones);

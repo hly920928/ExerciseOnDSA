@@ -1832,21 +1832,81 @@ std::string removeKdigits(std::string num, int k)
 	if (num.size() <= k)return "0";
 	int head = 0; int remainInOld = num.size(); int remainInNew = remainInOld - k - 1;
 	int tail = remainInOld - remainInNew + head - 1;
-	string ans = "";
-	while (ans.size()<num.size() - k) {
+	string ans = ""; int target = num.size() - k;
+	while (ans.size()<target) {
+		if (remainInNew == remainInOld) {
+			ans = ans + num.substr(head, num.size() - 1 - head + 1);
+			break;
+		}
 		int id =head;
 		for (int i = head; i < tail + 1; i++) {
 			if (num[i] < num[id])id = i;
 		}
-		ans.push_back(num[id]);
+		if (num[id] == '0'&&ans.size() == 0) {
+			target--;
+		}else ans.push_back(num[id]);
+	
 		
 		head = id + 1; remainInOld = num.size() - 1 - head + 1;
 		remainInNew--;
 		tail = remainInOld - remainInNew + head - 1;
 	}
-	int realhead = 0;
-	while (ans[realhead] == '0'&&realhead != ans.size() - 1)realhead++;
-	if (realhead == 0)return ans;
-	return ans.substr(realhead, ans.size() - 1 - realhead + 1);
+	if (ans == "")return "0";
+	return ans;
 }
-
+unordered_map<int, unsigned short>*_posToID_CC;
+vector<vector<unsigned short>>*_posCanJumpTo_CC;
+bool tryJump_CC(int nowID,int targetDist) {
+	if (targetDist <=0)return false;
+	auto itr = _posToID_CC->find(targetDist);
+	auto&table = *_posCanJumpTo_CC;
+	if (itr != _posToID_CC->end()) {
+		int nextID = itr->second;
+		if (itr->second == table.size() - 1)return true;
+		table[nextID].push_back(nowID);
+	}
+	return false;
+}
+bool maxTest_CC(long long dist, long long id) {
+	 if (dist * 2 > id* (id+1) ){ //max 
+		return false;
+	}else return true;
+}
+bool canCrossDP(std::vector<int>& stones)
+{
+	for (int i = stones.size() - 1; i >= 0; i--) {
+		if (!maxTest_CC(stones[i], i))return false;
+	}
+	unordered_map<int, unsigned short>posToID;
+	_posToID_CC = &posToID;
+	vector<vector<unsigned short>>posCanJumpTo;
+	_posCanJumpTo_CC = &posCanJumpTo;
+	//produce posToID
+	for (int i = 0; i < stones.size(); i++)posToID[stones[i]] = i;
+	posCanJumpTo.resize(stones.size());
+	posCanJumpTo[0].push_back(0);
+	//
+	unordered_set<int>targetDists;
+	for (int i = 0; i < stones.size(); i++) {
+		auto& prevID = posCanJumpTo[i];
+		
+		for (auto p : prevID) {
+			int k = stones[i] - stones[p];
+			targetDists.insert(stones[i] + k-1);
+			targetDists.insert(stones[i] + k);
+			targetDists.insert(stones[i] + k+1);
+		}
+		for (auto t : targetDists) {
+			if (tryJump_CC(i, t))return true;
+		}
+		targetDists.clear();
+	}
+	return false;
+}
+//TODO 
+bool canCrossRe(std::vector<int>& stones) {
+	return false;
+}
+bool canCross(std::vector<int>& stones) {
+	return canCrossDP(stones);
+}
