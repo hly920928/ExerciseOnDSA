@@ -1874,9 +1874,7 @@ bool maxTest_CC(long long dist, long long id) {
 }
 bool canCrossDP(std::vector<int>& stones)
 {
-	for (int i = stones.size() - 1; i >= 0; i--) {
-		if (!maxTest_CC(stones[i], i))return false;
-	}
+	
 	unordered_map<int, unsigned short>posToID;
 	_posToID_CC = &posToID;
 	vector<vector<unsigned short>>posCanJumpTo;
@@ -1904,9 +1902,37 @@ bool canCrossDP(std::vector<int>& stones)
 	return false;
 }
 //TODO 
-bool canCrossRe(std::vector<int>& stones) {
+vector<int>* _stonesCC;
+bool canCrossDFS(int nowID,int k) {
+	if(k<1)return false;
+	auto&stones = *_stonesCC;
+	if (nowID == stones.size() - 1)return true;
+	int value_1 = stones[nowID] + k + 1;
+	auto itr_1 = lower_bound(stones.begin() + nowID, stones.end(), value_1);
+	if (itr_1 != stones.end()&&*itr_1== value_1) {
+		if (canCrossDFS(itr_1 - stones.begin(), k + 1))return true;
+	}
+	int value_2 = stones[nowID] + k ;
+	auto itr_2= lower_bound(stones.begin() + nowID, stones.end(), value_2);
+	if (itr_2 != stones.end() && *itr_2 == value_2) {
+		if (canCrossDFS(itr_2 - stones.begin(), k))return true;
+	}
+	int value_3 = stones[nowID] + k-1;
+	auto itr_3 = lower_bound(stones.begin() + nowID, stones.end(), value_3);
+	if (itr_3 != stones.end() && *itr_3 == value_3) {
+		if (canCrossDFS(itr_3 - stones.begin(), k-1))return true;
+	}
 	return false;
 }
+bool canCrossDFSMain(std::vector<int>& stones) {
+	_stonesCC = &stones;
+	return canCrossDFS(1,1);
+}
 bool canCross(std::vector<int>& stones) {
-	return canCrossDP(stones);
+	if(stones.size()<=1)return true;
+	if (stones[1]!= 1)return false;
+	for (int i = stones.size() - 1; i >= 0; i--) {
+		if (!maxTest_CC(stones[i], i))return false;
+	}
+	return canCrossDFSMain(stones);
 }
