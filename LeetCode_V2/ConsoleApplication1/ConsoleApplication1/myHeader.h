@@ -341,3 +341,7 @@ std::vector<std::string> readBinaryWatch(int num);
 std::string removeKdigits(std::string num, int k);
 //403. Frog Jump  
 bool canCross(std::vector<int>& stones);
+//404 Sum of Left Leaves
+int sumOfLeftLeaves(TreeNode* root);
+//405. Convert a Number to Hexadecimal
+std::string toHex(int num);

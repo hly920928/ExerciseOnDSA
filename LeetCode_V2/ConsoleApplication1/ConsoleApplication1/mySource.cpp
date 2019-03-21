@@ -1936,12 +1936,6 @@ bool canCross(std::vector<int>& stones) {
 	}
 	return canCrossDFSMain(stones);
 }
-struct TreeNode {
-	int val;
-	TreeNode *left;
-	TreeNode *right;
-	TreeNode(int x) : val(x), left(NULL), right(NULL) {}
-};
 int ansSumOfLeftLeaves = 0;
 void sumOfLeftLeaves_re(TreeNode* root, bool isLeft) {
 	if (root == nullptr)return;
@@ -1958,4 +1952,37 @@ int sumOfLeftLeaves(TreeNode* root) {
 	sumOfLeftLeaves_re(root->left,true);
 	sumOfLeftLeaves_re(root->right,false);
 	return ansSumOfLeftLeaves;
+}
+
+std::string toHex(int _num)
+{
+	string ans;
+	if (_num == 0)return "0";
+	unsigned int num = _num;
+
+	while (num != 0) {
+		char now = num % 16;
+		num /= 16;
+		switch (now) {
+		case  0: {ans.push_back('0'); break; }
+		case  1: {ans.push_back('1'); break; }
+		case  2: {ans.push_back('2'); break; }
+		case  3: {ans.push_back('3'); break; }
+		case  4: {ans.push_back('4'); break; }
+		case  5: {ans.push_back('5'); break; }
+		case  6: {ans.push_back('6'); break; }
+		case  7: {ans.push_back('7'); break; }
+		case  8: {ans.push_back('8'); break; }
+		case  9: {ans.push_back('9'); break; }
+		case  10: {ans.push_back('a'); break; }
+		case  11: {ans.push_back('b'); break; }
+		case  12: {ans.push_back('c'); break; }
+		case  13: {ans.push_back('d'); break; }
+		case  14: {ans.push_back('e'); break; }
+		case  15: {ans.push_back('f'); break; }
+
+		}
+	}
+	std::reverse(ans.begin(), ans.end());
+	return ans;
 }
