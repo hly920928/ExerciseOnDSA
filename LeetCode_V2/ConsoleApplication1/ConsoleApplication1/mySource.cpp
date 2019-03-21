@@ -1936,3 +1936,26 @@ bool canCross(std::vector<int>& stones) {
 	}
 	return canCrossDFSMain(stones);
 }
+struct TreeNode {
+	int val;
+	TreeNode *left;
+	TreeNode *right;
+	TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+};
+int ansSumOfLeftLeaves = 0;
+void sumOfLeftLeaves_re(TreeNode* root, bool isLeft) {
+	if (root == nullptr)return;
+	if (root->left == nullptr&&root->right == nullptr&&isLeft) {
+		ansSumOfLeftLeaves += root->val;
+		return;
+	}
+	sumOfLeftLeaves_re(root->left, true);
+	sumOfLeftLeaves_re(root->right, false);
+}
+int sumOfLeftLeaves(TreeNode* root) {
+	ansSumOfLeftLeaves = 0;
+	if (root == nullptr)return 0;
+	sumOfLeftLeaves_re(root->left,true);
+	sumOfLeftLeaves_re(root->right,false);
+	return ansSumOfLeftLeaves;
+}
