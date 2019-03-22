@@ -1956,8 +1956,8 @@ int sumOfLeftLeaves(TreeNode* root) {
 
 std::string toHex(int _num)
 {
-	string ans;
 	if (_num == 0)return "0";
+	string ans;
 	unsigned int num = _num;
 
 	while (num != 0) {
@@ -1984,5 +1984,54 @@ std::string toHex(int _num)
 		}
 	}
 	std::reverse(ans.begin(), ans.end());
+	return ans;
+}
+struct TwoUnsignedInt {
+	unsigned int second;
+	unsigned int first;
+	TwoUnsignedInt(int _a = 0, int _b = 0) :first(_a), second(_b) {};
+};
+union unsignedLonglongAndTwoInt
+{
+	unsigned long long ull;
+	TwoUnsignedInt ti;
+	unsignedLonglongAndTwoInt(int _a = 0, int _b = 0) : ti(_a, _b) {};
+}; 
+bool operator<(const unsignedLonglongAndTwoInt& a, const unsignedLonglongAndTwoInt&b){
+	return a.ull < b.ull;
+}
+std::vector<std::pair<int, int>> reconstructQueue(std::vector<pair<int, int>>& people)
+{
+	if (people.size() <= 1)return people;
+	vector<unsignedLonglongAndTwoInt>table;
+	list<unsignedLonglongAndTwoInt>ansList;
+	vector<pair<int, int>> ans;
+	int len = people.size(); table.resize(len);
+	for (int i = 0; i < len; i++) {
+		unsignedLonglongAndTwoInt neo(people[i].first, people[i].second);
+		table[i] = neo;
+	}
+	sort(table.begin(), table.end());
+	int numberBegin = len ;
+	int numberEnd = len - 1;
+	int numberNow = len;
+	while (true) {
+		if (numberNow == len ||(table[numberNow].ti.first != table[numberEnd].ti.first)) {
+			numberEnd = numberBegin - 1;
+			numberBegin = lower_bound(table.begin(), table.begin() + numberBegin, table[numberEnd].ti.first) - table.begin();
+			numberNow = numberBegin;
+		}
+		int k = table[numberNow].ti.second; 
+		auto itr = ansList.begin();
+		for (int nowId = 0; nowId < k; nowId++) {
+			    itr++;
+		}
+		ansList.insert(itr, table[numberNow]);
+		numberNow++;
+		if (numberBegin == 0 && (numberNow == len||table[numberNow].ti.first != table[numberBegin].ti.first))break;
+	}
+	for (auto&itr : ansList) {
+		ans.push_back({ itr.ti.first,itr.ti.second });
+	}
 	return ans;
 }

@@ -5,6 +5,7 @@
 #include <unordered_set>
 #include <queue>
 #include <stack>
+#include <list>
 #include<algorithm>
 #include <random>
 #include <chrono>
@@ -345,3 +346,5 @@ bool canCross(std::vector<int>& stones);
 int sumOfLeftLeaves(TreeNode* root);
 //405. Convert a Number to Hexadecimal
 std::string toHex(int num);
+//406. Queue Reconstruction by Height
+std::vector<std::pair<int, int>> reconstructQueue(std::vector<std::pair<int, int>>& people);
