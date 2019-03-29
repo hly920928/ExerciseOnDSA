@@ -348,3 +348,7 @@ int sumOfLeftLeaves(TreeNode* root);
 std::string toHex(int num);
 //406. Queue Reconstruction by Height
 std::vector<std::pair<int, int>> reconstructQueue(std::vector<std::pair<int, int>>& people);
+//409.Longest Palindrome
+int longestPalindrome(char* s);
+//407. Trapping Rain Water II
+int trapRainWater(std::vector<std::vector<int>>& heightMap);

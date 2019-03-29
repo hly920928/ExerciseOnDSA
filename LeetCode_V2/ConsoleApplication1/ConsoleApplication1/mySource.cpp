@@ -2035,3 +2035,28 @@ std::vector<std::pair<int, int>> reconstructQueue(std::vector<pair<int, int>>& p
 	}
 	return ans;
 }
+vector<vector<int>>*heightMapTRW;
+bool inline isBorder(char x, char y) {
+	return false;
+}
+bool tryHeight(char x, char y, int h) {
+
+}
+
+int findHeight(pair<char, char>&bottom, int lo, int hi, vector<vector<bool>>&isVisited) {
+
+}
+int computeVolume(pair<char, char>&bottom, int height) {
+
+}
+int trapRainWater(vector<vector<int>>& heightMap)
+{
+	vector<pair<char, char>>bottom; int maxHeight = 0; int ans = 0;
+	//find bottom and  maxHeight
+
+	for (auto&b : bottom) {
+		int h = findHeight(b, heightMap[b.first][b.second],maxHeight);
+		ans += computeVolume(b, maxHeight);
+	}
+	return  ans;
+}
