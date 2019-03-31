@@ -2037,26 +2037,116 @@ std::vector<std::pair<int, int>> reconstructQueue(std::vector<pair<int, int>>& p
 }
 vector<vector<int>>*heightMapTRW;
 bool inline isBorder(char x, char y) {
+	
+	if (x == 0)return true;
+	if (y == 0)return true;
+	auto&heightMap = *heightMapTRW;
+	if (x == heightMap.size() - 1)return true;
+	if (y == heightMap[0].size() - 1)return true;
 	return false;
 }
-bool tryHeight(char x, char y, int h) {
+bool inline isBottom(char x, char y) {
+	if (isBorder(x, y))return false;
+	auto&heightMap = *heightMapTRW;
 
+
+	//if (heightMap[x][y] > heightMap[x-1][y-1])return false;
+	if (heightMap[x][y] > heightMap[x-1][y])return false;
+	//if (heightMap[x][y] > heightMap[x-1][y+1])return false;
+	if (heightMap[x][y] > heightMap[x][y-1])return false;
+	if (heightMap[x][y] > heightMap[x][y+1])return false;
+	//if (heightMap[x][y] > heightMap[x+1][y-1])return false;
+	if (heightMap[x][y] > heightMap[x+1][y])return false;
+	//if (heightMap[x][y] > heightMap[x+1][y+1])return false;
+	return true;
+}
+char  tryHeight(char x, char y, int h, vector<vector<bool>>&isVisited) {
+	auto&heightMap = *heightMapTRW;
+	if (heightMap[x][y] >= h)return 'H';
+	if (isBorder(x, y))return 'B';
+	if (isVisited[x][y])return 'V';
+	isVisited[x][y] = true;
+	//if (tryHeight(x-1, y-1, h, isVisited) == 'B')return 'B';
+	if (tryHeight(x - 1, y, h, isVisited) == 'B')return 'B';
+	//if (tryHeight(x-1 , y+1, h, isVisited) == 'B')return 'B';
+	if (tryHeight(x , y-1, h, isVisited) == 'B')return 'B';
+	if (tryHeight(x, y+1, h, isVisited) == 'B')return 'B';
+	//if (tryHeight(x + 1, y-1, h, isVisited) == 'B')return 'B';
+	if (tryHeight(x+1, y , h, isVisited) == 'B')return 'B';
+	//if (tryHeight(x+1, y +1, h, isVisited) == 'B')return 'B';
+	return 'F';
 }
 
-int findHeight(pair<char, char>&bottom, int lo, int hi, vector<vector<bool>>&isVisited) {
+int findHeight(pair<char, char>&bottom, int lo, int hi) {
 
+	vector<vector<bool>>isVisited;
+	auto&heightMap = *heightMapTRW;
+	isVisited.resize(heightMap.size());
+	for (auto&v : isVisited)v.resize(heightMap[0].size());
+	if (lo == hi) {
+		if (tryHeight(bottom.first, bottom.second, hi, isVisited) == 'F')return hi;
+		else return -1;
+	}
+	if (hi - lo == 1) {
+		if (tryHeight(bottom.first, bottom.second,hi, isVisited) == 'F')return hi;
+		for (auto&v : isVisited) { for (int i = 0; i < v.size();i++) { v[i]= false; } }
+		if (tryHeight(bottom.first, bottom.second, lo, isVisited) == 'F')return lo;
+		else return -1;
+	}
+	int mid = (lo + hi) / 2; char result = tryHeight(bottom.first, bottom.second, mid, isVisited);
+	if (result!='B') {
+		return findHeight(bottom, mid, hi);
+	}
+	else {
+		return findHeight(bottom, lo, mid-1);
+	}
+	
 }
-int computeVolume(pair<char, char>&bottom, int height) {
-
+void computeVolume_re(char x, char y, int height, unsigned int&ans, vector<vector<bool>>&isComputed) {
+	if (isBorder(x, y))return;
+	if (isComputed[x][y])return;
+	auto&heightMap = *heightMapTRW;
+	if(heightMap[x][y]>= height)return;
+	ans += height - heightMap[x][y];
+	isComputed[x][y] = true;
+	//computeVolume_re(x-1, y-1, height, ans);
+	computeVolume_re(x - 1, y, height, ans, isComputed);
+	//computeVolume_re(x-1 , y+1, height, ans);
+	computeVolume_re(x, y-1, height, ans, isComputed);
+	computeVolume_re(x, y+1, height, ans, isComputed);
+	//computeVolume_re(x +1, y-1, height, ans,);
+	computeVolume_re(x+1, y, height, ans, isComputed);
+	//computeVolume_re(x+1, y +1, height, ans);
+}
+int computeVolume(pair<char, char>&bottom, int height, vector<vector<bool>>&isComputed) {
+	unsigned int ans = 0;
+	computeVolume_re(bottom.first, bottom.second, height, ans, isComputed);
+	return ans;
 }
 int trapRainWater(vector<vector<int>>& heightMap)
 {
-	vector<pair<char, char>>bottom; int maxHeight = 0; int ans = 0;
+	if (heightMap.size() <= 2)return 0;
+	if (heightMap[0].size() <= 2)return 0;
+	heightMapTRW = &heightMap;
+	vector<pair<char, char>>bottom; int maxHeight = 0;unsigned int ans = 0;
+	int m = heightMap.size(); int n = heightMap[0].size();
 	//find bottom and  maxHeight
-
+	for (int i = 0; i < m; i++) {
+		for (int j= 0;j< n; j++) {
+			maxHeight = max(maxHeight, heightMap[i][j]);
+			if (isBottom(i, j)) {
+				bottom.push_back({ i,j });
+			}
+		}
+	}
+	vector<vector<bool>>isComputed;
+	isComputed.resize(heightMap.size());
+	for (auto&v : isComputed)v.resize(heightMap[0].size());
 	for (auto&b : bottom) {
-		int h = findHeight(b, heightMap[b.first][b.second],maxHeight);
-		ans += computeVolume(b, maxHeight);
+		if (isComputed[b.first][b.second])continue;
+		int h = findHeight(b, heightMap[b.first][b.second]+1, maxHeight);
+		if (h == -1)continue;
+		ans += computeVolume(b, h, isComputed);
 	}
 	return  ans;
 }
