@@ -2123,10 +2123,9 @@ int computeVolume(pair<char, char>&bottom, int height, vector<vector<bool>>&isCo
 	computeVolume_re(bottom.first, bottom.second, height, ans, isComputed);
 	return ans;
 }
-int trapRainWater(vector<vector<int>>& heightMap)
+int trapRainWater_BinarySearchAndDFS(vector<vector<int>>& heightMap)
 {
-	if (heightMap.size() <= 2)return 0;
-	if (heightMap[0].size() <= 2)return 0;
+	
 	heightMapTRW = &heightMap;
 	vector<pair<char, char>>bottom; int maxHeight = 0;unsigned int ans = 0;
 	int m = heightMap.size(); int n = heightMap[0].size();
@@ -2149,4 +2148,58 @@ int trapRainWater(vector<vector<int>>& heightMap)
 		ans += computeVolume(b, h, isComputed);
 	}
 	return  ans;
+}
+vector<vector<int>>* _heightMap;
+class compHeightMap {
+
+public:
+	bool operator()(const pair<char, char>& a, const pair<char, char>& b)const {
+		auto& heightMap = *_heightMap;
+		return heightMap[a.first][a.second] > heightMap[b.first][b.second];
+	}
+};
+int trapRainWater_Greedy(vector<vector<int>>& heightMap) {
+	_heightMap = &heightMap;
+	priority_queue < pair<char, char>, vector<pair<char, char>>, compHeightMap>pq;
+	vector<vector<bool>>isVisited;
+	isVisited.resize(heightMap.size());
+	for (auto&v : isVisited)v.resize(heightMap[0].size());
+	for (int i = 0; i < heightMap[0].size(); i++) {
+		isVisited[0][i] = true;	isVisited[heightMap.size() - 1][i] = true;
+		pq.push({ 0,i }); pq.push({ heightMap.size() - 1,i });
+	}
+	for (int i = 0; i < heightMap.size(); i++) {
+		isVisited[i][0] = true;	isVisited[i][heightMap[0].size() - 1] = true;
+		pq.push({ i,0 }); pq.push({ i, heightMap[0].size() - 1 });
+	}
+	int ans = 0; int currentHeight = 0;
+	int m = heightMap.size();
+	int n = heightMap[0].size();
+	auto pqAdd = [&](int x, int y) {
+		if (x < 0 || y < 0)return;
+		if (x >=  m|| y>= n)return;
+		if (!isVisited[x][y]) {
+			pq.push({ x,y });
+			isVisited[x][y] = true;
+		}
+	};
+
+	while (!pq.empty()) {
+		auto now = pq.top(); pq.pop(); int nowHeight = heightMap[now.first][now.second];
+		if (nowHeight < currentHeight) {
+			ans += (currentHeight - nowHeight);
+		}else {
+			currentHeight = nowHeight;
+		}
+		pqAdd(now.first + 1, now.second);
+		pqAdd(now.first - 1, now.second);
+		pqAdd(now.first, now.second + 1);
+		pqAdd(now.first, now.second - 1);
+	}
+	return ans;
+}
+int trapRainWater(vector<vector<int>>& heightMap) {
+	if (heightMap.size() <= 2)return 0;
+	if (heightMap[0].size() <= 2)return 0;
+	return trapRainWater_Greedy(heightMap);
 }
