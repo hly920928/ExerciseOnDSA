@@ -2203,3 +2203,21 @@ int trapRainWater(vector<vector<int>>& heightMap) {
 	if (heightMap[0].size() <= 2)return 0;
 	return trapRainWater_Greedy(heightMap);
 }
+
+std::vector<std::string> fizzBuzz(int n)
+{
+	std::vector<std::string> ans; ans.resize(n);
+	for (int i = 1; i <= n; i++) {
+		ans[i - 1] = to_string(i);
+	}
+	for (int i = 1; i*3<= n; i++) {
+		ans[i * 3-1] = "Fizz";
+	}
+	for (int i = 1; i * 5 <= n; i++) {
+		if (ans[i * 5 - 1] == "Fizz") {
+			ans[i * 5 - 1] = "FizzBuzz";
+		}else 	ans[i * 5 - 1] = "Buzz";
+	
+	}
+	return ans;
+}

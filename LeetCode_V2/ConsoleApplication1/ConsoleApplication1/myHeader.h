@@ -352,3 +352,5 @@ std::vector<std::pair<int, int>> reconstructQueue(std::vector<std::pair<int, int
 int longestPalindrome(char* s);
 //407. Trapping Rain Water II
 int trapRainWater(std::vector<std::vector<int>>& heightMap);
+// 412. Fizz Buzz
+std::vector<std::string> fizzBuzz(int n);
