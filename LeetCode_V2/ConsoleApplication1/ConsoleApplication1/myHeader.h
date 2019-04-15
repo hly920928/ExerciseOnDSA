@@ -354,3 +354,5 @@ int longestPalindrome(char* s);
 int trapRainWater(std::vector<std::vector<int>>& heightMap);
 // 412. Fizz Buzz
 std::vector<std::string> fizzBuzz(int n);
+//413. Arithmetic Slices
+int numberOfArithmeticSlices(std::vector<int>& A);

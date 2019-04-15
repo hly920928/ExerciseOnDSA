@@ -2221,3 +2221,25 @@ std::vector<std::string> fizzBuzz(int n)
 	}
 	return ans;
 }
+
+int numberOfArithmeticSlices(vector<int>& A)
+{
+	int totalLen = A.size();
+	if (totalLen < 3)return 0;
+	int now_len = 2; int now_diff = A[1] - A[0]; int ans = 0;
+	for (int i = 1; i < totalLen - 1; i++) {
+		if (A[i + 1] - A[i] == now_diff) {
+			now_len++;
+		}
+		else {
+			int maxLen = now_len - 2;
+			ans += maxLen * (maxLen + 1) / 2;
+			now_len = 2; now_diff = A[i + 1] - A[i];
+		}
+	}
+	if (now_len > 2) {
+		int maxLen = now_len - 2;
+		ans += maxLen * (maxLen + 1) / 2;
+	};
+	return ans;
+}
