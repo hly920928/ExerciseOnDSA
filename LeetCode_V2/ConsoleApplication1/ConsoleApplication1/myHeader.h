@@ -356,3 +356,5 @@ int trapRainWater(std::vector<std::vector<int>>& heightMap);
 std::vector<std::string> fizzBuzz(int n);
 //413. Arithmetic Slices
 int numberOfArithmeticSlices(std::vector<int>& A);
+//414. Third Maximum Number
+int thirdMax(std::vector<int>& nums);

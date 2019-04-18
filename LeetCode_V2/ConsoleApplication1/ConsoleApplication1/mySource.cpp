@@ -2243,3 +2243,33 @@ int numberOfArithmeticSlices(vector<int>& A)
 	};
 	return ans;
 }
+
+int thirdMax(std::vector<int>& nums)
+{
+	if (nums.size() == 1)return nums[0];
+	if (nums.size() == 2)return max(nums[0], nums[1]);
+	long long m1 = LONG_MIN; long long  m2 = LONG_MIN; long long  m3 = LONG_MIN;
+	for (int i = 0; i < nums.size(); i++) {
+		int now = nums[i];
+		if (now == m1 || now == m2 || now == m3)continue;
+		if (now > m1) {
+		
+			m3 = m2;
+			m2 = m1;
+			m1 = now;
+		}
+		else if (now > m2) {
+			
+			m3 = m2;
+			m2 = now;
+		}
+		else if (now > m3) {
+			m3 = now;
+		}
+	}
+	if (m3 == LONG_MIN) {
+			return m1;
+
+	}
+	return m3;
+}
