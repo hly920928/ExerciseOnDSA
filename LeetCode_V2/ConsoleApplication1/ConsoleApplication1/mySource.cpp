@@ -2273,3 +2273,22 @@ int thirdMax(std::vector<int>& nums)
 	}
 	return m3;
 }
+
+std::string addStrings(std::string num1, std::string num2)
+{
+	string ans = ""; bool isUp = 0;
+	reverse(num1.begin(), num1.end()); reverse(num2.begin(), num2.end());
+	int len = max(num1.size(), num2.size()); int a1 = 0; int a2 = 0;
+	for (int i = 0; i < len; i++) {
+		if (i < num1.size())a1 = num1[i] - '0';
+		else a1 = 0;
+		if (i < num2.size())a2 = num2[i] - '0';
+		else a2 = 0;
+		int sum = a1 + a2 + isUp;
+		isUp = sum / 10;
+		ans.push_back(sum % 10+'0');
+	}
+	if(isUp)ans.push_back('1');
+	reverse(ans.begin(), ans.end());
+	return ans;
+}

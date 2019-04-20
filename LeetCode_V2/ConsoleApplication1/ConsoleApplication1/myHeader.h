@@ -358,3 +358,5 @@ std::vector<std::string> fizzBuzz(int n);
 int numberOfArithmeticSlices(std::vector<int>& A);
 //414. Third Maximum Number
 int thirdMax(std::vector<int>& nums);
+//415. Add Strings
+std::string addStrings(std::string num1, std::string num2);
