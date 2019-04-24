@@ -2292,3 +2292,30 @@ std::string addStrings(std::string num1, std::string num2)
 	reverse(ans.begin(), ans.end());
 	return ans;
 }
+const vector<int>* numsCanPartition;
+bool re_func_canPartition(int a, int b, int now) {
+	auto& nums = *numsCanPartition;
+	if (nums[now] == a || nums[now] == b)return true;
+	if (nums[0] == a || nums[0] == b)return true;
+	if (nums[0] > a && nums[0]> b)return false;
+	if (nums[now] + nums[0] == a || nums[now] + nums[0] == b)return true;
+	if (nums[now] + nums[0] > a && nums[now] + nums[0] > b)return false;
+	if (nums[now] + nums[0] < a) {
+		if (re_func_canPartition(a- nums[now],b,now-1))return true;
+	}
+	if (nums[now] + nums[0] < b) {
+		if (re_func_canPartition(a , b - nums[now], now - 1))return true;
+	}
+	return false;
+}
+bool canPartition(std::vector<int>& nums)
+{
+	sort(nums.begin(), nums.end());
+	int sum = 0;
+	for (auto i : nums)sum += i;
+	if (sum % 2 == 1)return false;
+	if (nums.back() > sum / 2)return false;
+	if (nums.back() == sum / 2)return true;
+	numsCanPartition = &nums;
+	return re_func_canPartition(sum/2- nums.back(), sum / 2 ,nums.size()-2);
+}

@@ -360,3 +360,5 @@ int numberOfArithmeticSlices(std::vector<int>& A);
 int thirdMax(std::vector<int>& nums);
 //415. Add Strings
 std::string addStrings(std::string num1, std::string num2);
+//416. Partition Equal Subset Sum
+bool canPartition(std::vector<int>& nums);
