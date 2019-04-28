@@ -2319,3 +2319,13 @@ bool canPartition(std::vector<int>& nums)
 	numsCanPartition = &nums;
 	return re_func_canPartition(sum/2- nums.back(), sum / 2 ,nums.size()-2);
 }
+std::vector<std::vector<int>>* record_table_pacificAtlantic;
+void DFS_pacificAtlantic(int x,int y,char from) {
+
+}
+std::vector<std::vector<int>> pacificAtlantic(std::vector<std::vector<int>>& matrix)
+{
+	std::vector<std::vector<int>>record_table;
+
+	return std::vector<std::vector<int>>();
+}
