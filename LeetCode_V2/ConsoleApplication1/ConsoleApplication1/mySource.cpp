@@ -2319,13 +2319,59 @@ bool canPartition(std::vector<int>& nums)
 	numsCanPartition = &nums;
 	return re_func_canPartition(sum/2- nums.back(), sum / 2 ,nums.size()-2);
 }
-std::vector<std::vector<int>>* record_table_pacificAtlantic;
-void DFS_pacificAtlantic(int x,int y,char from) {
+std::vector<std::vector<char>>* record_table_pacificAtlantic;
+std::vector<std::vector<int>>* ans_pacificAtlantic;
+std::vector<std::vector<int>>* matrix_pacificAtlantic;
+void DFS_pacificAtlantic(int x,int y,char from,int pre) {
 
+	auto& matrix = *matrix_pacificAtlantic;
+	int m = matrix.size();	int n = matrix[0].size();
+	if (x < 0 || x >= m || y < 0 || y >= n)return;
+	if (matrix[x][y]<pre)return;
+	auto& record = *record_table_pacificAtlantic;
+	if (from == 'P') {
+		
+		if (record[x][y] != 'U')return;
+		record[x][y] = 'P';
+		DFS_pacificAtlantic(x + 1, y, 'P', matrix[x][y]);
+		DFS_pacificAtlantic(x - 1, y, 'P', matrix[x][y]);
+		DFS_pacificAtlantic(x, y+1, 'P', matrix[x][y]);
+		DFS_pacificAtlantic(x , y-1, 'P', matrix[x][y]);
+	}
+	if (from == 'A') {
+		auto& record = *record_table_pacificAtlantic;
+		if (record[x][y] == 'B'|| record[x][y] == 'A')return;
+		if (record[x][y] == 'U')record[x][y] = 'A';
+		if (record[x][y] == 'P') {
+			record[x][y] = 'B';
+			ans_pacificAtlantic->push_back(vector<int>({ x,y }));
+		}
+		
+		DFS_pacificAtlantic(x + 1, y, 'A', matrix[x][y]);
+		DFS_pacificAtlantic(x - 1, y, 'A', matrix[x][y]);
+		DFS_pacificAtlantic(x, y + 1, 'A', matrix[x][y]);
+		DFS_pacificAtlantic(x, y - 1, 'A', matrix[x][y]);
+	}
 }
 std::vector<std::vector<int>> pacificAtlantic(std::vector<std::vector<int>>& matrix)
 {
-	std::vector<std::vector<int>>record_table;
-
-	return std::vector<std::vector<int>>();
+	std::vector<std::vector<char>>record_table; std::vector<std::vector<int>>ans;
+	record_table_pacificAtlantic = &record_table; ans_pacificAtlantic = &ans;
+	matrix_pacificAtlantic = &matrix;
+	int m = matrix.size();
+	if (m == 0)return ans;
+	int n = matrix[0].size();
+	if (n == 0)return ans;
+	record_table.resize(m);
+	for (int i = 0; i < m; i++) {
+		record_table[i].resize(n);
+		for (int j= 0;j <n; j++) {
+			record_table[i][j]='U';
+		}
+	}
+	for (int i = 0; i < m; i++) DFS_pacificAtlantic(i, 0, 'P', INT_MIN);
+	for (int j = 0; j< n; j++) DFS_pacificAtlantic(0, j, 'P', INT_MIN);
+	for (int i = 0; i < m; i++) DFS_pacificAtlantic(i, n-1, 'A', INT_MIN);
+	for (int j = 0; j < n; j++) DFS_pacificAtlantic(m-1, j, 'A', INT_MIN);
+	return ans;
 }
