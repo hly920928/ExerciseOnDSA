@@ -2375,3 +2375,47 @@ std::vector<std::vector<int>> pacificAtlantic(std::vector<std::vector<int>>& mat
 	for (int j = 0; j < n; j++) DFS_pacificAtlantic(m-1, j, 'A', INT_MIN);
 	return ans;
 }
+bool check_splitArray(const std::vector<int>& nums, const int m, int ans) {
+	int subArrNum = 1;
+	unsigned long long sum = 0;	unsigned long long maxSum = 0;
+	for (int i = 0; i < nums.size(); i++) {
+		if (sum + nums[i] > ans) {
+			subArrNum++;
+			if (subArrNum > m)return false;
+			maxSum = max(maxSum, sum);
+			sum = nums[i];
+
+		}
+		else {
+			sum+= nums[i];
+		}
+	}
+	return maxSum<=ans;
+}
+int re_splitArray(const std::vector<int>& nums, const int m, unsigned long long lo, unsigned long long hi) {
+	if (hi == lo)return lo;
+	if (hi - lo == 1) {
+		if (check_splitArray(nums,m,lo))return lo;
+		return hi;
+	}
+	unsigned long long mid = (lo + hi) / 2;
+	if (check_splitArray(nums, m,mid)) {
+		return re_splitArray(nums, m, lo, mid);
+	}
+	else {
+		return re_splitArray(nums, m, mid+1, hi);
+	}
+}
+int splitArray(std::vector<int>& nums, int m)
+{
+	unsigned long long sum = 0; int _max = 0;
+	for (int i = 0; i < nums.size(); i++) {
+		sum += nums[i];
+		_max = max(_max, nums[i]);
+	}
+	int avg = sum / m;
+	avg = (sum % m == 0) ? (avg) : (avg + 1);
+	int min = max(avg, _max);
+
+	return re_splitArray(nums,m,min,sum);
+}

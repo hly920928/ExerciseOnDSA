@@ -364,3 +364,5 @@ std::string addStrings(std::string num1, std::string num2);
 bool canPartition(std::vector<int>& nums);
 //417. Pacific Atlantic Water Flow
 std::vector<std::vector<int>> pacificAtlantic(std::vector<std::vector<int>>& matrix);
+//410. Split Array Largest Sum
+int splitArray(std::vector<int>& nums, int m);
