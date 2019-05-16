@@ -2419,3 +2419,25 @@ int splitArray(std::vector<int>& nums, int m)
 
 	return re_splitArray(nums,m,min,sum);
 }
+
+int countBattleships(std::vector<std::vector<char>>& board)
+{
+	int m = board.size();
+	if (m == 0)return 0;
+	int n = board[0].size();
+	if (n == 0)return 0;
+	auto isBS = [&](int x,int y)->bool {
+		if (x < 0 || x >= m)return  false;
+		if (y < 0 || y >= n)return false;
+		return board[x][y] == 'X';
+	};
+	int ans = 0;
+	for (int i = 0; i < m; i++) {
+		for (int j = 0; j < n; j++) {
+			if (!isBS(i - 1, j) && !isBS(i, j - 1)&& isBS(i, j )) {
+				ans++;
+			}
+		}
+	}
+	return ans;
+}

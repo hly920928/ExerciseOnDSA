@@ -366,3 +366,5 @@ bool canPartition(std::vector<int>& nums);
 std::vector<std::vector<int>> pacificAtlantic(std::vector<std::vector<int>>& matrix);
 //410. Split Array Largest Sum
 int splitArray(std::vector<int>& nums, int m);
+//419. Battleships in a Board
+int countBattleships(std::vector<std::vector<char>>& board);
