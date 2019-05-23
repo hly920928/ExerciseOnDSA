@@ -2441,3 +2441,29 @@ int countBattleships(std::vector<std::vector<char>>& board)
 	}
 	return ans;
 }
+class binaryPrefixNode;
+class binaryPrefixNode {
+public:
+	binaryPrefixNode* ptr_zero;
+	binaryPrefixNode* ptr_one;
+	binaryPrefixNode() :ptr_zero(nullptr), ptr_one(nullptr) {
+
+	};
+	bool isLeaf() {
+		return ptr_zero == nullptr && ptr_one == nullptr;
+	}
+};
+void buildBinaryPrefixTree(binaryPrefixNode* now, bitset<32> num, int pos) {
+
+}
+int matchAndFindMaxXOR(binaryPrefixNode* now, bitset<32> num, int pos) {
+
+}
+int findMaximumXOR(std::vector<int>& nums)
+{
+	binaryPrefixNode root;
+	for (int i : nums) buildBinaryPrefixTree(&root, bitset<32>(i), 30);
+	int _max = 0;
+	for (int i : nums) _max=max(matchAndFindMaxXOR(&root, bitset<32>(i), 30), _max);
+	return _max;
+}

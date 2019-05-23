@@ -368,3 +368,5 @@ std::vector<std::vector<int>> pacificAtlantic(std::vector<std::vector<int>>& mat
 int splitArray(std::vector<int>& nums, int m);
 //419. Battleships in a Board
 int countBattleships(std::vector<std::vector<char>>& board);
+//421. Maximum XOR of Two Numbers in an Array
+int findMaximumXOR(std::vector<int>& nums);
