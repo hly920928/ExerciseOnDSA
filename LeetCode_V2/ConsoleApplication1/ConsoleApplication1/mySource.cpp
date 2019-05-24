@@ -2454,16 +2454,47 @@ public:
 	}
 };
 void buildBinaryPrefixTree(binaryPrefixNode* now, bitset<32> num, int pos) {
+	if (pos == -1)return;
+	if (num[pos] == 0) {
+		if (now->ptr_zero == nullptr) 	now->ptr_zero = new binaryPrefixNode();
+		buildBinaryPrefixTree(now->ptr_zero, num, pos-1);
+	}
+	else {
+		if (now->ptr_one == nullptr) 	now->ptr_one = new binaryPrefixNode();
+		buildBinaryPrefixTree(now->ptr_one, num, pos-1);
+	}
 
 }
-int matchAndFindMaxXOR(binaryPrefixNode* now, bitset<32> num, int pos) {
-
+int matchAndFindMaxXOR(binaryPrefixNode* now, bitset<32> num, bitset<32> pair,int pos) {
+	if (pos == -1) {
+		return num.to_ullong() ^ pair.to_ullong();
+	}
+	if (num[pos] == 1) {
+		if (now->ptr_zero != nullptr) {
+			pair[pos] = 0;
+			return matchAndFindMaxXOR(now->ptr_zero, num, pair, pos-1);
+		}
+		else {
+			pair[pos] = 1;
+			return matchAndFindMaxXOR(now->ptr_one, num, pair, pos-1);
+		}
+	}
+	else {
+		if (now->ptr_one != nullptr) {
+			pair[pos] = 1;
+			return matchAndFindMaxXOR(now->ptr_one, num, pair, pos-1);
+		}
+		else {
+			pair[pos] = 0;
+			return matchAndFindMaxXOR(now->ptr_zero, num, pair, pos-1);
+		}
+	}
 }
 int findMaximumXOR(std::vector<int>& nums)
 {
 	binaryPrefixNode root;
 	for (int i : nums) buildBinaryPrefixTree(&root, bitset<32>(i), 30);
 	int _max = 0;
-	for (int i : nums) _max=max(matchAndFindMaxXOR(&root, bitset<32>(i), 30), _max);
+	for (int i : nums) _max=max(matchAndFindMaxXOR(&root, bitset<32>(i), bitset<32>(0), 30), _max);
 	return _max;
 }
