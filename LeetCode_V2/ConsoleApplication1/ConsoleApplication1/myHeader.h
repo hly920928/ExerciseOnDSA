@@ -370,3 +370,5 @@ int splitArray(std::vector<int>& nums, int m);
 int countBattleships(std::vector<std::vector<char>>& board);
 //421. Maximum XOR of Two Numbers in an Array
 int findMaximumXOR(std::vector<int>& nums);
+//423. Reconstruct Original Digits from English
+std::string originalDigits(std::string s);

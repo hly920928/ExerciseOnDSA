@@ -2498,3 +2498,26 @@ int findMaximumXOR(std::vector<int>& nums)
 	for (int i : nums) _max=max(matchAndFindMaxXOR(&root, bitset<32>(i), bitset<32>(0), 30), _max);
 	return _max;
 }
+void findNumOfDigit(char now, string word, char sign, unsigned short* table, unsigned short* count) {
+
+}
+string originalDigits(string s)
+{
+	unsigned short table[26];
+	// compute count
+	//according to uniqueness ,get number of each digit
+	unsigned short count[10];
+	//MUST IN THIS ORDER
+	findNumOfDigit(0, "zero",'z', table, count);//only 0 have 'z'
+	findNumOfDigit(2, "two", 'w',table, count);//only 2 have 'w'
+	findNumOfDigit(6, "six", 'x',table, count);//only 6 have 'x'
+	findNumOfDigit(8, "eight", 'g', table, count);//only 8 have 'g'
+	findNumOfDigit(7, "seven", 's',table, count);//only 6 and 7 have 's'
+	findNumOfDigit(5, "five", 'v', table, count);//only 5 and 7 have 'v'
+	findNumOfDigit(4, "four", 'f', table, count);//only 5 and 4 have 'f'
+	findNumOfDigit(1, "one", 'o', table, count);
+	findNumOfDigit(3, "three", 't', table, count);
+	findNumOfDigit(9, "nine", 'i', table, count);
+	string ans;
+	return ans;
+}
