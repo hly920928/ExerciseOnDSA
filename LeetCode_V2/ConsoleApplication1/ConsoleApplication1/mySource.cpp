@@ -2500,7 +2500,7 @@ int findMaximumXOR(std::vector<int>& nums)
 }
 void findNumOfDigit(char now, string word, char sign, unsigned short* table, unsigned short* count) {
 	int num = table[sign - 'a'];
-	count[now - '0'] = num;
+	count[now] = num;
 	for (char c : word) {
 		table[c - 'a']-= num;
 	}
@@ -2515,6 +2515,7 @@ string originalDigits(string s)
 	// compute count
 	//according to uniqueness ,get number of each digit
 	unsigned short count[10];
+	memset(count, 0, 10 * 2);
 	//MUST IN THIS ORDER
 	findNumOfDigit(0, "zero",'z', table, count);//only 0 have 'z'
 	findNumOfDigit(2, "two", 'w',table, count);//only 2 have 'w'
@@ -2528,7 +2529,7 @@ string originalDigits(string s)
 	findNumOfDigit(9, "nine", 'i', table, count);
 	string ans;
 	for (int i = 0; i <= 9; i++) {
-		for (int j= 0; j <= count[i]; j++) {
+		for (int j= 0; j < count[i]; j++) {
 			ans.push_back(i+'0');
 		}
 	}
