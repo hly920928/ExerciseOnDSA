@@ -2535,3 +2535,14 @@ string originalDigits(string s)
 	}
 	return ans;
 }
+int maxBySlidingWindow(char target, const string& str, int k) {
+	return -1;
+}
+int characterReplacement(std::string s, int k)
+{
+	int _max = 0;
+	for (char now = 'A'; now <= 'Z'; now++) {
+		_max = max(_max, maxBySlidingWindow(now, s, k));
+	}
+	return _max;
+}

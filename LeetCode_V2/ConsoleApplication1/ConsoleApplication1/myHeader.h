@@ -372,3 +372,5 @@ int countBattleships(std::vector<std::vector<char>>& board);
 int findMaximumXOR(std::vector<int>& nums);
 //423. Reconstruct Original Digits from English
 std::string originalDigits(std::string s);
+//424. Longest Repeating Character Replacement
+int characterReplacement(std::string s, int k);
