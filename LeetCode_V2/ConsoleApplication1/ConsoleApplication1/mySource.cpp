@@ -2536,13 +2536,39 @@ string originalDigits(string s)
 	return ans;
 }
 int maxBySlidingWindow(char target, const string& str, int k) {
-	return -1;
+	int start = -1; int end = -1; int _max = 0;
+	while (end != str.size() - 1) {
+		end++;
+		if (str[end] == target) {
+			
+			_max = max(_max, end - start);
+		}
+		else {
+			if (k > 0) {
+			      k--;
+				_max = max(_max, end - start);
+			}
+			else {
+				start++;
+				while (str[start] == target)start++;
+				_max = max(_max, end - start);
+			}
+		}
+	}
+	return _max;
 }
 int characterReplacement(std::string s, int k)
 {
 	int _max = 0;
+	int table[26];
+	memset(table, 0, 26 * 4);
+	for (int i = 0; i < s.size(); i++) {
+		table[s[i] - 'A']++;
+	}
 	for (char now = 'A'; now <= 'Z'; now++) {
+		if (table[now - 'A'] + k <= _max)continue;
 		_max = max(_max, maxBySlidingWindow(now, s, k));
+		if (_max == s.size())break;
 	}
 	return _max;
 }
