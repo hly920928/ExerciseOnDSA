@@ -374,3 +374,22 @@ int findMaximumXOR(std::vector<int>& nums);
 std::string originalDigits(std::string s);
 //424. Longest Repeating Character Replacement
 int characterReplacement(std::string s, int k);
+//427. Construct Quad Tree
+class NodeQuadTree {
+public:
+	bool val;
+	bool isLeaf;
+	NodeQuadTree* topLeft;
+	NodeQuadTree* topRight;
+	NodeQuadTree* bottomLeft;
+	NodeQuadTree* bottomRight;
+	NodeQuadTree(bool _val=false, bool _isLeaf= false, NodeQuadTree* _topLeft = nullptr, NodeQuadTree* _topRight = nullptr, NodeQuadTree* _bottomLeft = nullptr, NodeQuadTree* _bottomRight = nullptr) {
+		val = _val;
+		isLeaf = _isLeaf;
+		topLeft = _topLeft;
+		topRight = _topRight;
+		bottomLeft = _bottomLeft;
+		bottomRight = _bottomRight;
+	}
+};
+NodeQuadTree* construct(std::vector<std::vector<int>>& grid);

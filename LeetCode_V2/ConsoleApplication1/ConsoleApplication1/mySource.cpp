@@ -2572,3 +2572,12 @@ int characterReplacement(std::string s, int k)
 	}
 	return _max;
 }
+NodeQuadTree* construct_re(std::vector<std::vector<int>>& grid,int top,int left,int buttom,int right)
+{
+	return nullptr;
+}
+
+NodeQuadTree* construct(std::vector<std::vector<int>>& grid)
+{
+	return nullptr;
+}
