@@ -2574,10 +2574,22 @@ int characterReplacement(std::string s, int k)
 }
 NodeQuadTree* construct_re(std::vector<std::vector<int>>& grid,int top,int left,int buttom,int right)
 {
+	if (buttom - top == 1 && right - left == 1) {
+		return new NodeQuadTree(grid[top][left], true);
+	}
+	int mid_v = (top + buttom) / 2;
+	int mid_h = (right + left) / 2;
+	auto lt = construct_re(grid, top, left, mid_v, mid_h);
+	auto rt= construct_re(grid, top, mid_v, mid_v, right);
+	auto bl = construct_re(grid, mid_h, mid_h, mid_v, right);
+	auto br = construct_re(grid, mid_h, mid_h, mid_v, right);
 	return nullptr;
 }
 
 NodeQuadTree* construct(std::vector<std::vector<int>>& grid)
 {
-	return nullptr;
+	int len = grid.size(); 
+	if (len == 0)return nullptr;
+	if (grid[0].size() == 0)return nullptr;
+	return construct_re(grid,0,0,len,len);
 }
