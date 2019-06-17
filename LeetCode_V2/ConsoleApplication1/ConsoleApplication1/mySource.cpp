@@ -2606,3 +2606,24 @@ NodeQuadTree* construct(std::vector<std::vector<int>>& grid)
 	if (grid[0].size() == 0)return nullptr;
 	return construct_re(grid,0,0,len,len);
 }
+vector<vector<int>> levelOrder(Node_Nary* root) {
+	queue<Node_Nary*>* ptr_q1; queue<Node_Nary*>* ptr_q2;
+	queue<Node_Nary*> q1; queue<Node_Nary*>q2;
+	ptr_q1 = &q1; ptr_q2 = &q2;
+	vector<vector<int>> ans;
+	if (root == nullptr)return ans;
+	ptr_q1->push(root);
+	while (!ptr_q1->empty()) {
+		vector<int>temp;
+		while (!ptr_q1->empty()) {
+			auto& now = ptr_q1->front(); ptr_q1->pop();
+
+			temp.push_back(now->val);
+			for (auto& c : now->children)ptr_q2->push(c);
+
+		}
+		ans.push_back(temp);
+		swap(ptr_q1, ptr_q2);
+	}
+	return ans;
+}
