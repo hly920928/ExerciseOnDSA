@@ -2616,10 +2616,10 @@ vector<vector<int>> levelOrder(Node_Nary* root) {
 	while (!ptr_q1->empty()) {
 		vector<int>temp;
 		while (!ptr_q1->empty()) {
-			auto& now = ptr_q1->front(); ptr_q1->pop();
+			auto now = ptr_q1->front(); ptr_q1->pop();
 
 			temp.push_back(now->val);
-			for (auto& c : now->children)ptr_q2->push(c);
+			for (auto c : now->children)ptr_q2->push(c);
 
 		}
 		ans.push_back(temp);

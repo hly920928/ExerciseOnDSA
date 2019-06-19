@@ -393,14 +393,15 @@ public:
 	}
 };
 NodeQuadTree* construct(std::vector<std::vector<int>>& grid);
+
 class Node_Nary {
 public:
 	int val;
-	vector<Node_Nary*> children;
+	std::vector<Node_Nary*> children;
 
 	Node_Nary() {}
 
-	Node_Nary(int _val, vector<Node_Nary*> _children) {
+	Node_Nary(int _val, std::vector<Node_Nary*> _children) {
 		val = _val;
 		children = _children;
 	}
