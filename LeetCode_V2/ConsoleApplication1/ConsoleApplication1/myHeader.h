@@ -393,7 +393,7 @@ public:
 	}
 };
 NodeQuadTree* construct(std::vector<std::vector<int>>& grid);
-
+//429.N-ary Tree Level Order Traversal
 class Node_Nary {
 public:
 	int val;
@@ -406,3 +406,26 @@ public:
 		children = _children;
 	}
 };
+//430. Flatten a Multilevel Doubly Linked List
+
+class Node_MLDL {
+public:
+	int val;
+	Node_MLDL* prev;
+	Node_MLDL* next;
+	Node_MLDL* child;
+
+	Node_MLDL() {}
+
+	Node_MLDL(int _val, Node_MLDL* _prev, Node_MLDL* _next, Node_MLDL* _child) {
+		val = _val;
+		prev = _prev;
+		next = _next;
+		child = _child;
+	}
+};
+
+
+Node_MLDL* flatten(Node_MLDL* head) {
+
+}
