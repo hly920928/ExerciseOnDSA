@@ -415,9 +415,7 @@ public:
 	Node_MLDL* next;
 	Node_MLDL* child;
 
-	Node_MLDL() {}
-
-	Node_MLDL(int _val, Node_MLDL* _prev, Node_MLDL* _next, Node_MLDL* _child) {
+	Node_MLDL(int _val=INT_MIN, Node_MLDL* _prev=nullptr, Node_MLDL* _next = nullptr, Node_MLDL* _child = nullptr) {
 		val = _val;
 		prev = _prev;
 		next = _next;
@@ -427,5 +425,7 @@ public:
 
 
 Node_MLDL* flatten(Node_MLDL* head) {
-
+	if (head == nullptr)return nullptr;
+	flattenAndReturnTail(head);
+	return head;
 }

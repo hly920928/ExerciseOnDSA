@@ -2627,3 +2627,23 @@ vector<vector<int>> levelOrder(Node_Nary* root) {
 	}
 	return ans;
 }
+Node_MLDL* flattenAndReturnTail(Node_MLDL* now) {
+
+	if (now->child != nullptr) {
+		auto now_child = now->child;
+		auto now_next = now->next;
+		auto child_tail = flattenAndReturnTail(now->child);
+		now->next = now_child;
+		now->child = nullptr;
+		now_child->prev = now;
+		if (now_next == nullptr)return child_tail;
+		child_tail->next = now_next;
+		now_next->prev = child_tail;
+		return  flattenAndReturnTail(now_next);
+	}
+	else {
+		if (now->next != nullptr)return flattenAndReturnTail(now->next);
+		return now;
+	}
+
+};
