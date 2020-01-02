@@ -1,0 +1,1 @@
+threeTupleMinDistance
