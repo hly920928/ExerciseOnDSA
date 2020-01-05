@@ -1,4 +1,4 @@
-//LeetCode 433. Minimum Genetic Mutation
+//LeetCode 433. Minimum Genetic Mutation  
 
 #include "mainHeader.h"
 #include <string>
@@ -25,6 +25,7 @@ int minMutation(std::string start, std::string end, std::vector<std::string>& ba
 	graph.resize(n);
 	visited.resize(n);
 	int  end_pos = -1;
+	//build graph
 	for (int i = 0; i < n; i++) {
 		  visited[i] = '0';
 		if (bank[i] == end)end_pos = i;
@@ -37,6 +38,7 @@ int minMutation(std::string start, std::string end, std::vector<std::string>& ba
 	vector<int> now({ end_pos});
 	visited[end_pos] = '1';
 	vector<int> next;
+	//BFS
 	while (!now.empty()){
 		for (auto& i : now) {
 		
