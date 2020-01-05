@@ -4,8 +4,7 @@
 #include <unordered_map>
 #include <unordered_set>
 #include <map>
-#include <vector>
-#include "mainHeader.h"
+
 using namespace std;
 class AllOne {
 private:
