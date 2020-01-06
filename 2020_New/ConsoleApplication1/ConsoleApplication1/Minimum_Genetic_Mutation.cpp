@@ -21,7 +21,7 @@ int minMutation(std::string start, std::string end, std::vector<std::string>& ba
 	if (bank.size() == 0)return -1;
 	vector< vector<char>>graph;
 	vector<char>visited;
-	int n = bank.size();
+	int n =(int) bank.size();
 	graph.resize(n);
 	visited.resize(n);
 	int  end_pos = -1;
