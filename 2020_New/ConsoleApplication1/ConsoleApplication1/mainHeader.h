@@ -8,3 +8,4 @@ int countSegments(std::string s);
 int eraseOverlapIntervals(std::vector<std::vector<int>>& intervals);
 int pathSum(TreeNode* root, int sum);
 std::vector<int> findRightInterval(std::vector<std::vector<int>>& intervals);
+std::vector<int> findAnagrams(std::string s, std::string p);

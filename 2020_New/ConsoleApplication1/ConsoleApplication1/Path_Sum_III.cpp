@@ -1,5 +1,5 @@
 #include "mainHeader.h"
-#include <map>
+#include <unordered_map>
 using namespace std;
 struct TreeNode {
     int val;
@@ -9,11 +9,11 @@ struct TreeNode {
 };
 
  
-void pathSum_re_II(TreeNode* root, int sum,int pre_sum,int&  ans, map<int, int>&table) {
+void pathSum_re_II(TreeNode* root, int sum,int pre_sum,int&  ans, unordered_map<int, int>&table) {
     if (root == nullptr)return;
     int now_sum = pre_sum + root->val;
     auto itr = table.find(now_sum - sum);
-    if (itr != table.end())ans++;
+    if (itr != table.end())ans= ans+ itr->second;
       itr = table.find(now_sum);
     if (itr == table.end())table[now_sum] = 1;
     else table[now_sum]++;
@@ -42,7 +42,7 @@ int pathSum_re(TreeNode* root, int sum, bool isInvolved) {
 }
 int pathSum(TreeNode* root, int sum) {
     int  ans = 0;
-    map<int, int> table;
+    unordered_map<int, int> table;
     //return pathSum_re(root, sum, false);
       table[0] = 1;
       pathSum_re_II(root, sum, 0, ans, table);
