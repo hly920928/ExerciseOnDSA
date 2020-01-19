@@ -13,3 +13,5 @@ std::vector<int> findRightInterval(std::vector<std::vector<int>>& intervals);
 std::vector<int> findAnagrams(std::string s, std::string p);
 
 int findKthNumber(int n, int k);
+
+int arrangeCoins(int n);

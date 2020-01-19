@@ -30,10 +30,8 @@ int findKthNumber_re(string header, int headerIndex, const int targetIndex, cons
 		else {
 			now_index = next_index;
 			int bw = countStrWithHeader(header + to_string(i + 1), max);
-			
 			next_index = next_index+bw;
 		}
-		
 	}
 
    return findKthNumber_re(header + to_string(9), now_index, targetIndex, max);;
