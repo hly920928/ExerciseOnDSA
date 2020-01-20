@@ -15,3 +15,5 @@ std::vector<int> findAnagrams(std::string s, std::string p);
 int findKthNumber(int n, int k);
 
 int arrangeCoins(int n);
+
+std::vector<int> findDuplicates(std::vector<int>& nums);
