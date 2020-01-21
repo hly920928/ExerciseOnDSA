@@ -17,3 +17,6 @@ int findKthNumber(int n, int k);
 int arrangeCoins(int n);
 
 std::vector<int> findDuplicates(std::vector<int>& nums);
+
+
+int compress(std::vector<char>& chars);
