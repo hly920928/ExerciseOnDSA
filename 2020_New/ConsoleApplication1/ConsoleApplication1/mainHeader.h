@@ -20,3 +20,11 @@ std::vector<int> findDuplicates(std::vector<int>& nums);
 
 
 int compress(std::vector<char>& chars);
+
+class ListNode {
+public:
+    int val;
+    ListNode* next;
+    ListNode(int x = -1) : val(x), next(nullptr) {}
+};
+ListNode* addTwoNumbers(ListNode* l1, ListNode* l2);
