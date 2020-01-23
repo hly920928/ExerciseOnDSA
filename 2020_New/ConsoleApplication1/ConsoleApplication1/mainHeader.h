@@ -28,3 +28,6 @@ public:
     ListNode(int x = -1) : val(x), next(nullptr) {}
 };
 ListNode* addTwoNumbers(ListNode* l1, ListNode* l2);
+
+
+int numberOfBoomerangs(std::vector<std::vector<int>>& points);
