@@ -31,3 +31,19 @@ ListNode* addTwoNumbers(ListNode* l1, ListNode* l2);
 
 
 int numberOfBoomerangs(std::vector<std::vector<int>>& points);
+
+std::vector<int> findDisappearedNumbers(std::vector<int>& nums);
+
+
+class TreeNode {
+public:
+    int val;
+    TreeNode* left;
+    TreeNode* right;
+    TreeNode(int x=INT_MAX) : val(x), left(NULL), right(NULL) {
+    }
+  
+};
+
+std::string serialize(TreeNode* root);
+TreeNode* deserialize(std::string data);
