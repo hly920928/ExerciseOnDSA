@@ -1,13 +1,7 @@
 #include "mainHeader.h"
 #include <unordered_map>
 using namespace std;
-struct TreeNode {
-    int val;
-    TreeNode* left;
-    TreeNode* right;
-    TreeNode(int x) : val(x), left(NULL), right(NULL) {}
-};
-
+ 
  
 void pathSum_re_II(TreeNode* root, int sum,int pre_sum,int&  ans, unordered_map<int, int>&table) {
     if (root == nullptr)return;

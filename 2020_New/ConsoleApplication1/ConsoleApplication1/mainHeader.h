@@ -3,7 +3,15 @@
 #include <vector>
 #include <algorithm>
 
-class TreeNode;
+class TreeNode {
+public:
+    int val;
+    TreeNode* left;
+    TreeNode* right;
+    TreeNode(int x = INT_MAX) : val(x), left(NULL), right(NULL) {
+    }
+
+};
 int threeTupleMinDistance(int a[], int  b[], int  c[], int m, int n, int l);
 int minMutation(std::string start, std::string end, std::vector<std::string>& bank);
 int countSegments(std::string s);
@@ -35,15 +43,7 @@ int numberOfBoomerangs(std::vector<std::vector<int>>& points);
 std::vector<int> findDisappearedNumbers(std::vector<int>& nums);
 
 
-class TreeNode {
-public:
-    int val;
-    TreeNode* left;
-    TreeNode* right;
-    TreeNode(int x=INT_MAX) : val(x), left(NULL), right(NULL) {
-    }
-  
-};
+
 
 std::string serialize(TreeNode* root);
 TreeNode* deserialize(std::string data);
