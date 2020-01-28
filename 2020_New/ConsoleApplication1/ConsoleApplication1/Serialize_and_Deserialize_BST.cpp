@@ -1,5 +1,6 @@
 //449. Serialize and Deserialize BST
 #include "mainHeader.h"
+#include <stack>
 using namespace std;
 
 union _data {
@@ -128,4 +129,30 @@ TreeNode* deserialize(std::string data) {
 	str_to_vector(data);
 	int len = in.size();
 	return buildBST(0, len - 1,0, len - 1);
+}
+stack<int>* _stk;
+string* post_str;
+void postorder_tra(TreeNode* root) {
+	auto& v = *_in;
+	if (root == nullptr)return;
+	postorder_tra(root->left);
+	postorder_tra(root->right);
+	v.push_back(dataBST(root->val));
+}
+
+void strInStack(string& str) {
+
+
+}
+
+TreeNode* deserialize_re(int min,int max) {
+	 
+
+}
+std::string serialize_II(TreeNode* root) {
+	if (root == nullptr)return "";
+}
+
+TreeNode* deserialize_II(std::string data) {
+		if (data == "")return nullptr;
 }
