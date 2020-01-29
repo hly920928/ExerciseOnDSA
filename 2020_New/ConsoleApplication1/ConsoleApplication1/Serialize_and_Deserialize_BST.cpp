@@ -131,28 +131,71 @@ TreeNode* deserialize(std::string data) {
 	return buildBST(0, len - 1,0, len - 1);
 }
 stack<int>* _stk;
-string* post_str;
+vector<dataBST>* _post;
+void vector_to_str_post(string& ans) {
+	auto& in = *_post;
+ 
+	for (auto& d : in)
+		for (int i = 0; i < 4; i++) {
+			ans.push_back(d._d.s[i]);
+		}
+	 
+}
+
 void postorder_tra(TreeNode* root) {
-	auto& v = *_in;
+	auto& v = *_post;
 	if (root == nullptr)return;
 	postorder_tra(root->left);
 	postorder_tra(root->right);
 	v.push_back(dataBST(root->val));
 }
 
-void strInStack(string& str) {
-
+void strInStack(string& input) {
+	auto& in = *_stk;
+ 
+	int len = input.size(); int n = 0;
+	dataBST  d;
+	for (int i = 0; i < len / 2; i++) {
+		if (n == 4) {
+			in.push(d._d.v);
+			n = 0;
+		}
+		d._d.s[n] = input[i];
+		n++;
+	}
+	in.push(d._d.v);
+	n = 0;
+ 
 
 }
 
-TreeNode* deserialize_re(int min,int max) {
-	 
-
+TreeNode* deserialize_re(int min, int max) {
+	auto& stk = *_stk;
+	if (stk.empty())return nullptr;
+	int v = stk.top();
+	if (v > max || v < min)return nullptr;
+	stk.pop();
+	TreeNode* root = new TreeNode(v);
+	TreeNode* left = deserialize_re(min, v);
+	TreeNode* right = deserialize_re(v, max);
+	root->left = left;
+	root->right = right;
+	return root;
 }
 std::string serialize_II(TreeNode* root) {
 	if (root == nullptr)return "";
+	vector<dataBST>post;
+	_post = &post;
+	postorder_tra(root);
+	string ans;
+	vector_to_str_post(ans);
+	return ans;
 }
 
 TreeNode* deserialize_II(std::string data) {
 		if (data == "")return nullptr;
+		stack<int>stk;
+		_stk=&stk;
+		strInStack(data);
+		return deserialize_re(INT_MIN, INT_MAX);
 }
