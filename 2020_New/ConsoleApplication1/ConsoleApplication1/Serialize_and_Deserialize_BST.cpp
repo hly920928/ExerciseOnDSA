@@ -105,7 +105,7 @@ unsigned short pre_head, unsigned short pre_tail
 	ans->right = right;
 	return ans;
 }
-std::string serialize(TreeNode* root) {
+std::string serialize_I(TreeNode* root) {
 	if (root == nullptr)return "";
 	vector<dataBST>  in;
 	vector<dataBST>  pre;
@@ -120,7 +120,7 @@ std::string serialize(TreeNode* root) {
 	return ans;
 }
  
-TreeNode* deserialize(std::string data) {
+TreeNode* deserialize_I(std::string data) {
 	if (data == "")return nullptr;
 	vector<dataBST>  in;
 	vector<dataBST>  pre;
@@ -155,7 +155,7 @@ void strInStack(string& input) {
  
 	int len = input.size(); int n = 0;
 	dataBST  d;
-	for (int i = 0; i < len / 2; i++) {
+	for (int i = 0; i < len; i++) {
 		if (n == 4) {
 			in.push(d._d.v);
 			n = 0;
@@ -176,8 +176,9 @@ TreeNode* deserialize_re(int min, int max) {
 	if (v > max || v < min)return nullptr;
 	stk.pop();
 	TreeNode* root = new TreeNode(v);
-	TreeNode* left = deserialize_re(min, v);
 	TreeNode* right = deserialize_re(v, max);
+	TreeNode* left = deserialize_re(min, v);
+	
 	root->left = left;
 	root->right = right;
 	return root;
@@ -198,4 +199,13 @@ TreeNode* deserialize_II(std::string data) {
 		_stk=&stk;
 		strInStack(data);
 		return deserialize_re(INT_MIN, INT_MAX);
+}
+
+std::string serialize(TreeNode* root) {
+ 
+	return serialize_II(root);
+}
+
+TreeNode* deserialize(std::string data) {
+	return deserialize_II(data);
 }
