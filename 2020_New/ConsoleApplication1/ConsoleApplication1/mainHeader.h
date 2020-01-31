@@ -47,3 +47,5 @@ std::vector<int> findDisappearedNumbers(std::vector<int>& nums);
 
 std::string serialize(TreeNode* root);
 TreeNode* deserialize(std::string data);
+
+TreeNode* deleteNode(TreeNode* root, int key);

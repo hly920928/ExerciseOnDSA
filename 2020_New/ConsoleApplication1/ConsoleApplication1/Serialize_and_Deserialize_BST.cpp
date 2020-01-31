@@ -105,6 +105,7 @@ unsigned short pre_head, unsigned short pre_tail
 	ans->right = right;
 	return ans;
 }
+
 std::string serialize_I(TreeNode* root) {
 	if (root == nullptr)return "";
 	vector<dataBST>  in;
