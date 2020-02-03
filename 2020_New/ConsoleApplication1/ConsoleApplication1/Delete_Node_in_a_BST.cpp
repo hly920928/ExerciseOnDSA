@@ -28,10 +28,25 @@ void searchNode(TreeNode* root, int key,TreeNode*& keyNode, TreeNode** parentNod
 	}
 	return;
 }
-void findNext(TreeNode* keyNode, TreeNode*& nextNode) {
+void findNextAndRemove(TreeNode* keyNode, TreeNode*& nextNode) {
+	if (keyNode->right == nullptr) {
+		nextNode = nullptr;
+		return;
+	}
+	TreeNode* now = keyNode->right;
+	TreeNode* parent = keyNode;
+	if (now->left == nullptr) {
+		nextNode = now;
+		parent->right = now->right;
+	}
+	while(now->left != nullptr) {
+		parent = now;
+		now = now->left;
 
-
-}
+	}
+	nextNode= now;
+	parent->left = now->right;
+ }
 void reconstructAt(TreeNode* keyNode, TreeNode** parentNodeLink, TreeNode*  nextNode) {
 
 }
