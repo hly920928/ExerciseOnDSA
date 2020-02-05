@@ -1,6 +1,6 @@
 //450. Delete Node in a BST
 #include "mainHeader.h"
-void searchNode(TreeNode* root, int key,TreeNode*& keyNode, TreeNode**& parentNodeLink,bool& isMax,bool& isMin) {
+void searchNode(TreeNode* root, int key,TreeNode*& keyNode, TreeNode**& parentNodeLink) {
 	if (root == nullptr) {
 		keyNode = nullptr;
 		return;
@@ -14,25 +14,25 @@ void searchNode(TreeNode* root, int key,TreeNode*& keyNode, TreeNode**& parentNo
 		return;
 	}
 	if (root->left !=nullptr&&root->left->val == key) {
-		isMax = false;
+	
 		keyNode = root->left ;
 		parentNodeLink=&root->left;
 		return;
 	}
 	if (root->right != nullptr && root->right->val == key) {
-		isMin = false;
+
 		keyNode = root->right;
 		parentNodeLink = &root->right;
 		return;
 	}
 	if (root->val < key) {
-		isMin = false;
-		searchNode(root->right, key, keyNode, parentNodeLink, isMax, isMin);
+	
+		searchNode(root->right, key, keyNode, parentNodeLink);
 		return;
 	}
 	if (root->val >key) {
-		isMax= false;
-		searchNode(root->left, key, keyNode, parentNodeLink, isMax, isMin);
+	
+		searchNode(root->left, key, keyNode, parentNodeLink);
 		return;
 	}
 	keyNode = nullptr;
@@ -59,7 +59,10 @@ void findNextAndRemove(TreeNode* keyNode, TreeNode*& nextNode) {
 	parent->left = now->right;
  }
  
-
+int getMax(TreeNode* root) {
+	if (root->right == nullptr)return root->val;
+	return getMax(root -> right);
+}
 TreeNode* deleteNode(TreeNode* root, int key) {
 	if (root == nullptr)return nullptr;
 	TreeNode* keyNode = nullptr;
@@ -78,9 +81,9 @@ TreeNode* deleteNode(TreeNode* root, int key) {
 	}
 
  
-	searchNode(root, key, keyNode, parentNodeLink, isMax, isMin);
+	searchNode(root, key, keyNode, parentNodeLink);
 	if (keyNode == nullptr)return root;
-	if (isMax) {
+	if (getMax(root)==key) {
 		*parentNodeLink = keyNode->left;
 		return root;
 	}
@@ -92,4 +95,14 @@ TreeNode* deleteNode(TreeNode* root, int key) {
 	if (nextNode != nullptr)keyNode->val = nextNode->val;
 	else *parentNodeLink = nullptr;
 	return root;
+}
+
+
+TreeNode* constructTree(std::vector<int>& v, int i) {
+	if (i > v.size()-1)return nullptr;
+	if(v[i] == -1)return nullptr;
+	TreeNode* now = new TreeNode(v[i]);
+	now->left = constructTree(v, i * 2 + 1);
+	now->right = constructTree(v, i * 2 + 2);
+	return now;
 }

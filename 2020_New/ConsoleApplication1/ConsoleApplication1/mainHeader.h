@@ -49,3 +49,5 @@ std::string serialize(TreeNode* root);
 TreeNode* deserialize(std::string data);
 
 TreeNode* deleteNode(TreeNode* root, int key);
+
+TreeNode* constructTree(std::vector<int>& v,int i);
