@@ -55,3 +55,6 @@ TreeNode* constructTree(std::vector<int>& v,int i);
 std::string frequencySort(std::string s);
 
 int findMinArrowShots(std::vector<std::vector<int>>& points);
+
+
+int minMoves(std::vector<int>& nums);
