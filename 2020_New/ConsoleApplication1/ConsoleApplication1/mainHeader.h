@@ -59,3 +59,6 @@ int findMinArrowShots(std::vector<std::vector<int>>& points);
 
 int minMoves(std::vector<int>& nums);
 int fourSumCount(std::vector<int>& A, std::vector<int>& B, std::vector<int>& C, std::vector<int>& D);
+
+
+int findContentChildren(std::vector<int>& g, std::vector<int>& s);
