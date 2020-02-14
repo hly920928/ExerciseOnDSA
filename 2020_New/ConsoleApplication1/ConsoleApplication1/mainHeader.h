@@ -62,3 +62,5 @@ int fourSumCount(std::vector<int>& A, std::vector<int>& B, std::vector<int>& C, 
 
 
 int findContentChildren(std::vector<int>& g, std::vector<int>& s);
+
+bool find132pattern(std::vector<int>& nums);
