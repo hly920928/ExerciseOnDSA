@@ -66,3 +66,5 @@ int findContentChildren(std::vector<int>& g, std::vector<int>& s);
 bool find132pattern(std::vector<int>& nums);
 
 bool circularArrayLoop(std::vector<int>& nums);
+
+int poorPigs(int buckets, int minutesToDie, int minutesToTest);
