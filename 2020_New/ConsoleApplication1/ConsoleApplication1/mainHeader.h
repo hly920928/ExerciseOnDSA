@@ -68,3 +68,6 @@ bool find132pattern(std::vector<int>& nums);
 bool circularArrayLoop(std::vector<int>& nums);
 
 int poorPigs(int buckets, int minutesToDie, int minutesToTest);
+
+
+bool repeatedSubstringPattern(std::string s);
