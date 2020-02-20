@@ -74,3 +74,6 @@ bool repeatedSubstringPattern(std::string s);
 
 
 int hammingDistance(int x, int y);
+
+
+int minMoves2(std::vector<int>& nums);
