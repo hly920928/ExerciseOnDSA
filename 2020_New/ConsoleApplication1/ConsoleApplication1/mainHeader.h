@@ -79,3 +79,5 @@ int hammingDistance(int x, int y);
 int minMoves2(std::vector<int>& nums);
 
 int islandPerimeter(std::vector<std::vector<int>>& grid);
+
+bool canIWin(int maxChoosableInteger, int desiredTotal);
