@@ -85,3 +85,5 @@ bool canIWin(int maxChoosableInteger, int desiredTotal);
 int getMaxRepetitions(std::string s1, int n1, std::string s2, int n2);
 
 int findSubstringInWraproundString(std::string p);
+
+std::string validIPAddress(std::string IP);
