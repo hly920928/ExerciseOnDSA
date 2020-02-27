@@ -89,3 +89,5 @@ int findSubstringInWraproundString(std::string p);
 std::string validIPAddress(std::string IP);
 
 int rand10();
+
+std::vector<std::string> findAllConcatenatedWordsInADict(std::vector<std::string>& words);
