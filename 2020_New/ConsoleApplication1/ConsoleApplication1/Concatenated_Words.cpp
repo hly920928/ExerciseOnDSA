@@ -23,22 +23,7 @@ void addToTries(const string& str, TriesNode* root) {
 		now = now->next[str[i] - 'a'];
 	}
 }
-bool isConcat(const string& str, TriesNode* root) {
-	auto now = root; 
-	int i = 0;
-	while (i < str.size()) {
-		if (now->next[str[i] - 'a'] == nullptr) {
-			if (!now->hasWords)return false;
-			else 	now = root;
-		}
-		else {
-			now=now->next[str[i] - 'a'];
-			i++;
-		}
-	}
-	return true;
-}
-
+ 
 bool isConcat_DFS(const string& str,  TriesNode* root,TriesNode* now,int i) {
  
 	if (i >= str.size())return false;
