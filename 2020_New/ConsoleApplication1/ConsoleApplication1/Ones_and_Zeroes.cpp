@@ -109,19 +109,31 @@ int DPS_v2( int begin, data_0_1 remainInHand, data_0_1 remainInSet) {
 	table[begin][remainInHand.toUll()] = ans;
 	return ans;
 }
-int findMaxForm(vector<string>& strs, int m, int n) {
-	vector<data_0_1> v; v.resize(strs.size()); _v = &v;
-	int max = 0; _m = &max;
 
-	vector<unordered_map<unsigned long long, int>> table; table.resize(strs.size()); _t = &table;
-
-	data_0_1 total(0, 0);
-	for (int i = 0; i < strs.size(); i++) {
-		v[i] = data_0_1(strs[i]);
-		total.add(v[i]);
+ 
+int DP(vector<string>& strs, int m, int n) {
+	
+	vector<vector<int>> table;
+	table.resize(m+1);
+	for (auto& v : table) {
+		v.resize(n+1);
+		for (int& i : v)i = 0;
 	}
-	sort(v.begin(), v.end());
+	for (int i = 0; i < strs.size(); i++) {
+		auto& now = strs[i];
+		int _0 = 0; int _1 = 0;
 
-	//DFS(v, 0, data_0_1(m, n), total,0, max);
-	return DPS_v2(0, data_0_1(m, n), total);
+		for (char c : now)if (c == '0')_0++;
+		_1 = now.size() - _0;
+		for (int j = m; j >= _0; j--) {
+			for (int k = n;k >= _1; k--) {
+				table[j][k] = max(table[j][k],1+ table[j-_0][k-_1]);
+			}
+		}
+	}
+	return table[m][n];
+}
+int findMaxForm(vector<string>& strs, int m, int n) {
+ 
+	return DP(strs, m,n);
 }
