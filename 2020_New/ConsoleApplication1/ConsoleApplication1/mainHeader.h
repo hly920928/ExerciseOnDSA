@@ -95,3 +95,5 @@ std::vector<std::string> findAllConcatenatedWordsInADict(std::vector<std::string
 bool makesquare(std::vector<int>& nums);
 
 int findMaxForm(std::vector<std::string>& strs, int m, int n);
+
+int findRadius(std::vector<int>& houses, std::vector<int>& heaters);
