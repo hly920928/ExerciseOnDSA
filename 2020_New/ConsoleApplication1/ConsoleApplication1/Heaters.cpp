@@ -9,9 +9,7 @@ int findRadius(vector<int>& houses, vector<int>& heaters) {
 
     int i = 0; int j = 0; int maxR = 0;
     while (true) {
-        if (maxR != 0) {
-            int a = 0;
-        }
+ 
         if (i >= houses.size())break;
         if (j == heaters.size()-1) {
             int nowR = abs(houses[i] - heaters[j]);
