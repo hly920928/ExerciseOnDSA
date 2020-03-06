@@ -97,3 +97,7 @@ bool makesquare(std::vector<int>& nums);
 int findMaxForm(std::vector<std::string>& strs, int m, int n);
 
 int findRadius(std::vector<int>& houses, std::vector<int>& heaters);
+
+int findComplement(int num);
+
+int totalHammingDistance(std::vector<int>& nums);
