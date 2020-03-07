@@ -2,7 +2,11 @@
 #include <string>
 #include <vector>
 #include <algorithm>
-
+#include <vector>
+#include <cmath>       
+#include <math.h>      
+#include <random>
+#define _USE_MATH_DEFINES
 class TreeNode {
 public:
     int val;
@@ -101,3 +105,34 @@ int findRadius(std::vector<int>& houses, std::vector<int>& heaters);
 int findComplement(int num);
 
 int totalHammingDistance(std::vector<int>& nums);
+
+class randPointInCircle {
+private:
+    double R;
+    double cx;
+    double cy;
+    std::default_random_engine gen;
+     std::uniform_real_distribution<double> dist;
+public:
+    randPointInCircle(double radius, double x_center, double y_center): R(radius), cx(x_center),cy(y_center){
+        dist= std::uniform_real_distribution<double>(-1* radius, radius);
+    }
+
+    vector<double> randPoint() {
+        double dx ;    double dy;
+        while (true)
+        {
+            const double x1 = dist(gen);
+            const double y1 = dist(gen);
+            const double rp2 = std::pow(R, 2.0);
+
+            if (std::pow(x1, 2.0) + std::pow(y1, 2.0) <= rp2)
+            {
+                dx = x1;   dy = y1;
+                break;
+            }
+        }
+        vector<double> ans; ans.push_back(cx + dx); ans.push_back(cy + dy);
+        return ans;
+    }
+};
