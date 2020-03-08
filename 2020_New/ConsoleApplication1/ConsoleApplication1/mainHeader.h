@@ -118,7 +118,7 @@ public:
         dist= std::uniform_real_distribution<double>(-1* radius, radius);
     }
 
-    vector<double> randPoint() {
+    std::vector<double> randPoint() {
         double dx ;    double dy;
         while (true)
         {
@@ -132,7 +132,9 @@ public:
                 break;
             }
         }
-        vector<double> ans; ans.push_back(cx + dx); ans.push_back(cy + dy);
+        std::vector<double> ans; ans.push_back(cx + dx); ans.push_back(cy + dy);
         return ans;
     }
 };
+
+int largestPalindrome(int n);
