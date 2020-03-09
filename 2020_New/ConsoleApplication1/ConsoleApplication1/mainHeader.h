@@ -138,3 +138,5 @@ public:
 };
 
 int largestPalindrome(int n);
+
+std::vector<double> medianSlidingWindow(std::vector<int>& nums, int k);
