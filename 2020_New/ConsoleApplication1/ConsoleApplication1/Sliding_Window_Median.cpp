@@ -53,12 +53,25 @@ void medianSlidingWindowEven(vector<int>& nums, int k, vector<double>& ans) {
 	for (int i = 1; i + k <= nums.size(); i++) {
 		int  deletedElement = nums[i - 1];
 		int  insertedElement = nums[i + k - 1];
-		table.erase(deletedElement);
-		table.insert(insertedElement);
+		int m1 = *median_1;
+		int m2 = *median_2;
 		//TODO change median according to relation between median_1,median_2,deletedElement,insertedElement
+		if (deletedElement==m1|| deletedElement == m2) {
 
+		}
+		else if(deletedElement>m1&& deletedElement < m2){
+
+		}
+		else if (deletedElement > m2) {
+
+		}
+		else if (deletedElement <m1) {
+
+		}
 		//
 		ans.push_back(((double)*median_1 + (double)*median_2) / 2);
+		table.erase(deletedElement);
+		table.insert(insertedElement);
 	}
 }
 vector<double> medianSlidingWindow(vector<int>& nums, int k) {
