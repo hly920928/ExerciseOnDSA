@@ -100,19 +100,46 @@ void medianSlidingWindowEven(vector<int>& nums, int k, vector<double>& ans) {
 				}
 			}
 		}
-		else if(deletedElement>m1&& deletedElement < m2){
-
-		}
 		else if (deletedElement > m2) {
-
+			if(insertedElement>=m2){
+				table.erase(deletedElement);
+				table.insert(insertedElement);
+				 
+			}
+			else if(insertedElement< m2&& insertedElement >=m1) {
+				table.erase(deletedElement);
+				table.insert(insertedElement);
+				median_2--;
+			}
+			else if( insertedElement < m1) {
+				table.erase(deletedElement);
+				table.insert(insertedElement);
+				median_1--;
+				median_2--;
+			}
 		}
 		else if (deletedElement <m1) {
-
+			if (insertedElement >= m2) {
+				table.erase(deletedElement);
+				table.insert(insertedElement);
+				median_1++;
+				median_2++;
+			}
+			else if (insertedElement < m2 && insertedElement >= m1) {
+				table.erase(deletedElement);
+				table.insert(insertedElement);
+				median_1++;
+			}
+			else if (insertedElement < m1) {
+				table.erase(deletedElement);
+				table.insert(insertedElement);
+			}
 		}
 		//
+		OUT:
 		ans.push_back(((double)*median_1 + (double)*median_2) / 2);
-		table.erase(deletedElement);
-		table.insert(insertedElement);
+		//table.erase(deletedElement);
+		//table.insert(insertedElement);
 	}
 }
 vector<double> medianSlidingWindow(vector<int>& nums, int k) {
