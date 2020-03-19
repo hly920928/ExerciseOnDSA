@@ -144,3 +144,5 @@ std::vector<double> medianSlidingWindow(std::vector<int>& nums, int k);
 int magicalString(int n);
 
 std::string licenseKeyFormatting(std::string S, int K);
+
+std::string smallestGoodBase(std::string n);
