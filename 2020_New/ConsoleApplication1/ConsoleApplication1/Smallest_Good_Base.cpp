@@ -10,21 +10,18 @@ unsigned long long getNum(unsigned long long base, int digit) {
 	return sum;
 }
 char isTarget(unsigned long long n, int digit, unsigned long long base) {
-	if (base == 1634 && digit == 7) {
-		auto num = getNum(1634, 7);
-		auto num_1 = getNum(986, 7);
-		int i = 0;
-	}
+	double product = pow(base, digit-1);
+	if (product > n)return 'H';
 	unsigned long long now = 1; unsigned long long sum = 0;
 	for (int i = 0; i < digit; i++) {
 		if (sum >=n)return 'H';
 
-		unsigned long long p_sum = sum;
+		//unsigned long long p_sum = sum;
 		sum += now;
-		if(p_sum>sum)return 'H';//overflow
-		unsigned long long p_now = now;
+		//if(p_sum>sum)return 'H';//overflow
+		//unsigned long long p_now = now;
 		now *= base;
-		if (p_now > now)return 'H';//overflow
+		//if (p_now > now)return 'H';//overflow
 		
 	}
 	if (sum == n)return 'E';
