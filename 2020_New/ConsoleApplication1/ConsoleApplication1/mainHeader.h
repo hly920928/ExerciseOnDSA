@@ -150,3 +150,5 @@ std::string smallestGoodBase(std::string n);
 int findMaxConsecutiveOnes(std::vector<int>& nums);
 
 bool PredictTheWinner(std::vector<int>& nums);
+
+int findMinStep(std::string board, std::string hand);
