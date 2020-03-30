@@ -79,8 +79,33 @@ public:
 		return depth;
 	}
 private:
-	bool removeAndMergeAndTestEmpty(state& out,int id,char type) {
+	bool removeAndMergeAndTestEmpty(state& out,int id,char type)const {
+		char cr = table[id].color; int sum = table[id].counts;
+		int now = id - 1; int begin = id; int end = id;
+		while (now >= 0 &&(table[now].color == cr|| table[now].counts==0)) {
+			   begin = now;
+			   sum+= table[now].counts;
+			   now--;
+		}
+		 now = id + 1;
+		while (now < table.size()&&(table[now].color == cr || table[now].counts == 0)) {
+			end = now;
+			sum += table[now].counts;
+			now++;
+		}
+		if (remain - sum == 0)return true;
+		out.table = table;
+		out.depth = depth + 1;
+		out.remain = remain - sum;	
+		for (int i = 0; i < 5; i++) {
+			out.hands[i] = hands[i];
+		}
+		out.hands[cr] -= type;
+		for (int i = begin; i <= end; i++) {
+			out.table[i] = 0;
+		}
 
+		return false;
 	}
  
 };
