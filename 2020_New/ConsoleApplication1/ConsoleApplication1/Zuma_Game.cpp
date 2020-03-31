@@ -81,21 +81,26 @@ public:
 private:
 	bool removeAndMergeAndTestEmpty(state& out,int id,char type)const {
 		char cr = table[id].color; int sum = table[id].counts;
-		int now = id - 1; int begin = id; int end = id;
-		while (now >= 0 &&(table[now].color == cr|| table[now].counts==0)) {
-			   begin = now;
-			   sum+= table[now].counts;
-			   now--;
-		}
-		 now = id + 1;
-		while (now < table.size()&&(table[now].color == cr || table[now].counts == 0)) {
-			end = now;
-			sum += table[now].counts;
-			now++;
+	     int begin = id; int end = id;
+		 while (true) {
+			 //test over-range
+			 if (begin - 1 < 0)break;
+			 if (end + 1 >= table.size())break;
+			 //test count is zero
+			 auto& b = table[begin - 1];
+			 if (b.counts == 0) { begin--; continue;}
+			 auto& e = table[end + 1];
+			 if (e.counts == 0) { end++; continue; }
+			 //test color and count
+			 if (b.color != e.color)break;
+			 if (b.counts + e.counts < 3)break;
+
+			 sum += b.counts + e.counts;
+			 begin--; end++;
 		}
 		if (remain - sum == 0)return true;
 		out.table = table;
-		out.depth = depth + 1;
+		out.depth = depth + type;
 		out.remain = remain - sum;	
 		for (int i = 0; i < 5; i++) {
 			out.hands[i] = hands[i];
