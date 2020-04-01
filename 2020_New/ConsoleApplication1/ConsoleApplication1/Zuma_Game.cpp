@@ -21,12 +21,23 @@ inline char colorToId(char c) {
 	if (c == 'W')return 4;
 	return -1;
 }
+
+inline char idToColor(char c) {
+	if (c ==0)return  'R';
+	if (c ==1)return  'Y';
+	if (c ==2)return  'B';
+	if (c == 3)return 'G';
+	if (c == 4)return 'W';
+	return -1;
+}
 class state {
 private:
 	vector<balls> table;
 	int hands[5];//red(R) 0, yellow(Y) 1, blue(B) 2, green(G) 3, white(W) 4
+	int boards[5];//red(R) 0, yellow(Y) 1, blue(B) 2, green(G) 3, white(W) 4
 	int depth;
 	int remain;
+	string str;
 public:
 	state() :depth(0), remain(0) {
 		for (int& i : hands) i = 0;
@@ -34,8 +45,11 @@ public:
 	state(string& board, string& hand) {
 		depth = 0; remain = board.size();
 		for (int& i : hands) i = 0;
+		for (int& i : boards) i = 0;
 		table.push_back(balls(colorToId(board[0]),1));
+		boards[colorToId(board[0])] = 1;
 		for (int i = 1; i < board.size(); i++) {
+			boards[colorToId(board[i])]++;
 			if (board[i] == board[i - 1]) {
 				table[table.size() - 1].counts++;
 			}
@@ -45,7 +59,7 @@ public:
 		}
 		
 		for (char c : hand)hands[colorToId(c)]++;
-	
+		setStr();
 	};
 	bool operator<(const state& b)const  {
 		if (depth > b.depth)return true;
@@ -54,7 +68,7 @@ public:
 		if (remain < b.remain)return false;
 		return false;
 	}
-	bool produceNextAndTestEmpty(priority_queue<state>& pq) {
+	int produceNextAndTestEmpty(priority_queue<state>& pq,int ans) {
 		vector<int>pos_1; vector<int>pos_2;
 		for (int i = 0; i < table.size(); i++) {
 			char cr = table[i].color;
@@ -64,19 +78,27 @@ public:
 		}
 		for (int i : pos_2) {
 			state neo;
-			if (removeAndMergeAndTestEmpty(neo, i, 2))return true;
-			pq.push(neo);
+			if (removeAndMergeAndTestEmpty(neo, i, 1))return depth+1;
+			if (ans != -1 && neo.getDepth() >= ans)continue;
+			if(neo.isPossible())pq.push(neo);
 		}
 
 		for (int i : pos_1) {
 			state neo;
-			if (removeAndMergeAndTestEmpty(neo, i, 1))return true;
-			pq.push(neo);
+			if (removeAndMergeAndTestEmpty(neo, i, 2))return depth +2;
+		    if (ans != -1 && neo.getDepth() >= ans)continue;
+			if (neo.isPossible())pq.push(neo);
 		}
-		return false;
+		return 0;
 	}
 	int getDepth()const {
 		return depth;
+	}
+	bool isPossible()const {
+		for (int i = 0; i < 5; i++) {
+			if (boards[i] !=0&&hands[i] + boards[i] < 3)return false;
+		}
+		return true;
 	}
 private:
 	bool removeAndMergeAndTestEmpty(state& out,int id,char type)const {
@@ -104,24 +126,41 @@ private:
 		out.remain = remain - sum;	
 		for (int i = 0; i < 5; i++) {
 			out.hands[i] = hands[i];
+			out.boards[i] = boards[i];
 		}
 		out.hands[cr] -= type;
 		for (int i = begin; i <= end; i++) {
-			out.table[i] = 0;
+			out.boards[out.table[i].color] -= out.table[i].counts;
+			out.table[i].counts = 0;
 		}
-
+		out.setStr();
 		return false;
 	}
- 
+	void setStr() {
+		for (auto& b : table) {
+			for (int i = 0; i < b.counts; i++) {
+				str.push_back(idToColor(b.color));
+			}
+		}
+	}
 };
 
 
 int findMinStep(string board, string hand) {
 	priority_queue<state> pq;
-	state root(board, hand); pq.push(root);
+	state root(board, hand); 
+	if (!root.isPossible())return -1;
+	pq.push(root);
+	int ans = -1;
 	while (!pq.empty()) {
 		auto st = pq.top(); pq.pop();
-		if (st.produceNextAndTestEmpty(pq))return st.getDepth() + 1;
+		if (ans != -1 && st.getDepth() >= ans)continue;
+		int rst = st.produceNextAndTestEmpty(pq,ans);
+		if (rst != 0) {
+			if (ans == -1) {
+				ans = rst;
+			}else ans = min(rst, ans);
+		}
 	}
-	return -1;
+	return ans;
 }
