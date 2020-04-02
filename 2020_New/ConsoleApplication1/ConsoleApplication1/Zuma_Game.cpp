@@ -32,12 +32,13 @@ inline char idToColor(char c) {
 }
 class state {
 private:
+	string str;
 	vector<balls> table;
 	int hands[5];//red(R) 0, yellow(Y) 1, blue(B) 2, green(G) 3, white(W) 4
 	int boards[5];//red(R) 0, yellow(Y) 1, blue(B) 2, green(G) 3, white(W) 4
 	int depth;
 	int remain;
-	string str;
+
 public:
 	state() :depth(0), remain(0) {
 		for (int& i : hands) i = 0;
@@ -133,6 +134,14 @@ private:
 			out.boards[out.table[i].color] -= out.table[i].counts;
 			out.table[i].counts = 0;
 		}
+		if (begin - 1 >= 0 && end + 1 < out.table.size()) {
+			if (out.table[begin - 1].color == out.table[end + 1].color) {
+				if (out.table[begin - 1].counts == 1 && out.table[end + 1].counts == 1) {
+					out.table[begin - 1].counts = 2;
+					out.table[end + 1].counts = 0;
+				}
+			}
+		 }
 		out.setStr();
 		return false;
 	}
