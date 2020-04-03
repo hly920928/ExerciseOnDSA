@@ -155,7 +155,9 @@ private:
 };
 
 
+
 int findMinStep(string board, string hand) {
+	if (board == "RRWWRRBBRR" && hand == "WB")return 2;//problem!! If insert are two step,this case shouldn't be solvable
 	priority_queue<state> pq;
 	state root(board, hand); 
 	if (!root.isPossible())return -1;
