@@ -47,7 +47,7 @@ public:
 		depth = 0; remain = board.size();
 		for (int& i : hands) i = 0;
 		for (int& i : boards) i = 0;
-		table.push_back(balls(colorToId(board[0]),1));
+		table.push_back(balls(colorToId(board[0]), 1));
 		boards[colorToId(board[0])] = 1;
 		for (int i = 1; i < board.size(); i++) {
 			boards[colorToId(board[i])]++;
@@ -58,73 +58,110 @@ public:
 				table.push_back(balls(colorToId(board[i]), 1));
 			}
 		}
-		
+
 		for (char c : hand)hands[colorToId(c)]++;
-		setStr();
+		//setStr();
 	};
-	bool operator<(const state& b)const  {
+	bool operator<(const state& b)const {
 		if (depth > b.depth)return true;
 		if (depth < b.depth)return false;
 		if (remain > b.remain)return true;
 		if (remain < b.remain)return false;
 		return false;
 	}
-	int produceNextAndTestEmpty(priority_queue<state>& pq,int ans) {
+	int produceNextAndTestEmpty(priority_queue<state>& pq, int ans) {
 		vector<int>pos_1; vector<int>pos_2;
 		for (int i = 0; i < table.size(); i++) {
 			char cr = table[i].color;
 			char ct = table[i].counts;
 			if (ct == 1 && hands[cr] >= 2)pos_1.push_back(i);
-			if (ct ==2 && hands[cr] >= 1)pos_2.push_back(i);
+			if (ct == 2 && hands[cr] >= 1)pos_2.push_back(i);
 		}
 		for (int i : pos_2) {
 			state neo;
-			if (removeAndMergeAndTestEmpty(neo, i, 1))return depth+1;
+			if (removeAndMergeAndTestEmpty(neo, i, 1))return depth + 1;
 			if (ans != -1 && neo.getDepth() >= ans)continue;
-			if(neo.isPossible())pq.push(neo);
+			if (neo.isPossible())pq.push(neo);
 		}
 
 		for (int i : pos_1) {
 			state neo;
-			if (removeAndMergeAndTestEmpty(neo, i, 2))return depth +2;
-		    if (ans != -1 && neo.getDepth() >= ans)continue;
+			if (removeAndMergeAndTestEmpty(neo, i, 2))return depth + 2;
+			if (ans != -1 && neo.getDepth() >= ans)continue;
 			if (neo.isPossible())pq.push(neo);
 		}
 		return 0;
+	}
+	void produceNextWithOutRemoving(priority_queue<state>& pq, int ans) {
+		if (ans != -1 && depth + 1 >= ans)return;
+		for (int pos = 0; pos < table.size(); pos++) {
+			for (int color = 0; color < 5; color++) {
+				if (hands[color] >= 1) {
+					state before;
+					if (tryInsertWithOutRemoving(pos, 'B', color, 1, before)) {
+						if (before.isPossible())pq.push(before);
+					}
+					state between;
+					if (tryInsertWithOutRemoving(pos, 'I', color, 1, between)) {
+						if (between.isPossible())pq.push(between);
+					}
+					state after;
+					if (tryInsertWithOutRemoving(pos, 'A', color, 1, after)) {
+						if (after.isPossible())pq.push(after);
+					}
+ 
+				}
+				if (hands[color] >= 2) {
+					if (ans != -1 && depth +2>= ans)continue;
+					state before;
+					if (tryInsertWithOutRemoving(pos, 'B', color, 2, before)) {
+						if (before.isPossible())pq.push(before);
+					}
+					state between;
+					if (tryInsertWithOutRemoving(pos, 'I', color, 2, between)) {
+						if (between.isPossible())pq.push(between);
+					}
+					state after;
+					if (tryInsertWithOutRemoving(pos, 'A', color, 2, after)) {
+						if (after.isPossible())pq.push(after);
+					}
+				}
+			}
+		}
 	}
 	int getDepth()const {
 		return depth;
 	}
 	bool isPossible()const {
 		for (int i = 0; i < 5; i++) {
-			if (boards[i] !=0&&hands[i] + boards[i] < 3)return false;
+			if (boards[i] != 0 && hands[i] + boards[i] < 3)return false;
 		}
 		return true;
 	}
 private:
-	bool removeAndMergeAndTestEmpty(state& out,int id,char type)const {
+	bool removeAndMergeAndTestEmpty(state& out, int id, char type)const {
 		char cr = table[id].color; int sum = table[id].counts;
-	     int begin = id; int end = id;
-		 while (true) {
-			 //test over-range
-			 if (begin - 1 < 0)break;
-			 if (end + 1 >= table.size())break;
-			 //test count is zero
-			 auto& b = table[begin - 1];
-			 if (b.counts == 0) { begin--; continue;}
-			 auto& e = table[end + 1];
-			 if (e.counts == 0) { end++; continue; }
-			 //test color and count
-			 if (b.color != e.color)break;
-			 if (b.counts + e.counts < 3)break;
+		int begin = id; int end = id;
+		while (true) {
+			//test over-range
+			if (begin - 1 < 0)break;
+			if (end + 1 >= table.size())break;
+			//test count is zero
+			auto& b = table[begin - 1];
+			if (b.counts == 0) { begin--; continue; }
+			auto& e = table[end + 1];
+			if (e.counts == 0) { end++; continue; }
+			//test color and count
+			if (b.color != e.color)break;
+			if (b.counts + e.counts < 3)break;
 
-			 sum += b.counts + e.counts;
-			 begin--; end++;
+			sum += b.counts + e.counts;
+			begin--; end++;
 		}
 		if (remain - sum == 0)return true;
 		out.table = table;
 		out.depth = depth + type;
-		out.remain = remain - sum;	
+		out.remain = remain - sum;
 		for (int i = 0; i < 5; i++) {
 			out.hands[i] = hands[i];
 			out.boards[i] = boards[i];
@@ -141,8 +178,8 @@ private:
 					out.table[end + 1].counts = 0;
 				}
 			}
-		 }
-		out.setStr();
+		}
+		//out.setStr();
 		return false;
 	}
 	void setStr() {
@@ -152,12 +189,15 @@ private:
 			}
 		}
 	}
+	bool tryInsertWithOutRemoving(int pos, char type,int color, int count, state& out) {
+		return false;
+	}
 };
 
 
 
 int findMinStep(string board, string hand) {
-	if (board == "RRWWRRBBRR" && hand == "WB")return 2;//problem!! If insert are two step,this case shouldn't be solvable
+	//if (board == "RRWWRRBBRR" && hand == "WB")return 2;//problem!! If insert are two step,this case shouldn't be solvable
 	priority_queue<state> pq;
 	state root(board, hand); 
 	if (!root.isPossible())return -1;
@@ -172,6 +212,7 @@ int findMinStep(string board, string hand) {
 				ans = rst;
 			}else ans = min(rst, ans);
 		}
+		st.produceNextWithOutRemoving(pq, ans);
 	}
 	return ans;
 }
