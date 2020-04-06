@@ -190,16 +190,87 @@ private:
 		}
 	}
 	bool tryInsertWithOutRemoving(int pos, char type,int color, int count, state& out) {
+		if (type == 'B') {
+			if (pos == 0) {
+				if (table[pos].color == color && table[pos].counts + count >= 3)return false;
+				out.table = table;
+			}
+		}
 		return false;
 	}
 };
 
+class state_II {
+private:
+	string str;
+	int hands[5];//red(R) 0, yellow(Y) 1, blue(B) 2, green(G) 3, white(W) 4
+	int boards[5];//red(R) 0, yellow(Y) 1, blue(B) 2, green(G) 3, white(W) 4
+	int depth;
+	int remain;
+public:
+	state_II() :depth(0), remain(0) {
+		for (int& i : hands) i = 0;
+	}
+	state_II(string& board, string& hand) {
+		
+		depth = 0; remain = board.size();
+		for (int& i : hands) i = 0;
+		for (int& i : boards) i = 0;
+		for (int i =0; i < board.size(); i++) {
+			boards[colorToId(board[i])]++;
+			str.push_back(colorToId(board[i]));
+		}
+		for (char c : hand)hands[colorToId(c)]++;
+	};
+	bool operator<(const state_II& b)const {
+		if (depth > b.depth)return true;
+		if (depth < b.depth)return false;
+		if (remain > b.remain)return true;
+		if (remain < b.remain)return false;
+		return false;
+	}
+	int produceNextAndTestEmpty(priority_queue<state_II>& pq, int ans) {
+		if (ans != -1 && depth + 1 >= ans)return 0;
+		for (int pos = 0; pos <= str.size(); pos++) {
+			for (int color = 0; color < 5; color++) {
+				if (hands[color] >= 1) {
+					state_II neo;
+					insertBefore(pos, color, neo);
+					neo.tryReducing();
+					if (neo.isEmpty())return neo.getDepth();
+					pq.push(neo);
+				}
+			}
+		}
+		return 0;
+	}
 
+	int getDepth()const {
+		return depth;
+	}
+	bool isPossible()const {
+		for (int i = 0; i < 5; i++) {
+			if (boards[i] != 0 && hands[i] + boards[i] < 3)return false;
+		}
+		return true;
+	}
+	bool isEmpty() {
+		return remain == 0;
+	}
+private:
+	void insertBefore(int pos, int color,state_II& out) {//pos==str.size() mean insert after the tailer
+
+	}
+	void tryReducing() {
+
+	}
+
+};
 
 int findMinStep(string board, string hand) {
 	//if (board == "RRWWRRBBRR" && hand == "WB")return 2;//problem!! If insert are two step,this case shouldn't be solvable
-	priority_queue<state> pq;
-	state root(board, hand); 
+	priority_queue<state_II> pq;
+	state_II root(board, hand);
 	if (!root.isPossible())return -1;
 	pq.push(root);
 	int ans = -1;
@@ -212,7 +283,6 @@ int findMinStep(string board, string hand) {
 				ans = rst;
 			}else ans = min(rst, ans);
 		}
-		st.produceNextWithOutRemoving(pq, ans);
 	}
 	return ans;
 }
