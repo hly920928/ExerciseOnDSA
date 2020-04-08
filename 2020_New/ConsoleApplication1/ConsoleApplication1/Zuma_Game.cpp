@@ -218,7 +218,7 @@ public:
 		for (int& i : boards) i = 0;
 		for (int i =0; i < board.size(); i++) {
 			boards[colorToId(board[i])]++;
-			str.push_back(colorToId(board[i]));
+			str.push_back(board[i]);
 		}
 		for (char c : hand)hands[colorToId(c)]++;
 	};
@@ -236,7 +236,7 @@ public:
 				if (hands[color] >= 1) {
 					state_II neo;
 					insertBefore(pos, color, neo);
-					neo.tryReducing();
+					neo.tryReducing(pos);
 					if (neo.isEmpty())return neo.getDepth();
 					pq.push(neo);
 				}
@@ -259,10 +259,74 @@ public:
 	}
 private:
 	void insertBefore(int pos, int color,state_II& out) {//pos==str.size() mean insert after the tailer
-
+		out.str = str;
+		if (pos != str.size()) {
+			out.str.insert(out.str.begin()+pos, idToColor(color));
+		}
+		else {
+			out.str.insert(out.str.end(), idToColor(color));
+		}
+		out.depth = depth + 1;
+		out.remain = remain + 1;
+		for (int i = 0; i < 5; i++) {
+			out.hands[i] = hands[i];
+			out.boards[i] = boards[i];
+		}
+		out.boards[color]++;
+		out.hands[color]--;
 	}
-	void tryReducing() {
+	void tryReducing(int checkpoint) {
+		int begin = checkpoint; int end = checkpoint;
+		//check if first can be reduced
+		while (true) {
+			bool flag = false;
+			if (begin - 1 >= 0) {
+				if (str[begin - 1] == str[checkpoint]) {
+					begin--;
+					flag = true;
+				}
+			}
+			if (end + 1 <= str.size() - 1) {
+				if (str[end + 1] == str[checkpoint]) {
+					end++;
+					flag = true;
+				}
+			}
+			if (!flag)break;
+		}
+		if (end - begin + 1 < 3)return;
+		//check if more place can be  reduced
+		while (true) {
+			int tb = begin; int te = end;
+			if (tb - 1 < 0 || te + 1 >= str.size())break;
+			char targetColor = -1;
+			if (str[tb - 1] != str[te + 1])break;
+			targetColor = str[tb - 1];
 
+			while (true) {
+				bool flag = false;
+				if (tb - 1 >= 0) {
+					if (str[tb - 1] == targetColor) {
+						tb--;
+						flag = true;
+					}
+				}
+				if (te + 1 <= str.size() - 1) {
+					if (str[te + 1] == targetColor) {
+						te++;
+						flag = true;
+					}
+				}
+				if (!flag)break;
+			}
+			if (te - tb + 1 < 3)break;
+			begin = tb; end = te;
+		}
+		for (int i = begin; i <= end; i++) {
+			boards[colorToId(str[i])]--;
+		}
+		str.erase(str.begin() + begin, str.begin() + end + 1);
+		remain -= end - begin + 1;
 	}
 
 };
