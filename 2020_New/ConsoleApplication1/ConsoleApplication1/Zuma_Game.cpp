@@ -63,10 +63,10 @@ public:
 		//setStr();
 	};
 	bool operator<(const state& b)const {
-		if (depth > b.depth)return true;
-		if (depth < b.depth)return false;
 		if (remain > b.remain)return true;
 		if (remain < b.remain)return false;
+		if (depth > b.depth)return true;
+		if (depth < b.depth)return false;
 		return false;
 	}
 	int produceNextAndTestEmpty(priority_queue<state>& pq, int ans) {
@@ -231,13 +231,19 @@ public:
 	}
 	int produceNextAndTestEmpty(priority_queue<state_II>& pq, int ans) {
 		if (ans != -1 && depth + 1 >= ans)return 0;
+		if (str == "BRBYYBBRRB") {
+			int t = 1;
+		}
 		for (int pos = 0; pos <= str.size(); pos++) {
 			for (int color = 0; color < 5; color++) {
 				if (hands[color] >= 1) {
 					state_II neo;
 					insertBefore(pos, color, neo);
 					neo.tryReducing(pos);
-					if (neo.isEmpty())return neo.getDepth();
+					if (neo.isEmpty()) {
+				 
+						return neo.getDepth();
+					}
 					pq.push(neo);
 				}
 			}
@@ -319,7 +325,7 @@ private:
 				}
 				if (!flag)break;
 			}
-			if (te - tb + 1 < 3)break;
+			if ((te - end) + (begin - tb) < 3)break;
 			begin = tb; end = te;
 		}
 		for (int i = begin; i <= end; i++) {
