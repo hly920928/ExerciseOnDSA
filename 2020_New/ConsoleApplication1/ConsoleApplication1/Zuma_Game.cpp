@@ -231,9 +231,6 @@ public:
 	}
 	int produceNextAndTestEmpty(priority_queue<state_II>& pq, int ans) {
 		if (ans != -1 && depth + 1 >= ans)return 0;
-		if (str == "BRBYYBBRRB") {
-			int t = 1;
-		}
 		for (int pos = 0; pos <= str.size(); pos++) {
 			for (int color = 0; color < 5; color++) {
 				if (hands[color] >= 1) {
@@ -338,7 +335,7 @@ private:
 };
 
 int findMinStep(string board, string hand) {
-	//if (board == "RRWWRRBBRR" && hand == "WB")return 2;//problem!! If insert are two step,this case shouldn't be solvable
+	 
 	priority_queue<state_II> pq;
 	state_II root(board, hand);
 	if (!root.isPossible())return -1;
