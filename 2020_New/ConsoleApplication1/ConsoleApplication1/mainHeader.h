@@ -152,3 +152,6 @@ int findMaxConsecutiveOnes(std::vector<int>& nums);
 bool PredictTheWinner(std::vector<int>& nums);
 
 int findMinStep(std::string board, std::string hand);
+
+std::vector<std::vector<int>> findSubsequences(std::vector<int>& nums);
+
