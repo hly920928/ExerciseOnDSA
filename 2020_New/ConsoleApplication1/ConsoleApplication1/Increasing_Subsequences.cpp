@@ -2,6 +2,8 @@
 
 #include "mainHeader.h"
 #include <set>
+#include <bitset>
+
 using namespace std;
 vector<vector<int>> findSubsequences(vector<int>& nums) {
 	set<vector<int>>table[20];
@@ -33,8 +35,20 @@ vector<vector<int>> findSubsequences(vector<int>& nums) {
 	}
 	 
 	vector<vector<int>> ans;
-	for (int i =2; i <15; i++) {
+	for (int i =2; i <=15; i++) {
 		for (auto& v : table[i])ans.push_back(v);
 	}
 	return ans;
+}
+
+class treeNode {
+public:
+	int val;
+	int nextLen;
+	treeNode* next[20];
+	treeNode();
+	void tryInsert(int next);
+};
+void buildAnswer(treeNode* root,vector<vector<int>>& ans, vector<int>&path) {
+
 }
