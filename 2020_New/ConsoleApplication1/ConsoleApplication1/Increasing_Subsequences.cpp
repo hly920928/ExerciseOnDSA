@@ -46,9 +46,25 @@ public:
 	int val;
 	int nextLen;
 	treeNode* next[20];
-	treeNode();
-	void tryInsert(int next);
+	treeNode(int v = INT_MAX) :val(v) {
+		nextLen = 0;
+		for (auto& ptr : next)ptr = nullptr;
+	};
+	~treeNode() {
+		delete[]next;
+	}
+	void tryInsert(int next) {};
 };
 void buildAnswer(treeNode* root,vector<vector<int>>& ans, vector<int>&path) {
 
+}
+
+vector<vector<int>> findSubsequences_II(vector<int>& nums) {
+	treeNode root;
+
+	for (int i = 0; i < nums.size(); i++)root.tryInsert(nums[i]);
+
+	vector<vector<int>> ans; vector<int>path;
+	for (auto& ptr : root.next)buildAnswer(ptr, ans, path);
+	return ans;
 }
