@@ -5,7 +5,63 @@
 #include <bitset>
 
 using namespace std;
+class treeNode {
+public:
+	int val;
+	int nextLen;
+	treeNode* next[20];
+	treeNode(int v = INT_MAX) :val(v) {
+		nextLen = 0;
+		for (auto& ptr : next)ptr = nullptr;
+	};
+	~treeNode() {
+		delete[]next;
+	}
+	void tryInsert(int next_val) {
+		bool flag = true;
+		for (int i = 0; i < nextLen; i++) {
+			if (next[i]->val == next_val) {
+				flag = false;
+				break;
+			}
+		}
+		int old_len = nextLen;
+		if (flag) {
+			next[nextLen] = new treeNode(next_val);
+			nextLen++;
+		}
+		for (int i = 0; i < old_len; i++) {
+			if (next[i]->val <= next_val) {
+				next[i]->tryInsert(next_val);
+			}
+		}
+
+	};
+};
+void buildAnswer(treeNode* root, vector<vector<int>>& ans, vector<int>& path) {
+	if (root == nullptr)return;
+	path.push_back(root->val);
+	if (path.size() >= 2)ans.push_back(path);
+	for (int i = 0; i < root->nextLen; i++) {
+		buildAnswer(root->next[i], ans, path);
+	}
+	path.pop_back();
+
+}
+
 vector<vector<int>> findSubsequences(vector<int>& nums) {
+	treeNode root;
+
+	for (int i = 0; i < nums.size(); i++) {
+		root.tryInsert(nums[i]);
+	}
+
+	vector<vector<int>> ans; vector<int>path;
+	for (auto& ptr : root.next)buildAnswer(ptr, ans, path);
+	return ans;
+}
+
+vector<vector<int>> findSubsequences_t(vector<int>& nums) {
 	set<vector<int>>table[20];
 	set<vector<int>> temp;
 	for (int i = 0; i < nums.size(); i++) {
@@ -41,30 +97,3 @@ vector<vector<int>> findSubsequences(vector<int>& nums) {
 	return ans;
 }
 
-class treeNode {
-public:
-	int val;
-	int nextLen;
-	treeNode* next[20];
-	treeNode(int v = INT_MAX) :val(v) {
-		nextLen = 0;
-		for (auto& ptr : next)ptr = nullptr;
-	};
-	~treeNode() {
-		delete[]next;
-	}
-	void tryInsert(int next) {};
-};
-void buildAnswer(treeNode* root,vector<vector<int>>& ans, vector<int>&path) {
-
-}
-
-vector<vector<int>> findSubsequences_II(vector<int>& nums) {
-	treeNode root;
-
-	for (int i = 0; i < nums.size(); i++)root.tryInsert(nums[i]);
-
-	vector<vector<int>> ans; vector<int>path;
-	for (auto& ptr : root.next)buildAnswer(ptr, ans, path);
-	return ans;
-}
