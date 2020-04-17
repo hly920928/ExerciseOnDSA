@@ -15,7 +15,7 @@ public:
 		for (auto& ptr : next)ptr = nullptr;
 	};
 	~treeNode() {
-		delete[]next;
+		for (auto& ptr : next)delete ptr;
 	}
 	void tryInsert(int next_val) {
 		bool flag = true;
