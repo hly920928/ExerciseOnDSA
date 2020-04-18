@@ -155,3 +155,4 @@ int findMinStep(std::string board, std::string hand);
 
 std::vector<std::vector<int>> findSubsequences(std::vector<int>& nums);
 
+std::vector<int> constructRectangle(int area);
