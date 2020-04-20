@@ -13,6 +13,11 @@ int compareAndMerge(int lo,int hi) {
 	int p2 = compareAndMerge(mid, hi);
 	//TODO compare two part
 	int p3 = 0;
+	for (int i = mid; i <= hi; i++) {
+		int t = 2 * nums[i] + 1;
+		auto itr_t = lower_bound(nums.begin()+lo,nums.begin()+mid,t);
+		p3 += (nums.begin() + mid) - itr_t;
+	}
 	inplace_merge(nums.begin()+lo,nums.begin()+mid, nums.begin()+hi+1);
 	return p1 + p2 + p3;
 }
