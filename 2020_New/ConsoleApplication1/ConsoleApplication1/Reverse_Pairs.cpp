@@ -5,8 +5,10 @@ int compareAndMerge(int lo,int hi) {
 	auto& nums = *n;
 	if (hi == lo)return 0;
 	if (hi - lo == 1) {
-		if (nums[lo] > nums[hi] * 2)return 1;
-		return 0;
+		int ans = 0;
+		if ((long long) nums[lo] >((long long)nums[hi])* 2)ans=1;
+		if (nums[lo] > nums[hi])swap(nums[lo], nums[hi]);
+		return ans;
 	}
 	int mid = (lo + hi) / 2;
 	int p1 = compareAndMerge(lo, mid-1);
@@ -14,7 +16,7 @@ int compareAndMerge(int lo,int hi) {
 	//TODO compare two part
 	int p3 = 0;
 	for (int i = mid; i <= hi; i++) {
-		int t = 2 * nums[i] + 1;
+		long long t = 2 *(long long) nums[i] + 1;
 		auto itr_t = lower_bound(nums.begin()+lo,nums.begin()+mid,t);
 		p3 += (nums.begin() + mid) - itr_t;
 	}
@@ -22,6 +24,7 @@ int compareAndMerge(int lo,int hi) {
 	return p1 + p2 + p3;
 }
 int reversePairs(vector<int>& nums) {
+	if (nums.size() == 0)return 0;
 	n = &nums;
 	return compareAndMerge(0,nums.size()-1);
 }
