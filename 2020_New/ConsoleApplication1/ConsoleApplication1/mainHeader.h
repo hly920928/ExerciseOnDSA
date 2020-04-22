@@ -158,3 +158,5 @@ std::vector<std::vector<int>> findSubsequences(std::vector<int>& nums);
 std::vector<int> constructRectangle(int area);
 
 int reversePairs(std::vector<int>& nums);
+
+int findTargetSumWays(std::vector<int>& nums, int S);
