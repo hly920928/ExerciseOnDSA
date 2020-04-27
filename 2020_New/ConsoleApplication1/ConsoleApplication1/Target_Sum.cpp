@@ -5,7 +5,7 @@
 #include <unordered_map>
 using namespace std;
 
-int* _ans;
+//int* _ans;
 vector<int>* _nums_1;
 vector<int>* _part_sum;
 vector<int>* _count_zero;
