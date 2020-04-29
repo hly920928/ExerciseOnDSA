@@ -160,3 +160,5 @@ std::vector<int> constructRectangle(int area);
 int reversePairs(std::vector<int>& nums);
 
 int findTargetSumWays(std::vector<int>& nums, int S);
+
+int findPoisonedDuration(std::vector<int>& timeSeries, int duration);
