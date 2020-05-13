@@ -162,3 +162,5 @@ int reversePairs(std::vector<int>& nums);
 int findTargetSumWays(std::vector<int>& nums, int S);
 
 int findPoisonedDuration(std::vector<int>& timeSeries, int duration);
+
+std::vector<int> nextGreaterElement(std::vector<int>& nums1, std::vector<int>& nums2);
