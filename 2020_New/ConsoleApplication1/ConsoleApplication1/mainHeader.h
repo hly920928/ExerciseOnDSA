@@ -164,3 +164,23 @@ int findTargetSumWays(std::vector<int>& nums, int S);
 int findPoisonedDuration(std::vector<int>& timeSeries, int duration);
 
 std::vector<int> nextGreaterElement(std::vector<int>& nums1, std::vector<int>& nums2);
+
+class RectanglesPointPicker {
+public:
+    std::vector<std::vector<int>>  rects;
+    std::vector<int>areaList;
+public:
+    RectanglesPointPicker(std::vector<std::vector<int>>& rects){}
+
+    std::vector<int> pick() {
+ 
+        return pickPointInRect(pickRects());
+}
+private:
+    int pickRects() { return 0; };
+    std::vector<int>  pickPointInRect(int id) {
+        std::vector<int>ans;
+        return ans;
+    
+    };
+};
