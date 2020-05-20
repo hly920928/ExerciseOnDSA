@@ -6,6 +6,7 @@
 #include <cmath>       
 #include <math.h>      
 #include <random>
+
 #define _USE_MATH_DEFINES
 class TreeNode {
 public:
@@ -167,20 +168,46 @@ std::vector<int> nextGreaterElement(std::vector<int>& nums1, std::vector<int>& n
 
 class RectanglesPointPicker {
 public:
-    std::vector<std::vector<int>>  rects;
+    std::vector<std::vector<int>>*  rects;
     std::vector<int>areaList;
+    std::default_random_engine gen;
+    std::uniform_real_distribution<int>rectDist;
+    std::uniform_real_distribution<double>inRectDist;
 public:
-    RectanglesPointPicker(std::vector<std::vector<int>>& rects){}
+    RectanglesPointPicker(std::vector<std::vector<int>>& rects){
+        int areaSum = 0;
+        rects =rects;
+        for (int i = 0; i < rects.size(); i++) {
+            areaSum += area(rects[i]);
+            areaList.push_back(areaSum);
+        }
+        rectDist = uniform_real_distribution<int>(0, areaSum);
+        inRectDist= uniform_real_distribution<double>(0, 1.0);
+    }
 
     std::vector<int> pick() {
  
         return pickPointInRect(pickRects());
 }
 private:
-    int pickRects() { return 0; };
+    int pickRects() {
+        int areaPos= rectDist(gen);
+        if (areaPos == 0)return 0;
+        if (areaPos == areaList.back())return areaList.size()-1;
+        auto itr = upper_bound(areaList.begin(), areaList.end(), areaPos);
+        return itr- areaList.begin(); 
+    };
     std::vector<int>  pickPointInRect(int id) {
-        std::vector<int>ans;
+        auto& r = rects->at(id);
+        double xPos = inRectDist(gen);
+        double yPos = inRectDist(gen);
+        vector<int>ans;
+        ans.push_back(r[0] + (r[2] - r[0]) * xPos);
+        ans.push_back(r[1] + (r[3] - r[1]) * yPos);
         return ans;
     
     };
+    int area(vector<int>&r) {
+        return (r[2] - r[0] + 1) * (r[3] - r[1] + 1);
+    }
 };
