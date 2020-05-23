@@ -169,20 +169,18 @@ std::vector<int> nextGreaterElement(std::vector<int>& nums1, std::vector<int>& n
 class RectanglesPointPicker {
 public:
     std::vector<std::vector<int>>*  rects;
-    std::vector<int>areaList;
+    std::vector<unsigned long long>areaList;
     std::default_random_engine gen;
-    std::uniform_real_distribution<int>rectDist;
-    std::uniform_real_distribution<double>inRectDist;
+    std::uniform_int_distribution<int>rectDist;
 public:
-    RectanglesPointPicker(std::vector<std::vector<int>>& rects){
-        int areaSum = 0;
-        rects =rects;
-        for (int i = 0; i < rects.size(); i++) {
-            areaSum += area(rects[i]);
+    RectanglesPointPicker(std::vector<std::vector<int>>& _rects){
+        unsigned long long areaSum = 0;
+        rects = &_rects;
+        for (int i = 0; i < _rects.size(); i++) {
+            areaSum += area_1(_rects[i]);
             areaList.push_back(areaSum);
         }
-        rectDist = uniform_real_distribution<int>(0, areaSum);
-        inRectDist= uniform_real_distribution<double>(0, 1.0);
+        rectDist = std::uniform_int_distribution<int>(0, areaSum);
     }
 
     std::vector<int> pick() {
@@ -198,16 +196,12 @@ private:
         return itr- areaList.begin(); 
     };
     std::vector<int>  pickPointInRect(int id) {
-        auto& r = rects->at(id);
-        double xPos = inRectDist(gen);
-        double yPos = inRectDist(gen);
-        vector<int>ans;
-        ans.push_back(r[0] + (r[2] - r[0]) * xPos);
-        ans.push_back(r[1] + (r[3] - r[1]) * yPos);
-        return ans;
+        auto& selected = rects->at(id);
+        return std::vector<int>{selected[0] + rand() % (selected[2] - selected[0] + 1),
+            selected[1] + rand() % (selected[3] - selected[1] + 1)};
     
     };
-    int area(vector<int>&r) {
-        return (r[2] - r[0] + 1) * (r[3] - r[1] + 1);
+    unsigned long long area_1(std::vector<int>&r) {
+        return (unsigned long long)((long long)r[2] - (long long)r[0] + 1) * (unsigned long long)((long long)r[3] - (long long)r[1] + 1);
     }
 };
