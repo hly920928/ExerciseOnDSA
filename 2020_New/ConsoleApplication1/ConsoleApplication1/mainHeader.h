@@ -205,3 +205,5 @@ private:
         return (unsigned long long)((long long)r[2] - (long long)r[0] + 1) * (unsigned long long)((long long)r[3] - (long long)r[1] + 1);
     }
 };
+
+std::vector<int> findDiagonalOrder(std::vector<std::vector<int>>& matrix);
