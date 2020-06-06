@@ -211,3 +211,5 @@ std::vector<int> findDiagonalOrder(std::vector<std::vector<int>>& matrix);
 std::vector<std::string> findWords(std::vector<std::string>& words);
 
 std::vector<int> findMode(TreeNode* root);
+
+int findMaximizedCapital(int k, int W, std::vector<int>& Profits, std::vector<int>& Capital);
